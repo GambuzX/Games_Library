@@ -11,7 +11,7 @@ private:
 	vector<CreditCard> creditCards;
 	set<Title*>* purchasedGames;
 	unsigned int userID;
-	vector<User*> friendsList;
+	set<User*> friendsList;
 
 public:
 	void addCreditCard(CreditCard cc);
