@@ -7,7 +7,7 @@ private:
 	double subPrice;
 
 public:
-	void chargeUser(User* user) = 0;
+	virtual void chargeUser(User* user) = 0;
 };
 
 #endif

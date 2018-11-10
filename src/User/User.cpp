@@ -5,7 +5,7 @@ void User::addCreditCard(CreditCard cc) {
 	throw "Not yet implemented";
 }
 
-bool User::hasTitle(Title title) {
+bool User::hasTitle(Title* title) {
 	// TODO - implement User::hasTitle
 	throw "Not yet implemented";
 }
@@ -40,8 +40,8 @@ void User::playGame() {
 	throw "Not yet implemented";
 }
 
-void User::addFrienc() {
-	// TODO - implement User::addFrienc
+void User::addFriend() {
+	// TODO - implement User::addFriend
 	throw "Not yet implemented";
 }
 

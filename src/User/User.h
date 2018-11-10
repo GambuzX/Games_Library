@@ -4,19 +4,21 @@
 class User {
 
 private:
+	static int nextUserID;
+	unsigned int userID;
 	string name;
 	string email;
 	int age;
 	Address address;
 	vector<CreditCard> creditCards;
 	set<Title*>* purchasedGames;
-	unsigned int userID;
 	set<User*> friendsList;
+	vector<Transaction> transactions;
 
 public:
 	void addCreditCard(CreditCard cc);
 
-	bool hasTitle(Title title);
+	bool hasTitle(Title* title);
 
 	bool hasTitle(unsigned int titleID);
 
@@ -30,7 +32,7 @@ public:
 
 	void playGame();
 
-	void addFrienc();
+	void addFriend();
 
 	void removeFriend();
 };

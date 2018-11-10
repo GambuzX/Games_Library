@@ -5,7 +5,7 @@ class CreditCard {
 
 private:
 	string number;
-	string nameOnCard;
+	string holder;
 	Date expiryDate;
 	double balance;
 

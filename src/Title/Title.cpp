@@ -5,8 +5,8 @@ Title::Title(string name, double price, Date releaseDate, range ageRange) {
 	throw "Not yet implemented";
 }
 
-void Title::addUpdate(Update update) {
-	// TODO - implement Title::addUpdate
+double Title::getCurrentPrice() {
+	// TODO - implement Title::getCurrentPrice
 	throw "Not yet implemented";
 }
 

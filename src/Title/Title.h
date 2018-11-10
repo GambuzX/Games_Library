@@ -4,6 +4,7 @@
 class Title {
 
 private:
+	static int nextTitleID;
 	unsigned int titleID;
 	string name;
 	double basePrice;
@@ -13,14 +14,15 @@ private:
 	string genre;
 	string company;
 	vector<Sale> pricesHistory;
-	int attribute;
 
 public:
 	Title(string name, double price, Date releaseDate, range ageRange);
 
-	void addUpdate(Update update);
-
 	virtual void getInfo() = 0;
+
+	virtual void getStats() = 0;
+
+	double getCurrentPrice();
 
 	void addPromotion();
 };
