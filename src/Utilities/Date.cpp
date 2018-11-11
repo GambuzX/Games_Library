@@ -1,4 +1,5 @@
 #include "Date.h"
+#include <string>
 
 using namespace std;
 
@@ -29,12 +30,14 @@ unsigned int Date::daysInMonth(unsigned int month, unsigned int year) const
 
 	case 2: // february
 		return LeapYear(year) ? 29 : 28;
+	default:
+		break;
 	}
 }
 
 unsigned int Date::daysInYear(unsigned int year) const
 {
-	return LeapYear(year) ? 366 : 365;
+	return (LeapYear(year) ? 366 : 365);
 }
 
 unsigned int Date::dayNumber(unsigned int day, unsigned int month, unsigned int year) const
@@ -47,6 +50,16 @@ unsigned int Date::dayNumber(unsigned int day, unsigned int month, unsigned int 
 	return res;
 }
 
+unsigned long Date::date2days() const
+{
+	unsigned long res = 0;
+	
+	for (unsigned int y = 0; y < this->year; y++)
+		res += daysInYear(y);
+
+	return res + dayNumber(this->day, this->month, this->year);
+}
+
 Date::Date()
 {
 	day = 1;
@@ -54,7 +67,7 @@ Date::Date()
 	year = 0;
 }
 
-Date::Date(unsigned int year, unsigned int month, unsigned int day) {
+Date::Date(unsigned int day, unsigned int month, unsigned int year) {
 	if (month > 12)
 		throw InvalidMonth(month);
 	if (day > daysInMonth(month, year))
@@ -128,6 +141,42 @@ Date Date::operator+(unsigned int days) const {
 	return res;
 }
 
+Date Date::operator-(unsigned int days) const
+{
+	Date res(*this);
+	
+	while (days > daysInYear(res.year)) {
+		days -= daysInYear(res.year - 1);
+		res.year--;
+	}
+
+	unsigned pres = dayNumber(res.day, res.month, res.year);
+
+	if (days >= pres){
+		res.year--;
+		days = daysInYear(res.year) - days + pres;
+	}
+	else {
+		days = pres - days;
+	}
+
+	res.month = 1;
+
+	while (days > daysInMonth(res.month, res.year)) {
+		days -= daysInMonth(res.month, res.year);
+		res.month++;
+	}
+
+	res.day = days;
+	
+	return res;
+}
+
+long Date::operator-(const Date & date) const
+{
+	return this->date2days() - date.date2days();
+}
+
 bool Date::operator==(const Date & d2) const
 {
 	return year == d2.getYear() && month == d2.getMonth() && day == d2.getDay();
@@ -146,22 +195,27 @@ bool Date::operator<(const Date & d2) const
 
 ostream & operator<<(ostream & os, const Date & date)
 {
+	os << (date.getDay() > 9 ? "" : "0");
 	os << date.getDay() << "/";
-	os << (date.getMonth() > 10 ? "" : "0");
+	os << (date.getMonth() > 9 ? "" : "0");
 	os << date.getMonth() << "/" << date.getYear();
 	return os;
 }
 
 istream & operator>>(istream & is, Date & date)
 {
-	istream is2 = is;
-	string invalidDate(istreambuf_iterator<char>(is2), {})
+
 	char c1, c2;
 	unsigned int d, m, y;
 	
 	is >> d >> c1 >> m >> c2 >> y;
 	
-	if (c1 != c2)
+	if (c1 != c2){
+		string invalidDate = to_string(d) + c1 + to_string(m) + c2 + to_string(y);
 		throw InvalidDateFormat(invalidDate);
+	}
+
 	date = Date(d, m, y);
+
+	return is;
 }

@@ -2,6 +2,7 @@
 #define DATE_H
 
 #include <sstream>
+#include <string>
 
 class Date {
 
@@ -14,9 +15,10 @@ private:
 	unsigned int daysInMonth(unsigned int month, unsigned int year) const;
 	unsigned int daysInYear(unsigned int year) const;
 	unsigned int dayNumber(unsigned int day, unsigned int month, unsigned int year) const;
+	unsigned long date2days() const;
 public:
 	Date();
-	Date(unsigned int year, unsigned int month, unsigned int day);
+	Date(unsigned int day, unsigned int month, unsigned int year);
 	Date(const Date & date);
 
 	unsigned getDay() const { return day; };
@@ -27,14 +29,16 @@ public:
 	void setMonth(unsigned int month);
 	void setYear(unsigned int year);
 
-	Date& operator=(const Date &date);
-	Date operator+(unsigned int days) const; // add days to date
+	Date& operator=(const Date & date);
+	Date operator+(unsigned int days) const;
+	Date operator-(unsigned int days) const;
+	long operator-(const Date & date) const;
 
 	bool operator==(const Date& d2) const;
 	bool operator<(const Date& d2) const;
 
-	friend std::ostream& operator<<(std::ostream &os, const Date &date);
-	friend std::istream& operator>>(std::istream &is, Date &date);
+	friend std::ostream& operator<<(std::ostream &os, const Date & date);
+	friend std::istream& operator>>(std::istream &is, Date & date);
 
 };
 
@@ -71,12 +75,12 @@ public:
 
 class InvalidDateFormat {
 private:
-	string date;
+	std::string date;
 
 public:
 	InvalidDateFormat() {};
-	InvalidDateFormat(const string d) { date = d; };
-	string getInvalidDate() const { return dater; };
+	InvalidDateFormat(const std::string d) { date = d; };
+	std::string getInvalidDate() const { return date; };
 };
 
 #endif

@@ -24,7 +24,7 @@ Address::Address(int houseNumber, string streetName, string city, string country
 
 bool Address::sameCountry(const Address & a2) const
 {
-	return this->coutry == a2.getCountry();
+	return this->country == a2.getCountry();
 }
 
 bool Address::sameCity(const Address & a2) const
