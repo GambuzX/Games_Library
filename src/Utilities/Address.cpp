@@ -11,7 +11,6 @@ Address::Address()
 
 }
 
-
 //Address::Address(string streetName, string city, string country, string state)
 Address::Address(int houseNumber, string streetName, string city, string country)
 {
@@ -20,6 +19,13 @@ Address::Address(int houseNumber, string streetName, string city, string country
 	this->city = city;
 	this->country = country;
 	//this->state = state;
+}
+
+Address::Address(const Address & add) {
+	houseNumber = add.getHouseNumber();
+	streetName = add.getStreetName();
+	city = add.getCity();
+	country = add.getCountry();
 }
 
 bool Address::sameCountry(const Address & a2) const

@@ -1,11 +1,38 @@
 #include "CreditCard.h"
+#include <iostream>
 
-void CreditCard::addFunds(double funds) {
-	// TODO - implement CreditCard::addFunds
-	throw "Not yet implemented";
+CreditCard::CreditCard(std::string n, std::string h, Date exp, double bal) {
+	if (bal < 0) throw NegativeFunds(bal);
+	number = n;
+	holder = h;
+	expiryDate = exp;
+	balance = bal;
 }
 
-void CreditCard::removeFunds(double funds) {
-	// TODO - implement CreditCard::removeFunds
-	throw "Not yet implemented";
+double CreditCard::addFunds(double funds) {
+	balance += funds;
+	return balance;
+}
+
+double CreditCard::removeFunds(double funds) {
+	if (balance < funds) throw NotEnoughFunds(funds);
+	balance -= funds;
+	return balance;
+}
+
+double CreditCard::operator+(const double & val) {
+	return addFunds(val);
+}
+
+
+double CreditCard::operator-(const double & val) {
+	try {
+		removeFunds(val);
+	}
+	catch (NotEnoughFunds & exception) {
+		// std::cout << holder << " does not have enough funds : " << exception.getFunds() << endl;
+		// return false;
+		throw
+	}
+	return balance;
 }

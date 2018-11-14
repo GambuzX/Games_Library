@@ -1,11 +1,14 @@
 #ifndef HOMETITLE_H
 #define HOMETITLE_H
 
+#include <map>
+#include <"Update.h">
+
 class HomeTitle : Title {
 
 private:
-	vector<Update> titleUpdateHistory;
-	map<User*, Update> userUpdates;
+	std::vector<Update> titleUpdateHistory;
+	std::map<User*, Update> userUpdates;
 
 public:
 	void getInfo();

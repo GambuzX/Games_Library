@@ -15,6 +15,7 @@ public:
 	Address();
 	//Address(std::string streetName, std::string city, std::string country, std::string state);
 	Address(int houseNumber, std::string streetName, std::string city, std::string country);
+	Address(const Address & add);
 
 	int getHouseNumber() const { return houseNumber; };
 	std::string getStreetName() const { return streetName; };

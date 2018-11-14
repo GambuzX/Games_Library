@@ -1,22 +1,32 @@
 #ifndef TITLE_H
 #define TITLE_H
 
+#include <string>
+#include <vector>
+#include "Date.h"
+#include "Sale.h"
+
+struct ageRange {
+	int minAge;
+	int maxAge;
+}
+
 class Title {
 
 private:
 	static int nextTitleID;
 	unsigned int titleID;
-	string name;
+	std::string name;
 	double basePrice;
 	Date releaseDate;
-	unsigned int minAge;
-	string platform;
-	string genre;
-	string company;
-	vector<Sale> pricesHistory;
+	ageRange ageR;
+	std::string platform;
+	std::string genre;
+	std::string company;
+	std::vector<Sale> pricesHistory;
 
 public:
-	Title(string name, double price, Date releaseDate, range ageRange);
+	Title(std::string name, double price, Date releaseDate, ageRange ageR);
 
 	virtual void getInfo() = 0;
 
