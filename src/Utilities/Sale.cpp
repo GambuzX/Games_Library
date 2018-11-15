@@ -19,9 +19,5 @@ double Sale::getSaleFactor() const {
 }
 
 bool Sale::isActiveOn(const Date & date) const {
-	unsigned int start = startDate.getYear() * 10000 + startDate.getMonth() * 100 + startDate.getDay();
-	unsigned int end = endDate.getYear() * 10000 + endDate.getMonth() * 100 + endDate.getDay();
-	unsigned int current = date.getYera() * 10000 + date.getMonth() * 100 + date.getDay();
-
-	return (current >= start && current <= end);
+	return startDate <= date && date <= endDate;
 }

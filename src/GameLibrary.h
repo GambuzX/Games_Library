@@ -1,12 +1,18 @@
 #ifndef GAMELIBRARY_H
 #define GAMELIBRARY_H
 
+#include <set>
+#include <map>
+#include <fstream>
+#include "Title.h"
+#include "User.h"
+
 class GameLibrary {
 
 private:
-	set<Title> titles;
-	map<User, set<Title*>> users;
-	static map<Title*, double> titlesRevenue;
+	std::set<Title> titles;
+	std::map<User, std::set<Title*>> users;
+	static std::map<Title*, double> titlesRevenue;
 
 public:
 	void addUser(User* user);
