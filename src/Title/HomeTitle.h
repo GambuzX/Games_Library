@@ -2,7 +2,9 @@
 #define HOMETITLE_H
 
 #include <map>
-#include <"Update.h">
+#include "Update.h"
+#include "Title.h"
+#include "User.h"
 
 class HomeTitle : Title {
 

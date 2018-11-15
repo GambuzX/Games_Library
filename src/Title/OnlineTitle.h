@@ -2,8 +2,10 @@
 #define ONLINETITLE_H
 
 #include <map>
+#include <vector>
 #include "Subscription.h"
 #include "Session.h"
+#include "Title.h"
 
 class OnlineTitle : Title {
 

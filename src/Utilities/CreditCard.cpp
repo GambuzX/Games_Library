@@ -29,7 +29,7 @@ double CreditCard::operator-(const double & val) {
 	try {
 		removeFunds(val);
 	}
-	catch (NotEnoughFunds & exception) {
+	catch (NotEnoughFunds) {
 		// std::cout << holder << " does not have enough funds : " << exception.getFunds() << endl;
 		// return false;
 		throw;

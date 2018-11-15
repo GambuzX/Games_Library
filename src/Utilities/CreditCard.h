@@ -33,7 +33,7 @@ private:
 public:
 	NegativeFunds(double f) : funds(f) {}
 	double getFunds() const { return funds; }
-}
+};
 
 class NotEnoughFunds {
 private:
@@ -41,6 +41,6 @@ private:
 public:
 	NotEnoughFunds(double f) : funds(f) {}
 	double getFunds() const { return funds; }
-}
+};
 
 #endif

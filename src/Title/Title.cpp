@@ -1,6 +1,6 @@
 #include "Title.h"
 
-Title::Title(string name, double price, Date releaseDate, range ageRange) {
+Title::Title(std::string name, double price, Date releaseDate, ageRange ageR) {
 	// TODO - implement Title::Title
 	throw "Not yet implemented";
 }

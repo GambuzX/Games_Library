@@ -9,7 +9,7 @@
 struct ageRange {
 	int minAge;
 	int maxAge;
-}
+};
 
 class Title {
 

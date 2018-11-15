@@ -7,6 +7,13 @@
 #include "Title.h"
 #include "User.h"
 
+enum rankingFilter
+{
+	gender,
+	platform,
+	age
+};
+
 class GameLibrary {
 
 private:
@@ -23,11 +30,11 @@ public:
 
 	void removeTitle(unsigned int id);
 
-	void loadTitlesFromFile(fstream& titleFile);
+	void loadTitlesFromFile(std::fstream& titleFile);
 
-	void loadUsersFromFile(fstream& userFile);
+	void loadUsersFromFile(std::fstream& userFile);
 
-	void updateHomeTitle(HomeTitle* title);
+	void updateTitle(Title* title);
 
 	void buildPopularityRanking(rankingFilter filter);
 

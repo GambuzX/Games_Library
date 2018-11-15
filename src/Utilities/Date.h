@@ -37,6 +37,9 @@ public:
 	bool operator==(const Date& d2) const;
 	bool operator<(const Date& d2) const;
 
+	// TODO IMPLEMENT THIS !!!!!!!!
+	bool operator<=(const Date& d2) const;
+
 	friend std::ostream& operator<<(std::ostream &os, const Date & date);
 	friend std::istream& operator>>(std::istream &is, Date & date);
 

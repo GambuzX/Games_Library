@@ -33,6 +33,8 @@ unsigned int Date::daysInMonth(unsigned int month, unsigned int year) const
 	default:
 		break;
 	}
+	// RETURN SOMETHING TO REMOVE WARNING
+	return 0;
 }
 
 unsigned int Date::daysInYear(unsigned int year) const
@@ -191,6 +193,12 @@ bool Date::operator<(const Date & d2) const
 		return month < d2.getMonth();
 
 	return day < d2.getDay();
+}
+
+// TODO IMPLEMENT THIS !!!!!!!!
+bool Date::operator<=(const Date & d2) const
+{
+	return false;
 }
 
 ostream & operator<<(ostream & os, const Date & date)

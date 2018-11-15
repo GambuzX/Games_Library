@@ -20,17 +20,17 @@ void GameLibrary::removeTitle(unsigned int id) {
 	throw "Not yet implemented";
 }
 
-void GameLibrary::loadTitlesFromFile(fstream& titleFile) {
+void GameLibrary::loadTitlesFromFile(std::fstream& titleFile) {
 	// TODO - implement GameLibrary::loadTitlesFromFile
 	throw "Not yet implemented";
 }
 
-void GameLibrary::loadUsersFromFile(fstream& userFile) {
+void GameLibrary::loadUsersFromFile(std::fstream& userFile) {
 	// TODO - implement GameLibrary::loadUsersFromFile
 	throw "Not yet implemented";
 }
 
-void GameLibrary::updateHomeTitle(HomeTitle* title) {
+void GameLibrary::updateTitle(Title* title) {
 	// TODO - implement GameLibrary::updateHomeTitle
 	throw "Not yet implemented";
 }
@@ -60,7 +60,7 @@ void GameLibrary::buildUserConsumingHabitsList(User* user) {
 	throw "Not yet implemented";
 }
 
-static void GameLibrary::updateTitleRevenue(Title* title, int double_amount) {
+void GameLibrary::updateTitleRevenue(Title* title, int double_amount) {
 	// TODO - implement GameLibrary::updateTitleRevenue
 	throw "Not yet implemented";
 }

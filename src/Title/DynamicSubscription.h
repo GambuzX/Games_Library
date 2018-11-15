@@ -1,6 +1,8 @@
 #ifndef DYNAMICSUBSCRIPTION_H
 #define DYNAMICSUBSCRIPTION_H
 
+#include "Subscription.h"
+
 class DynamicSubscription : Subscription {
 
 
