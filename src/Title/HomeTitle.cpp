@@ -1,5 +1,9 @@
 #include "HomeTitle.h"
 
+using namespace std;
+
+HomeTitle::HomeTitle(string name, double price, Date releaseDate, ageRange ageR, string platform, string genre, string company) : Title(name, price, releaseDate, ageR, platform, genre, company) {}
+
 void HomeTitle::getInfo() {
 	// TODO - implement HomeTitle::getInfo
 	throw "Not yet implemented";

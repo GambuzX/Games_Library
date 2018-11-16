@@ -195,10 +195,9 @@ bool Date::operator<(const Date & d2) const
 	return day < d2.getDay();
 }
 
-// TODO IMPLEMENT THIS !!!!!!!!
 bool Date::operator<=(const Date & d2) const
 {
-	return false;
+	return (*this) < d2 || (*this) == d2;
 }
 
 ostream & operator<<(ostream & os, const Date & date)

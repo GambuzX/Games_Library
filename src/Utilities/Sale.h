@@ -15,6 +15,8 @@ public:
 	Date getEndDate() const;
 	double getSaleFactor() const;
 	bool isActiveOn(const Date & date) const;
+
+	bool operator<(const Sale& s2) const;
 };
 
 #endif

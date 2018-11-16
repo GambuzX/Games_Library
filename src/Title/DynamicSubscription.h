@@ -7,6 +7,9 @@ class DynamicSubscription : Subscription {
 
 
 public:
+	DynamicSubscription() : Subscription() {};
+	DynamicSubscription(double sPrice) : Subscription(sPrice) {};
+
 	void chargeUser(User* user);
 };
 

@@ -21,3 +21,8 @@ double Sale::getSaleFactor() const {
 bool Sale::isActiveOn(const Date & date) const {
 	return startDate <= date && date <= endDate;
 }
+
+bool Sale::operator<(const Sale & s2) const
+{
+	return startDate < s2.getStartDate();
+}

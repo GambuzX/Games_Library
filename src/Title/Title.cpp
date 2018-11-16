@@ -1,16 +1,74 @@
 #include "Title.h"
+#include <algorithm>
 
-Title::Title(std::string name, double price, Date releaseDate, ageRange ageR) {
-	// TODO - implement Title::Title
-	throw "Not yet implemented";
+using namespace std;
+
+unsigned int Title::nextTitleID = 0;
+
+Title::Title(string name, double price, Date releaseDate, ageRange ageR, string platform, string genre, string company) : titleID(++nextTitleID), releaseDate(releaseDate)
+{
+	// TODO: Fazer throw já aqui se nome já existente ou apenas na library
+	this->name = name;
+	basePrice = price;
+	this->ageR = ageR;
+	// TODO: Fazer pertencer a tipo de plataforma e género??
+	this->platform = platform;
+	this->platform = genre;
+	this->platform = company;
 }
 
-double Title::getCurrentPrice() {
-	// TODO - implement Title::getCurrentPrice
-	throw "Not yet implemented";
+const Sale & Title::getLastSale() const
+{
+	if (0 == pricesHistory.size())
+		throw InexistentSale();
+	/*
+	Date lastEndDate = pricesHistory.at(0).getEndDate();
+	unsigned int lastSaleInd = 0;
+	for (size_t i = 0; i < pricesHistory.size(); i++) 
+		if (lastEndDate < pricesHistory.at(i).getEndDate()){
+			lastEndDate = pricesHistory.at(i).getEndDate();
+			lastSaleInd = i;
+		}
+	
+	return pricesHistory.at(lastSaleInd);
+	*/
+	return pricesHistory.at(pricesHistory.size() - 1);
 }
 
-void Title::addPromotion() {
-	// TODO - implement Title::addPromotion
-	throw "Not yet implemented";
+double Title::getCurrentPrice(Date & date) const
+{
+	for (size_t i = 0; i < pricesHistory.size(); i++)
+	{
+		if (pricesHistory.at(i).isActiveOn(date))
+		{
+			return basePrice * pricesHistory.at(i).getSaleFactor();
+		}
+	}
+	return basePrice;
+}
+
+void Title::addPromotion(Sale & promotion) {
+	if(0 == pricesHistory.size() || getLastSale().getEndDate() < promotion.getStartDate())
+		pricesHistory.push_back(promotion);
+	else if (promotion.getStartDate() < pricesHistory.at(0).getStartDate())
+	{
+		//TODO: maneira mais eficiente de acrescentar ao início??
+		pricesHistory.push_back(promotion);
+		sort(pricesHistory.begin(), pricesHistory.end());
+	}
+	else {
+		for (size_t i = 0; i < pricesHistory.size() - 1; i++)
+			// Avoid Sales Overlap
+			if ((pricesHistory.at(i).getEndDate() < promotion.getStartDate()) && (promotion.getEndDate() < pricesHistory.at(i + 1).getStartDate())) {
+				pricesHistory.push_back(promotion);
+				sort(pricesHistory.begin(), pricesHistory.end());
+				return;
+			}
+		throw OverlappingSales();
+	}
+}
+
+bool Title::operator<(const Title & t2) const
+{
+	return titleID < t2.getTitleID();
 }
