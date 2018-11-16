@@ -1,5 +1,5 @@
 #include "User.h"
-#include <time.h>
+#include <chrono>
 #include "..\GameLibrary.h"
 
 using namespace std;
@@ -22,12 +22,12 @@ bool User::addCreditCard(CreditCard cc) {
 bool User::hasEnoughMoney(double val) const {
 	double amountOwned = 0;
 
-	time_t theTime = time(NULL);
-	struct tm aTime;
-	localtime_s(&aTime, &theTime);
-	int day = aTime.tm_mday;
-	int month = aTime.tm_mon + 1; // Month is 0 - 11, add 1 to get a jan-dec 1-12 concept
-	int year = aTime.tm_year + 1900; // Year is # years since 1900
+	time_t theTime = time(nullptr);
+	struct tm *aTime = localtime(&theTime);
+
+	int day = aTime->tm_mday;
+	int month = aTime->tm_mon + 1; // Month is 0 - 11, add 1 to get a jan-dec 1-12 concept
+	int year = aTime->tm_year + 1900; // Year is # years since 1900
 
 	for (const auto & cc : creditCards)
 		// if not expired
@@ -43,12 +43,12 @@ bool User::subtractValue(double val)
 
 	for (auto & cc : creditCards)
 	{
-		time_t theTime = time(NULL);
-		struct tm aTime;
-		localtime_s(&aTime, &theTime);
-		int day = aTime.tm_mday;
-		int month = aTime.tm_mon + 1; // Month is 0 - 11, add 1 to get a jan-dec 1-12 concept
-		int year = aTime.tm_year + 1900; // Year is # years since 1900
+		time_t theTime = time(nullptr);
+		struct tm *aTime = localtime(&theTime);
+
+		auto day = static_cast<unsigned int>(aTime->tm_mday);
+		auto month = static_cast<unsigned int>(aTime->tm_mon + 1); // Month is 0 - 11, add 1 to get a jan-dec 1-12 concept
+		auto year = static_cast<unsigned int>(aTime->tm_year + 1900); // Year is # years since 1900
 
 		// If expired, skip card
 		if (cc.getExpiryDate() < Date(day, month, year)) continue;
@@ -98,12 +98,13 @@ bool User::buyTitle(Title* title) {
 	// Title repeated 
 	if (hasTitle(title)) return false;
 
-	time_t theTime = time(NULL);
-	struct tm aTime;
-	localtime_s(&aTime, &theTime);
-	int day = aTime.tm_mday;
-	int month = aTime.tm_mon + 1; // Month is 0 - 11, add 1 to get a jan-dec 1-12 concept
-	int year = aTime.tm_year + 1900; // Year is # years since 1900
+	time_t theTime = time(nullptr);
+	struct tm *aTime = localtime(&theTime);
+
+	int day = aTime->tm_mday;
+	int month = aTime->tm_mon + 1; // Month is 0 - 11, add 1 to get a jan-dec 1-12 concept
+	int year = aTime->tm_year + 1900; // Year is # years since 1900
+
 	Date currentDate = Date(day, month, year);
 	double price = title->getCurrentPrice(currentDate);
 
