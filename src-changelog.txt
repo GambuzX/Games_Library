@@ -1,0 +1,12 @@
+16/11/2018 - Gonçalo
+
+->User.cpp 
+
+--> hasEnoughMoney():
+   - NULL é deprecado a partir do C++11, troquei para nullptr.
+   - localtime_s é uma função exclusiva do MSVC, não está implementada em MinGW, troquei para:
+	struct tm *aTime = localtime(&theTime); que está implementada em todos os compiladores, 
+        bem como todas as outras ocorrências.
+
+--> subtractValue():
+   -  A função get_date_string não está definida e parece não ter efeito, eliminei
