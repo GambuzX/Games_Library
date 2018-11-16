@@ -20,12 +20,15 @@ double CreditCard::removeFunds(double funds) {
 	return balance;
 }
 
-double CreditCard::operator+(const double & val) {
-	return addFunds(val);
+void CreditCard::resetFunds() { balance = 0; }
+
+CreditCard & CreditCard::operator+(const double & val) {
+	addFunds(val);
+	return *this;
 }
 
 
-double CreditCard::operator-(const double & val) {
+CreditCard & CreditCard::operator-(const double & val) {
 	try {
 		removeFunds(val);
 	}
@@ -34,5 +37,5 @@ double CreditCard::operator-(const double & val) {
 		// return false;
 		throw;
 	}
-	return balance;
+	return *this;
 }

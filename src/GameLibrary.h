@@ -15,38 +15,35 @@ enum rankingFilter
 };
 
 class GameLibrary {
-
 private:
-	std::set<Title> titles;
-	std::map<User, std::set<Title*>> users;
+	/*static*/ std::set<Title> titles;
 	static std::map<Title*, double> titlesRevenue;
+
+	std::map<User, std::set<Title*>> users;
 
 public:
 	void addUser(User* user);
-
 	void removeUser();
 
 	void addTitle(Title* title);
-
 	void removeTitle(unsigned int id);
 
 	void loadTitlesFromFile(std::fstream& titleFile);
-
 	void loadUsersFromFile(std::fstream& userFile);
 
 	void updateTitle(Title* title);
 
 	void buildPopularityRanking(rankingFilter filter);
-
 	void averageUserTitles(User* user);
-
 	void favoriteUserPlatform(User* user);
-
 	void userLibraryCost(User* user);
-
 	void buildUserConsumingHabitsList(User* user);
 
-	static void updateTitleRevenue(Title* title, int double_amount);
+	static void updateTitleRevenue(Title* title, double amount);
+	/*
+	static Title* getTitle(unsigned int titleID);
+	static Title* getTitle(std::string name);
+	*/
 };
 
 #endif

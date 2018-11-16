@@ -29,7 +29,7 @@ private:
 public:
 	Title(std::string name, double price, Date releaseDate, ageRange ageR, std::string platform, std::string genre, std::string company);
 
-	virtual void getInfo() = 0;
+	virtual void getUpdates() = 0;
 	virtual void getStats() = 0;
 
 	std::string getName() const { return name; };

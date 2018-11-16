@@ -4,16 +4,16 @@
 #include <string>
 #include <vector>
 #include <set>
-#include "CreditCard.h"
-#include "Title.h"
-#include "Transaction.h"
-#include "Address.h"
+#include "..\Utilities\CreditCard.h"
+#include "..\Title\Title.h"
+#include "..\Utilities\Transaction.h"
+#include "..\Utilities\Address.h"
 
 class User {
 
 private:
 	static int nextUserID;
-	unsigned int userID;
+	const unsigned int userID;
 	std::string name;
 	std::string email;
 	int age;
@@ -27,6 +27,7 @@ public:
 	User (std::string name, std::string email, int age, Address address);
 
 	std::string getName() const { return name; }
+	unsigned int getUserID() const { return userID; }
 	std::string getEmail() const { return email; }
 	int getAge() const { return age; }
 	Address getAddress() const { return address; }
@@ -35,25 +36,24 @@ public:
 	const std::set<User*> & getFriendsList() const { return friendsList; }
 	const std::vector<Transaction> & getTransactions() const { return transactions; }
 
-	void addCreditCard(CreditCard cc);
+	bool addCreditCard(CreditCard cc);
+	bool hasEnoughMoney(double val) const;
+	bool subtractValue(double val);
 
-	bool hasTitle(Title* title);
+	bool hasTitle(Title* title) const;
+	bool hasTitle(unsigned int titleID) const;
 
-	bool hasTitle(unsigned int titleID);
+	bool buyTitle(Title* title);
+	bool buyTitle(unsigned int titleID);
+	bool updateTitle(Title* title);
+	bool updateTitle(unsigned int titleID);
 
-	void buyTitle(Title* title);
+	bool playGame();
 
-	void buyTitle(unsigned int titleID);
+	bool addFriend(User * frnd);
+	bool removeFriend(User * frnd);
 
-	void updateTitle(Title* title);
-
-	void updateTitle(unsigned int titleID);
-
-	void playGame();
-
-	void addFriend();
-
-	void removeFriend();
+	bool operator<(const User & usr) const;
 };
 
 #endif

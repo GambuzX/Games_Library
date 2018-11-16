@@ -23,8 +23,10 @@ public:
 	double addFunds(double funds);
 	double removeFunds(double funds);
 
-	double operator+(const double & val);
-	double operator-(const double & val);
+	void resetFunds();
+
+	CreditCard & operator+(const double & val);
+	CreditCard & operator-(const double & val);
 };
 
 class NegativeFunds {

@@ -60,7 +60,25 @@ void GameLibrary::buildUserConsumingHabitsList(User* user) {
 	throw "Not yet implemented";
 }
 
-void GameLibrary::updateTitleRevenue(Title* title, int double_amount) {
+void GameLibrary::updateTitleRevenue(Title* title, double amount) {
 	// TODO - implement GameLibrary::updateTitleRevenue
 	throw "Not yet implemented";
 }
+
+/*
+Title * GameLibrary::getTitle(unsigned int titleID)
+{
+	for (auto & title : titles)
+		if (title.getTitleID() == titleID)
+			return &title;
+	return NULL;
+}
+
+Title * GameLibrary::getTitle(std::string name)
+{
+	for (auto & title : titles)
+		if (title.getName() == name)
+			return &title;
+	return NULL;
+}
+*/
