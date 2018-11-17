@@ -3,7 +3,6 @@
 
 #include <sstream>
 #include <map>
-#include "..\Utilities\Update.h"
 #include "Title.h"
 #include "..\User\User.h"
 #include "..\Utilities\CompareObj.h"
@@ -17,10 +16,14 @@ private:
 public:
 	HomeTitle(std::string name, double price, Date releaseDate, ageRange ageR, std::string platform, std::string genre, std::string company);
 
-	void getUpdates();
+	const std::vector<Update> & getUpdates() const { return titleUpdateHistory; };
 	void getStats();
 
-	Update getCurrentVersion();
+	const Update & getCurrentVersion();
+	const Update & getCurrentVersion(User * u);
+	const Update & getCurrentVersion(unsigned int userID);
+	const Update & getCurrentVersion(std::string name);
+
 
 	void addTitleUpdate(Update & newUpdate);
 
@@ -38,7 +41,7 @@ public:
 	OldUpdate(Update & oldUp, Update & currUp) { oldUpdate = oldUp; currentVersion = currUp; };
 	Update getOldUpdate() const { return oldUpdate; };
 	std::string getMessage() const { 
-		std::ostringstream oss(getOldUpdate().getVersion());
+		std::ostringstream oss(oldUpdate.getVersion());
 		if (currentVersion == Update())
 			return "Tried to add old Update: " + oss.str();
 		std::string msg = "Tried to add old Update: " + oss.str() + "while Current Version is: ";
