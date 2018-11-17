@@ -174,6 +174,20 @@ double User::getTotalTransactionsValue() const
 	return total;
 }
 
+string User::getFavoritePlatform() const
+{
+	map<string, int> platforms;
+	for (const auto & title : *purchasedGames)
+		platforms[title->getPlatform()]++;
+	
+	pair<string, int> max("", 0);
+	for (const auto & entry : platforms)
+		if (entry.second > max.second)
+			max = entry;
+
+	return max.first;
+}
+
 bool User::playGame() {
 	// Have in account subscriptions
 	throw "Not yet implemented";

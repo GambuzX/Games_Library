@@ -18,7 +18,9 @@ public:
 	OnlineTitle(std::string name, double price, Date releaseDate, ageRange ageR, std::string platform, std::string genre, std::string company, Subscription* subs);
 	
 	const std::vector<Update> & getUpdates() const;
-	void getStats();
+	void getStats() const;
+
+	void UpdateTitle(Update *);
 
 	void addUser(User & u);
 

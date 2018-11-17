@@ -1,5 +1,6 @@
 #include "Title.h"
 #include <algorithm>
+#include "..\Utilities\Exceptions.h"
 
 using namespace std;
 

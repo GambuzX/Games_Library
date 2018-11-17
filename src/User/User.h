@@ -36,7 +36,9 @@ public:
 	const std::set<Title*>* getPurchasedGames() const { return purchasedGames; }
 	const std::set<User*, ComparePtr<User>> & getFriendsList() const { return friendsList; }
 	const std::vector<Transaction> & getTransactions() const { return transactions; }
+
 	double getTotalTransactionsValue() const;
+	std::string getFavoritePlatform() const;
 
 	bool addCreditCard(CreditCard cc);
 	bool hasEnoughMoney(double val) const;

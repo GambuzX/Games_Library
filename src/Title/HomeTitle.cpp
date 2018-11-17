@@ -1,4 +1,5 @@
 #include "HomeTitle.h"
+#include "..\Utilities\Exceptions.h"
 
 using namespace std;
 
@@ -7,14 +8,14 @@ HomeTitle::HomeTitle(string name, double price, Date releaseDate, ageRange ageR,
 	titleUpdateHistory.push_back(Update(releaseDate));
 }
 
-void HomeTitle::addTitleUpdate(Update & newUpdate)
+void HomeTitle::UpdateTitle(Update * newUpdate)
 {
 	if (titleUpdateHistory.size() == 0)
-		titleUpdateHistory.push_back(newUpdate);
-	else if (getCurrentVersion() < newUpdate)
-		titleUpdateHistory.push_back(newUpdate);
+		titleUpdateHistory.push_back(*newUpdate);
+	else if (getCurrentVersion() < *newUpdate)
+		titleUpdateHistory.push_back(*newUpdate);
 	else
-		throw OldUpdate(newUpdate, getCurrentVersion());
+		throw OldUpdate(*newUpdate, getCurrentVersion());
 }
 
 void HomeTitle::updateUserVersion() {
@@ -22,7 +23,7 @@ void HomeTitle::updateUserVersion() {
 	throw "Not yet implemented";
 }
 
-void HomeTitle::getStats() {
+void HomeTitle::getStats() const {
 	// TODO - implement HomeTitle::getStats
 	throw "Not yet implemented";
 }
@@ -35,14 +36,17 @@ const Update & HomeTitle::getCurrentVersion(User * u) const
 	if (it == userUpdates.end()) 
 		throw
 	return userUpdates.at(begin() + it);*/
+	return Update();
 }
 
 const Update & HomeTitle::getCurrentVersion(unsigned int userID) const
 {
 	// TODO: insert return statement here
+	return Update();
 }
 
 const Update & HomeTitle::getCurrentVersion(std::string name) const
 {
 	// TODO: insert return statement here
+	return Update();
 }

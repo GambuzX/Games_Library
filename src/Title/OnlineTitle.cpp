@@ -1,4 +1,5 @@
 #include "OnlineTitle.h"
+#include "..\Utilities\Exceptions.h"
 
 using namespace std;
 
@@ -22,7 +23,12 @@ const std::vector<Update>& OnlineTitle::getUpdates() const
 	throw "Not yet implemented";
 }
 
-void OnlineTitle::getStats() {
+void OnlineTitle::getStats() const{
 	// TODO - implement OnlineTitle::getStats
 	throw "Not yet implemented";
+}
+
+void OnlineTitle::UpdateTitle(Update *)
+{
+	throw NotHomeTitle(getTitleID());
 }

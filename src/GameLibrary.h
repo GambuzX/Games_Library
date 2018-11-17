@@ -38,7 +38,7 @@ public:
 
 	void buildPopularityRanking(rankingFilter filter);
 	double averageUserTitles() const;
-	void favoriteUserPlatform(User* user) const;
+	std::string favoriteUserPlatform(User* user) const;
 
 	double userLibraryCost(User* user) const;
 	double averageUserLibraryCost() const;

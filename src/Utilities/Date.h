@@ -45,45 +45,4 @@ public:
 
 };
 
-//TODO: generalizar??
-class InvalidMonth {
-private:
-	unsigned int month;
-
-public:
-	InvalidMonth() {};
-	InvalidMonth(const unsigned int m) { month = m; };
-	unsigned getMonth() const { return month; };
-};
-
-class InvalidDay {
-private:
-	unsigned int day;
-
-public:
-	InvalidDay() {};
-	InvalidDay(const unsigned int d) { day = d; };
-	unsigned getDay() const { return day; };
-};
-
-class InvalidYear {
-private:
-	unsigned int year;
-
-public:
-	InvalidYear() {};
-	InvalidYear(const unsigned int y) { year = y; };
-	unsigned getYear() const { return year; };
-};
-
-class InvalidDateFormat {
-private:
-	std::string date;
-
-public:
-	InvalidDateFormat() {};
-	InvalidDateFormat(const std::string d) { date = d; };
-	std::string getInvalidDate() const { return date; };
-};
-
 #endif

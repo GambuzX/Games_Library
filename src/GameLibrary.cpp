@@ -1,4 +1,5 @@
 #include "GameLibrary.h"
+#include "Utilities\Exceptions.h"
 
 using namespace std;
 
@@ -45,14 +46,14 @@ void GameLibrary::loadGameLibraryFromFile(std::fstream& titleFile)
 }
 
 bool GameLibrary::updateTitle(Title* title, Update * update) {
-	/*try
+	try
 	{
 		title->UpdateTitle(update);
 	}
 	catch (NotHomeTitle)
 	{
 		return false;
-	} */
+	}
 	return true;
 }
 
@@ -67,9 +68,8 @@ double GameLibrary::averageUserTitles() const{
 	return total / users.size();
 }
 
-void GameLibrary::favoriteUserPlatform(User* user) const {
-	// TODO - implement GameLibrary::favoriteUserPlatform
-	throw "Not yet implemented";
+string GameLibrary::favoriteUserPlatform(User* user) const {
+	return user->getFavoritePlatform();
 }
 
 double GameLibrary::userLibraryCost(User* user) const {
@@ -94,7 +94,6 @@ bool GameLibrary::updateTitleRevenue(Title* title, double amount) {
 	(*it).second += amount;
 	return true;
 }
-
 
 Title * GameLibrary::getTitle(unsigned int titleID)
 {

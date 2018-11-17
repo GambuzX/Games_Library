@@ -29,20 +29,4 @@ public:
 	CreditCard & operator-(const double & val);
 };
 
-class NegativeFunds {
-private:
-	double funds;
-public:
-	NegativeFunds(double f) : funds(f) {}
-	double getFunds() const { return funds; }
-};
-
-class NotEnoughFunds {
-private:
-	double funds;
-public:
-	NotEnoughFunds(double f) : funds(f) {}
-	double getFunds() const { return funds; }
-};
-
 #endif
