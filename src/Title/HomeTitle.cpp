@@ -2,16 +2,9 @@
 
 using namespace std;
 
-HomeTitle::HomeTitle(string name, double price, Date releaseDate, ageRange ageR, string platform, string genre, string company) : Title(name, price, releaseDate, ageR, platform, genre, company) {}
-
-void HomeTitle::getUpdates() {
-	// TODO - implement HomeTitle::getInfo
-	throw "Not yet implemented";
-}
-
-Update HomeTitle::getCurrentVersion() {
-	// TODO - implement HomeTitle::getCurrentVersion
-	throw "Not yet implemented";
+HomeTitle::HomeTitle(string name, double price, Date releaseDate, ageRange ageR, string platform, string genre, string company) : Title(name, price, releaseDate, ageR, platform, genre, company) 
+{
+	titleUpdateHistory.push_back(Update(releaseDate));
 }
 
 void HomeTitle::addTitleUpdate(Update & newUpdate)
@@ -32,4 +25,24 @@ void HomeTitle::updateUserVersion() {
 void HomeTitle::getStats() {
 	// TODO - implement HomeTitle::getStats
 	throw "Not yet implemented";
+}
+
+const Update & HomeTitle::getCurrentVersion(User * u) const
+{/*
+	map<User*, Update, ComparePtr<User>>::iterator it;
+	it = userUpdates.find(u);
+
+	if (it == userUpdates.end()) 
+		throw
+	return userUpdates.at(begin() + it);*/
+}
+
+const Update & HomeTitle::getCurrentVersion(unsigned int userID) const
+{
+	// TODO: insert return statement here
+}
+
+const Update & HomeTitle::getCurrentVersion(std::string name) const
+{
+	// TODO: insert return statement here
 }

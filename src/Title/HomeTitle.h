@@ -19,10 +19,10 @@ public:
 	const std::vector<Update> & getUpdates() const { return titleUpdateHistory; };
 	void getStats();
 
-	const Update & getCurrentVersion();
-	const Update & getCurrentVersion(User * u);
-	const Update & getCurrentVersion(unsigned int userID);
-	const Update & getCurrentVersion(std::string name);
+	const Update & getCurrentVersion() const { return titleUpdateHistory.at(titleUpdateHistory.size() - 1); };
+	const Update & getCurrentVersion(User * u) const;
+	const Update & getCurrentVersion(unsigned int userID) const;
+	const Update & getCurrentVersion(std::string name) const;
 
 
 	void addTitleUpdate(Update & newUpdate);
@@ -37,8 +37,8 @@ private:
 	Update currentVersion;
 
 public:
-	OldUpdate(Update & oldUp) { oldUpdate = oldUp; };
-	OldUpdate(Update & oldUp, Update & currUp) { oldUpdate = oldUp; currentVersion = currUp; };
+	OldUpdate(const Update & oldUp) { oldUpdate = oldUp; };
+	OldUpdate(const Update & oldUp, const Update & currUp) { oldUpdate = oldUp; currentVersion = currUp; };
 	Update getOldUpdate() const { return oldUpdate; };
 	std::string getMessage() const { 
 		std::ostringstream oss(oldUpdate.getVersion());

@@ -5,6 +5,7 @@
 #include <vector>
 #include "..\Utilities\Date.h"
 #include "..\Utilities\Sale.h"
+#include "..\Utilities\Update.h"
 
 struct ageRange {
 	int minAge;
@@ -29,7 +30,7 @@ private:
 public:
 	Title(std::string name, double price, Date releaseDate, ageRange ageR, std::string platform, std::string genre, std::string company);
 
-	virtual void getUpdates() = 0;
+	virtual const std::vector<Update> & getUpdates() = 0;
 	virtual void getStats() = 0;
 
 	std::string getName() const { return name; };

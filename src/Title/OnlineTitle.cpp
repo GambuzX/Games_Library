@@ -12,13 +12,13 @@ void OnlineTitle::addUser(User & u)
 	//titleStats.insert(pair <User*, vector<Session>>(u, {}));
 }
 
-void OnlineTitle::getUpdates() {
-	// TODO - implement OnlineTitle::getInfo
+void OnlineTitle::addUserSession() {
+	// TODO - implement OnlineTitle::addUserSession
 	throw "Not yet implemented";
 }
 
-void OnlineTitle::addUserSession() {
-	// TODO - implement OnlineTitle::addUserSession
+const std::vector<Update>& OnlineTitle::getUpdates() const
+{
 	throw "Not yet implemented";
 }
 
