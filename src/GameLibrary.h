@@ -18,10 +18,10 @@ enum rankingFilter
 class GameLibrary {
 private:
 	/*static*/ std::set<Title> titles;
-	static std::map<Title*, double, CompareTitlePtr> titlesRevenue;
+	static std::map<Title*, double, ComparePtr<Title>> titlesRevenue;
 
 	// O MAP JA ORGANIZA USANDO O OPERADOR < RIGHT ????
-	std::map<User, std::set<Title*, CompareTitlePtr>> users;
+	std::map<User, std::set<Title*, ComparePtr<Title>>> users;
 
 public:
 	void addUser(User * user);

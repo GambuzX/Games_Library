@@ -12,7 +12,7 @@ class OnlineTitle : Title {
 
 private:
 	Subscription* subscription;
-	std::map<User*, std::vector<Session>, CompareUserPtr> titleStats;
+	std::map<User*, std::vector<Session>, ComparePtr<User>> titleStats;
 
 public:
 	OnlineTitle(std::string name, double price, Date releaseDate, ageRange ageR, std::string platform, std::string genre, std::string company, Subscription* subs);

@@ -11,6 +11,7 @@ private:
 	std::string description;
 	double version;
 public:
+	Update() { date = Date(); description = ""; version = 0.0; };
 	Update(Date d, std::string desc, double v);
 	Date getDate() const;
 	std::string getDescription() const;

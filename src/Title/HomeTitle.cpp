@@ -9,7 +9,7 @@ void HomeTitle::getUpdates() {
 	throw "Not yet implemented";
 }
 
-void HomeTitle::getCurrentVersion() {
+Update HomeTitle::getCurrentVersion() {
 	// TODO - implement HomeTitle::getCurrentVersion
 	throw "Not yet implemented";
 }
@@ -18,10 +18,10 @@ void HomeTitle::addTitleUpdate(Update & newUpdate)
 {
 	if (titleUpdateHistory.size() == 0)
 		titleUpdateHistory.push_back(newUpdate);
-	else if(titleUpdateHistory.at(titleUpdateHistory.size() - 1 ) < newUpdate)
+	else if (getCurrentVersion() < newUpdate)
 		titleUpdateHistory.push_back(newUpdate);
 	else
-		throw 
+		throw OldUpdate(newUpdate, getCurrentVersion());
 }
 
 void HomeTitle::updateUserVersion() {

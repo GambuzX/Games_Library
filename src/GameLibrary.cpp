@@ -3,11 +3,11 @@
 using namespace std;
 
 void GameLibrary::addUser(User * user) {
-	users.insert(pair<User, set<Title*, CompareTitlePtr>>(*user, set<Title*, CompareTitlePtr>()));
+	users.insert(pair<User, set<Title*, ComparePtr<Title>>>(*user, set<Title*, ComparePtr<Title>>()));
 }
 
 bool GameLibrary::removeUser(User * user) {
-	map<User, set<Title*, CompareTitlePtr>>::iterator it;
+	map<User, set<Title*, ComparePtr<Title>>>::iterator it;
 
 	it = users.find(*user);
 	if (it == users.end()) return false;

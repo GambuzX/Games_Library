@@ -133,7 +133,7 @@ bool User::playGame() {
 }
 
 bool User::addFriend(User * frnd) {
-	set<User*, CompareUserPtr>::iterator it;
+	set<User*, ComparePtr<User>>::iterator it;
 	it = friendsList.find(frnd);
 
 	// Already in friend list
@@ -144,7 +144,7 @@ bool User::addFriend(User * frnd) {
 }
 
 bool User::removeFriend(User * frnd) {
-	set<User*, CompareUserPtr>::iterator it;
+	set<User*, ComparePtr<User>>::iterator it;
 	it = friendsList.find(frnd);
 
 	// Did not find friend
