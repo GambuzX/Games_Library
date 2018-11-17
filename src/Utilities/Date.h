@@ -41,6 +41,8 @@ public:
 	friend std::ostream& operator<<(std::ostream &os, const Date & date);
 	friend std::istream& operator>>(std::istream &is, Date & date);
 
+	static Date getCurrentDate();
+
 };
 
 //TODO: generalizar??

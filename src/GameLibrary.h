@@ -6,6 +6,7 @@
 #include <fstream>
 #include "Title\Title.h"
 #include "User\User.h"
+#include "Utilities\CompareObj.h"
 
 enum rankingFilter
 {
@@ -17,13 +18,14 @@ enum rankingFilter
 class GameLibrary {
 private:
 	/*static*/ std::set<Title> titles;
-	static std::map<Title*, double> titlesRevenue;
+	static std::map<Title*, double, CompareTitlePtr> titlesRevenue;
 
-	std::map<User, std::set<Title*>> users;
+	// O MAP JA ORGANIZA USANDO O OPERADOR < RIGHT ????
+	std::map<User, std::set<Title*, CompareTitlePtr>> users;
 
 public:
-	void addUser(User* user);
-	void removeUser();
+	void addUser(User * user);
+	bool removeUser(User * user);
 
 	void addTitle(Title* title);
 	void removeTitle(unsigned int id);

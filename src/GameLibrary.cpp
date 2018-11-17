@@ -1,13 +1,18 @@
 #include "GameLibrary.h"
 
-void GameLibrary::addUser(User* user) {
-	// TODO - implement GameLibrary::addUser
-	throw "Not yet implemented";
+using namespace std;
+
+void GameLibrary::addUser(User * user) {
+	users.insert(pair<User, set<Title*, CompareTitlePtr>>(*user, set<Title*, CompareTitlePtr>()));
 }
 
-void GameLibrary::removeUser() {
-	// TODO - implement GameLibrary::removeUser
-	throw "Not yet implemented";
+bool GameLibrary::removeUser(User * user) {
+	map<User, set<Title*, CompareTitlePtr>>::iterator it;
+
+	it = users.find(*user);
+	if (it == users.end()) return false;
+	users.erase(it);
+	return true;
 }
 
 void GameLibrary::addTitle(Title* title) {
