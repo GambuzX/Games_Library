@@ -78,4 +78,22 @@ public:
 	std::string getMessage() const { return message; };
 };
 
+class ExpiredSale {
+private:
+	Date endSalesDate;
+	Date currentDate;
+
+public:
+	ExpiredSale() { currentDate = Date::getCurrentDate(); endSalesDate = Date(); };
+	ExpiredSale(Date endSalesDate) { this->endSalesDate = endSalesDate; currentDate = Date::getCurrentDate(); };
+	std::string getMessage() const { 
+		std::ostringstream os1, os2;
+		os1 << endSalesDate;
+		os2 << currentDate;
+		if (endSalesDate == Date()) return "Sale has expired: current date " + os2.str();
+		return "Sale has expired: Sale ends in " + os1.str() + " and we are in " + os2.str();
+	};
+	Date getEndSalesDate() const { return endSalesDate; };
+};
+
 #endif

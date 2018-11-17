@@ -8,7 +8,7 @@
 #include "..\Title\Title.h"
 #include "..\Utilities\Transaction.h"
 #include "..\Utilities\Address.h"
-// #include "..\Utilities\CompareObj.h"
+#include "..\Utilities\CompareObj.h"
 
 class User {
 
@@ -21,7 +21,7 @@ private:
 	Address address;
 	std::vector<CreditCard> creditCards;
 	std::set<Title*>* purchasedGames;
-	std::set<User*> friendsList;
+	std::set<User*, CompareUserPtr> friendsList;
 	std::vector<Transaction> transactions;
 
 public:
@@ -34,7 +34,7 @@ public:
 	Address getAddress() const { return address; }
 	const std::vector<CreditCard> & getCreditCards() const { return creditCards; }
 	const std::set<Title*>* getPurchasedGames() const { return purchasedGames; }
-	const std::set<User*> & getFriendsList() const { return friendsList; }
+	const std::set<User*, CompareUserPtr> & getFriendsList() const { return friendsList; }
 	const std::vector<Transaction> & getTransactions() const { return transactions; }
 
 	bool addCreditCard(CreditCard cc);

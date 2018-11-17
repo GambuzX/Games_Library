@@ -12,7 +12,7 @@ void OnlineTitle::addUser(User & u)
 	//titleStats.insert(pair <User*, vector<Session>>(u, {}));
 }
 
-void OnlineTitle::getInfo() {
+void OnlineTitle::getUpdates() {
 	// TODO - implement OnlineTitle::getInfo
 	throw "Not yet implemented";
 }

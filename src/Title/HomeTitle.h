@@ -5,25 +5,35 @@
 #include "..\Utilities\Update.h"
 #include "Title.h"
 #include "..\User\User.h"
+#include "..\Utilities\CompareObj.h"
 
 class HomeTitle : Title {
 
 private:
 	std::vector<Update> titleUpdateHistory;
-	std::map<User*, Update> userUpdates;
+	std::map<User*, Update, CompareUserPtr> userUpdates;
 
 public:
 	HomeTitle(std::string name, double price, Date releaseDate, ageRange ageR, std::string platform, std::string genre, std::string company);
 
-	void getInfo();
+	void getUpdates();
+	void getStats();
 
 	void getCurrentVersion();
 
+	void addTitleUpdate(Update & newUpdate);
+
 	void updateUserVersion();
 
-	void addTitleUpdate();
+};
 
-	void getStats();
+class OldUpdate {
+private:
+	std::string message;
+
+public:
+	OldUpdate() { message = "There are sales overlapping!"; };
+	std::string getMessage() const { return message; };
 };
 
 #endif

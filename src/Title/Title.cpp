@@ -48,6 +48,10 @@ double Title::getCurrentPrice(Date & date) const
 }
 
 void Title::addPromotion(Sale & promotion) {
+	if (promotion.getEndDate() < Date::getCurrentDate())
+	{
+		throw ExpiredSale(promotion.getEndDate());
+	}
 	if(0 == pricesHistory.size() || getLastSale().getEndDate() < promotion.getStartDate())
 		pricesHistory.push_back(promotion);
 	else if (promotion.getStartDate() < pricesHistory.at(0).getStartDate())

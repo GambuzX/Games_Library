@@ -5,25 +5,25 @@
 #include <vector>
 #include "Subscription.h"
 #include "..\Utilities\Session.h"
+#include "..\Utilities\CompareObj.h"
 #include "Title.h"
 
 class OnlineTitle : Title {
 
 private:
 	Subscription* subscription;
-	// Some kind of ordenation or by address??
-	std::map<User*, std::vector<Session>> titleStats;
+	std::map<User*, std::vector<Session>, CompareUserPtr> titleStats;
 
 public:
 	OnlineTitle(std::string name, double price, Date releaseDate, ageRange ageR, std::string platform, std::string genre, std::string company, Subscription* subs);
 	
-	void addUser(User & u);
+	void getUpdates();
+	void getStats();
 
-	void getInfo();
+	void addUser(User & u);
 
 	void addUserSession();
 
-	void getStats();
 };
 
 #endif
