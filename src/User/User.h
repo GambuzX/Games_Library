@@ -36,6 +36,7 @@ public:
 	const std::set<Title*>* getPurchasedGames() const { return purchasedGames; }
 	const std::set<User*, ComparePtr<User>> & getFriendsList() const { return friendsList; }
 	const std::vector<Transaction> & getTransactions() const { return transactions; }
+	double getTotalTransactionsValue() const;
 
 	bool addCreditCard(CreditCard cc);
 	bool hasEnoughMoney(double val) const;
@@ -43,9 +44,11 @@ public:
 
 	bool hasTitle(Title* title) const;
 	bool hasTitle(unsigned int titleID) const;
+	bool hasTitle(std::string name) const;
 
 	bool buyTitle(Title* title);
 	bool buyTitle(unsigned int titleID);
+	bool buyTitle(std::string name);
 	bool updateTitle(Title* title);
 	bool updateTitle(unsigned int titleID);
 

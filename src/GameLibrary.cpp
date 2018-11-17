@@ -2,6 +2,11 @@
 
 using namespace std;
 
+void GameLibrary::addUser(std::string name, std::string email, int age, Address address)
+{
+	users.insert(pair<User, set<Title*, ComparePtr<Title>>>(User(name, email, age, address), set<Title*, ComparePtr<Title>>()));
+}
+
 void GameLibrary::addUser(User * user) {
 	users.insert(pair<User, set<Title*, ComparePtr<Title>>>(*user, set<Title*, ComparePtr<Title>>()));
 }
@@ -15,29 +20,40 @@ bool GameLibrary::removeUser(User * user) {
 	return true;
 }
 
-void GameLibrary::addTitle(Title* title) {
-	// TODO - implement GameLibrary::addTitle
-	throw "Not yet implemented";
+void GameLibrary::addTitle(Title * title) {
+	titles.insert(*title);
 }
 
-void GameLibrary::removeTitle(unsigned int id) {
-	// TODO - implement GameLibrary::removeTitle
-	throw "Not yet implemented";
+bool GameLibrary::removeTitle(unsigned int id) {
+	std::set<Title>::iterator it;
+	for (it = titles.begin(); it != titles.end(); it++)
+		if (it->getTitleID() == id)
+			break;
+	if (it == titles.end()) return false;
+	titles.erase(it);
+	return true;
 }
 
-void GameLibrary::loadTitlesFromFile(std::fstream& titleFile) {
-	// TODO - implement GameLibrary::loadTitlesFromFile
-	throw "Not yet implemented";
+void GameLibrary::saveGameLibraryToFile(std::fstream& titleFile)
+{
+
 }
 
-void GameLibrary::loadUsersFromFile(std::fstream& userFile) {
-	// TODO - implement GameLibrary::loadUsersFromFile
-	throw "Not yet implemented";
+void GameLibrary::loadGameLibraryFromFile(std::fstream& titleFile)
+{
+
 }
 
-void GameLibrary::updateTitle(Title* title) {
-	// TODO - implement GameLibrary::updateHomeTitle
-	throw "Not yet implemented";
+bool GameLibrary::updateTitle(Title* title, Update * update) {
+	/*try
+	{
+		title->UpdateTitle(update);
+	}
+	catch (NotHomeTitle)
+	{
+		return false;
+	} */
+	return true;
 }
 
 void GameLibrary::buildPopularityRanking(rankingFilter filter) {
@@ -45,19 +61,25 @@ void GameLibrary::buildPopularityRanking(rankingFilter filter) {
 	throw "Not yet implemented";
 }
 
-void GameLibrary::averageUserTitles(User* user) {
-	// TODO - implement GameLibrary::averageUserTitles
-	throw "Not yet implemented";
+double GameLibrary::averageUserTitles() const{
+	double total = 0;
+	for (const auto & user : users) total += user.second.size();
+	return total / users.size();
 }
 
-void GameLibrary::favoriteUserPlatform(User* user) {
+void GameLibrary::favoriteUserPlatform(User* user) const {
 	// TODO - implement GameLibrary::favoriteUserPlatform
 	throw "Not yet implemented";
 }
 
-void GameLibrary::userLibraryCost(User* user) {
-	// TODO - implement GameLibrary::userLibraryCost
-	throw "Not yet implemented";
+double GameLibrary::userLibraryCost(User* user) const {
+	return user->getTotalTransactionsValue();
+}
+
+double GameLibrary::averageUserLibraryCost() const {
+	double total = 0;
+	for (const auto & user : users) total += userLibraryCost((User *)&user.first);
+	return total / users.size();
 }
 
 void GameLibrary::buildUserConsumingHabitsList(User* user) {
@@ -65,17 +87,20 @@ void GameLibrary::buildUserConsumingHabitsList(User* user) {
 	throw "Not yet implemented";
 }
 
-void GameLibrary::updateTitleRevenue(Title* title, double amount) {
-	// TODO - implement GameLibrary::updateTitleRevenue
-	throw "Not yet implemented";
+bool GameLibrary::updateTitleRevenue(Title* title, double amount) {
+	map<Title*, double, ComparePtr<Title>>::iterator it;
+	it = titlesRevenue.find(title);
+	if (it == titlesRevenue.end()) return false;
+	(*it).second += amount;
+	return true;
 }
 
-/*
+
 Title * GameLibrary::getTitle(unsigned int titleID)
 {
 	for (auto & title : titles)
 		if (title.getTitleID() == titleID)
-			return &title;
+			return (Title *) &title;
 	return NULL;
 }
 
@@ -83,7 +108,7 @@ Title * GameLibrary::getTitle(std::string name)
 {
 	for (auto & title : titles)
 		if (title.getName() == name)
-			return &title;
+			return (Title *) &title;
 	return NULL;
 }
-*/
+

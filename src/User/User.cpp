@@ -79,6 +79,14 @@ bool User::hasTitle(unsigned int titleID) const {
 	return false;
 }
 
+bool User::hasTitle(string name) const {
+	set<Title*>::iterator it;
+	for (it = purchasedGames->begin(); it != purchasedGames->end(); it++)
+		if ((*it)->getName() == name)
+			return true;
+	return false;
+}
+
 bool User::buyTitle(Title* title) {
 	// Title repeated 
 	if (hasTitle(title)) return false;
@@ -90,20 +98,51 @@ bool User::buyTitle(Title* title) {
 	if (!subtractValue(price)) return false;
 	GameLibrary::updateTitleRevenue(title, price);
 
+	// add transaction
+	transactions.push_back(Transaction(price, Date::getCurrentDate(), gamePurchase));
+
 	purchasedGames->insert(title);
 	return true;
 }
 
 bool User::buyTitle(unsigned int titleID) {
-	// find title to check if repeated
-	// if found
-		// return false
-	// if not enough money
-		// return false
+	Title * title = GameLibrary::getTitle(titleID);
 
-	// subtract money
-	// add title
-	// return true
+	// Title repeated 
+	if (hasTitle(title)) return false;
+
+	Date currentDate = Date::getCurrentDate();
+	double price = title->getCurrentPrice(currentDate);
+
+	// Charge price ; Checks if has enough money
+	if (!subtractValue(price)) return false;
+	GameLibrary::updateTitleRevenue(title, price);
+
+	// add transaction
+	transactions.push_back(Transaction(price, Date::getCurrentDate(), gamePurchase));
+
+	purchasedGames->insert(title);
+	return true;
+}
+
+bool User::buyTitle(std::string name)
+{
+	Title * title = GameLibrary::getTitle(name);
+
+	// Title repeated 
+	if (hasTitle(title)) return false;
+
+	Date currentDate = Date::getCurrentDate();
+	double price = title->getCurrentPrice(currentDate);
+
+	// Charge price ; Checks if has enough money
+	if (!subtractValue(price)) return false;
+	GameLibrary::updateTitleRevenue(title, price);
+
+	// add transaction
+	transactions.push_back(Transaction(price, Date::getCurrentDate(), gamePurchase));
+
+	purchasedGames->insert(title);
 	return true;
 }
 
@@ -125,6 +164,14 @@ bool User::updateTitle(Title* title) {
 bool User::updateTitle(unsigned int titleID) {
 	// TODO - implement User::updateTitle
 	throw "Not yet implemented";
+	// add transaction
+}
+
+double User::getTotalTransactionsValue() const
+{
+	double total = 0;
+	for (const auto & trans : transactions) total += trans.getValue();
+	return total;
 }
 
 bool User::playGame() {
