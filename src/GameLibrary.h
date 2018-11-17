@@ -6,6 +6,7 @@
 #include <fstream>
 #include "Title\Title.h"
 #include "User\User.h"
+#include "Utilities\Update.h"
 #include "Utilities\CompareObj.h"
 
 enum rankingFilter
@@ -17,35 +18,38 @@ enum rankingFilter
 
 class GameLibrary {
 private:
-	/*static*/ std::set<Title> titles;
+	static std::set<Title> titles;
 	static std::map<Title*, double, ComparePtr<Title>> titlesRevenue;
 
-	// O MAP JA ORGANIZA USANDO O OPERADOR < RIGHT ????
 	std::map<User, std::set<Title*, ComparePtr<Title>>> users;
 
 public:
+	void addUser(std::string name, std::string email, int age, Address address);
 	void addUser(User * user);
 	bool removeUser(User * user);
 
-	void addTitle(Title* title);
-	void removeTitle(unsigned int id);
+	void addTitle(Title * title);
+	bool removeTitle(unsigned int id);
 
-	void loadTitlesFromFile(std::fstream& titleFile);
-	void loadUsersFromFile(std::fstream& userFile);
+	void saveGameLibraryToFile(std::fstream& titleFile);
+	void loadGameLibraryFromFile(std::fstream& titleFile);
 
-	void updateTitle(Title* title);
+	bool updateTitle(Title* title, Update * update);
 
 	void buildPopularityRanking(rankingFilter filter);
-	void averageUserTitles(User* user);
-	void favoriteUserPlatform(User* user);
-	void userLibraryCost(User* user);
+	double averageUserTitles() const;
+	void favoriteUserPlatform(User* user) const;
+
+	double userLibraryCost(User* user) const;
+	double averageUserLibraryCost() const;
+
 	void buildUserConsumingHabitsList(User* user);
 
-	static void updateTitleRevenue(Title* title, double amount);
-	/*
+	static bool updateTitleRevenue(Title* title, double amount);
+	
 	static Title* getTitle(unsigned int titleID);
 	static Title* getTitle(std::string name);
-	*/
+	
 };
 
 #endif

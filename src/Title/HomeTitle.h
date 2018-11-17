@@ -37,7 +37,8 @@ public:
 	OldUpdate(Update & oldUp) { oldUpdate = oldUp; };
 	OldUpdate(Update & oldUp, Update & currUp) { oldUpdate = oldUp; currentVersion = currUp; };
 	Update getOldUpdate() const { return oldUpdate; };
-	std::string getMessage() const { 
+	std::string getMessage() const
+	{
 		std::ostringstream oss(getOldUpdate().getVersion());
 		if (currentVersion == Update())
 			return "Tried to add old Update: " + oss.str();
