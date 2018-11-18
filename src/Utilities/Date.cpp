@@ -46,6 +46,7 @@ unsigned int Date::daysInYear(unsigned int year) const
 
 unsigned int Date::dayNumber(unsigned int day, unsigned int month, unsigned int year) const
 {
+	Date d1(day, month, year);
 	unsigned int res = day;
 
 	for (unsigned int m = 1; m < month; m++)
@@ -113,17 +114,10 @@ void Date::setYear(unsigned int year)
 	this->year = year;
 }
 
-Date& Date::operator=(const Date &date) {
-	if (&date != this) {
-		day = date.getDay();
-		month = date.getMonth();
-		year = date.getYear();
-	}
+Date Date::operator+(int days) const {
+	if (days < 0)
+		return *this - (- days);
 
-	return *this;
-}
-
-Date Date::operator+(unsigned int days) const {
 	Date res(*this);
 
 	days += dayNumber(res.day, res.month, res.year);
@@ -145,8 +139,11 @@ Date Date::operator+(unsigned int days) const {
 	return res;
 }
 
-Date Date::operator-(unsigned int days) const
+Date Date::operator-(int days) const
 {
+	if (days < 0)
+		return *this + (- days);
+
 	Date res(*this);
 	
 	while (days > daysInYear(res.year)) {
@@ -232,7 +229,7 @@ istream & operator>>(istream & is, Date & date)
 Date Date::getCurrentDate()
 {
 	time_t theTime = time(nullptr);
-	struct tm *aTime = localtime(&theTime);
+	tm *aTime = localtime(&theTime);
 
 	int day = aTime->tm_mday;
 	int month = aTime->tm_mon + 1; // Month is 0 - 11, add 1 to get a jan-dec 1-12 concept

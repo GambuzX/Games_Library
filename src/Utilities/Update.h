@@ -73,6 +73,7 @@ public:
 	bool operator==(const Update & update) const;
 	/**
 	 * @brief Overload of less than operator
+	 * One Update is "less" than other if its version number is smaller thant the other
 	 * 
 	 * @param update Update with which we are comparing the Current Update
 	 * @return true If the Update version number of the Current Update is less than the one passed as a parameter

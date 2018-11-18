@@ -14,7 +14,7 @@ class Session {
 
 private:
 	double sessionDuration;	/**< @brief Duration in hours of a playing session */
-	Date date;	/**< @brief Date correspondent to when the session was played */
+	Date date;	/**< @brief Date corresponding to when the session was played */
 
 public:
 	

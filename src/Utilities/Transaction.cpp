@@ -1,5 +1,12 @@
 #include "Transaction.h"
 
+Transaction::Transaction(double val, TransactionType t)
+{
+	value = val;
+	date = Date::getCurrentDate();
+	type = t;
+}
+
 Transaction::Transaction(double val, Date d, TransactionType t) {
 	value = val;
 	date = d;
