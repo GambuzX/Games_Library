@@ -3,6 +3,9 @@
 
 using namespace std;
 
+set<Title*, ComparePtr<Title>> GameLibrary::titles;
+map<Title*, double, ComparePtr<Title>> GameLibrary::titlesRevenue;
+
 void GameLibrary::addUser(std::string name, std::string email, int age, Address address)
 {
 	users.insert(pair<User, set<Title*, ComparePtr<Title>>>(User(name, email, age, address), set<Title*, ComparePtr<Title>>()));
@@ -22,13 +25,13 @@ bool GameLibrary::removeUser(User * user) {
 }
 
 void GameLibrary::addTitle(Title * title) {
-	titles.insert(*title);
+	titles.insert(title);
 }
 
 bool GameLibrary::removeTitle(unsigned int id) {
-	std::set<Title>::iterator it;
+	std::set<Title*, ComparePtr<Title>>::iterator it;
 	for (it = titles.begin(); it != titles.end(); it++)
-		if (it->getTitleID() == id)
+		if ((*it)->getTitleID() == id)
 			break;
 	if (it == titles.end()) return false;
 	titles.erase(it);
@@ -98,16 +101,16 @@ bool GameLibrary::updateTitleRevenue(Title* title, double amount) {
 Title * GameLibrary::getTitle(unsigned int titleID)
 {
 	for (auto & title : titles)
-		if (title.getTitleID() == titleID)
-			return const_cast<Title*>(&title);
+		if (title->getTitleID() == titleID)
+			return const_cast<Title*>(title);
 	return NULL;
 }
 
 Title * GameLibrary::getTitle(std::string name)
 {
 	for (auto & title : titles)
-		if (title.getName() == name)
-			return const_cast<Title*>(&title);
+		if (title->getName() == name)
+			return const_cast<Title*>(title);
 	return NULL;
 }
 

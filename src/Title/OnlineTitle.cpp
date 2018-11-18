@@ -77,3 +77,8 @@ void OnlineTitle::updateTitle(Update * newUpdate)
 {
 	throw NotHomeTitle(getTitleID());
 }
+
+bool OnlineTitle::operator<(const Title & t2) const
+{
+	return getTitleID() < t2.getTitleID();
+}

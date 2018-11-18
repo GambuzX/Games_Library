@@ -17,7 +17,8 @@ public:
 	Update getOldUpdate() const { return oldUpdate; };
 	std::string getMessage() const
 	{
-		std::ostringstream oss(oldUpdate.getVersion());
+		std::ostringstream oss;
+		oss << oldUpdate.getVersion();
 		if (currentVersion == Update())
 			return "Tried to add old Update: " + oss.str();
 		std::string msg = "Tried to add old Update: " + oss.str() + "while Current Version is: ";

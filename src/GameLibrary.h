@@ -18,7 +18,7 @@ enum rankingFilter
 
 class GameLibrary {
 private:
-	static std::set<Title> titles;
+	static std::set<Title*, ComparePtr<Title>> titles;
 	static std::map<Title*, double, ComparePtr<Title>> titlesRevenue;
 
 	std::map<User, std::set<Title*, ComparePtr<Title>>> users;

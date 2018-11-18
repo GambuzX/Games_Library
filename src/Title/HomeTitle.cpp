@@ -90,3 +90,8 @@ const Update & HomeTitle::getCurrentUserVersion(std::string name) const
 	throw;
 }
 */
+
+bool HomeTitle::operator<(const Title & t2) const
+{
+	return getTitleID() < t2.getTitleID();
+}

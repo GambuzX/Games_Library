@@ -57,7 +57,7 @@ public:
 	void addPromotion(Sale & promotion);
 
 	// Necessary for the set
-	bool operator<(const Title& t2) const;
+	virtual bool operator<(const Title & t2) const = 0;
 };
 
 #endif
