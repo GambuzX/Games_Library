@@ -28,6 +28,14 @@ void GameLibrary::addTitle(Title * title) {
 	titles.insert(title);
 }
 
+bool GameLibrary::removeTitle(Title * title) {
+	std::set<Title*, ComparePtr<Title>>::iterator it;
+	it = titles.find(title);
+	if (it == titles.end()) return false;
+	titles.erase(it);
+	return true;
+}
+
 bool GameLibrary::removeTitle(unsigned int id) {
 	std::set<Title*, ComparePtr<Title>>::iterator it;
 	for (it = titles.begin(); it != titles.end(); it++)
@@ -54,6 +62,10 @@ bool GameLibrary::updateTitle(Title* title, Update * update) {
 		title->updateTitle(update);
 	}
 	catch (NotHomeTitle)
+	{
+		return false;
+	}
+	catch (OldUpdate)
 	{
 		return false;
 	}

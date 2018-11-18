@@ -4,7 +4,7 @@
 
 using namespace std;
 
-int User::nextUserID = 1;
+unsigned int User::nextUserID = 1;
 
 User::User (std::string name, std::string email, int age, Address address) : userID(nextUserID) {
 	this->name = name;

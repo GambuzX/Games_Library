@@ -29,8 +29,8 @@ class Title;
 class User {
 
 private:
-	static int nextUserID; /**< @brief Static Int used to assign different IDs to each User */
-	const unsigned int userID; /**< @brief Int with the user ID */
+	static unsigned int nextUserID; /**< @brief Static Unsigned Int used to assign different IDs to each User */
+	const unsigned int userID; /**< @brief Unsigned Int with the user ID */
 	std::string name; /**< @brief String with the user name */
 	std::string email; /**< @brief String with the user email */
 	int age; /**< @brief Int with the user age */
@@ -156,7 +156,7 @@ public:
 	bool subtractValue(double val);
 
 	/**
-	* @brief Verifies if the user has Title title
+	* @brief Verify if User has Title
 	*
 	* @param title Title to search
 	* @return bool Returns true if user has it, false otherwise
@@ -164,7 +164,7 @@ public:
 	bool hasTitle(Title* title) const;
 
 	/**
-	* @brief Verifies if the user has Title title
+	* @brief Verify if User has Title
 	* Uses GameLibrary's static method getTitle() to retrieve information about the Title with ID titleID
 	*
 	* @param titleID ID of Title to search
@@ -173,7 +173,7 @@ public:
 	bool hasTitle(unsigned int titleID) const;
 
 	/**
-	* @brief Verifies if the user has Title title
+	* @brief Verify if User has Title
 	* Uses GameLibrary's static method getTitle() to retrieve information about the Title with name name
 	*
 	* @param name name of Title to search
@@ -182,7 +182,7 @@ public:
 	bool hasTitle(std::string name) const;
 
 	/**
-	* @brief Buys Title title for this user
+	* @brief Buy Title for User
 	* Verifies if User already owns title
 	* Updates GameLibrary's titleRevenue map
 	* Adds a transaction to User
@@ -193,7 +193,7 @@ public:
 	bool buyTitle(Title* title);
 
 	/**
-	* @brief Buys Title with ID titleID for this user
+	* @brief Buy Title for User
 	* Uses GameLibrary's static method getTitle() to retrieve information about the Title with id titleID
 	* Verifies if User already owns title
 	* Updates GameLibrary's titleRevenue map
@@ -205,7 +205,7 @@ public:
 	bool buyTitle(unsigned int titleID);
 
 	/**
-	* @brief Buys Title with name name for this user
+	* @brief Buy Title for User
 	* Uses GameLibrary's static method getTitle() to retrieve information about the Title with name name
 	* Verifies if User already owns title
 	* Updates GameLibrary's titleRevenue map
@@ -217,7 +217,7 @@ public:
 	bool buyTitle(std::string name);
 
 	/**
-	* @brief Updates user version of Home Title title
+	* @brief Update User version of a Title
 	* Uses a try catch to verify if the Title is a Home Title
 	* Verifies if User owns title
 	* Checks if User has 1 euro to pay for the Update
@@ -230,7 +230,7 @@ public:
 	bool updateTitle(Title* title);
 
 	/**
-	* @brief Updates user version of Home Title with ID titleID
+	* @brief Update User version of a Title
 	* Uses GameLibrary's static method getTitle() to retrieve information about the Title with id titleID
 	* Uses a try catch to verify if the Title is a Home Title
 	* Verifies if User owns title
@@ -244,7 +244,7 @@ public:
 	bool updateTitle(unsigned int titleID);
 
 	/**
-	* @brief Simulates a playing session
+	* @brief Play a Title
 	*
 	* @param title Pointer to the Title the User played
 	* @param duration Time in hours of the playing sessions
