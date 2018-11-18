@@ -12,7 +12,7 @@ Address::Address()
 }
 
 //Address::Address(string streetName, string city, string country, string state)
-Address::Address(int houseNumber, string streetName, string city, string country)
+Address::Address(unsigned int houseNumber, string streetName, string city, string country)
 {
 	this->houseNumber = houseNumber;
 	this->streetName = streetName;
