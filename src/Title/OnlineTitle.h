@@ -22,7 +22,7 @@ class OnlineTitle : public Title {
 
 private:
 	Subscription* subscription; /**< @brief Subscription pointer to the type of subscription used (Fixed or Dynamic) */
-	std::map<User*, std::vector<Session>, ComparePtr<User>> titleStats; /**< @brief Map of User to their vector of sessions */
+	std::map<User*, std::vector<Session>, ComparePtr<User>> titleStats; /**< @brief Map of User to their vector of ordered sessions */
 
 public:
 	/**
@@ -121,7 +121,7 @@ public:
 	void addNewUser(User & u) override;
 
 	/**
-	 * @brief Adds a new Session to the User's vector of sessions
+	 * @brief Adds a new Session to the User's vector of sessions keepping it in order
 	 * May also throw other exceptions if the user is not a owner of the Title
 	 * 
 	 * @param u User that you want to add a session to
@@ -130,7 +130,7 @@ public:
 	 */
 	void addNewSession(const User & u, const Session & sess);
 	/**
-	 * @brief Adds a new Session to the User's vector of sessions
+	 * @brief Adds a new Session to the User's vector of sessions keepping it in order
 	 * May also throw other exceptions if the user is not a owner of the Title
 	 * 
 	 * @param userID ID of the User that you want to add a session to

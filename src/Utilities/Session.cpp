@@ -12,3 +12,8 @@ double Session::getSessionDuration() const {
 Date Session::getDate() const {
 	return date;
 }
+
+bool Session::operator<(const Session & sess2) const
+{
+	return date < sess2.getDate();
+}

@@ -38,6 +38,16 @@ public:
 	 * @return Date Returns Date Private Member
 	 */
 	Date getDate() const;
+
+	/**
+	* @brief Overload of less than operator
+	* One Session is "less" than other if it is played in a previous date
+	*
+	* @param sess2 Session with which we are comparing the "Current" Session
+	* @return true If the Session was played before sess2 (right hand side of the signal)
+	* @return false If the Session was played after or on the same day as sess2 (right hand side of the signal)
+	*/
+	bool operator<(const Session & sess2) const;
 };
 
 /** @} */

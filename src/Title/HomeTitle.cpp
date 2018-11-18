@@ -61,7 +61,6 @@ void HomeTitle::updateUserVersion(std::string name)
 	for (auto & pair : userUpdates)
 		if (pair.first->getName() == name)
 			pair.second = getCurrentVersion();
-	//TODO: Add exception
 	throw;
 }
 */
@@ -94,7 +93,6 @@ const Update & HomeTitle::getCurrentUserVersion(std::string name) const
 	for (auto & pair : userUpdates)
 		if (pair.first->getName() == name)
 			return	pair.second;	
-	//TODO: Add exception
 	throw;
 }
 */

@@ -8,7 +8,6 @@ unsigned int Title::nextTitleID = 0;
 
 Title::Title(string name, double price, Date releaseDate, ageRange ageR, string platform, string genre, string company) : titleID(++nextTitleID), releaseDate(releaseDate)
 {
-	// TODO: Fazer throw já aqui se nome já existente ou apenas na library
 	this->name = name;
 	basePrice = price;
 	this->ageR = ageR;

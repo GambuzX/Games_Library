@@ -1,5 +1,6 @@
 #include "OnlineTitle.h"
 #include "..\Utilities\Exceptions.h"
+#include <algorithm>
 
 using namespace std;
 
@@ -17,7 +18,6 @@ void OnlineTitle::addNewUser(User & u)
 	titleStats.insert(pair<User*, vector<Session>>(&u, {}));
 }
 
-//TODO: Fazer verificacao de se e possivel ele ter jogaod??
 void OnlineTitle::addNewSession(const User & u, const Session & sess)
 {
 	map<User*, vector<Session>, ComparePtr<User>>::iterator it;
@@ -25,6 +25,7 @@ void OnlineTitle::addNewSession(const User & u, const Session & sess)
 	if (it == titleStats.end())
 		throw InexistentUser(u.getUserID());
 	it->second.push_back(sess);
+	sort(titleStats.begin(), titleStats.end());
 }
 
 void OnlineTitle::addNewSession(unsigned int userID, const Session & sess)
@@ -32,6 +33,7 @@ void OnlineTitle::addNewSession(unsigned int userID, const Session & sess)
 	for (auto & pair : titleStats)
 		if (pair.first->getUserID() == userID) {
 			pair.second.push_back(sess);
+			sort(titleStats.begin(), titleStats.end());
 			return;
 		}
 	throw InexistentUser(userID);
