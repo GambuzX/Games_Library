@@ -70,6 +70,7 @@ public:
 	 * @throw NotOnlineTitle If it is called on a Home Title Object
 	 */
 	double getStats() const override;
+	const Subscription & getSubscription() const { throw NotOnlineTitle(getTitleID()); };
 
 	/**
 	 * @brief Get the Current Update Version object

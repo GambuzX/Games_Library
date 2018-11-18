@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include "Subscription.h"
 #include "..\User\User.h"
 #include "..\Utilities\Date.h"
 #include "..\Utilities\Sale.h"
@@ -114,6 +115,7 @@ public:
 	 * @throw TitleUpToDate() If the Title is already up to date
 	 */
 	virtual void updateUserVersion(const User & usr) = 0;
+	virtual const Subscription & getSubscription() const = 0;
 
 	/**
 	 * @brief Get the Name Private Member
