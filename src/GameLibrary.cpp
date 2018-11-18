@@ -103,7 +103,7 @@ Title * GameLibrary::getTitle(unsigned int titleID)
 	for (auto & title : titles)
 		if (title->getTitleID() == titleID)
 			return const_cast<Title*>(title);
-	return NULL;
+	return nullptr;
 }
 
 Title * GameLibrary::getTitle(std::string name)
@@ -111,6 +111,6 @@ Title * GameLibrary::getTitle(std::string name)
 	for (auto & title : titles)
 		if (title->getName() == name)
 			return const_cast<Title*>(title);
-	return NULL;
+	return nullptr;
 }
 

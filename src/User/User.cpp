@@ -108,6 +108,7 @@ bool User::buyTitle(Title* title) {
 
 bool User::buyTitle(unsigned int titleID) {
 	Title * title = GameLibrary::getTitle(titleID);
+	if (title == nullptr) return false;
 
 	// Title repeated 
 	if (hasTitle(title)) return false;
@@ -129,6 +130,7 @@ bool User::buyTitle(unsigned int titleID) {
 bool User::buyTitle(std::string name)
 {
 	Title * title = GameLibrary::getTitle(name);
+	if (title == nullptr) return false;
 
 	// Title repeated 
 	if (hasTitle(title)) return false;
@@ -148,24 +150,46 @@ bool User::buyTitle(std::string name)
 }
 
 bool User::updateTitle(Title* title) {
-	// find title
-	// if not found
-		// return false
-	// try
-		// title pointer update
-		// subtract updates cost to cc
-		// update user map
-		// increment title static rendimento
-	// catch if title is not Home title
-		// return false
-	// return true
+
+	if (!hasTitle(title) || !hasEnoughMoney(1)) return false;
+
+	try
+	{
+		title->updateUserVersion(*this);
+	}
+	catch (NotHomeTitle)
+	{
+		return false;
+	}
+
+	if (!subtractValue(1)) return false;
+	GameLibrary::updateTitleRevenue(title, 1);
+	transactions.push_back(Transaction(1, Date::getCurrentDate(), homeUpdate));
+
 	return true;
 }
 
 bool User::updateTitle(unsigned int titleID) {
-	// TODO - implement User::updateTitle
-	throw "Not yet implemented";
-	// add transaction
+
+	Title * title = GameLibrary::getTitle(titleID);
+	if (title == nullptr) return false;
+
+	if (!hasTitle(title) || !hasEnoughMoney(1)) return false;
+
+	try
+	{
+		title->updateUserVersion(*this);
+	}
+	catch (NotHomeTitle)
+	{
+		return false;
+	}
+
+	if (!subtractValue(1)) return false;
+	GameLibrary::updateTitleRevenue(title, 1);
+	transactions.push_back(Transaction(1, Date::getCurrentDate(), homeUpdate));
+
+	return true;
 }
 
 double User::getTotalTransactionsValue() const
@@ -189,9 +213,19 @@ string User::getFavoritePlatform() const
 	return max.first;
 }
 
-bool User::playGame() {
-	// Have in account subscriptions
-	throw "Not yet implemented";
+bool User::playGame(double duration) {
+	// If Online Title
+		// Check playing price
+		// If has enough money add Session, subtract money, add transaction, increase title revenue, return true
+		// else return false
+	// Else if home title
+		// if updated
+			// return true
+		// if not try to update
+			// success - return true
+			// fail return false
+
+	return true;
 }
 
 bool User::addFriend(User * frnd) {

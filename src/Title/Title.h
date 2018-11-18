@@ -40,6 +40,7 @@ public:
 	virtual void updateTitle(Update * newUpdate) = 0;
 	//TODO: & ou *??
 	virtual void addNewUser(User & u) = 0;
+	virtual void updateUserVersion(const User & usr) = 0;
 
 	std::string getName() const { return name; };
 	unsigned int getTitleID() const { return titleID; };

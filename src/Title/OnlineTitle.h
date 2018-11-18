@@ -25,6 +25,7 @@ public:
 	double getStats(unsigned int userID) const;
 
 	void updateTitle(Update * newUpdate) override;
+	void updateUserVersion(const User & usr) override;
 
 	void addNewUser(User & u) override;
 

@@ -58,7 +58,7 @@ public:
 	bool updateTitle(Title* title);
 	bool updateTitle(unsigned int titleID);
 
-	bool playGame();
+	bool playGame(double duration);
 
 	bool addFriend(User * frnd);
 	bool removeFriend(User * frnd);

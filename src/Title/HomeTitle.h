@@ -30,7 +30,7 @@ public:
 
 	void updateTitle(Update * newUpdate) override;
 
-	void updateUserVersion(const User & u);
+	void updateUserVersion(const User & u) override;
 	void updateUserVersion(unsigned int userID);
 	//void updateUserVersion(std::string name);
 
