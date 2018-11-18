@@ -115,6 +115,13 @@ public:
 	 * @throw TitleUpToDate() If the Title is already up to date
 	 */
 	virtual void updateUserVersion(const User & usr) = 0;
+	/**
+	 * @brief Get the Subscription object
+	 * Virtual function that may throw exceptions if called on the incorrect object
+	 * 
+	 * @return const Subscription& Return the subscription Private object Member
+	 * @throw NotOnlineTitle If it is called on a Home Title Object
+	 */
 	virtual const Subscription & getSubscription() const = 0;
 
 	/**

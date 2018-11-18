@@ -70,6 +70,13 @@ public:
 	 * @throw NotOnlineTitle If it is called on a Home Title Object
 	 */
 	double getStats() const override;
+	/**
+	 * @brief Get the Subscription object
+	 * Virtual function that may throw exceptions if called on the incorrect object
+	 * 
+	 * @return const Subscription& Return the subscription Private object Member
+	 * @throw NotOnlineTitle If it is called on a Home Title Object
+	 */
 	const Subscription & getSubscription() const { throw NotOnlineTitle(getTitleID()); };
 
 	/**
