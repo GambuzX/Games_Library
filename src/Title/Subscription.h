@@ -36,7 +36,7 @@ public:
 	double getSubscriptionPrice() const { return subPrice; };
 
 	/**
-	 * @brief Function that calculates the price of the Session Played
+	 * @brief Virtual Function that calculates the price of the Session Played
 	 * 
 	 * @param sessionHours Number of hours played in that Session
 	 * @return double Returns the final Session Price

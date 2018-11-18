@@ -72,3 +72,8 @@ void Title::addPromotion(Sale & promotion) {
 		throw OverlappingSales();
 	}
 }
+
+bool Title::operator<(const Title & t2) const
+{
+	return getTitleID() < t2.getTitleID();
+}

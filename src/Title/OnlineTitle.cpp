@@ -17,6 +17,7 @@ void OnlineTitle::addNewUser(User & u)
 	titleStats.insert(pair<User*, vector<Session>>(&u, {}));
 }
 
+//TODO: Fazer verificacao de se e possivel ele ter jogaod??
 void OnlineTitle::addNewSession(const User & u, const Session & sess)
 {
 	map<User*, vector<Session>, ComparePtr<User>>::iterator it;
@@ -83,7 +84,9 @@ void OnlineTitle::updateUserVersion(const User & usr)
 	throw NotHomeTitle(getTitleID());
 }
 
+/*
 bool OnlineTitle::operator<(const Title & t2) const
 {
 	return getTitleID() < t2.getTitleID();
 }
+*/

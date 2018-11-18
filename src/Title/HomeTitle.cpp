@@ -30,15 +30,15 @@ void HomeTitle::updateTitle(Update * newUpdate)
 		throw OldUpdate(*newUpdate, getCurrentVersion());
 }
 
-void HomeTitle::updateUserVersion(const User & u)
+void HomeTitle::updateUserVersion(const User & usr)
 {
 	map<User*, vector<Update*>, ComparePtr<User>>::iterator it;
-	it = userUpdates.find(const_cast<User*>(&u));
+	it = userUpdates.find(const_cast<User*>(&usr));
 
 	if (it == userUpdates.end())
-		throw InexistentUser(u.getUserID());
+		throw InexistentUser(usr.getUserID());
 	// Verificar se é a versão atual
-	else if (getCurrentUserVersion(u) == getCurrentVersion())
+	else if (getCurrentUserVersion(usr) == getCurrentVersion())
 		throw TitleUpToDate(getTitleID());
 	it->second.push_back(const_cast<Update*>(&getCurrentVersion()));
 }
@@ -99,7 +99,9 @@ const Update & HomeTitle::getCurrentUserVersion(std::string name) const
 }
 */
 
+/*
 bool HomeTitle::operator<(const Title & t2) const
 {
 	return getTitleID() < t2.getTitleID();
 }
+*/
