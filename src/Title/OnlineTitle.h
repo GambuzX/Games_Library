@@ -17,14 +17,19 @@ private:
 public:
 	OnlineTitle(std::string name, double price, Date releaseDate, ageRange ageR, std::string platform, std::string genre, std::string company, Subscription* subs);
 	
+	const Subscription & getSubscription() const { return *subscription; };
 	const std::vector<Update> & getUpdates() const;
-	void getStats() const;
+	unsigned int getNumberUsers() const { return titleStats.size(); };
+	double getStats() const;
+	double getStats(const User & u) const;
+	double getStats(unsigned int userID) const;
 
-	void UpdateTitle(Update *);
+	void updateTitle(Update * newUpdate);
 
-	void addUser(User & u);
+	void addNewUser(User & u);
 
-	void addUserSession();
+	void addNewSession(const User & u, const Session & sess);
+	void addNewSession(unsigned int userID, const Session & sess);
 
 };
 

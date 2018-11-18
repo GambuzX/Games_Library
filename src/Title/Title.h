@@ -3,9 +3,13 @@
 
 #include <string>
 #include <vector>
+#include "..\User\User.h"
 #include "..\Utilities\Date.h"
 #include "..\Utilities\Sale.h"
 #include "..\Utilities\Update.h"
+
+// TODO: tentar evitar inclusão de bibliotecas circular (??) para já está isto
+class User;
 
 struct ageRange {
 	int minAge;
@@ -31,8 +35,11 @@ public:
 	Title(std::string name, double price, Date releaseDate, ageRange ageR, std::string platform, std::string genre, std::string company);
 
 	virtual const std::vector<Update> & getUpdates() const = 0;
-	virtual void getStats() const = 0;
-	virtual void UpdateTitle(Update *) = 0;
+	virtual double getStats() const = 0;
+	virtual unsigned int getNumberUsers() const = 0;
+	virtual void updateTitle(Update * newUpdate) = 0;
+	//TODO: & ou *??
+	virtual void addNewUser(User & u) = 0;
 
 	std::string getName() const { return name; };
 	unsigned int getTitleID() const { return titleID; };

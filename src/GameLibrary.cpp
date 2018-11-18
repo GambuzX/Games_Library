@@ -48,7 +48,7 @@ void GameLibrary::loadGameLibraryFromFile(std::fstream& titleFile)
 bool GameLibrary::updateTitle(Title* title, Update * update) {
 	try
 	{
-		title->UpdateTitle(update);
+		title->updateTitle(update);
 	}
 	catch (NotHomeTitle)
 	{
@@ -99,7 +99,7 @@ Title * GameLibrary::getTitle(unsigned int titleID)
 {
 	for (auto & title : titles)
 		if (title.getTitleID() == titleID)
-			return (Title *) &title;
+			return const_cast<Title*>(&title);
 	return NULL;
 }
 
@@ -107,7 +107,7 @@ Title * GameLibrary::getTitle(std::string name)
 {
 	for (auto & title : titles)
 		if (title.getName() == name)
-			return (Title *) &title;
+			return const_cast<Title*>(&title);
 	return NULL;
 }
 

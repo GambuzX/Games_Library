@@ -1,5 +1,6 @@
 #include "User.h"
 #include "..\GameLibrary.h"
+#include "..\Utilities\Exceptions.h"
 
 using namespace std;
 

@@ -4,11 +4,15 @@
 #include <string>
 #include <vector>
 #include <set>
-#include "..\Utilities\CreditCard.h"
 #include "..\Title\Title.h"
+#include "..\Utilities\CreditCard.h"
 #include "..\Utilities\Transaction.h"
 #include "..\Utilities\Address.h"
 #include "..\Utilities\CompareObj.h"
+
+// TODO: tentar evitar inclusão de bibliotecas circular (??) para já está isto
+
+class Title;
 
 class User {
 

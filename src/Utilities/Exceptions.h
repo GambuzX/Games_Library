@@ -1,6 +1,10 @@
 #ifndef EXCEPTIONS_H
 #define EXCEPTIONS_H
 
+#include <sstream>
+#include "Date.h"
+#include "Update.h"
+
 class OldUpdate
 {
 private:
@@ -30,6 +34,15 @@ private:
 	unsigned titleID;
 public:
 	NotHomeTitle(unsigned id) { titleID = id; }
+	unsigned getTitleID() { return titleID; }
+};
+
+class NotOnlineTitle
+{
+private:
+	unsigned titleID;
+public:
+	NotOnlineTitle(unsigned id) { titleID = id; }
 	unsigned getTitleID() { return titleID; }
 };
 
@@ -143,6 +156,24 @@ private:
 public:
 	NotEnoughFunds(double f) : funds(f) {}
 	double getFunds() const { return funds; }
+};
+
+class InexistentUser
+{
+private:
+	unsigned userID;
+public:
+	InexistentUser(unsigned id) { userID = id; }
+	unsigned getUserID() { return userID; }
+};
+
+class DuplicatetUser
+{
+private:
+	unsigned userID;
+public:
+	DuplicatetUser(unsigned id) { userID = id; }
+	unsigned getUserID() { return userID; }
 };
 
 #endif
