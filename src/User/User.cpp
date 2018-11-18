@@ -29,7 +29,6 @@ bool User::hasEnoughMoney(double val) const {
 	return amountOwned >= val;
 }
 
-
 bool User::subtractValue(double val)
 {
 	if (!hasEnoughMoney(val)) return false;
@@ -213,7 +212,7 @@ string User::getFavoritePlatform() const
 	return max.first;
 }
 
-bool User::playGame(double duration) {
+bool User::playGame(Title * title, double duration) {
 	// If Online Title
 		// Check playing price
 		// If has enough money add Session, subtract money, add transaction, increase title revenue, return true

@@ -66,6 +66,7 @@ public:
 	 * @return double Returns the final Balance of the Credit Card
 	 */
 	double addFunds(double funds);
+
 	/**
 	 * @brief Function to Remove money from the Credit Card
 	 * May throw some exceptions if the amount you are trying to take away is bigger than the current balance
@@ -75,6 +76,7 @@ public:
 	 * @throw NegativeFunds()
 	 */
 	double removeFunds(double funds);
+
 	/**
 	 * @brief Removes all the funds of the Credit Card returning its balance to 0
 	 * 
