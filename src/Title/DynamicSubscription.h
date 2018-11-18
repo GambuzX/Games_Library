@@ -10,7 +10,7 @@ public:
 	DynamicSubscription() : Subscription() {};
 	DynamicSubscription(double sPrice) : Subscription(sPrice) {};
 
-	void chargeUser(User* user);
+	double sessionPrice(double sessionHours) { return floor(sessionHours) * getSubscriptionPrice(); };
 };
 
 #endif

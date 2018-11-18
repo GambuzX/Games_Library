@@ -10,7 +10,7 @@ public:
 	FixedSubscription() : Subscription() {};
 	FixedSubscription(double sPrice) : Subscription(sPrice) {};
 
-	void chargeUser(User* user);
+	double sessionPrice(double sessionHours) { return getSubscriptionPrice(); };
 };
 
 #endif

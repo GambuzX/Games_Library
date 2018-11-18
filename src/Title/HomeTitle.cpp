@@ -10,11 +10,14 @@ HomeTitle::HomeTitle(string name, double price, Date releaseDate, ageRange ageR,
 
 void HomeTitle::addNewUser(User & u)
 {
-	map<User*, Update, ComparePtr<User>>::iterator it;
+	map<User*, vector<Update>, ComparePtr<User>>::iterator it;
 	it = userUpdates.find(&u);
 	if (it != userUpdates.end())
 		throw DuplicatetUser(u.getUserID());
-	userUpdates.insert(pair<User*, Update>(&u, getCurrentVersion()));
+	
+	vector<Update> v1;
+	v1.push_back(getCurrentVersion());
+	userUpdates.insert(pair<User*, vector<Update>>(&u, v1));
 }
 
 void HomeTitle::updateTitle(Update * newUpdate)
@@ -29,19 +32,24 @@ void HomeTitle::updateTitle(Update * newUpdate)
 
 void HomeTitle::updateUserVersion(const User & u)
 {
-	map<User*, Update, ComparePtr<User>>::iterator it;
+	map<User*, vector<Update>, ComparePtr<User>>::iterator it;
 	it = userUpdates.find(const_cast<User*>(&u));
 
 	if (it == userUpdates.end())
 		throw InexistentUser(u.getUserID());
-	it->second = getCurrentVersion();
+	// Verificar se é a versão atual
+	else if (getCurrentUserVersion(u) == getCurrentVersion())
+		throw TitleUpToDate(getTitleID());
+	it->second.push_back(getCurrentVersion());
 }
 
 void HomeTitle::updateUserVersion(unsigned int userID)
 {
 	for (auto & pair : userUpdates)
 		if (pair.first->getUserID() == userID) {
-			pair.second = getCurrentVersion();
+			if (getCurrentUserVersion(userID) == getCurrentVersion())
+				throw TitleUpToDate(userID);
+			pair.second.push_back( getCurrentVersion() );
 			return;
 		}
 	throw InexistentUser(userID);
@@ -64,19 +72,19 @@ double HomeTitle::getStats() const {
 
 const Update & HomeTitle::getCurrentUserVersion(const User & u) const
 {
-	map<User*, Update, ComparePtr<User>>::const_iterator it;
+	map<User*, vector<Update>, ComparePtr<User>>::const_iterator it;
 	it = userUpdates.find(const_cast<User*>(&u) );
 
 	if (it == userUpdates.end())
 		throw InexistentUser(u.getUserID());
-	return it->second;
+	return it->second.at(userUpdates.size() - 1);
 }
 
 const Update & HomeTitle::getCurrentUserVersion(unsigned int userID) const
 {
 	for (auto & pair : userUpdates)
 		if (pair.first->getUserID() == userID)
-			return	pair.second;
+			return	pair.second.at(userUpdates.size() - 1);
 	throw InexistentUser(userID);
 }
 

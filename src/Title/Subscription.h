@@ -14,7 +14,7 @@ public:
 
 	double getSubscriptionPrice() const { return subPrice; };
 
-	virtual void chargeUser(User* user) = 0;
+	virtual double sessionPrice(double sessionHours) = 0;
 };
 
 #endif

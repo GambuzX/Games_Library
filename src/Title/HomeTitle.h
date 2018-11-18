@@ -11,7 +11,7 @@ class HomeTitle : public Title {
 
 private:
 	std::vector<Update> titleUpdateHistory;
-	std::map<User*, Update, ComparePtr<User>> userUpdates;
+	std::map<User*, vector<Update>, ComparePtr<User>> userUpdates;
 
 public:
 	HomeTitle(std::string name, double price, Date releaseDate, ageRange ageR, std::string platform, std::string genre, std::string company);

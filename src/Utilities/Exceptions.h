@@ -177,4 +177,12 @@ public:
 	unsigned getUserID() { return userID; }
 };
 
+class TitleUpToDate
+{
+private:
+	unsigned titleID;
+public:
+	TitleUpToDate(unsigned id) { titleID = id; }
+	unsigned getTitleID() { return titleID; }
+};
 #endif
