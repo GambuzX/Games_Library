@@ -1,3 +1,4 @@
+#include <iostream>
 #include "GameLibrary.h"
 #include "Utilities\Exceptions.h"
 
@@ -61,12 +62,14 @@ bool GameLibrary::updateTitle(Title* title, Update * update) {
 	{
 		title->updateTitle(update);
 	}
-	catch (NotHomeTitle)
+	catch (NotHomeTitle & excp)
 	{
+		cout << "updateTitle Error: Tried to update Online Title with ID " << excp.getTitleID() << endl;
 		return false;
 	}
-	catch (OldUpdate)
+	catch (OldUpdate & excp)
 	{
+		cout << "updateTitle Error: Tried to update to an older version " << excp.getOldUpdate().getVersion() << endl;
 		return false;
 	}
 	return true;

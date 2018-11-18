@@ -156,7 +156,15 @@ bool User::updateTitle(Title* title) {
 	{
 		title->updateUserVersion(*this);
 	}
-	catch (NotHomeTitle)
+	catch (TitleUpToDate)
+	{
+		return false;
+	}
+	catch (NotHomeTitle & excp2)
+	{
+		return false;
+	}
+	catch (InexistentUser)
 	{
 		return false;
 	}
@@ -179,7 +187,15 @@ bool User::updateTitle(unsigned int titleID) {
 	{
 		title->updateUserVersion(*this);
 	}
-	catch (NotHomeTitle)
+	catch (TitleUpToDate)
+	{
+		return false;
+	}
+	catch (NotHomeTitle & excp2)
+	{
+		return false;
+	}
+	catch (InexistentUser)
 	{
 		return false;
 	}
@@ -213,16 +229,41 @@ string User::getFavoritePlatform() const
 }
 
 bool User::playGame(Title * title, double duration) {
-	// If Online Title
-		// Check playing price
-		// If has enough money add Session, subtract money, add transaction, increase title revenue, return true
-		// else return false
-	// Else if home title
-		// if updated
-			// return true
-		// if not try to update
-			// success - return true
-			// fail return false
+	if (!hasTitle(title)) return false;
+	try
+	{
+		double playPrice = title->getSubscription()->sessionPrice(duration);
+		if (!hasEnoughMoney(playPrice)) return false;
+		// TODO Add session
+		if (!subtractValue(playPrice)) return false;
+		GameLibrary::updateTitleRevenue(title, playPrice);
+		transactions.push_back(Transaction(playPrice, Date::getCurrentDate(), onlineSubscription));
+	}
+	catch (NotOnlineTitle & excp)
+	{
+		try
+		{
+			title->updateUserVersion(*this);
+
+			// If nothing is thrown, title was updated
+			if (!subtractValue(1)) return false;
+			GameLibrary::updateTitleRevenue(title, 1);
+			transactions.push_back(Transaction(1, Date::getCurrentDate(), homeUpdate));
+		}
+		catch (TitleUpToDate)
+		{
+			// Title is up to date, dont need to do anything
+			return true;
+		}
+		catch (NotHomeTitle & excp2)
+		{
+			return false;
+		}
+		catch (InexistentUser)
+		{
+			return false;
+		}
+	}
 
 	return true;
 }

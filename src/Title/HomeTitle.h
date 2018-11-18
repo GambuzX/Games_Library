@@ -74,10 +74,10 @@ public:
 	 * @brief Get the Subscription object
 	 * Virtual function that may throw exceptions if called on the incorrect object
 	 * 
-	 * @return const Subscription& Return the subscription Private object Member
+	 * @return const Subscription* Return the subscription Private object Member
 	 * @throw NotOnlineTitle If it is called on a Home Title Object
 	 */
-	const Subscription & getSubscription() const { throw NotOnlineTitle(getTitleID()); };
+	Subscription * getSubscription() const { throw NotOnlineTitle(getTitleID()); };
 
 	/**
 	 * @brief Get the Current Update Version object
