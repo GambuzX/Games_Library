@@ -10,14 +10,14 @@ HomeTitle::HomeTitle(string name, double price, Date releaseDate, ageRange ageR,
 
 void HomeTitle::addNewUser(User & u)
 {
-	map<User*, vector<Update>, ComparePtr<User>>::iterator it;
+	map<User*, vector<Update*>, ComparePtr<User>>::iterator it;
 	it = userUpdates.find(&u);
 	if (it != userUpdates.end())
 		throw DuplicatetUser(u.getUserID());
 	
-	vector<Update> v1;
-	v1.push_back(getCurrentVersion());
-	userUpdates.insert(pair<User*, vector<Update>>(&u, v1));
+	vector<Update*> v1;
+	v1.push_back(const_cast<Update*>(&getCurrentVersion()));
+	userUpdates.insert(pair<User*, vector<Update*>>(&u, v1));
 }
 
 void HomeTitle::updateTitle(Update * newUpdate)
@@ -32,7 +32,7 @@ void HomeTitle::updateTitle(Update * newUpdate)
 
 void HomeTitle::updateUserVersion(const User & u)
 {
-	map<User*, vector<Update>, ComparePtr<User>>::iterator it;
+	map<User*, vector<Update*>, ComparePtr<User>>::iterator it;
 	it = userUpdates.find(const_cast<User*>(&u));
 
 	if (it == userUpdates.end())
@@ -40,7 +40,7 @@ void HomeTitle::updateUserVersion(const User & u)
 	// Verificar se é a versão atual
 	else if (getCurrentUserVersion(u) == getCurrentVersion())
 		throw TitleUpToDate(getTitleID());
-	it->second.push_back(getCurrentVersion());
+	it->second.push_back(const_cast<Update*>(&getCurrentVersion()));
 }
 
 void HomeTitle::updateUserVersion(unsigned int userID)
@@ -49,7 +49,7 @@ void HomeTitle::updateUserVersion(unsigned int userID)
 		if (pair.first->getUserID() == userID) {
 			if (getCurrentUserVersion(userID) == getCurrentVersion())
 				throw TitleUpToDate(userID);
-			pair.second.push_back( getCurrentVersion() );
+			pair.second.push_back(const_cast<Update*>(&getCurrentVersion()));
 			return;
 		}
 	throw InexistentUser(userID);
@@ -72,19 +72,19 @@ double HomeTitle::getStats() const {
 
 const Update & HomeTitle::getCurrentUserVersion(const User & u) const
 {
-	map<User*, vector<Update>, ComparePtr<User>>::const_iterator it;
+	map<User*, vector<Update*>, ComparePtr<User>>::const_iterator it;
 	it = userUpdates.find(const_cast<User*>(&u) );
 
 	if (it == userUpdates.end())
 		throw InexistentUser(u.getUserID());
-	return it->second.at(userUpdates.size() - 1);
+	return *it->second.at(userUpdates.size() - 1);
 }
 
 const Update & HomeTitle::getCurrentUserVersion(unsigned int userID) const
 {
 	for (auto & pair : userUpdates)
 		if (pair.first->getUserID() == userID)
-			return	pair.second.at(userUpdates.size() - 1);
+			return	*pair.second.at(userUpdates.size() - 1);
 	throw InexistentUser(userID);
 }
 
