@@ -73,6 +73,20 @@ void Title::addPromotion(Sale & promotion) {
 	}
 }
 
+void Title::removePromotion(Date & saleBeginning)
+{
+	if (saleBeginning < Date::getCurrentDate())
+	{
+		throw SaleStarted(saleBeginning);
+	}
+	for (size_t i = 0; i < pricesHistory.size(); i++)
+		if (saleBeginning == pricesHistory.at(i).getStartDate()) {
+			pricesHistory.erase(pricesHistory.begin() + i);
+			return;
+		}
+	throw InexistentSale(saleBeginning);
+}
+
 bool Title::operator<(const Title & t2) const
 {
 	return getTitleID() < t2.getTitleID();

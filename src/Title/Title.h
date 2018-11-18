@@ -189,7 +189,6 @@ public:
 	double getCurrentPrice(Date & date) const;
 
 	// TODO: Acho que set's neste faz sentido pq j� tem cenas associadas (podes s� querer mudar plat, gen ou emp a n�o ser que const)
-	// TODO: Remove promotion function
 	/**
 	 * @brief Add new Promotion to the vector of Sales
 	 * May throw some exceptions if the promotions overlap or the "new" one is old
@@ -200,6 +199,15 @@ public:
 	 * @throw OverlappingSales() If the promotion overlaps one already planned
 	 */
 	void addPromotion(Sale & promotion);
+	/**
+	 * @brief Remove future Promotion off of the vector of Sales
+	 * May throw some exceptions if the promotion has already started or doesn't exists
+	 * 
+	 * @param saleBeginning Date when the promotion that we want to Remove begins
+	 * @throw SaleStarted() If the sale already has started or passed
+	 * @throw InexistentSale() If doesn't exist a sale beginning on that date
+	 */
+	void removePromotion(Date & saleBeginning);
 
 	/**
 	 * @brief Overload of the less than operator

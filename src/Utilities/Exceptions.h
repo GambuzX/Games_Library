@@ -51,18 +51,18 @@ class InexistentSale
 {
 private:
 	std::string message;
-	//Date date;
+	Date date;
 
 public:
-	InexistentSale() { message = "There is no existing sale!"; };
-	/*InexistentSale(const Date & d1) {
-	date = d1;
-	std::ostringstream os;
-	os << date;
-	message = "There are no sales on " + os.str();
-	}*/
+	InexistentSale() { message = "There is no existing sale!"; date = Date(); };
+	InexistentSale(const Date & d1) {
+		date = d1;
+		std::ostringstream os;
+		os << date;
+		message = "There are no sales on " + os.str();
+	}
 	std::string getMessage() const { return message; };
-	//Date getDate() const { return date; };
+	Date getDate() const { return date; };
 };
 
 // TODO: Mudar parametros??
@@ -94,6 +94,26 @@ public:
 		return "Sale has expired: Sale ends in " + os1.str() + " and we are in " + os2.str();
 	};
 	Date getEndSalesDate() const { return endSalesDate; };
+};
+
+class SaleStarted
+{
+private:
+	Date beginSalesDate;
+	Date currentDate;
+
+public:
+	SaleStarted() { currentDate = Date::getCurrentDate(); beginSalesDate = Date(); };
+	SaleStarted(Date beginSalesDate) { this->beginSalesDate = beginSalesDate; currentDate = Date::getCurrentDate(); };
+	std::string getMessage() const
+	{
+		std::ostringstream os1, os2;
+		os1 << beginSalesDate;
+		os2 << currentDate;
+		if (beginSalesDate == Date()) return "Sale has started: current date " + os2.str();
+		return "Sale has started: Sale started on " + os1.str() + " and we are in " + os2.str();
+	};
+	Date getBeginSalesDate() const { return beginSalesDate; };
 };
 
 //TODO: generalizar??
