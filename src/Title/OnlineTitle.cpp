@@ -25,7 +25,7 @@ void OnlineTitle::addNewSession(const User & u, const Session & sess)
 	if (it == titleStats.end())
 		throw InexistentUser(u.getUserID());
 	it->second.push_back(sess);
-	sort(titleStats.begin(), titleStats.end());
+	//sort(titleStats.begin(), titleStats.end());
 }
 
 void OnlineTitle::addNewSession(unsigned int userID, const Session & sess)
@@ -33,7 +33,7 @@ void OnlineTitle::addNewSession(unsigned int userID, const Session & sess)
 	for (auto & pair : titleStats)
 		if (pair.first->getUserID() == userID) {
 			pair.second.push_back(sess);
-			sort(titleStats.begin(), titleStats.end());
+			//sort(titleStats.begin(), titleStats.end());
 			return;
 		}
 	throw InexistentUser(userID);

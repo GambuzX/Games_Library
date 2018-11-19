@@ -12,7 +12,7 @@
  * @see Subscription
  * @see OnlineTitle
  */
-class DynamicSubscription : Subscription {
+class DynamicSubscription : public Subscription {
 
 
 public:

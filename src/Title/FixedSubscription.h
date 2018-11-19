@@ -12,7 +12,7 @@
  * @see Subscription
  * @see OnlineTitle
  */
-class FixedSubscription : Subscription {
+class FixedSubscription : public Subscription {
 
 public:
 	/**
