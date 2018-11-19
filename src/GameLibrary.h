@@ -4,6 +4,7 @@
 #include <set>
 #include <map>
 #include <fstream>
+#include "GameLibraryInfo.h"
 #include "Title\Title.h"
 #include "User\User.h"
 #include "Utilities\Update.h"
@@ -20,24 +21,26 @@
 * @see Title
 */
 
-/**
-* @brief Enumerated type for identifying the different organizations possible for the popularity rankings
-*/
-enum rankingFilter
-{
-	gender, /*!< Organize by gender */ 
-	platform, /*!< Organize by platform */ 
-	age /*!< Organize by age */ 
-};
-
 class GameLibrary {
 private:
 	static std::set<Title*, ComparePtr<Title>> titles; /**< @brief Static Set of the Game Library Titles */
 	static std::map<Title*, double, ComparePtr<Title>> titlesRevenue; /**< @brief Static Map of Titles to their respective total revenue */
 
 	std::map<User, std::set<Title*, ComparePtr<Title>>> users; /**< @brief Map of Users to their respective list of Titles */
+	/*std::vector<std::string> supportedPlatforms;
+	std::vector<std::string> titlesGenres;
+	std::vector<std::string> ageGroups;*/
 
 public:
+	/**
+	* @brief Construct a new Game Library object
+	*
+	* @param platforms Vector of strings representing the supported platforms
+	* @param genres Vector of strings representing the supported title genres
+	* @param ages Vector of strings representing the defined ageGroups
+	*/
+	//GameLibrary(std::vector<std::string> * platforms, std::vector<std::string> * genres, std::vector<std::string> * ages) : supportedPlatforms(*platforms), titlesGenres(*genres), ageGroups(*ages) {}
+
 	/**
 	* @brief Adds a User to the Game Library
 	* Constructs a new user with the given parameters
@@ -112,12 +115,22 @@ public:
 	bool updateTitle(Title* title, Update * update);
 
 	/**
-	* @brief Builds a popularity ranking of the Titles
-	* Ranking is based on the filter parameter
+	* @brief Verify if a platform is supported by the Game Library
 	*
-	* @param filter Specifies how the ranking should be organized
+	* @param platform Platform to check validity
+	* @return bool Returns true if is supported, false otherwise
 	*/
-	void buildPopularityRanking(rankingFilter filter);
+	//bool validPlatform(std::string plat) const;
+
+	/**
+	* @brief Builds a popularity ranking of the Titles
+	* Ranking is based on the combination of the 3 parameters provided
+	*
+	* @param platform Filter to limit ranking to this platform
+	* @param genre Filter to limit ranking to this genre
+	* @param ageGroup Filter to limit ranking to this age group
+	*/
+	void buildPopularityRanking(std::ostream & os, gameLibraryPlatform platform, gameLibraryGenre genre, gameLibraryAgeGroup ageGroup);
 
 	/**
 	* @brief Determines the average number of titles per user
@@ -189,6 +202,39 @@ public:
 	* @return Title* Pointer to the Title with name name
 	*/
 	static Title* getTitle(std::string name);
+
+	/**
+	* @brief Get the name of a platform
+	*
+	* @param platform Enum type of the platform
+	* @return string Returns the name of the platform provided as argument
+	*/
+	static std::string getPlatformName(gameLibraryPlatform platform);
+
+	/**
+	* @brief Get the name of a genre
+	*
+	* @param genre Enum type of the genre
+	* @return string Returns the name of the genre provided as argument
+	*/
+	static std::string getGenreName(gameLibraryGenre genre);
+
+	/**
+	* @brief Get the name of a ageGroup
+	*
+	* @param ageGroup Enum type of the ageGroup
+	* @return string Returns the name of the ageGroup provided as argument
+	*/
+	static std::string getAgeGroupString(gameLibraryAgeGroup ageGroup);
+
+	/**
+	* @brief Check if a Title is Adequate for an Age Group
+	*
+	* @param title Title to verify
+	* @param ageG Age Group in question
+	* @return bool Returns true if adequate, false otherwise
+	*/
+	static bool titleAdequateForAgeGroup(const Title * title, gameLibraryAgeGroup ageG);
 	
 };
 

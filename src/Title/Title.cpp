@@ -6,15 +6,15 @@ using namespace std;
 
 unsigned int Title::nextTitleID = 0;
 
-Title::Title(string name, double price, Date releaseDate, ageRange ageR, string platform, string genre, string company) : titleID(++nextTitleID), releaseDate(releaseDate)
+Title::Title(string name, double price, Date releaseDate, ageRange ageR, gameLibraryPlatform platform, gameLibraryGenre genre, string company) : titleID(++nextTitleID), releaseDate(releaseDate)
 {
 	this->name = name;
 	basePrice = price;
 	this->ageR = ageR;
 	// TODO: Fazer pertencer a tipo de plataforma e género??
 	this->platform = platform;
-	this->platform = genre;
-	this->platform = company;
+	this->genre = genre;
+	this->company = company;
 }
 
 const Sale & Title::getLastSale() const

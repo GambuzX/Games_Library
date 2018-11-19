@@ -218,7 +218,7 @@ string User::getFavoritePlatform() const
 {
 	map<string, int> platforms;
 	for (const auto & title : *purchasedGames)
-		platforms[title->getPlatform()]++;
+		platforms[GameLibrary::getPlatformName(title->getPlatform())]++;
 	
 	pair<string, int> max("", 0);
 	for (const auto & entry : platforms)

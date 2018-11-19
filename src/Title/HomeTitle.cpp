@@ -3,7 +3,7 @@
 
 using namespace std;
 
-HomeTitle::HomeTitle(string name, double price, Date releaseDate, ageRange ageR, string platform, string genre, string company) : Title(name, price, releaseDate, ageR, platform, genre, company) 
+HomeTitle::HomeTitle(string name, double price, Date releaseDate, ageRange ageR, gameLibraryPlatform platform, gameLibraryGenre genre, string company) : Title(name, price, releaseDate, ageR, platform, genre, company)
 {
 	titleUpdateHistory.push_back(Update(releaseDate));
 }
