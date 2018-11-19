@@ -1,3 +1,4 @@
+#include <ostream>
 #include "Address.h"
 
 using namespace std;

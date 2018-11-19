@@ -25,7 +25,7 @@ TransactionType Transaction::getType() const {
 	return type;
 }
 
-std::ostream & operator<<(std::ostream & os, Transaction & trans)
+std::ostream & operator<<(std::ostream & os, const Transaction & trans)
 {
 	std::string desc = "";
 
