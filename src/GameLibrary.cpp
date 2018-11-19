@@ -75,7 +75,7 @@ bool GameLibrary::updateTitle(Title* title, Update * update) {
 	return true;
 }
 
-void GameLibrary::buildPopularityRanking(ostream & os, gameLibraryPlatform platform, gameLibraryGenre genre, ageRange ageR) {
+void GameLibrary::buildGlobalPopularityRanking(ostream & os, gameLibraryPlatform platform, gameLibraryGenre genre, ageRange ageR) {
 	
 	map<int, const Title*> rankedList;
 	
@@ -100,6 +100,65 @@ void GameLibrary::buildPopularityRanking(ostream & os, gameLibraryPlatform platf
 		os << counter << ". " << entry.second->getTitleID() << " " << entry.second->getName() << " " << entry.first << endl;
 		counter++;
 	}	
+}
+
+void GameLibrary::buildGlobalRevenueRanking(ostream & os, gameLibraryPlatform platform, gameLibraryGenre genre, ageRange ageR)
+{
+	map<double, const Title*> rankedList;
+
+	// Search for all the titles that match and organize them by revenue
+	for (Title * title : titles)
+	{
+		if (!(title->getPlatform() == platform || platform == all_platforms)) continue;
+		if (!(title->getGenre() == genre || genre == all_genres)) continue;
+		map<Title*, double, ComparePtr<Title>>::iterator it = titlesRevenue.find(title);
+		rankedList.insert(pair<double, const Title*>((*it).second, title));
+	}
+
+	os << "Titles Revenue Ranking" << endl << endl;
+	os << "Filters used:\n" << "Platform = " << getPlatformName(platform);
+	os << ", Genre = " << getGenreName(genre) << ", Age Group = " << ageR.minAge << " to " << ageR.maxAge << endl << endl;
+
+	os << "N" << " " << "ID" << " " << "Name" << " " << "Revenue" << endl;
+	int counter = 1;
+	for (const auto & entry : rankedList)
+	{
+		// TODO FORMAT THE OUTPUT
+		os << counter << ". " << entry.second->getTitleID() << " " << entry.second->getName() << " " << entry.first << endl;
+		counter++;
+	}
+}
+
+void GameLibrary::buildUserMostPlayedTitlesRanking(std::ostream & os, User * usr, gameLibraryPlatform platform, gameLibraryGenre genre)
+{
+	map<double, const Title*> rankedList;
+
+	// Search for all the user titles that match and organize them by time played
+	for (Title * title : *(usr->getPurchasedGames()))
+	{
+		if (!(title->getPlatform() == platform || platform == all_platforms)) continue;
+		if (!(title->getGenre() == genre || genre == all_genres)) continue;
+		try
+		{
+			double timePlayed = title->getTimePlayed(usr);
+			rankedList.insert(pair<double, const Title*>(timePlayed, title));
+		}
+		catch (NotOnlineTitle) { continue; }
+		catch (InexistentUser) { continue; }
+	}
+
+	os << "User Most Played Titles" << endl << endl;
+	os << "Filters used:\n" << "Platform = " << getPlatformName(platform);
+	os << ", Genre = " << getGenreName(genre) << endl << endl;
+
+	os << "N" << " " << "ID" << " " << "Name" << " " << "Hours Played" << endl;
+	int counter = 1;
+	for (const auto & entry : rankedList)
+	{
+		// TODO FORMAT THE OUTPUT
+		os << counter << ". " << entry.second->getTitleID() << " " << entry.second->getName() << " " << entry.first << endl;
+		counter++;
+	}
 }
 
 double GameLibrary::averageUserTitles() const{

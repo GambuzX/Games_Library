@@ -123,14 +123,37 @@ public:
 	//bool validPlatform(std::string plat) const;
 
 	/**
-	* @brief Builds a popularity ranking of the Titles
+	* @brief Builds a popularity ranking of the Game Library Titles
 	* Ranking is based on the combination of the 3 parameters provided
 	*
+	* @param os Output stream to write ranking to
 	* @param platform Filter to limit ranking to this platform
 	* @param genre Filter to limit ranking to this genre
 	* @param ageR Filter to limit ranking to this age group
 	*/
-	void buildPopularityRanking(std::ostream & os, gameLibraryPlatform platform, gameLibraryGenre genre, ageRange ageR);
+	void buildGlobalPopularityRanking(std::ostream & os, gameLibraryPlatform platform, gameLibraryGenre genre, ageRange ageR);
+
+	/**
+	* @brief Builds a revenue ranking of the Game Library Titles
+	* Ranking is based on the combination of the 3 parameters provided
+	*
+	* @param os Output stream to write ranking to
+	* @param platform Filter to limit ranking to this platform
+	* @param genre Filter to limit ranking to this genre
+	* @param ageR Filter to limit ranking to this age group
+	*/
+	void buildGlobalRevenueRanking(std::ostream & os, gameLibraryPlatform platform, gameLibraryGenre genre, ageRange ageR);
+
+	/**
+	* @brief Builds a ranking based on a User's most played Online Titles
+	* Ranking is based on the combination of the platform and genre parameters
+	*
+	* @param os Output stream to write ranking to
+	* @param usr User to get info from
+	* @param platform Filter to limit ranking to this platform
+	* @param genre Filter to limit ranking to this genre
+	*/
+	void buildUserMostPlayedTitlesRanking(std::ostream & os, User * usr, gameLibraryPlatform platform, gameLibraryGenre genre);
 
 	/**
 	* @brief Determines the average number of titles per user
