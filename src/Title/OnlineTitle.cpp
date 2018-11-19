@@ -4,7 +4,7 @@
 
 using namespace std;
 
-OnlineTitle::OnlineTitle(string name, double price, Date releaseDate, ageRange ageR, string platform, string genre, string company, Subscription* subs) : Title(name, price, releaseDate, ageR, platform, genre, company) 
+OnlineTitle::OnlineTitle(string name, double price, Date releaseDate, ageRange ageR, gameLibraryPlatform platform, gameLibraryGenre genre, string company, Subscription* subs) : Title(name, price, releaseDate, ageR, platform, genre, company)
 {
 	subscription = subs;
 }

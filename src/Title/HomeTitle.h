@@ -32,12 +32,12 @@ public:
 	 * @param price Double that initializes the basePrice Private Member
 	 * @param releaseDate Date that initializes the releaseDate Private constant Member and the Update in the titleUpdateHistory Vector
 	 * @param ageR ageRange struct that initializes the ageR Private Member
-	 * @param platform String that initializes the platform Private Member
-	 * @param genre String that initializes the genre Private Member
+	 * @param platform gameLibraryPlatform that initializes the platform Private Member
+	 * @param genre gameLibraryGenre that initializes the genre Private Member
 	 * @param company String that initializes the company Private Member
 	 * @see Update(Date)
 	 */
-	HomeTitle(std::string name, double price, Date releaseDate, ageRange ageR, std::string platform, std::string genre, std::string company);
+	HomeTitle(std::string name, double price, Date releaseDate, ageRange ageR, gameLibraryPlatform platform, gameLibraryGenre genre, std::string company);
 	
 	/**
 	 * @brief Function that helps to add a new User to the list of owners of that Title

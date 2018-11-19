@@ -33,12 +33,12 @@ public:
 	 * @param price Double that initializes the basePrice Private Member
 	 * @param releaseDate Date that initializes the releaseDate Private constant Member
 	 * @param ageR ageRange struct that initializes the ageR Private Member
-	 * @param platform String that initializes the platform Private Member
-	 * @param genre String that initializes the genre Private Member
+	 * @param platform gameLibraryPlatform that initializes the platform Private Member
+	 * @param genre gameLibraryGenre that initializes the genre Private Member
 	 * @param company String that initializes the company Private Member
 	 * @param subs Subscription that initializes the subscription Private Member
 	 */
-	OnlineTitle(std::string name, double price, Date releaseDate, ageRange ageR, std::string platform, std::string genre, std::string company, Subscription* subs);
+	OnlineTitle(std::string name, double price, Date releaseDate, ageRange ageR, gameLibraryPlatform platform, gameLibraryGenre genre, std::string company, Subscription* subs);
 	
 	/**
 	 * @brief Get the Subscription object

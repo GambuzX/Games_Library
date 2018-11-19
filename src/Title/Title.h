@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include "Subscription.h"
+#include "..\GameLibraryInfo.h"
 #include "..\User\User.h"
 #include "..\Utilities\Date.h"
 #include "..\Utilities\Sale.h"
@@ -43,8 +44,8 @@ private:
 	double basePrice; /**< @brief Base Price of the title */
 	const Date releaseDate; /**< @brief Release Date of the title */
 	ageRange ageR;  /**< @brief Age Range recommended for the title */
-	std::string platform; /**< @brief String with the name of the plataform where the Title should be played */
-	std::string genre; /**< @brief String with the genre of the Title */
+	gameLibraryPlatform platform; /**< @brief String with the name of the plataform where the Title should be played */
+	gameLibraryGenre genre; /**< @brief String with the genre of the Title */
 	std::string company; /**< @brief String with the company name that produced the Title */
 	std::vector<Sale> pricesHistory; /**< @brief Vector of Sales to keep track of the Title current, passed and possible future sales. Sorted by beginning date */
 
@@ -61,7 +62,7 @@ public:
 	 * @param genre String that initializes the genre Private Member
 	 * @param company String that initializes the company Private Member
 	 */
-	Title(std::string name, double price, Date releaseDate, ageRange ageR, std::string platform, std::string genre, std::string company);
+	Title(std::string name, double price, Date releaseDate, ageRange ageR, gameLibraryPlatform platform, gameLibraryGenre genre, std::string company);
 
 	/**
 	 * @brief Get the Vector of Updates
@@ -178,16 +179,16 @@ public:
 	/**
 	 * @brief Get the Platform Private Member
 	 * 
-	 * @return string Return the platform Private Member
+	 * @return gameLibraryPlatform Return the platform Private Member
 	 */
-	std::string getPlatform() const { return platform; };
+	gameLibraryPlatform getPlatform() const { return platform; };
 
 	/**
 	 * @brief Get the Genre Private Member
 	 * 
-	 * @return string Return the genre Private Member 
+	 * @return gameLibraryGenre Return the genre Private Member 
 	 */
-	std::string getGenre() const { return genre; };
+	gameLibraryGenre getGenre() const { return genre; };
 
 	/**
 	 * @brief Get the Company Private Member
