@@ -138,6 +138,17 @@ public:
 	 * @throw TitleUpToDate() If the Title is already up to date
 	 */
 	void updateUserVersion(unsigned int userID);
+
+	/**
+	* @brief Get the total time played of Title by User
+	* Virtual function that may throw exceptions if called on the incorrect object
+	*
+	* @param usr Pointer to the User to get time played
+	* @throw NotOnlineTitle() If it is called on a Home Title Object
+	* @throw InexistentUser() If the user specified doesn't own the game
+	*/
+	double getTimePlayed(const User * usr) const override { throw NotOnlineTitle(getTitleID()); }
+
 	//void updateUserVersion(std::string name);
 
 	//bool operator<(const Title & t2) const override;

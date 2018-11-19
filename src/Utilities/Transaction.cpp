@@ -24,3 +24,15 @@ Date Transaction::getDate() const {
 TransactionType Transaction::getType() const {
 	return type;
 }
+
+std::ostream & operator<<(std::ostream & os, Transaction & trans)
+{
+	std::string desc = "";
+
+	if (trans.getType() == gamePurchase) desc = "Purchased a Title";
+	else if (trans.getType() == homeUpdate) desc = "Updated a Home Title";
+	else if (trans.getType() == onlineSubscription) desc = "Payed an Online Subscription";
+
+	os << desc << " on " << trans.getDate() << " of value " << trans.getValue() << " .";
+	return os;
+}

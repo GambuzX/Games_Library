@@ -31,7 +31,7 @@ class User;
  */
 struct ageRange {
 	int minAge;	/*!< Minimum Recommended Age */
-	int maxAge;	/*!< MAximum Recommended Age */
+	int maxAge;	/*!< Maximum Recommended Age */
 };
 
 class Title {
@@ -71,6 +71,7 @@ public:
 	 * @throw NotHomeTitle() If it is called on a Online Title Object
 	 */
 	virtual const std::vector<Update> & getUpdates() const = 0;
+
 	/**
 	 * @brief Get the Stats of a Title (hours played)
 	 * Virtual function that may throw exceptions if called on the incorrect object
@@ -79,12 +80,14 @@ public:
 	 * @throw NotOnlineTitle If it is called on a Home Title Object
 	 */
 	virtual double getStats() const = 0;
+
 	/**
-	 * @brief Get the Number Users
+	 * @brief Get the Number of Users that have the Title
 	 * 
 	 * @return unsigned int Returns the number of Users that have the Title
 	 */
 	virtual unsigned int getNumberUsers() const = 0;
+
 	/**
 	 * @brief Updates a Home Title
 	 * Virtual function that may throw exceptions if called on the incorrect object
@@ -95,6 +98,7 @@ public:
 	 * @throw OldUpdate() If the Update that we are trying to add is already passed
 	 */
 	virtual void updateTitle(Update * newUpdate) = 0;
+
 	/**
 	 * @brief Function that helps to add a new User to the list of owners of that Title
 	 * Virtual function that may throw exceptions if User already has the Title
@@ -104,6 +108,7 @@ public:
 	 */
 	//TODO: & ou *??
 	virtual void addNewUser(User & u) = 0;
+
 	/**
 	 * @brief Function that Updates the User Home Title Version to the latest
 	 * Virtual function that may throw exceptions if called on the incorrect object
@@ -115,6 +120,17 @@ public:
 	 * @throw TitleUpToDate() If the Title is already up to date
 	 */
 	virtual void updateUserVersion(const User & usr) = 0;
+
+	/**
+	* @brief Get the total time played of Title by User
+	* Virtual function that may throw exceptions if called on the incorrect object
+	*
+	* @param usr Pointer to the User to get time played
+	* @throw NotOnlineTitle() If it is called on a Home Title Object
+	* @throw InexistentUser() If the user specified doesn't own the game
+	*/
+	virtual double getTimePlayed(const User * usr) const = 0;
+
 	/**
 	 * @brief Get the Subscription object
 	 * Virtual function that may throw exceptions if called on the incorrect object
@@ -130,48 +146,56 @@ public:
 	 * @return string Return the name Private Member
 	 */
 	std::string getName() const { return name; };
+
 	/**
 	 * @brief Get the Title ID Private Member
 	 * 
 	 * @return unsigned int Return the titleID Private Member
 	 */
 	unsigned int getTitleID() const { return titleID; };
+
 	/**
 	 * @brief Get the Base Price Private Member
 	 * 
 	 * @return double Return the basePrice Private Member
 	 */
 	double getBasePrice() const { return basePrice; };
+
 	/**
 	 * @brief Get the Release Date object
 	 * 
 	 * @return Date Return the releaseDate object
 	 */
 	Date getReleaseDate() const { return releaseDate; };
+
 	/**
 	 * @brief Get the Age Range Private Struct Member
 	 * 
 	 * @return ageRange Return the ageR Private Struct Member
 	 */
 	ageRange getAgeRange() const { return ageR; };
+
 	/**
 	 * @brief Get the Platform Private Member
 	 * 
 	 * @return string Return the platform Private Member
 	 */
 	std::string getPlatform() const { return platform; };
+
 	/**
 	 * @brief Get the Genre Private Member
 	 * 
 	 * @return string Return the genre Private Member 
 	 */
 	std::string getGenre() const { return genre; };
+
 	/**
 	 * @brief Get the Company Private Member
 	 * 
 	 * @return string Return the company Private Member 
 	 */
 	std::string getCompany() const { return company; };
+
 	/**
 	 * @brief Get the Last Sale object
 	 * May throw some exceptions if there are no sales
@@ -180,6 +204,7 @@ public:
 	 * @throw InexistentSale() If there are no Sales
 	 */
 	const Sale & getLastSale() const;
+
 	/**
 	 * @brief Get the Current Price object
 	 * 
@@ -199,6 +224,7 @@ public:
 	 * @throw OverlappingSales() If the promotion overlaps one already planned
 	 */
 	void addPromotion(Sale & promotion);
+
 	/**
 	 * @brief Remove future Promotion off of the vector of Sales
 	 * May throw some exceptions if the promotion has already started or doesn't exists

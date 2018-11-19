@@ -100,9 +100,52 @@ double GameLibrary::averageUserLibraryCost() const {
 	return total / users.size();
 }
 
-void GameLibrary::buildUserConsumingHabitsList(User* user) {
-	// TODO - implement GameLibrary::buildUserConsumingHabitsList
-	throw "Not yet implemented";
+double GameLibrary::onlineTitlesPlayTime(User * user) const
+{
+	double total = 0;
+	for (const Title * title : *(user->getPurchasedGames()))
+	{
+		try
+		{
+			double time = title->getTimePlayed(user);
+			total += time;
+		}
+		catch (NotOnlineTitle)
+		{
+			continue;
+		}
+		catch (InexistentUser)
+		{
+			continue;
+		}
+	}
+	return total;
+}
+
+void GameLibrary::buildUserConsumingHabitsList(User* user, ostream & os)
+{
+	os << "Consuming Habits of User " << user->getName() << ", ID = " << user->getUserID() << " :" << endl << endl;
+
+	double total = 0;
+	int updatesCount = 0, subsCount = 0;
+	for (const auto & trans : user->getTransactions())
+	{
+		os << trans << endl;
+		total += trans.getValue();
+
+		if (trans.getType() == homeUpdate) updatesCount++;
+		else if (trans.getType() == onlineSubscription) subsCount++;
+	}
+
+	os << endl;
+	os << "Account created on " << user->getCreationDate() << endl;
+	os << "Number of Titles Owned: " << (*(user->getPurchasedGames())).size() << endl;
+	os << "Number of Home Title Updates: " << updatesCount << endl;
+	os << "Number of Subscription Fees Payed: " << subsCount << endl;
+	os << "User Library Cost: " << total << endl;
+	os << "Favorite User Platform: " << favoriteUserPlatform(user) << endl;
+	os << "Online Titles Playtime: " << onlineTitlesPlayTime(user) << endl;
+	os << "Number of Friends: " << (user->getFriendsList()).size() << endl;
 }
 
 bool GameLibrary::updateTitleRevenue(Title* title, double amount) {

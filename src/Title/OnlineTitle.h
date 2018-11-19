@@ -121,6 +121,16 @@ public:
 	void addNewUser(User & u) override;
 
 	/**
+	* @brief Get the total time played of Title by User
+	* Virtual function that may throw exceptions if called on the incorrect object
+	*
+	* @param usr Pointer to the User to get time played
+	* @throw NotOnlineTitle() If it is called on a Home Title Object
+	* @throw InexistentUser() If the user specified doesn't own the game
+	*/
+	double getTimePlayed(const User * usr) const override { return getStats(*usr); }
+
+	/**
 	 * @brief Adds a new Session to the User's vector of sessions keepping it in order
 	 * May also throw other exceptions if the user is not a owner of the Title
 	 * 

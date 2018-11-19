@@ -6,7 +6,7 @@ using namespace std;
 
 unsigned int User::nextUserID = 1;
 
-User::User (std::string name, std::string email, int age, Address address) : userID(nextUserID) {
+User::User (std::string name, std::string email, int age, Address address) : userID(nextUserID), createdDate(Date::getCurrentDate()) {
 	this->name = name;
 	this->email = email;
 	this->age = age;

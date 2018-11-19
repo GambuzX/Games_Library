@@ -150,11 +150,20 @@ public:
 	double averageUserLibraryCost() const;
 
 	/**
+	* @brief Determines time spent by a User playing Online Titles
+	*
+	* @param user Pointer to User
+	* @return double time spent by a User playing Online Titles
+	*/
+	double onlineTitlesPlayTime(User * user) const;
+
+	/**
 	* @brief Builds a list of a User's consuming habits
 	*
 	* @param user Pointer to the User
+	* @param os Output stream to write to
 	*/
-	void buildUserConsumingHabitsList(User* user);
+	void buildUserConsumingHabitsList(User* user, std::ostream & os);
 
 	/**
 	* @brief Updates the revenue of a Title

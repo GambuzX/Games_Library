@@ -31,6 +31,7 @@ class User {
 private:
 	static unsigned int nextUserID; /**< @brief Static Unsigned Int used to assign different IDs to each User */
 	const unsigned int userID; /**< @brief Unsigned Int with the user ID */
+	const Date createdDate; /**< @brief Date the User account was created */
 	std::string name; /**< @brief String with the user name */
 	std::string email; /**< @brief String with the user email */
 	int age; /**< @brief Int with the user age */
@@ -44,6 +45,7 @@ public:
 	/**
 	* @brief Construct a new User object
 	* Uses the nextUserID static int to assign the userID
+	* Assigns the current Date to createdDate
 	*
 	* @param name String that initializes the name Private Member
 	* @param email String that initializes the email Private Member
@@ -51,6 +53,13 @@ public:
 	* @param address Address that initializes the address Private Member
 	*/
 	User (std::string name, std::string email, int age, Address address);
+
+	/**
+	* @brief Get the createdDate Private Member
+	*
+	* @return Date Returns the createdDate Private Member
+	*/
+	Date getCreationDate() const { return createdDate; }
 
 	/**
 	* @brief Get the name Private Member
