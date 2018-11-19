@@ -98,6 +98,8 @@ bool User::buyTitle(Title* title) {
 	if (!subtractValue(price)) return false;
 	GameLibrary::updateTitleRevenue(title, price);
 
+	//TODO ADD USER TO ONLINE STATS OU HOME UPDATES
+
 	// add transaction
 	transactions.push_back(Transaction(price, Date::getCurrentDate(), gamePurchase));
 
@@ -234,7 +236,7 @@ bool User::playGame(Title * title, double duration) {
 	{
 		double playPrice = title->getSubscription()->sessionPrice(duration);
 		if (!hasEnoughMoney(playPrice)) return false;
-		// TODO Add session
+		// TODO Add game SESSION
 		if (!subtractValue(playPrice)) return false;
 		GameLibrary::updateTitleRevenue(title, playPrice);
 		transactions.push_back(Transaction(playPrice, Date::getCurrentDate(), onlineSubscription));

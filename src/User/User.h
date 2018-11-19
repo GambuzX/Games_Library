@@ -10,7 +10,7 @@
 #include "..\Utilities\Address.h"
 #include "..\Utilities\CompareObj.h"
 
-// TODO: tentar evitar inclusão de bibliotecas circular (??) para já está isto
+// TODO: tentar evitar inclus? de bibliotecas circular (??) para j?est?isto
 
 class Title;
 
@@ -285,6 +285,8 @@ public:
 	* @return bool Returns the result of the IDs comparison
 	*/
 	bool operator<(const User & usr) const;
+
+	//TODO Get User info function
 };
 
 /** @} */

@@ -245,6 +245,9 @@ public:
 	 * @return false If the title on the left of signal has a bigger or equal titleID to the one on the right side
 	 */
 	bool operator<(const Title & t2) const;
+
+	
+	//TODO Get User info function
 };
 
 /** @} */
