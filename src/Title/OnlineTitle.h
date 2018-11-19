@@ -48,6 +48,7 @@ public:
 	 * @throw NotOnlineTitle If it is called on a Home Title Object
 	 */
 	Subscription * getSubscription() const { return subscription; };
+
 	/**
 	 * @brief Get the Vector of Updates
 	 * Virtual function that may throw exceptions if called on the incorrect object
@@ -56,12 +57,22 @@ public:
 	 * @throw NotHomeTitle() If it is called on a Online Title Object
 	 */
 	const std::vector<Update> & getUpdates() const override;
+
 	/**
 	 * @brief Get the Number Users
 	 * 
 	 * @return unsigned int Returns the number of Users that have the Title
 	 */
 	unsigned int getNumberUsers() const override { return titleStats.size(); };
+
+	/**
+	 * @brief Get the Number of Users within an Age Range that have the Title
+	 *
+	 * @param Age range Users must belong to
+	 * @return unsigned int Returns the number of Users that have the Title
+	 */
+	unsigned int getNumberUsers(ageRange ageR) const override;
+
 	/**
 	 * @brief Get the Stats of a Title (hours played)
 	 * Virtual function that may throw exceptions if called on the incorrect object
@@ -70,6 +81,7 @@ public:
 	 * @throw NotOnlineTitle If it is called on a Home Title Object
 	 */
 	double getStats() const override;
+
 	/**
 	 * @brief Get the Stats of a Title of a certain User (hours played)
 	 * May also throw other exceptions if the user is not a owner of the Title
@@ -79,6 +91,7 @@ public:
 	 * @throw InexistentUser() If the user specified doesn't own the Online Title
 	 */
 	double getStats(const User & u) const;
+
 	/**
 	 * @brief Get the Stats of a Title of a certain User (hours played)
 	 * May also throw other exceptions if the user is not a owner of the Title
@@ -99,6 +112,7 @@ public:
 	 * @throw OldUpdate() If the Update that we are trying to add is already passed
 	 */
 	void updateTitle(Update * newUpdate) override;
+
 	/**
 	 * @brief Function that Updates the User Home Title Version to the latest
 	 * Virtual function that may throw exceptions if called on the incorrect object
@@ -139,6 +153,7 @@ public:
 	 * @throw InexistentUser() If the user specified by its ID doesn't own the Home Title
 	 */
 	void addNewSession(const User & u, const Session & sess);
+
 	/**
 	 * @brief Adds a new Session to the User's vector of sessions keepping it in order
 	 * May also throw other exceptions if the user is not a owner of the Title

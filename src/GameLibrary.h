@@ -128,9 +128,9 @@ public:
 	*
 	* @param platform Filter to limit ranking to this platform
 	* @param genre Filter to limit ranking to this genre
-	* @param ageGroup Filter to limit ranking to this age group
+	* @param ageR Filter to limit ranking to this age group
 	*/
-	void buildPopularityRanking(std::ostream & os, gameLibraryPlatform platform, gameLibraryGenre genre, gameLibraryAgeGroup ageGroup);
+	void buildPopularityRanking(std::ostream & os, gameLibraryPlatform platform, gameLibraryGenre genre, ageRange ageR);
 
 	/**
 	* @brief Determines the average number of titles per user
@@ -220,21 +220,13 @@ public:
 	static std::string getGenreName(gameLibraryGenre genre);
 
 	/**
-	* @brief Get the name of a ageGroup
-	*
-	* @param ageGroup Enum type of the ageGroup
-	* @return string Returns the name of the ageGroup provided as argument
-	*/
-	static std::string getAgeGroupString(gameLibraryAgeGroup ageGroup);
-
-	/**
 	* @brief Check if a Title is Adequate for an Age Group
 	*
-	* @param title Title to verify
-	* @param ageG Age Group in question
+	* @param usr User to verify age
+	* @param ageR Age Range in question
 	* @return bool Returns true if adequate, false otherwise
 	*/
-	static bool titleAdequateForAgeGroup(const Title * title, gameLibraryAgeGroup ageG);
+	static bool userBelongsToAgeRange(const User * usr, ageRange ageR);
 	
 };
 

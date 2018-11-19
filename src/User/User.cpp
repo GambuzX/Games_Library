@@ -1,17 +1,17 @@
+#include <iostream>
 #include "User.h"
 #include "..\GameLibrary.h"
 #include "..\Utilities\Exceptions.h"
 
 using namespace std;
 
-unsigned int User::nextUserID = 1;
+unsigned int User::nextUserID = 0;
 
-User::User (std::string name, std::string email, int age, Address address) : userID(nextUserID), createdDate(Date::getCurrentDate()) {
+User::User (std::string name, std::string email, int age, Address address) : userID(++nextUserID), createdDate(Date::getCurrentDate()) {
 	this->name = name;
 	this->email = email;
 	this->age = age;
 	this->address = address;
-	nextUserID++;
 }
 
 bool User::addCreditCard(CreditCard cc) {
@@ -98,7 +98,15 @@ bool User::buyTitle(Title* title) {
 	if (!subtractValue(price)) return false;
 	GameLibrary::updateTitleRevenue(title, price);
 
-	//TODO ADD USER TO ONLINE STATS OU HOME UPDATES
+	try
+	{
+		title->addNewUser(*this);
+	}
+	catch (DuplicatetUser)
+	{
+		cout << "buyTitle: Tried to buy repeated title" << endl;
+		return false;
+	}
 
 	// add transaction
 	transactions.push_back(Transaction(price, Date::getCurrentDate(), gamePurchase));
@@ -121,6 +129,16 @@ bool User::buyTitle(unsigned int titleID) {
 	if (!subtractValue(price)) return false;
 	GameLibrary::updateTitleRevenue(title, price);
 
+	try
+	{
+		title->addNewUser(*this);
+	}
+	catch (DuplicatetUser)
+	{
+		cout << "buyTitle: Tried to buy repeated title" << endl;
+		return false;
+	}
+
 	// add transaction
 	transactions.push_back(Transaction(price, Date::getCurrentDate(), gamePurchase));
 
@@ -142,6 +160,16 @@ bool User::buyTitle(std::string name)
 	// Charge price ; Checks if has enough money
 	if (!subtractValue(price)) return false;
 	GameLibrary::updateTitleRevenue(title, price);
+
+	try
+	{
+		title->addNewUser(*this);
+	}
+	catch (DuplicatetUser)
+	{
+		cout << "buyTitle: Tried to buy repeated title" << endl;
+		return false;
+	}
 
 	// add transaction
 	transactions.push_back(Transaction(price, Date::getCurrentDate(), gamePurchase));

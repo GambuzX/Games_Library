@@ -44,6 +44,15 @@ const std::vector<Update>& OnlineTitle::getUpdates() const
 	throw NotHomeTitle(getTitleID());
 }
 
+unsigned int OnlineTitle::getNumberUsers(ageRange ageR) const
+{
+	int total = 0;
+	for (const auto & ref : titleStats)
+		if (ref.first->getAge() >= ageR.minAge && ref.first->getAge() <= ageR.maxAge)
+			total++;
+	return total;
+}
+
 double OnlineTitle::getStats() const{
 	double res = 0.0;
 	for (auto pair : titleStats)

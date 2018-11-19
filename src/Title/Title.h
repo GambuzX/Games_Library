@@ -90,6 +90,14 @@ public:
 	virtual unsigned int getNumberUsers() const = 0;
 
 	/**
+	 * @brief Get the Number of Users within an Age Range that have the Title
+	 *
+	 * @param Age range Users must belong to
+	 * @return unsigned int Returns the number of Users that have the Title
+	 */
+	virtual unsigned int getNumberUsers(ageRange ageR) const = 0;
+
+	/**
 	 * @brief Updates a Home Title
 	 * Virtual function that may throw exceptions if called on the incorrect object
 	 * Also Throws exception if the parameter is not a new Update

@@ -75,7 +75,7 @@ bool GameLibrary::updateTitle(Title* title, Update * update) {
 	return true;
 }
 
-void GameLibrary::buildPopularityRanking(ostream & os, gameLibraryPlatform platform, gameLibraryGenre genre, gameLibraryAgeGroup ageGroup) {
+void GameLibrary::buildPopularityRanking(ostream & os, gameLibraryPlatform platform, gameLibraryGenre genre, ageRange ageR) {
 	
 	map<int, const Title*> rankedList;
 	
@@ -84,14 +84,13 @@ void GameLibrary::buildPopularityRanking(ostream & os, gameLibraryPlatform platf
 	{
 		if (!(title->getPlatform() == platform || platform == all_platforms)) continue;
 		if (!(title->getGenre() == genre || genre == all_genres)) continue;
-		if (!(titleAdequateForAgeGroup(title, ageGroup) || ageGroup == all_ages)) continue;
-		int numberOfPlayers = title->getNumberUsers();
+		int numberOfPlayers = title->getNumberUsers(ageR);
 		rankedList.insert(pair<int, const Title*>(numberOfPlayers, title));
 	}
 
 	os << "Titles Popularity Ranking" << endl << endl;
 	os << "Filters used:\n" << "Platform = " << getPlatformName(platform);
-	os << ", Genre = " << getGenreName(genre) << ", Age Group = " << ageGroup << endl << endl;
+	os << ", Genre = " << getGenreName(genre) << ", Age Group = " << ageR.minAge << " to " << ageR.maxAge << endl << endl;
 
 	os << "N" << " " << "ID" << " " << "Name" << " " << "Popularity" << endl;
 	int counter = 1;
@@ -214,23 +213,20 @@ string GameLibrary::getGenreName(gameLibraryGenre genre)
 	case action: return "Action";
 	case adventure: return "Adventure";
 	case puzzle: return "Puzzle";
+	case shooter: return "Shooter";
+	case simulation: return "Simulation";
+	case rpg: return "RPG";
+	case platformer: return "Platformer";
+	case strategy: return "Strategy";
+	case sports: return "Sports";
+	case mmo: return "MMO";
+	case all_genres: return "All Genres";
 	}
 	// TODO CHANGE THIS???
 	return "Invalid genre";
 }
 
-string GameLibrary::getAgeGroupString(gameLibraryAgeGroup ageGroup)
+bool GameLibrary::userBelongsToAgeRange(const User * usr, ageRange ageR)
 {
-	switch (ageGroup)
-	{
-	case a_0_12: return "0 to 12 years";
-	}
-	// TODO CHANGE THIS???
-	return "Invalid Age Group";
-}
-
-// TODO IMPLEMENT THIS !!!!!!!
-bool GameLibrary::titleAdequateForAgeGroup(const Title * title, gameLibraryAgeGroup ageG)
-{
-	return true;
+	return (usr->getAge() >= ageR.minAge && usr->getAge() <= ageR.maxAge);
 }

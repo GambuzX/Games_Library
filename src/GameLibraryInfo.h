@@ -1,7 +1,6 @@
 #ifndef GAME_LIBRARY_INFO
 #define GAME_LIBRARY_INFO
 
-
 /**
 * @brief Enumerated type for identifying the different genres of the Game Library's Titles
 */
@@ -11,24 +10,13 @@ enum gameLibraryGenre
 	action, /*!< Action genre*/
 	adventure, /*!< Adventure genre*/
 	puzzle, /*!< Puzzle genre*/
-	fps, /*!< First Person Shooter genre*/
+	shooter, /*!< First Person Shooter genre*/
 	simulation, /*!< Simulation genre*/
 	rpg, /*!< Role Playing Game genre*/
-	platformer /*!< Platformer genre*/
-};
-
-/**
-* @brief Enumerated type for identifying the different age groups defined by the Game Library
-*/
-enum gameLibraryAgeGroup
-{
-	// TODO CHANGE THIS!!!
-	all_ages,
-	a_0_12,
-	a_13_17,
-	a_18_29,
-	a_30_50,
-	a_50_plus
+	platformer, /*!< Platformer genre*/
+	strategy, /*!< Strategy genre*/
+	sports, /*!< Sports genre*/
+	mmo /*!< MMO genre*/
 };
 
 /**

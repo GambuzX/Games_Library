@@ -20,6 +20,15 @@ void HomeTitle::addNewUser(User & u)
 	userUpdates.insert(pair<User*, vector<Update*>>(&u, v1));
 }
 
+unsigned int HomeTitle::getNumberUsers(ageRange ageR) const
+{
+	int total = 0;
+	for (const auto & ref : userUpdates)
+		if (ref.first->getAge() >= ageR.minAge && ref.first->getAge() <= ageR.maxAge)
+			total++;
+	return total;
+}
+
 void HomeTitle::updateTitle(Update * newUpdate)
 {
 	if (titleUpdateHistory.size() == 0)

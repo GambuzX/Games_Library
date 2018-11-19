@@ -56,12 +56,22 @@ public:
 	 * @throw NotHomeTitle() If it is called on a Online Title Object
 	 */
 	const std::vector<Update> & getUpdates() const override { return titleUpdateHistory; };
+
 	/**
 	 * @brief Get the Number Users
 	 * 
 	 * @return unsigned int Returns the number of Users that have the Title
 	 */
 	unsigned int getNumberUsers() const override { return userUpdates.size(); };
+
+	/**
+	 * @brief Get the Number of Users within an Age Range that have the Title
+	 *
+	 * @param Age range Users must belong to
+	 * @return unsigned int Returns the number of Users that have the Title
+	 */
+	unsigned int getNumberUsers(ageRange ageR) const;
+
 	/**
 	 * @brief Get the Stats of a Title (hours played)
 	 * Virtual function that may throw exceptions if called on the incorrect object
@@ -70,6 +80,7 @@ public:
 	 * @throw NotOnlineTitle If it is called on a Home Title Object
 	 */
 	double getStats() const override;
+
 	/**
 	 * @brief Get the Subscription object
 	 * Virtual function that may throw exceptions if called on the incorrect object
@@ -85,6 +96,7 @@ public:
 	 * @return const Update& Return the Last Update made to the Home Title
 	 */
 	const Update & getCurrentVersion() const { return titleUpdateHistory.at(titleUpdateHistory.size() - 1); };
+
 	/**
 	 * @brief Get the Current User Update Version object
 	 * May also throw other exceptions if the user is not a owner of the Title
@@ -94,6 +106,7 @@ public:
 	 * @throw InexistentUser() If the user specified doesn't own the Home Title
 	 */
 	const Update & getCurrentUserVersion(const User & u) const;
+
 	/**
 	 * @brief Get the Current User Update Version object
 	 * May also throw other exceptions if the user is not a owner of the Title
@@ -103,6 +116,7 @@ public:
 	 * @throw InexistentUser() If the user specified by its ID doesn't own the Home Title
 	 */
 	const Update & getCurrentUserVersion(unsigned int userID) const;
+
 	//const Update & getCurrentUserVersion(std::string name) const;
 
 	/**
@@ -127,6 +141,7 @@ public:
 	 * @throw TitleUpToDate() If the Title is already up to date
 	 */
 	void updateUserVersion(const User & usr) override;
+
 	/**
 	 * @brief Function that Updates the User Home Title Version to the latest
 	 * Virtual function that may throw exceptions if called on the incorrect object
