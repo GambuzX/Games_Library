@@ -3,7 +3,6 @@
 
 #include <map>
 #include <vector>
-#include "..\Utilities\Session.h"
 #include "..\Utilities\CompareObj.h"
 #include "Title.h"
 
@@ -145,17 +144,17 @@ public:
 	double getTimePlayed(const User * usr) const override { return getStats(*usr); }
 
 	/**
-	 * @brief Adds a new Session to the User's vector of sessions keepping it in order
+	 * @brief Adds a new Session to the User's vector of sessions kepping it in order
 	 * May also throw other exceptions if the user is not a owner of the Title
 	 * 
 	 * @param u User that you want to add a session to
 	 * @param sess Session to be added to the Vector of Sessions
 	 * @throw InexistentUser() If the user specified by its ID doesn't own the Home Title
 	 */
-	void addNewSession(const User & u, const Session & sess);
+	void addNewSession(const User & u, const Session & sess) override;
 
 	/**
-	 * @brief Adds a new Session to the User's vector of sessions keepping it in order
+	 * @brief Adds a new Session to the User's vector of sessions kepping it in order
 	 * May also throw other exceptions if the user is not a owner of the Title
 	 * 
 	 * @param userID ID of the User that you want to add a session to

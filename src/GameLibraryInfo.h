@@ -31,5 +31,19 @@ enum gameLibraryPlatform
 	all
 };
 
+/**
+* @brief Enumerated type for identifying the different filters to be used when building the consuming habits list
+*/
+enum ConsumingHabitsFilter
+{
+	pus, /*!< Purchases, Updates and Subscriptions */
+	p, /*!< Purchases */
+	u, /*!< Updates */
+	s, /*!< Subscriptions */
+	pu, /*!< Purchases and Updates */
+	ps, /*!< Purchases and Subscriptions */
+	us /*!< Updates and Subscriptions */
+};
+
 
 #endif

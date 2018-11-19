@@ -9,6 +9,7 @@
 #include "..\Utilities\Date.h"
 #include "..\Utilities\Sale.h"
 #include "..\Utilities\Update.h"
+#include "..\Utilities\Session.h"
 
 // TODO: tentar evitar inclusao de bibliotecas circular (??) para ja esta isto
 class User;
@@ -129,6 +130,17 @@ public:
 	 * @throw TitleUpToDate() If the Title is already up to date
 	 */
 	virtual void updateUserVersion(const User & usr) = 0;
+
+	/**
+	 * @brief Adds a new Session to the User's vector of sessions kepping it in order
+	 * May also throw other exceptions if the user is not a owner of the Title
+	 *
+	 * @param u User that you want to add a session to
+	 * @param sess Session to be added to the Vector of Sessions
+	 * @throw InexistentUser() If the user specified by its ID doesn't own the Home Title
+	 * @throw NotOnlineTitle If it is called on a Home Title Object
+	 */
+	virtual void addNewSession(const User & u, const Session & sess) = 0;
 
 	/**
 	* @brief Get the total time played of Title by User

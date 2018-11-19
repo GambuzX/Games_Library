@@ -264,8 +264,18 @@ bool User::playGame(Title * title, double duration) {
 	{
 		double playPrice = title->getSubscription()->sessionPrice(duration);
 		if (!hasEnoughMoney(playPrice)) return false;
-		// TODO Add game SESSION
 		if (!subtractValue(playPrice)) return false;
+
+		try
+		{
+			title->addNewSession(*this, Session(duration, Date::getCurrentDate()));
+		}
+		catch (NotOnlineTitle)
+		{
+			//TODO Cout something?
+			return false;
+		}
+
 		GameLibrary::updateTitleRevenue(title, playPrice);
 		transactions.push_back(Transaction(playPrice, Date::getCurrentDate(), onlineSubscription));
 	}

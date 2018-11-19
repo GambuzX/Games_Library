@@ -176,7 +176,7 @@ public:
 	* @param user Pointer to the User
 	* @param os Output stream to write to
 	*/
-	void buildUserConsumingHabitsList(User* user, std::ostream & os);
+	void buildUserConsumingHabitsList(User* user, std::ostream & os, ConsumingHabitsFilter chFilter);
 
 	/**
 	* @brief Updates the revenue of a Title

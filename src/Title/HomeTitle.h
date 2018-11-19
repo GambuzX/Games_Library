@@ -82,6 +82,17 @@ public:
 	double getStats() const override;
 
 	/**
+	 * @brief Adds a new Session to the User's vector of sessions kepping it in order
+	 * May also throw other exceptions if the user is not a owner of the Title
+	 *
+	 * @param u User that you want to add a session to
+	 * @param sess Session to be added to the Vector of Sessions
+	 * @throw InexistentUser() If the user specified by its ID doesn't own the Home Title
+	 * @throw NotOnlineTitle If it is called on a Home Title Object
+	 */
+	void addNewSession(const User & u, const Session & sess) override { throw NotOnlineTitle(getTitleID()); }
+
+	/**
 	 * @brief Get the Subscription object
 	 * Virtual function that may throw exceptions if called on the incorrect object
 	 * 

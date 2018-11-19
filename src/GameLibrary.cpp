@@ -144,30 +144,73 @@ double GameLibrary::onlineTitlesPlayTime(User * user) const
 	return total;
 }
 
-void GameLibrary::buildUserConsumingHabitsList(User* user, ostream & os)
+void GameLibrary::buildUserConsumingHabitsList(User* user, ostream & os, ConsumingHabitsFilter chFilter)
 {
+	bool purchases = false, updates = false, subscriptions = false;
+	switch (chFilter)
+	{
+	case pus: purchases = true;	updates = true;	subscriptions = true; break;
+	case p:	purchases = true; break;
+	case u:	updates = true;	break;
+	case s:	subscriptions = true; break;
+	case pu: purchases = true; updates = true; break;
+	case ps: purchases = true; subscriptions = true; break;
+	case us: updates = true; subscriptions = true; break;
+	default: break;
+	}
+
 	os << "Consuming Habits of User " << user->getName() << ", ID = " << user->getUserID() << " :" << endl << endl;
 
-	double total = 0;
+	double purchasesTotal = 0, updatesTotal = 0, subsTotal = 0;
 	int updatesCount = 0, subsCount = 0;
 	for (const auto & trans : user->getTransactions())
 	{
-		os << trans << endl;
-		total += trans.getValue();
-
-		if (trans.getType() == homeUpdate) updatesCount++;
-		else if (trans.getType() == onlineSubscription) subsCount++;
+		if (trans.getType() == gamePurchase)
+		{
+			purchasesTotal += trans.getValue();
+			if (purchases)
+				os << trans << endl;
+		}
+		else if (trans.getType() == homeUpdate)
+		{
+			updatesCount++; 
+			updatesTotal += trans.getValue();
+			if (updates)
+				os << trans << endl;
+		}
+		else if (trans.getType() == onlineSubscription)
+		{
+			subsCount++;
+			subsTotal += trans.getValue();
+			if (subscriptions)
+				os << trans << endl;
+		}
 	}
 
 	os << endl;
-	os << "Account created on " << user->getCreationDate() << endl;
-	os << "Number of Titles Owned: " << (*(user->getPurchasedGames())).size() << endl;
-	os << "Number of Home Title Updates: " << updatesCount << endl;
-	os << "Number of Subscription Fees Payed: " << subsCount << endl;
-	os << "User Library Cost: " << total << endl;
-	os << "Favorite User Platform: " << favoriteUserPlatform(user) << endl;
-	os << "Online Titles Playtime: " << onlineTitlesPlayTime(user) << endl;
-	os << "Number of Friends: " << (user->getFriendsList()).size() << endl;
+	if (purchases)
+	{
+		os << "Number of Titles Owned: " << (*(user->getPurchasedGames())).size() << endl;
+		os << "Total spent purchasing Titles: " << purchasesTotal << endl;
+	}
+	if (updates)
+	{
+		os << "Number of Home Title Updates: " << updatesCount << endl;
+		os << "Total spent updating Home Titles: " << updatesTotal << endl;
+	}
+	if (subscriptions)
+	{
+		os << "Number of Subscription Fees Payed: " << subsCount << endl;
+		os << "Total spent paying Subscription Fees: " << subsTotal << endl;
+	}
+	if (purchases && updates && subscriptions)
+	{
+		os << "User Library Cost: " << (purchasesTotal + updatesTotal + subsTotal) << endl;
+		os << "Account created on " << user->getCreationDate() << endl;
+		os << "Favorite User Platform: " << favoriteUserPlatform(user) << endl;
+		os << "Online Titles Playtime: " << onlineTitlesPlayTime(user) << endl;
+		os << "Number of Friends: " << (user->getFriendsList()).size() << endl;
+	}
 }
 
 bool GameLibrary::updateTitleRevenue(Title* title, double amount) {
