@@ -53,17 +53,7 @@ enum ConsumingHabitsFilter
 * @param platform Enum type of the platform
 * @return string Returns the name of the platform provided as argument
 */
-std::string platformEnum2string(gameLibraryPlatform platform)
-{
-	switch (platform)
-	{
-	case pc: return "PC";
-	case ps4: return "PS4";
-	case xbox: return "XBOX";
-	}
-	// TODO CHANGE THIS???
-	return "Invalid platform";
-}
+std::string platformEnum2string(gameLibraryPlatform platform);
 
 /**
 * @brief Get the name of a genre
@@ -71,24 +61,6 @@ std::string platformEnum2string(gameLibraryPlatform platform)
 * @param genre Enum type of the genre
 * @return string Returns the name of the genre provided as argument
 */
-std::string genreEnum2string(gameLibraryGenre genre)
-{
-	switch (genre)
-	{
-	case action: return "Action";
-	case adventure: return "Adventure";
-	case puzzle: return "Puzzle";
-	case shooter: return "Shooter";
-	case simulation: return "Simulation";
-	case rpg: return "RPG";
-	case platformer: return "Platformer";
-	case strategy: return "Strategy";
-	case sports: return "Sports";
-	case mmo: return "MMO";
-	case all_genres: return "All Genres";
-	}
-	// TODO CHANGE THIS???
-	return "Invalid genre";
-}
+std::string genreEnum2string(gameLibraryGenre genre);
 
 #endif
