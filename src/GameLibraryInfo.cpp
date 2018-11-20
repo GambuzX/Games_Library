@@ -6,9 +6,14 @@ string platformEnum2string(gameLibraryPlatform platform)
 {
 	switch (platform)
 	{
+	case all_platforms: return "ALL";
 	case pc: return "PC";
+	case ps3: return "PS3";
 	case ps4: return "PS4";
-	case xbox: return "XBOX";
+	case xbox1: return "XBOX ONE";
+	case xbox360: return "XBOX 360";
+	case wii: return "WII";
+	case nds: return "NDS";
 	}
 	// TODO CHANGE THIS???
 	return "Invalid platform";

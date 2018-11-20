@@ -85,13 +85,13 @@ bool menuOnlineHome() {
 gameLibraryPlatform menuPlatform() {
 	int option_number;
 
-	cout << " Plataform :" << endl << endl;
+	cout << " Platform :" << endl << endl;
 
 	cout << "   1 - PC" << endl;
 
 	cout << "   2 - PS4" << endl;
 	
-	cout << "   3 - XBOX" << endl;
+	cout << "   3 - XBOX1" << endl;
 
 	cout << "   0 - All the Plataforms" << endl << endl;
 
@@ -106,7 +106,7 @@ gameLibraryPlatform menuPlatform() {
 	case 2:
 		return ps4;
 	case 3:
-		return xbox;
+		return xbox1;
 	// Should never reach here
 	default:
 		throw invalid_argument(" Error in menuPlatform() ");

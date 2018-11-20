@@ -14,7 +14,7 @@ void OnlineTitle::addNewUser(User & u)
 	map<User*, vector<Session>, ComparePtr<User>>::iterator it;
 	it = titleStats.find(&u);
 	if (it != titleStats.end())
-		throw DuplicatetUser(u.getUserID());
+		throw DuplicatedUser(u.getUserID());
 	titleStats.insert(pair<User*, vector<Session>>(&u, {}));
 }
 

@@ -185,10 +185,11 @@ public:
 	* @brief Verify if User has Title
 	* Uses GameLibrary's static method getTitle() to retrieve information about the Title with name name
 	*
-	* @param name name of Title to search
+	* @param name Name of Title to search
+	* @param platform Platform of title
 	* @return bool Returns true if user has it, false otherwise
 	*/
-	bool hasTitle(std::string name) const;
+	bool hasTitle(std::string name, gameLibraryPlatform platform) const;
 
 	/**
 	* @brief Buy Title for User
@@ -220,10 +221,11 @@ public:
 	* Updates GameLibrary's titleRevenue map
 	* Adds a transaction to User
 	*
-	* @param name name of Title to buy
+	* @param name Name of Title to buy
+	* @param platform Platform of Title
 	* @return bool Returns true if successfull, false otherwise
 	*/
-	bool buyTitle(std::string name);
+	bool buyTitle(std::string name, gameLibraryPlatform platform);
 
 	/**
 	* @brief Update User version of a Title

@@ -15,6 +15,7 @@ public:
 	OldUpdate(const Update & oldUp) { oldUpdate = oldUp; };
 	OldUpdate(const Update & oldUp, const Update & currUp) { oldUpdate = oldUp; currentVersion = currUp; };
 	Update getOldUpdate() const { return oldUpdate; };
+	Update getCurrentVersion() const { return currentVersion; };
 	std::string getMessage() const
 	{
 		std::ostringstream oss;
@@ -188,12 +189,12 @@ public:
 	unsigned getUserID() { return userID; }
 };
 
-class DuplicatetUser
+class DuplicatedUser
 {
 private:
 	unsigned userID;
 public:
-	DuplicatetUser(unsigned id) { userID = id; }
+	DuplicatedUser(unsigned id) { userID = id; }
 	unsigned getUserID() { return userID; }
 };
 

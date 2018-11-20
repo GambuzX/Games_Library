@@ -25,8 +25,17 @@ bool GameLibrary::removeUser(User * user) {
 	return true;
 }
 
-void GameLibrary::addTitle(Title * title) {
+bool GameLibrary::addTitle(Title * title) {
+	bool repeated = false;
+	for (const auto t : titles)
+		if (t->getName() == title->getName() && t->getPlatform() == title->getPlatform())
+		{
+			repeated = true;
+			break;
+		}
+	if (repeated) return false;
 	titles.insert(title);
+	return true;
 }
 
 bool GameLibrary::removeTitle(Title * title) {
@@ -47,6 +56,19 @@ bool GameLibrary::removeTitle(unsigned int id) {
 	return true;
 }
 
+bool GameLibrary::isOnlineTitle(Title * title) const
+{
+	try
+	{
+		title->getSubscription();
+	}
+	catch (NotOnlineTitle)
+	{
+		return false;
+	}
+	return true;
+}
+
 void GameLibrary::saveGameLibraryToFile(std::fstream& titleFile)
 {
 
@@ -62,14 +84,15 @@ bool GameLibrary::updateTitle(Title* title, Update * update) {
 	{
 		title->updateTitle(update);
 	}
-	catch (NotHomeTitle & excp)
+	catch (NotHomeTitle)
 	{
-		cout << "updateTitle: Tried to update Online Title with ID " << excp.getTitleID() << endl;
+		cout << "(" << __func__ << ") Game Library tried to update Online Title " << title->getName() << endl;
 		return false;
 	}
 	catch (OldUpdate & excp)
 	{
-		cout << "updateTitle: Tried to update to an older version " << excp.getOldUpdate().getVersion() << endl;
+		cout << "(" << __func__ << ") Tried to update title " << title->getName() << " from Current version " << excp.getCurrentVersion().getVersion();
+		cout << " to Older version " << excp.getOldUpdate().getVersion() << endl;
 		return false;
 	}
 	return true;
@@ -193,10 +216,13 @@ double GameLibrary::onlineTitlesPlayTime(User * user) const
 		}
 		catch (NotOnlineTitle)
 		{
+			cout << "(" << __func__ << ") Game Library tried to get time played from Home Title " << title->getName() << endl;
 			continue;
 		}
 		catch (InexistentUser)
 		{
+			cout << "(" << __func__ << ") Tried to get time played from title " << title->getName() << " for User ";
+			cout << user->getName() << " who does not own the title" << endl;
 			continue;
 		}
 	}
@@ -288,10 +314,10 @@ Title * GameLibrary::getTitle(unsigned int titleID)
 	return nullptr;
 }
 
-Title * GameLibrary::getTitle(std::string name)
+Title * GameLibrary::getTitle(std::string name, gameLibraryPlatform platform)
 {
 	for (auto & title : titles)
-		if (title->getName() == name)
+		if (title->getName() == name && title->getPlatform() == platform)
 			return const_cast<Title*>(title);
 	return nullptr;
 }

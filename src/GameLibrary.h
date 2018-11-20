@@ -77,10 +77,12 @@ public:
 
 	/**
 	* @brief Adds a Title to the Game Library
+	* Returns false if Title with same name and platform already exists
 	*
 	* @param user Pointer to the Title to be added
+	* @return bool Returns true if successfully added title, false otherwise
 	*/
-	void addTitle(Title * title);
+	bool addTitle(Title * title);
 
 	/**
 	* @brief Removes a Title from the Game Library
@@ -97,6 +99,14 @@ public:
 	* @return bool Returns true if successfull, false otherwise
 	*/
 	bool removeTitle(unsigned int id);
+
+	/**
+	* @brief Verifies if a Title is an Online Title
+	*
+	* @param title Pointer to title to verify
+	* @return bool Returns true if it is an Online Title, false otherwise
+	*/
+	bool isOnlineTitle(Title * title) const;
 
 	/**
 	* @brief Saves the current Game Library and all of its data to a file
@@ -230,9 +240,10 @@ public:
 	* @brief Get the pointer for a Title
 	*
 	* @param name Name of Title to get
+	* @param platform Platform of Title
 	* @return Title* Pointer to the Title with name name
 	*/
-	static Title* getTitle(std::string name);
+	static Title* getTitle(std::string name, gameLibraryPlatform platform);
 
 	/**
 	* @brief Check if a Title is Adequate for an Age Group

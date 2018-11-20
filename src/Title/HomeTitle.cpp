@@ -13,7 +13,7 @@ void HomeTitle::addNewUser(User & u)
 	map<User*, vector<Update*>, ComparePtr<User>>::iterator it;
 	it = userUpdates.find(&u);
 	if (it != userUpdates.end())
-		throw DuplicatetUser(u.getUserID());
+		throw DuplicatedUser(u.getUserID());
 	
 	vector<Update*> v1;
 	v1.push_back(const_cast<Update*>(&getCurrentVersion()));

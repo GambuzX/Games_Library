@@ -47,7 +47,7 @@ bool User::subtractValue(double val)
 			}
 			catch (NotEnoughFunds & exc)
 			{
-				printf("(%s) Not enough funds: %f", __func__, exc.getFunds());
+				cout << "(" << __func__ << ") Not enough funds: " << exc.getFunds() << endl;
 				return false;
 			}
 			val = 0;
@@ -79,10 +79,10 @@ bool User::hasTitle(unsigned int titleID) const {
 	return false;
 }
 
-bool User::hasTitle(string name) const {
+bool User::hasTitle(string name, gameLibraryPlatform platform) const {
 	set<Title*>::iterator it;
 	for (it = purchasedGames->begin(); it != purchasedGames->end(); it++)
-		if ((*it)->getName() == name)
+		if ((*it)->getName() == name && (*it)->getPlatform() == platform)
 			return true;
 	return false;
 }
@@ -102,9 +102,9 @@ bool User::buyTitle(Title* title) {
 	{
 		title->addNewUser(*this);
 	}
-	catch (DuplicatetUser)
+	catch (DuplicatedUser)
 	{
-		cout << "buyTitle: Tried to buy repeated title" << endl;
+		cout << "(" << __func__ << ") User " << name << " already owns title " << title->getName() << endl;
 		return false;
 	}
 
@@ -133,9 +133,9 @@ bool User::buyTitle(unsigned int titleID) {
 	{
 		title->addNewUser(*this);
 	}
-	catch (DuplicatetUser)
+	catch (DuplicatedUser)
 	{
-		cout << "buyTitle: Tried to buy repeated title" << endl;
+		cout << "(" << __func__ << ") User " << name << " already owns title " << title->getName() << endl;
 		return false;
 	}
 
@@ -146,9 +146,9 @@ bool User::buyTitle(unsigned int titleID) {
 	return true;
 }
 
-bool User::buyTitle(std::string name)
+bool User::buyTitle(std::string name, gameLibraryPlatform platform)
 {
-	Title * title = GameLibrary::getTitle(name);
+	Title * title = GameLibrary::getTitle(name, platform);
 	if (title == nullptr) return false;
 
 	// Title repeated 
@@ -165,9 +165,9 @@ bool User::buyTitle(std::string name)
 	{
 		title->addNewUser(*this);
 	}
-	catch (DuplicatetUser)
+	catch (DuplicatedUser)
 	{
-		cout << "buyTitle: Tried to buy repeated title" << endl;
+		cout << "(" << __func__ << ") User " << name << " already owns title " << title->getName() << endl;
 		return false;
 	}
 
@@ -188,14 +188,17 @@ bool User::updateTitle(Title* title) {
 	}
 	catch (TitleUpToDate)
 	{
+		cout << "(" << __func__ << ") User " << name << " already has title " << title->getName() << "updated" << endl;
 		return false;
 	}
 	catch (NotHomeTitle)
 	{
+		cout << "(" << __func__ << ") User " << name << " tried to update Online Title " << title->getName() << endl;
 		return false;
 	}
 	catch (InexistentUser)
 	{
+		cout << "(" << __func__ << ") User " << name << " does not own title " << title->getName() << endl;
 		return false;
 	}
 
@@ -219,14 +222,17 @@ bool User::updateTitle(unsigned int titleID) {
 	}
 	catch (TitleUpToDate)
 	{
+		cout << "(" << __func__ << ") User " << name << " already has title " << title->getName() << "updated" << endl;
 		return false;
 	}
 	catch (NotHomeTitle)
 	{
+		cout << "(" << __func__ << ") User " << name << " tried to update Online Title " << title->getName() << endl;
 		return false;
 	}
 	catch (InexistentUser)
 	{
+		cout << "(" << __func__ << ") User " << name << " does not own title " << title->getName() << endl;
 		return false;
 	}
 
@@ -272,7 +278,7 @@ bool User::playGame(Title * title, double duration) {
 		}
 		catch (NotOnlineTitle)
 		{
-			//TODO Cout something?
+			cout << "(" << __func__ << ") User " << name << " tried to add Session to Home Title " << title->getName() << endl;
 			return false;
 		}
 
@@ -297,10 +303,12 @@ bool User::playGame(Title * title, double duration) {
 		}
 		catch (NotHomeTitle)
 		{
+			cout << "(" << __func__ << ") User " << name << " tried to update Online Title " << title->getName() << endl;
 			return false;
 		}
 		catch (InexistentUser)
 		{
+			cout << "(" << __func__ << ") User " << name << " does not own title " << title->getName() << endl;
 			return false;
 		}
 	}
