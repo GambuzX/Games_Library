@@ -314,6 +314,10 @@ unsigned gameIDinput(GameLibrary & gL) {
 				}
 				titleID = intInput(" Title ID Number (0 to go back): ");
 			}
+			else
+			{
+				return titleID;
+			}
 		}
 		return titleID;
 	}
@@ -322,17 +326,19 @@ unsigned gameIDinput(GameLibrary & gL) {
 void GameOperationsMenu(GameLibrary & gl, unsigned titleID) {
 	header("Game Info");
 
+	Title * game = gl.getTitle(titleID);
+
 	int option_number;
 
 	cout << " Possible Actions:" << endl << endl;
 
 	cout << "   1 - Detailed Info" << endl;
 
-	cout << "   2 - Add Game" << endl;
+	cout << "   2 - " << endl;
 
-	cout << "   3 - Remove Game" << endl;
+	cout << "   3 - " << endl;
 
-	cout << "   4 - Game Info" << endl;
+	cout << "   4 - " << endl;
 
 	cout << "   0 - Go back" << endl << endl;
 
@@ -411,6 +417,7 @@ void GamesMenu(GameLibrary & gameL) {
 		GamesMenu(gameL);
 		break;
 	case 4:
+		cout << endl;
 		ID = gameIDinput(gameL);
 		if (0 == ID) GamesMenu(gameL);
 		else GameOperationsMenu(gameL, ID);
