@@ -190,7 +190,7 @@ bool User::updateTitle(Title* title) {
 	{
 		return false;
 	}
-	catch (NotHomeTitle & excp2)
+	catch (NotHomeTitle)
 	{
 		return false;
 	}
@@ -221,7 +221,7 @@ bool User::updateTitle(unsigned int titleID) {
 	{
 		return false;
 	}
-	catch (NotHomeTitle & excp2)
+	catch (NotHomeTitle)
 	{
 		return false;
 	}
@@ -248,7 +248,7 @@ string User::getFavoritePlatform() const
 {
 	map<string, int> platforms;
 	for (const auto & title : *purchasedGames)
-		platforms[GameLibrary::getPlatformName(title->getPlatform())]++;
+		platforms[platformEnum2string(title->getPlatform())]++;
 	
 	pair<string, int> max("", 0);
 	for (const auto & entry : platforms)
@@ -279,7 +279,7 @@ bool User::playGame(Title * title, double duration) {
 		GameLibrary::updateTitleRevenue(title, playPrice);
 		transactions.push_back(Transaction(playPrice, Date::getCurrentDate(), onlineSubscription));
 	}
-	catch (NotOnlineTitle & excp)
+	catch (NotOnlineTitle)
 	{
 		try
 		{
@@ -295,7 +295,7 @@ bool User::playGame(Title * title, double duration) {
 			// Title is up to date, dont need to do anything
 			return true;
 		}
-		catch (NotHomeTitle & excp2)
+		catch (NotHomeTitle)
 		{
 			return false;
 		}

@@ -1,8 +1,9 @@
 #include <iostream>
 #include <limits>
 #include "Utilities\Date.h"
+#include "Interface\ConsoleFunctions.h"
+#include "Interface\Input.h"
 #include "GameLibrary.h"
-#include "Utilities\ConsoleFunctions.h"
 #include "Title/HomeTitle.h"
 #include "Title/OnlineTitle.h"
 #include "Title/FixedSubscription.h"
@@ -10,7 +11,9 @@
 
 using namespace std;
 
-void FirstMenu();
+void InicialMenu();
+void PrincipalMenu(GameLibrary & gameL);
+void GamesMenu(GameLibrary & gameL);
 
 /**
 * Writes a neat header in the console with the title centerd and a line above and below all across the screen
@@ -53,508 +56,6 @@ void header(string header)
 	lineAcrossConsole('-');
 	cout << endl;
 	setcolor(15);
-}
-
-/**
-* Removes spaces:
-* - Repetitive spaces in the middle of the name ;
-* - From the beginning and the end.
-*
-* @param	name	Name that you want to remove the spaces from
-*
-* @return	string	String with the formatted name
-*/
-string removeSpace(string name) {
-
-	int contaEspaco = 0;
-
-	for (unsigned int i = 0; i < name.length();)
-	{
-		if (isblank(name[i])) {
-			contaEspaco += 1;
-			if (contaEspaco > 1)
-			{
-				name.erase(name.begin() + i);
-			}
-			else
-			{
-				i++;
-			}
-		}
-		else
-		{
-			contaEspaco = 0;
-			i++;
-		}
-
-	}
-
-	if (isblank(name[0]))
-	{
-		name.erase(name.begin());
-	}
-
-	if (isblank(name[name.length() - 1]))
-	{
-		name.erase(name.end() - 1);
-	}
-
-	return name;
-
-}
-
-
-/**
-* Robustness of the name Input:
-* - Checks if the word has other characters than letters and spaces;
-* - Remove spaces
-* - Controls eof character and other invalids characters erros using getlineZ;
-*
-* @param	question		Question that you want to write on the console when asking for the name
-*
-* @return	string			String with the name
-*
-* @see		removeSpace
-* @see		getlineZ		(@		ConsoleFunctions)
-*/
-string nameInput(string question)
-{
-	bool validInput = false;
-	bool ErrorFlag = false;
-	bool letterFlag = false;
-	string name;
-
-	cout << question;
-
-	HANDLE hCon = GetStdHandle(STD_OUTPUT_HANDLE);
-	COORD currentPos = GetConsoleCursorPosition(hCon);
-
-	while (!validInput)
-	{
-		cin.clear();
-		getlineZ(cin, name);
-
-		ErrorFlag = false;
-		letterFlag = false;
-
-		if (cin.eof())
-		{
-			cin.clear();
-			ErrorFlag = true;
-		}
-		if (cin.fail())
-		{
-			cin.clear();
-			cin.ignore((numeric_limits<streamsize>::max)(), '\n');
-			ErrorFlag = true;
-		}
-		else
-		{
-			// Search for invalid characters //
-			for (size_t j = 0; j < name.size(); j++)
-			{
-				if ((unsigned int)name.at(j) != 32 && !isalpha((unsigned char)name.at(j)))
-				{
-					ErrorFlag = true;
-					break;
-				}
-				if (isalpha((unsigned char)name.at(j)))
-				{
-					letterFlag = true;
-				}
-			}
-		}
-		if ("" == name || !letterFlag)
-		{
-			ErrorFlag = true;
-		}
-
-		validInput = !ErrorFlag;
-
-		if (ErrorFlag)
-		{
-			clrscr(currentPos);
-		}
-	}
-
-	return removeSpace(name);
-}
-
-/**
-* Robustness of the name with Numbers Input:
-* - Checks if the word has other characters than letters, spaces and numbers;
-* - Remove spaces
-* - Controls eof character and other invalids characters erros using getlineZ;
-*
-* @param	question		Question that you want to write on the console when asking for the name
-*
-* @return	string			String with the name
-*
-* @see		removeSpace
-* @see		getlineZ		(@		ConsoleFunctions)
-*/
-string nameNumbersInput(string question)
-{
-	bool validInput = false;
-	bool ErrorFlag = false;
-	bool letterFlag = false;
-	string name;
-
-	cout << question;
-
-	HANDLE hCon = GetStdHandle(STD_OUTPUT_HANDLE);
-	COORD currentPos = GetConsoleCursorPosition(hCon);
-
-	while (!validInput)
-	{
-		cin.clear();
-		getlineZ(cin, name);
-
-		ErrorFlag = false;
-		letterFlag = false;
-
-		if (cin.eof())
-		{
-			cin.clear();
-			ErrorFlag = true;
-		}
-		if (cin.fail())
-		{
-			cin.clear();
-			cin.ignore((numeric_limits<streamsize>::max)(), '\n');
-			ErrorFlag = true;
-		}
-		else
-		{
-			// Search for invalid characters //
-			for (size_t j = 0; j < name.size(); j++)
-			{
-				if ((unsigned int)name.at(j) != 32 && !isalnum((unsigned char)name.at(j)))
-				{
-					ErrorFlag = true;
-					break;
-				}
-				if (isalnum((unsigned char)name.at(j)))
-				{
-					letterFlag = true;
-				}
-			}
-		}
-		if ("" == name || !letterFlag)
-		{
-			ErrorFlag = true;
-		}
-
-		validInput = !ErrorFlag;
-
-		if (ErrorFlag)
-		{
-			clrscr(currentPos);
-		}
-	}
-
-	return removeSpace(name);
-}
-
-/**
-* Check if there is any other character than an escape line in the end of the input
-*
-* @param	&in		Input string stream that you want to check the end
-*
-* @return	bool	Boolean value correspondent to if there is something different to '\n' in the end
-*/
-bool afterNumber(istringstream & in)
-{
-	int numbers = 0;
-	char ch;
-	if (in.get(ch))
-	{
-		return true;
-	}
-	return false;
-}
-
-/**
-* Robustness of the double Input:
-* - Checks if there is something left on the istringstream after the numbers
-* - Controls eof character and other invalids characters erros using getlineZ;
-*
-* @param	question		Question that you want to write on the console when asking for a double
-*
-* @return	double			Double with the desired number
-*
-* @see		afterNumber
-* @see		getlineZ		(@		ConsoleFunctions)
-*/
-double duobleInput(string question)
-{
-	double option;
-	bool valid = false;
-
-	string prov;
-
-	cout << question;
-
-	HANDLE hCon = GetStdHandle(STD_OUTPUT_HANDLE);
-	COORD currentPos = GetConsoleCursorPosition(hCon);
-
-	while (!valid)
-	{
-		getlineZ(cin, prov);
-		istringstream iss(prov);
-		while (!(iss >> option))
-		{
-			if (iss.eof())
-			{
-				iss.clear();
-				cin.clear();
-			}
-			if (iss.fail())
-			{
-				iss.clear();
-				cin.clear();
-			}
-
-			clrscr(currentPos);
-			getlineZ(cin, prov);
-			iss.str(prov);
-		}
-		if (!afterNumber(iss))
-		{
-			valid = true;
-		}
-		else
-		{
-			cin.clear();
-		}
-		if (!valid)
-		{
-			clrscr(currentPos);
-		}
-	}
-
-	return option;
-}
-
-/**
-* Robustness of the int Input:
-* - Checks if there is something left on the istringstream after the numbers
-* - Controls eof character and other invalids characters erros using getlineZ;
-*
-* @param	question		Question that you want to write on the console when asking for an int
-*
-* @return	double			Int with the desired number
-*
-* @see		afterNumber
-* @see		getlineZ		(@		ConsoleFunctions)
-*/
-int intInput(string question)
-{
-	int option;
-	bool valid = false;
-
-	string prov;
-
-	cout << question;
-
-	HANDLE hCon = GetStdHandle(STD_OUTPUT_HANDLE);
-	COORD currentPos = GetConsoleCursorPosition(hCon);
-
-	while (!valid)
-	{
-		getlineZ(cin, prov);
-		istringstream iss(prov);
-		while (!(iss >> option))
-		{
-			if (iss.eof())
-			{
-				iss.clear();
-				cin.clear();
-			}
-			if (iss.fail())
-			{
-				iss.clear();
-				cin.clear();
-			}
-
-			clrscr(currentPos);
-			getlineZ(cin, prov);
-			iss.str(prov);
-		}
-		if (!afterNumber(iss))
-		{
-			valid = true;
-		}
-		else
-		{
-			cin.clear();
-		}
-		if (!valid)
-		{
-			clrscr(currentPos);
-		}
-	}
-
-	return option;
-}
-
-Date dateInput(string question) 
-{
-
-	Date d;
-	bool valid = false;
-	unsigned day, month, year;
-
-	string prov;
-
-	cout << question << endl;
-
-	HANDLE hCon = GetStdHandle(STD_OUTPUT_HANDLE);
-	COORD currentPos = GetConsoleCursorPosition(hCon);
-
-	while (!valid)
-	{
-		day = intInput("   - Day: ");
-		month = intInput("   - Month: ");
-		year = intInput("   - Year: ");
-		cin.clear();
-		try
-		{
-			d = Date(day, month, year);
-			valid = true;
-		}
-		catch (...)
-		{
-			valid = false;
-			// Apenas para windows...
-			//MessageBoxA(NULL, "    Invalid Date            ", "Error!", MB_OK);
-		}
-		if (!valid)
-		{
-			clrscr(currentPos);
-		}
-	}
-	return d;
-}
-
-ageRange ageRangeInput(string question)
-{
-
-	ageRange ageR;
-	bool valid = false;
-	int minAge, maxAge;
-
-	string prov;
-
-	cout << question << endl;
-
-	HANDLE hCon = GetStdHandle(STD_OUTPUT_HANDLE);
-	COORD currentPos = GetConsoleCursorPosition(hCon);
-
-	while (!valid)
-	{
-		minAge = intInput("   - Minimum age: ");
-		maxAge = intInput("   - Maximum age: ");
-		cin.clear();
-		if(minAge > maxAge)
-		{
-			valid = false;
-			// Apenas para windows...
-			MessageBoxA(NULL, "    Min Age is greater than Max Age       ", "Error!", MB_OK);
-		}
-		else
-		{
-			valid = true;
-			ageR.maxAge = maxAge;
-			ageR.minAge = minAge;
-		}
-		if (!valid)
-		{
-			clrscr(currentPos);
-		}
-	}
-	return ageR;
-}
-
-/**
-* Robustness of the menu Input:
-* - Checks if the input number is inside the menu option bounds
-* - Controls eof character and other invalids characters erros using getlineZ;
-*
-* @param	question		Question that you want to write on the console when asking for the option number
-* @param	inferiorLimit	Lower possible option in the menu
-* @param	superiorLimit	Higher possible option in the menu
-*
-* @return	int				Integer with the desired option
-*
-* @see		getlineZ		(@		ConsoleFunctions)
-*/
-int menuInput(string question, int inferiorLimit, int superiorLimit)
-{
-	string option;
-	bool ValidInput = false;
-	int option_number;
-
-	cout << question;
-
-	HANDLE hCon = GetStdHandle(STD_OUTPUT_HANDLE);
-	COORD currentPos = GetConsoleCursorPosition(hCon);
-
-	while (!ValidInput)
-	{
-		cin.clear();
-
-		bool ErrorFlag = false;
-
-		getlineZ(cin, option);
-
-
-		if (cin.eof())
-		{
-			cin.clear();
-		}
-		if (cin.fail())
-		{
-			cin.clear();
-			cin.ignore((numeric_limits<streamsize>::max)(), '\n');
-			ErrorFlag = true;
-		}
-		if (option == "")
-		{
-			ErrorFlag = true;
-		}
-		else
-		{
-			if (option.length() > 0) {
-				for (size_t i = 0; i < option.length(); i++)
-				{
-					if (!isdigit((unsigned char)option.at(i)))
-					{
-						ErrorFlag = true;
-						break;
-					}
-				}
-			}
-			if(!ErrorFlag)
-				option_number = stoi(option);
-
-			if (!ErrorFlag && !(option_number >= inferiorLimit && option_number <= superiorLimit))
-			{
-				ErrorFlag = true;
-			}
-		}
-
-		ValidInput = !ErrorFlag;
-
-		if (ErrorFlag)
-		{
-
-			clrscr(currentPos);
-		}
-
-	}
-
-	return option_number;
 }
 
 bool menuOnlineHome() {
@@ -691,6 +192,18 @@ bool menuSubcription() {
 	cout << endl;
 }
 
+void titleSummary(GameLibrary & gameL) {
+	set<Title*, ComparePtr<Title>> prov = gameL.getTitles();
+	for (auto & title: prov)
+	{
+		cout << " Title ID:\t" << title->getTitleID() << endl;
+		cout << " Game:\t\t" << title->getName() << endl;
+		cout << " Price:\t\t" << title->getBasePrice() << endl;
+		cout << " Platform:\t" << title->getPlatformName() << endl << endl;
+	}
+	system("pause");
+}
+
 void addGames(GameLibrary & gL)
 {
 	bool isOnline = menuOnlineHome();
@@ -711,7 +224,7 @@ void addGames(GameLibrary & gL)
 		}
 		else
 		{
-			for (int plat = pc; plat != all; plat++)
+			for (int plat = pc; plat != last; plat++)
 			{
 				gL.addTitle(new HomeTitle(name, price, releaseDate, ar, static_cast<gameLibraryPlatform>(plat), genre, company));
 			}
@@ -728,7 +241,7 @@ void addGames(GameLibrary & gL)
 			}
 			else
 			{
-				for (int plat = pc; plat != all; plat++)
+				for (int plat = pc; plat != last; plat++)
 				{
 					gL.addTitle(new OnlineTitle(name, price, releaseDate, ar, static_cast<gameLibraryPlatform>(plat), genre, company, new FixedSubscription(subsPrice)));
 				}
@@ -742,7 +255,7 @@ void addGames(GameLibrary & gL)
 			}
 			else
 			{
-				for (int plat = pc; plat != all; plat++)
+				for (int plat = pc; plat != last; plat++)
 				{
 					gL.addTitle(new OnlineTitle(name, price, releaseDate, ar, static_cast<gameLibraryPlatform>(plat), genre, company, new DynamicSubscription(subsPrice)));
 				}
@@ -753,15 +266,171 @@ void addGames(GameLibrary & gL)
 
 }
 
-void SecondMenu(GameLibrary & gameL)
+void removeGame(GameLibrary & gL) {
+	if (gL.getTitles().size() == 0)
+	{
+		cout << " There are no games to remove\n";
+		return;
+	}
+	int nameErrors = 0;
+	int titleID = intInput(" Title ID Number (0 to go back): ");
+	while (titleID != 0) {
+		if (!gL.removeTitle(titleID))
+		{
+			nameErrors++;
+			cout << " Inexistent title ID\n";
+			if (nameErrors > 3)
+			{
+				cout << " You've seem to be struggling. Plz consider taking a look at the Game Summary\n";
+			}
+			titleID = intInput(" Title ID Number (0 to go back): ");
+		}
+		else
+		{
+			cout << "\n Title Removed Successfully";
+			break;
+		}
+	}
+
+}
+
+unsigned gameIDinput(GameLibrary & gL) {
+	if (gL.getTitles().size() == 0)
+	{
+		cout << " There are no games in the library\n";
+		return 0;
+	}
+	else {
+		int nameErrors = 0;
+		unsigned titleID = intInput(" Title ID Number (0 to go back): ");
+		while (titleID != 0) {
+			if (gL.getTitle(titleID) == NULL)
+			{
+				nameErrors++;
+				cout << " Inexistent title ID\n";
+				if (nameErrors > 3)
+				{
+					cout << " You've seem to be struggling. Plz consider taking a look at the Game Summary\n";
+				}
+				titleID = intInput(" Title ID Number (0 to go back): ");
+			}
+		}
+		return titleID;
+	}
+}
+
+void GameOperationsMenu(GameLibrary & gl, unsigned titleID) {
+	header("Game Info");
+
+	int option_number;
+
+	cout << " Possible Actions:" << endl << endl;
+
+	cout << "   1 - Detailed Info" << endl;
+
+	cout << "   2 - Add Game" << endl;
+
+	cout << "   3 - Remove Game" << endl;
+
+	cout << "   4 - Game Info" << endl;
+
+	cout << "   0 - Go back" << endl << endl;
+
+	option_number = menuInput(" Option ? ", 0, 4);
+
+	switch (option_number)
+	{
+	case 1:
+		//eader("Games Summary");
+		//titleSummary(gameL);
+		//cout << endl << endl;
+		//GamesMenu(gameL);
+		break;
+
+	case 2:
+		//header("Add Game");
+		//addGames(gameL);
+		//cout << endl << endl;
+		//GamesMenu(gameL);
+		break;
+	case 3:
+		//header("Remove Game");
+		//removeGame(gameL);
+		//cout << endl << endl;
+		//GamesMenu(gameL);
+		break;
+	case 4:
+		//GameOperationsMenu(gameL);
+		break;
+	case 0:
+		GamesMenu(gl);
+		break;
+	}
+
+
+}
+
+void GamesMenu(GameLibrary & gameL) {
+	header("Manage Games");
+	unsigned ID;
+	int option_number;
+
+	cout << " Possible Actions:" << endl << endl;
+
+	cout << "   1 - Games Summary" << endl;
+
+	cout << "   2 - Add Game" << endl;
+
+	cout << "   3 - Remove Game" << endl;
+
+	cout << "   4 - Game Info" << endl;
+
+	cout << "   0 - Go back" << endl << endl;
+
+	option_number = menuInput(" Option ? ", 0, 4);
+
+	switch (option_number)
+	{
+	case 1:
+		header("Games Summary");
+		titleSummary(gameL);
+		cout << endl << endl;
+		GamesMenu(gameL);
+		break;
+
+	case 2:
+		header("Add Game");
+		addGames(gameL);
+		cout << endl << endl;
+		GamesMenu(gameL);
+		break;
+	case 3:
+		header("Remove Game");
+		removeGame(gameL);
+		cout << endl << endl;
+		GamesMenu(gameL);
+		break;
+	case 4:
+		ID = gameIDinput(gameL);
+		if (0 == ID) GamesMenu(gameL);
+		else GameOperationsMenu(gameL, ID);
+		break;
+	case 0:
+		header("CREATE GAME LIBRARY");
+		PrincipalMenu(gameL);
+		break;
+	}
+}
+
+void PrincipalMenu(GameLibrary & gameL)
 {
 	int option_number;
 
 	cout << " Do you want to:" << endl << endl;
 
-	cout << "   1 - Add a new Game" << endl;
+	cout << "   1 - Manage Games" << endl;
 
-	cout << "   2 - Add a new User" << endl;
+	cout << "   2 - Manage Users" << endl;
 	//TODO: Nao gosto mas é para poder ver os jogos, jogar, comprar...
 	cout << "   3 - Login as a User" << endl;
 
@@ -774,14 +443,10 @@ void SecondMenu(GameLibrary & gameL)
 	switch (option_number)
 	{
 	case 1:
-		header("Add New Game");
-		addGames(gameL);
-		cout << endl << endl;
-		SecondMenu(gameL);
+		GamesMenu(gameL);
 		break;
-
 	case 2:
-		header("Add New User");
+		header("Manage Users");
 		break;
 	case 3:
 		header("Login as User");
@@ -792,12 +457,12 @@ void SecondMenu(GameLibrary & gameL)
 	case 0:
 		system("cls");
 		mainHeader("Welcome to the Game Library");
-		FirstMenu();
+		InicialMenu();
 		break;
 	}
 }
 
-void FirstMenu()
+void InicialMenu()
 {
 	GameLibrary gl = GameLibrary();
 
@@ -805,7 +470,7 @@ void FirstMenu()
 
 	cout << " OPTIONS:" << endl << endl;
 
-	cout << "   1 - Create Library Manually" << endl;
+	cout << "   1 - Create Library" << endl;
 
 	cout << "   2 - Load Library" << endl;
 
@@ -829,14 +494,14 @@ void FirstMenu()
 		return;
 	}
 	
-	SecondMenu(gl);
+	PrincipalMenu(gl);
 }
 
 int main() {	
 	system("title   GAME LIBRARY");
 	mainHeader("Welcome to the Game Library");
 	
-	FirstMenu();
+	InicialMenu();
 
 
 

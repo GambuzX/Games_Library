@@ -1,6 +1,8 @@
 #ifndef GAME_LIBRARY_INFO
 #define GAME_LIBRARY_INFO
 
+#include <string>
+
 /**
 * @brief Enumerated type for identifying the different genres of the Game Library's Titles
 */
@@ -28,7 +30,7 @@ enum gameLibraryPlatform
 	pc, /*!< Personal Computer */
 	ps4, /*!< Playstation 4 */
 	xbox, /*!< X-Box */
-	all
+	last
 };
 
 /**
@@ -45,5 +47,48 @@ enum ConsumingHabitsFilter
 	us /*!< Updates and Subscriptions */
 };
 
+/**
+* @brief Get the name of a platform
+*
+* @param platform Enum type of the platform
+* @return string Returns the name of the platform provided as argument
+*/
+std::string platformEnum2string(gameLibraryPlatform platform)
+{
+	switch (platform)
+	{
+	case pc: return "PC";
+	case ps4: return "PS4";
+	case xbox: return "XBOX";
+	}
+	// TODO CHANGE THIS???
+	return "Invalid platform";
+}
+
+/**
+* @brief Get the name of a genre
+*
+* @param genre Enum type of the genre
+* @return string Returns the name of the genre provided as argument
+*/
+std::string genreEnum2string(gameLibraryGenre genre)
+{
+	switch (genre)
+	{
+	case action: return "Action";
+	case adventure: return "Adventure";
+	case puzzle: return "Puzzle";
+	case shooter: return "Shooter";
+	case simulation: return "Simulation";
+	case rpg: return "RPG";
+	case platformer: return "Platformer";
+	case strategy: return "Strategy";
+	case sports: return "Sports";
+	case mmo: return "MMO";
+	case all_genres: return "All Genres";
+	}
+	// TODO CHANGE THIS???
+	return "Invalid genre";
+}
 
 #endif

@@ -52,6 +52,14 @@ public:
 	*/
 	void addUser(std::string name, std::string email, int age, Address address);
 
+	// TODO: MARIO GIL espero que nao te importes disto!!!
+	/**
+	 * @brief Get the Titles Private Member
+	 * 
+	 * @return const std::set<Title*, ComparePtr<Title>>& Returns titles Private Member
+	 */
+	const std::set<Title*, ComparePtr<Title>> & getTitles() const { return titles; };
+
 	/**
 	* @brief Adds a User to the Game Library
 	*
@@ -225,22 +233,6 @@ public:
 	* @return Title* Pointer to the Title with name name
 	*/
 	static Title* getTitle(std::string name);
-
-	/**
-	* @brief Get the name of a platform
-	*
-	* @param platform Enum type of the platform
-	* @return string Returns the name of the platform provided as argument
-	*/
-	static std::string getPlatformName(gameLibraryPlatform platform);
-
-	/**
-	* @brief Get the name of a genre
-	*
-	* @param genre Enum type of the genre
-	* @return string Returns the name of the genre provided as argument
-	*/
-	static std::string getGenreName(gameLibraryGenre genre);
 
 	/**
 	* @brief Check if a Title is Adequate for an Age Group

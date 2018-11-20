@@ -120,16 +120,16 @@ Date Date::operator+(int days) const {
 
 	Date res(*this);
 
-	days += dayNumber(res.day, res.month, res.year);
+	days += int(dayNumber(res.day, res.month, res.year));
 
-	while (days > daysInYear(res.year)) {
+	while (days > int(daysInYear(res.year))) {
 		days -= daysInYear(res.year);
 		res.year++;
 	}
 
 	res.month = 1;
 
-	while (days > daysInMonth(res.month, res.year)) {
+	while (days > int(daysInMonth(res.month, res.year))) {
 		days -= daysInMonth(res.month, res.year);
 		res.month++;
 	}
@@ -146,12 +146,12 @@ Date Date::operator-(int days) const
 
 	Date res(*this);
 	
-	while (days > daysInYear(res.year)) {
+	while (days > int(daysInYear(res.year))) {
 		days -= daysInYear(res.year - 1);
 		res.year--;
 	}
 
-	unsigned pres = dayNumber(res.day, res.month, res.year);
+	int pres = int(dayNumber(res.day, res.month, res.year));
 
 	if (days >= pres){
 		res.year--;
@@ -163,7 +163,7 @@ Date Date::operator-(int days) const
 
 	res.month = 1;
 
-	while (days > daysInMonth(res.month, res.year)) {
+	while (days > int(daysInMonth(res.month, res.year))) {
 		days -= daysInMonth(res.month, res.year);
 		res.month++;
 	}

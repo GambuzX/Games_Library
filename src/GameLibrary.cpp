@@ -89,8 +89,8 @@ void GameLibrary::buildGlobalPopularityRanking(ostream & os, gameLibraryPlatform
 	}
 
 	os << "Titles Popularity Ranking" << endl << endl;
-	os << "Filters used:\n" << "Platform = " << getPlatformName(platform);
-	os << ", Genre = " << getGenreName(genre) << ", Age Group = " << ageR.minAge << " to " << ageR.maxAge << endl << endl;
+	os << "Filters used:\n" << "Platform = " << platformEnum2string(platform);
+	os << ", Genre = " << genreEnum2string(genre) << ", Age Group = " << ageR.minAge << " to " << ageR.maxAge << endl << endl;
 
 	os << "N" << " " << "ID" << " " << "Name" << " " << "Popularity" << endl;
 	int counter = 1;
@@ -116,8 +116,8 @@ void GameLibrary::buildGlobalRevenueRanking(ostream & os, gameLibraryPlatform pl
 	}
 
 	os << "Titles Revenue Ranking" << endl << endl;
-	os << "Filters used:\n" << "Platform = " << getPlatformName(platform);
-	os << ", Genre = " << getGenreName(genre) << ", Age Group = " << ageR.minAge << " to " << ageR.maxAge << endl << endl;
+	os << "Filters used:\n" << "Platform = " << platformEnum2string(platform);
+	os << ", Genre = " << genreEnum2string(genre) << ", Age Group = " << ageR.minAge << " to " << ageR.maxAge << endl << endl;
 
 	os << "N" << " " << "ID" << " " << "Name" << " " << "Revenue" << endl;
 	int counter = 1;
@@ -148,8 +148,8 @@ void GameLibrary::buildUserMostPlayedTitlesRanking(std::ostream & os, User * usr
 	}
 
 	os << "User Most Played Titles" << endl << endl;
-	os << "Filters used:\n" << "Platform = " << getPlatformName(platform);
-	os << ", Genre = " << getGenreName(genre) << endl << endl;
+	os << "Filters used:\n" << "Platform = " << platformEnum2string(platform);
+	os << ", Genre = " << genreEnum2string(genre) << endl << endl;
 
 	os << "N" << " " << "ID" << " " << "Name" << " " << "Hours Played" << endl;
 	int counter = 1;
@@ -294,38 +294,6 @@ Title * GameLibrary::getTitle(std::string name)
 		if (title->getName() == name)
 			return const_cast<Title*>(title);
 	return nullptr;
-}
-
-string GameLibrary::getPlatformName(gameLibraryPlatform platform)
-{
-	switch (platform)
-	{
-	case pc: return "PC";
-	case ps4: return "PS4";
-	case xbox: return "XBOX";
-	}
-	// TODO CHANGE THIS???
-	return "Invalid platform";
-}
-
-string GameLibrary::getGenreName(gameLibraryGenre genre)
-{
-	switch (genre)
-	{
-	case action: return "Action";
-	case adventure: return "Adventure";
-	case puzzle: return "Puzzle";
-	case shooter: return "Shooter";
-	case simulation: return "Simulation";
-	case rpg: return "RPG";
-	case platformer: return "Platformer";
-	case strategy: return "Strategy";
-	case sports: return "Sports";
-	case mmo: return "MMO";
-	case all_genres: return "All Genres";
-	}
-	// TODO CHANGE THIS???
-	return "Invalid genre";
 }
 
 bool GameLibrary::userBelongsToAgeRange(const User * usr, ageRange ageR)

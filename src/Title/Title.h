@@ -204,12 +204,28 @@ public:
 	gameLibraryPlatform getPlatform() const { return platform; };
 
 	/**
+	 * @brief Get the Platform Name of the Private Member
+	 * 
+	 * @return std::string Returns the conversion of the enum gameLibraryPlatform to a string
+	 * @see platformEnum2string()
+	 */
+	std::string getPlatformName() const { return platformEnum2string(platform); };
+	
+	/**
 	 * @brief Get the Genre Private Member
 	 * 
 	 * @return gameLibraryGenre Return the genre Private Member 
 	 */
 	gameLibraryGenre getGenre() const { return genre; };
 
+	/**
+	 * @brief Get the Genre Name of the Private Member
+	 * 
+	 * @return std::string Returns the conversion of the enum gameLibraryGenre to a string
+	 * @see genreEnum2string()
+	 */
+	std::string getGenreName() const { return genreEnum2string(genre); };
+	
 	/**
 	 * @brief Get the Company Private Member
 	 * 
