@@ -101,14 +101,6 @@ public:
 	bool removeTitle(unsigned int id);
 
 	/**
-	* @brief Verifies if a Title is an Online Title
-	*
-	* @param title Pointer to title to verify
-	* @return bool Returns true if it is an Online Title, false otherwise
-	*/
-	bool isOnlineTitle(Title * title) const;
-
-	/**
 	* @brief Saves the current Game Library and all of its data to a file
 	*
 	* @param file File to save the data to
@@ -221,6 +213,7 @@ public:
 
 	/**
 	* @brief Updates the revenue of a Title
+	* Fails if title does not exist
 	*
 	* @param title Pointer to the title
 	* @param amount Value to be added
@@ -253,6 +246,14 @@ public:
 	* @return bool Returns true if adequate, false otherwise
 	*/
 	static bool userBelongsToAgeRange(const User * usr, ageRange ageR);
+
+	/**
+	* @brief Verifies if a Title is an Online Title
+	*
+	* @param title Pointer to title to verify
+	* @return bool Returns true if it is an Online Title, false otherwise
+	*/
+	static bool isOnlineTitle(Title * title);
 	
 };
 

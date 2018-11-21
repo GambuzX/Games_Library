@@ -105,21 +105,10 @@ bool User::buyTitle(Title* title) {
 		return false;
 	}
 	GameLibrary::updateTitleRevenue(title, price);
-
-	try
-	{
-		title->addNewUser(*this);
-	}
-	catch (DuplicatedUser)
-	{
-		cout << "(" << __func__ << ") User " << name << " already owns title with ID " << title->getTitleID() << endl;
-		return false;
-	}
-
-	// add transaction
+	title->addNewUser(*this);
 	transactions.push_back(Transaction(price, Date::getCurrentDate(), gamePurchase));
-
 	purchasedGames->insert(title);
+
 	return true;
 }
 
@@ -148,21 +137,10 @@ bool User::buyTitle(unsigned int titleID) {
 		return false;
 	}
 	GameLibrary::updateTitleRevenue(title, price);
-
-	try
-	{
-		title->addNewUser(*this);
-	}
-	catch (DuplicatedUser)
-	{
-		cout << "(" << __func__ << ") User " << name << " already owns title with ID " << titleID << endl;
-		return false;
-	}
-
-	// add transaction
+	title->addNewUser(*this);
 	transactions.push_back(Transaction(price, Date::getCurrentDate(), gamePurchase));
-
 	purchasedGames->insert(title);
+
 	return true;
 }
 
@@ -192,21 +170,10 @@ bool User::buyTitle(std::string name, gameLibraryPlatform platform)
 		return false;
 	}
 	GameLibrary::updateTitleRevenue(title, price);
-
-	try
-	{
-		title->addNewUser(*this);
-	}
-	catch (DuplicatedUser)
-	{
-		cout << "(" << __func__ << ") User " << this->name << " already owns title " << name << " for the platform " << platform << endl;
-		return false;
-	}
-
-	// add transaction
+	title->addNewUser(*this);
 	transactions.push_back(Transaction(price, Date::getCurrentDate(), gamePurchase));
-
 	purchasedGames->insert(title);
+
 	return true;
 }
 
@@ -218,16 +185,19 @@ bool User::updateTitle(Title* title) {
 		return false;
 	}
 
-	double updatePrice = 0;
-	try
+	if (GameLibrary::isOnlineTitle(title))
 	{
-		title->getUpdatePrice();
-	}
-	catch (NotHomeTitle & excp)
-	{
-		cout << "(" << __func__ << ") Tried to get Update price from Online Title with ID " << excp.getTitleID() << endl;
+		cout << "(" << __func__ << ") Tried to update Online Title with ID " << title->getTitleID() << endl;
 		return false;
 	}
+
+	if (!title->userNeedsUpdate(this))
+	{
+		cout << "(" << __func__ << ") User " << name << " already has title with ID " << title->getTitleID() << " updated" << endl;
+		return false;
+	}
+
+	double updatePrice = title->getUpdatePrice();
 
 	if (!hasEnoughMoney(updatePrice))
 	{
@@ -235,26 +205,7 @@ bool User::updateTitle(Title* title) {
 		return false;
 	}
 
-	try
-	{
-		title->updateUserVersion(*this);
-	}
-	catch (TitleUpToDate)
-	{
-		cout << "(" << __func__ << ") User " << name << " already has title with ID " << title->getTitleID() << " updated" << endl;
-		return false;
-	}
-	catch (NotHomeTitle)
-	{
-		cout << "(" << __func__ << ") User " << name << " tried to update Online Title with ID " << title->getTitleID() << endl;
-		return false;
-	}
-	catch (InexistentUser)
-	{
-		cout << "(" << __func__ << ") User " << name << " does not own title with ID " << title->getTitleID() << endl;
-		return false;
-	}
-
+	title->updateUserVersion(*this);
 	if (!subtractValue(updatePrice)) return false;
 	GameLibrary::updateTitleRevenue(title, updatePrice);
 	transactions.push_back(Transaction(1, Date::getCurrentDate(), homeUpdate));
@@ -273,20 +224,23 @@ bool User::updateTitle(unsigned int titleID) {
 
 	if (!hasTitle(title))
 	{
-		cout << "(" << __func__ << ") User " << name << " does not own title with ID " << titleID << endl;
+		cout << "(" << __func__ << ") User " << name << " does not own title with ID " << title->getTitleID() << endl;
 		return false;
 	}
 
-	double updatePrice = 0;
-	try
+	if (GameLibrary::isOnlineTitle(title))
 	{
-		title->getUpdatePrice();
-	}
-	catch (NotHomeTitle & excp)
-	{
-		cout << "(" << __func__ << ") Tried to get Update price from Online Title with ID " << excp.getTitleID() << endl;
+		cout << "(" << __func__ << ") Tried to update Online Title with ID " << title->getTitleID() << endl;
 		return false;
 	}
+
+	if (!title->userNeedsUpdate(this))
+	{
+		cout << "(" << __func__ << ") User " << name << " already has title with ID " << title->getTitleID() << " updated" << endl;
+		return false;
+	}
+
+	double updatePrice = title->getUpdatePrice();
 
 	if (!hasEnoughMoney(updatePrice))
 	{
@@ -294,26 +248,7 @@ bool User::updateTitle(unsigned int titleID) {
 		return false;
 	}
 
-	try
-	{
-		title->updateUserVersion(*this);
-	}
-	catch (TitleUpToDate)
-	{
-		cout << "(" << __func__ << ") User " << name << " already has title with ID " << titleID << " updated" << endl;
-		return false;
-	}
-	catch (NotHomeTitle)
-	{
-		cout << "(" << __func__ << ") User " << name << " tried to update Online Title with ID " << titleID << endl;
-		return false;
-	}
-	catch (InexistentUser)
-	{
-		cout << "(" << __func__ << ") User " << name << " does not own title with ID " << titleID << endl;
-		return false;
-	}
-
+	title->updateUserVersion(*this);
 	if (!subtractValue(updatePrice)) return false;
 	GameLibrary::updateTitleRevenue(title, updatePrice);
 	transactions.push_back(Transaction(1, Date::getCurrentDate(), homeUpdate));
@@ -349,9 +284,13 @@ bool User::playGame(Title * title, double duration) {
 		return false;
 	}
 
-	try
+	// If Online Title
+	if (GameLibrary::isOnlineTitle(title))
 	{
+		// Get Subscription Price
 		double playPrice = title->getSubscription()->sessionPrice(duration);
+
+		// Check if has enough money
 		if (!hasEnoughMoney(playPrice))
 		{
 			cout << "(" << __func__ << ") User " << name << " does not have enough money to pay the subscription price: " << playPrice << endl;
@@ -359,82 +298,33 @@ bool User::playGame(Title * title, double duration) {
 		}
 		if (!subtractValue(playPrice)) return false;
 
-		try
-		{
-			title->addNewSession(*this, Session(duration, Date::getCurrentDate()));
-		}
-		catch (NotOnlineTitle)
-		{
-			cout << "(" << __func__ << ") User " << name << " tried to add Session to Home Title with ID " << title->getTitleID() << endl;
-			return false;
-		}
-
+		title->addNewSession(*this, Session(duration, Date::getCurrentDate()));
 		GameLibrary::updateTitleRevenue(title, playPrice);
 		transactions.push_back(Transaction(playPrice, Date::getCurrentDate(), onlineSubscription));
 	}
-	catch (NotOnlineTitle)
+	// If Home Title
+	else
 	{
-		try
+		// Title is up to date, don't have to do anything
+		if (!title->userNeedsUpdate(this)) return true;
+
+		// Get Update Price
+		double updatePrice = title->getUpdatePrice();
+
+		// Check if has enough money
+		if (!hasEnoughMoney(updatePrice))
 		{
-			bool userNeedsUpdate = false;
-			try
-			{
-				userNeedsUpdate = title->userNeedsUpdate(this);
-			}
-			catch (NotHomeTitle)
-			{
-				return false;
-			}
-			catch (InexistentUser)
-			{
-				return false;
-			}
-
-			// Title is up to date, don't have to do anything
-			if (!userNeedsUpdate) return true;
-
-			// Get Update Price
-			double updatePrice = 0;
-			try
-			{
-				title->getUpdatePrice();
-			}
-			catch (NotHomeTitle & excp)
-			{
-				cout << "(" << __func__ << ") Tried to get Update price from Online Title with ID " << excp.getTitleID() << endl;
-				return false;
-			}
-
-			// Check if has enough money
-			if (!hasEnoughMoney(updatePrice))
-			{
-				cout << "(" << __func__ << ") User " << name << " does not have enough money to pay the update price: " << updatePrice << endl;
-				return false;
-			}
-
-			// Update User Version
-			title->updateUserVersion(*this);
-
-			// If nothing is thrown, title was updated
-			if (!subtractValue(updatePrice)) return false;
-			GameLibrary::updateTitleRevenue(title, updatePrice);
-			transactions.push_back(Transaction(updatePrice, Date::getCurrentDate(), homeUpdate));
-		}
-		catch (TitleUpToDate)
-		{
-			// Title is up to date, dont need to do anything
-			return true;
-		}
-		catch (NotHomeTitle)
-		{
-			cout << "(" << __func__ << ") User " << name << " tried to update Online Title " << title->getName() << endl;
+			cout << "(" << __func__ << ") User " << name << " does not have enough money to pay the update price: " << updatePrice << endl;
 			return false;
 		}
-		catch (InexistentUser)
-		{
-			cout << "(" << __func__ << ") User " << name << " does not own title " << title->getName() << endl;
-			return false;
-		}
+
+		// Update User Version
+		title->updateUserVersion(*this);
+
+		// If nothing is thrown, title was updated
+		if (!subtractValue(updatePrice)) return false;
+		GameLibrary::updateTitleRevenue(title, updatePrice);
+		transactions.push_back(Transaction(updatePrice, Date::getCurrentDate(), homeUpdate));
 	}
 
 	return true;

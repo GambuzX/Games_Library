@@ -205,9 +205,6 @@ public:
 	/**
 	* @brief Buy Title for User
 	* Uses GameLibrary's static method getTitle() to retrieve information about the Title with id titleID
-	* Verifies if User already owns title
-	* Updates GameLibrary's titleRevenue map
-	* Adds a transaction to User
 	*
 	* @param titleID ID of Title to buy
 	* @return bool Returns true if successfull, false otherwise
@@ -217,9 +214,6 @@ public:
 	/**
 	* @brief Buy Title for User
 	* Uses GameLibrary's static method getTitle() to retrieve information about the Title with name name
-	* Verifies if User already owns title
-	* Updates GameLibrary's titleRevenue map
-	* Adds a transaction to User
 	*
 	* @param name Name of Title to buy
 	* @param platform Platform of Title
@@ -229,11 +223,6 @@ public:
 
 	/**
 	* @brief Update User version of a Title
-	* Uses a try catch to verify if the Title is a Home Title
-	* Verifies if User owns title
-	* Checks if User has 1 euro to pay for the Update
-	* Updates GameLibrary's titleRevenue map
-	* Adds a transaction to User
 	*
 	* @param title Pointer to Title to update
 	* @return bool Returns true if successfull, false otherwise
@@ -243,11 +232,6 @@ public:
 	/**
 	* @brief Update User version of a Title
 	* Uses GameLibrary's static method getTitle() to retrieve information about the Title with id titleID
-	* Uses a try catch to verify if the Title is a Home Title
-	* Verifies if User owns title
-	* Checks if User has 1 euro to pay for the Update
-	* Updates GameLibrary's titleRevenue map
-	* Adds a transaction to User
 	*
 	* @param titleID ID of Title to update
 	* @return bool Returns true if successfull, false otherwise

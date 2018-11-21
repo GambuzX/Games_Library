@@ -56,19 +56,6 @@ bool GameLibrary::removeTitle(unsigned int id) {
 	return true;
 }
 
-bool GameLibrary::isOnlineTitle(Title * title) const
-{
-	try
-	{
-		title->getSubscription();
-	}
-	catch (NotOnlineTitle)
-	{
-		return false;
-	}
-	return true;
-}
-
 void GameLibrary::saveGameLibraryToFile(std::fstream& titleFile)
 {
 
@@ -325,4 +312,17 @@ Title * GameLibrary::getTitle(std::string name, gameLibraryPlatform platform)
 bool GameLibrary::userBelongsToAgeRange(const User * usr, ageRange ageR)
 {
 	return (usr->getAge() >= ageR.minAge && usr->getAge() <= ageR.maxAge);
+}
+
+bool GameLibrary::isOnlineTitle(Title * title)
+{
+	try
+	{
+		title->getSubscription();
+	}
+	catch (NotOnlineTitle)
+	{
+		return false;
+	}
+	return true;
 }
