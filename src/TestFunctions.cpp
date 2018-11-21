@@ -481,9 +481,11 @@ void InicialMenu()
 
 	cout << "   2 - Load Library" << endl;
 
+	cout << "   3 - Save Library" << endl;
+
 	cout << "   0 - Exit" << endl << endl;
 
-	option_number = menuInput(" Option ? ", 0, 2);
+	option_number = menuInput(" Option ? ", 0, 3);
 
 	switch (option_number)
 	{
@@ -496,12 +498,17 @@ void InicialMenu()
 		//IR para função que vai buscar o nome da pasta/ficheiro
 		//gl.loadGameLibraryFromFile();
 		break;
+	case 3:
+	    header("SAVE GAME LIBRARY");
+	    cout << " Saving..." << endl;
+	    gl.saveGameLibrary();
+	    cout << " Done" << endl;
+	    break;
 	case 0:
 		system("cls");
 		return;
 	}
-	
-	PrincipalMenu(gl);
+	    PrincipalMenu(gl);
 }
 
 int main() {	

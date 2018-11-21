@@ -1,6 +1,7 @@
 #include "Input.h"
 #include "ConsoleFunctions.h"
 #include <sstream>
+#include <limits>
 
 using namespace std;
 
