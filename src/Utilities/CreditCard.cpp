@@ -2,6 +2,8 @@
 #include "Exceptions.h"
 #include <iostream>
 
+using namespace std;
+
 CreditCard::CreditCard(std::string n, std::string h, Date exp, double bal) {
 	if (bal < 0) throw NegativeFunds(bal);
 	number = n;
@@ -37,4 +39,11 @@ CreditCard & CreditCard::operator-(const double & val) {
 		throw;
 	}
 	return *this;
+}
+
+ostream &operator<<(ostream &os, const CreditCard &cc)
+{
+	os << cc.getNumber() << " " << cc.getHolder() << " " << cc.getExpiryDate() << " " << cc.getBalance();
+
+    return os;
 }

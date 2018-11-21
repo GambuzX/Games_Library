@@ -103,6 +103,8 @@ public:
 	 * @throw NegativeFunds()
 	 */
 	CreditCard & operator-(const double & val);
+
+	friend std::ostream& operator<<(std::ostream &os, const CreditCard &cc);
 };
 
 /** @} */

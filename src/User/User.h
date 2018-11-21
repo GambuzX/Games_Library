@@ -286,6 +286,8 @@ public:
 	*/
 	bool operator<(const User & usr) const;
 
+	friend std::ostream& operator<<(std::ostream &os, const User &user);
+
 	//TODO Get User info function
 };
 
