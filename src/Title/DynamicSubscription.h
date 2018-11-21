@@ -39,6 +39,14 @@ public:
 	 * @return double Returns the final Session Price
 	 */
 	double sessionPrice(double sessionHours) { return sessionHours * getSubscriptionPrice(); };
+
+	/**
+	* @brief Virtual Function that tells whether a subscription is fixed or dynamic
+	*
+	* @return true If the Subscription is Fixed
+	* @return false If the Subscription is Dynamic
+	*/
+	bool isFixedSubscription() const { return false; };
 };
 
 /** @} */
