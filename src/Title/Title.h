@@ -172,13 +172,13 @@ public:
 	virtual Subscription * getSubscription() const = 0;
 
 	/**
-	* @brief Get the price to pay for a Home Title Update
+	* @brief Get the Current Update Version object
 	* Virtual function that may throw exceptions if called on the incorrect object
 	*
-	* @return double Return the updateCost Private object Member
-	* @throw NotHomeTitle If it is called on an Online Title Object
+	* @return const Update& Return the Last Update made to the Home Title
+	* @throw NotHomeTitle() If it is called on a Online Title Object
 	*/
-	virtual double getUpdatePrice() const = 0;
+	virtual const Update & getCurrentVersion() const = 0;
 
 	/**
 	 * @brief Get the Name Private Member

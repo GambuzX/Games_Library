@@ -228,7 +228,7 @@ void addGames(GameLibrary & gL)
 	string company = nameInput(" Publisher name (only letters and space): ");;
 
 	//Title(std::string name, double price, Date releaseDate, ageRange ageR, std::string platform, std::string genre, std::string company);
-	if (!isOnline)
+	if (!isOnline){
 		if(platform != all_platforms){
 			gL.addTitle(new HomeTitle(name, price, releaseDate, ar, platform, genre, company));
 			return;
@@ -241,6 +241,7 @@ void addGames(GameLibrary & gL)
 			}
 			return;
 		}
+	}
 	else {
 		bool isFixed = menuSubcription();
 		double subsPrice = duobleInput(" Subscription price: ");
@@ -350,11 +351,16 @@ void titleInfo(GameLibrary & gl, Title * game)
 	cout << "  - Begin Date:\t" << game->getLastSale().getStartDate() << endl;
 	cout << "  - End Date:\t" << game->getLastSale().getEndDate() << endl;
 	cout << "  - Promotion:\t" << game->getLastSale().getSaleFactor()*100 << "%" << endl;
-	cout << " Company:\t"  << endl;
+	
+	///////
+	game->getStats();
+	game->getSubscription();
+	//game->getTimePlayed();
+	//game->getUpdatePrice();
+	game->getUpdates();
 
 	system("pause");
 }
-
 void GameOperationsMenu(GameLibrary & gl, unsigned titleID) {
 	header("Game Info");
 

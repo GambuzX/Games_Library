@@ -1,9 +1,10 @@
 #include "Update.h"
 
-Update::Update(Date d, std::string desc, double v) {
+Update::Update(Date d, std::string desc, double v, double updatePrice) {
 	date = d;
 	description = desc;
 	version = v;
+	updateCost = updatePrice;
 }
 
 Date Update::getDate() const {
