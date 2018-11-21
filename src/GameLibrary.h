@@ -70,6 +70,14 @@ public:
 	bool removeUser(User * user);
 
 	/**
+	* @brief Get the pointer to a User
+	*
+	* @param userID ID of User to get
+	* @return User* Returns pointer to User, nullptr if not found
+	*/
+	User * getUser(unsigned userID);
+
+	/**
 	* @brief Adds a Title to the Game Library
 	* Returns false if Title with same name and platform already exists
 	*

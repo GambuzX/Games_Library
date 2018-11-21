@@ -50,11 +50,18 @@ void GameLibrary::addUser(User * user) {
 
 bool GameLibrary::removeUser(User * user) {
 	map<User*, set<Title*, ComparePtr<Title>>>::iterator it;
-
 	it = users.find(user);
 	if (it == users.end()) return false;
 	users.erase(it);
 	return true;
+}
+
+User * GameLibrary::getUser(unsigned userID)
+{
+	for (auto & user : users)
+		if (user.first->getUserID() == userID)
+			return user.first;
+	return nullptr;
 }
 
 bool GameLibrary::addTitle(Title * title) {
