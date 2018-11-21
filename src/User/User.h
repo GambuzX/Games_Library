@@ -278,6 +278,15 @@ public:
 	bool removeFriend(User * frnd);
 
 	/**
+	* @brief Adds a Transaction to the User
+	*
+	* @param value Value of transaction
+	* @param date Date of transaction
+	* @param t TransactionType enum value representing the type of transaction
+	*/
+	void addTransaction(double value, Date date, TransactionType t) { transactions.push_back(Transaction(value, date, t)); }
+
+	/**
 	* @brief Overload of the less operator
 	* A User is "less" than the other if its ID is smaller
 	*

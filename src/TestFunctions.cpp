@@ -87,26 +87,37 @@ gameLibraryPlatform menuPlatform() {
 
 	cout << " Platform :" << endl << endl;
 
-	cout << "   1 - PC" << endl;
+	cout << "   1 - Nintendo DS" << endl;
 
-	cout << "   2 - PS4" << endl;
+	cout << "   2 - PC" << endl;
+
+	cout << "   3 - PS3" << endl;
+
+	cout << "   4 - PS4" << endl;
+
+	cout << "   5 - Nintendo Switch" << endl;
+
+	cout << "   6 - WII" << endl;
+
+	cout << "   7 - XBOX 360" << endl;
+
+	cout << "   8 - XBOX ONE" << endl;
 	
-	cout << "   3 - XBOX1" << endl;
-
 	cout << "   0 - All the Plataforms" << endl << endl;
 
-	option_number = menuInput(" Option ? ", 0, 3);
+	option_number = menuInput(" Option ? ", 0, 8);
 	
 	switch (option_number)
 	{
-	case 0:
-		return all_platforms;
-	case 1:
-		return pc;
-	case 2:
-		return ps4;
-	case 3:
-		return xbox1;
+	case 0: return all_platforms;
+	case 1: return nds;
+	case 2: return pc;
+	case 3: return ps3;
+	case 4: return ps4;
+	case 5: return switche;
+	case 6: return wii;
+	case 7: return xbox1;
+	case 8: return xbox360;
 	// Should never reach here
 	default:
 		throw invalid_argument(" Error in menuPlatform() ");
@@ -217,19 +228,20 @@ void addGames(GameLibrary & gL)
 	string company = nameInput(" Publisher name (only letters and space): ");;
 
 	//Title(std::string name, double price, Date releaseDate, ageRange ageR, std::string platform, std::string genre, std::string company);
-	if (!isOnline)
+	if (!isOnline){
 		if(platform != all_platforms){
 			gL.addTitle(new HomeTitle(name, price, releaseDate, ar, platform, genre, company));
 			return;
 		}
 		else
 		{
-			for (int plat = pc; plat != last; plat++)
+			for (int plat = nds; plat != last; plat++)
 			{
 				gL.addTitle(new HomeTitle(name, price, releaseDate, ar, static_cast<gameLibraryPlatform>(plat), genre, company));
 			}
 			return;
 		}
+	}
 	else {
 		bool isFixed = menuSubcription();
 		double subsPrice = duobleInput(" Subscription price: ");
@@ -241,7 +253,7 @@ void addGames(GameLibrary & gL)
 			}
 			else
 			{
-				for (int plat = pc; plat != last; plat++)
+				for (int plat = nds; plat != last; plat++)
 				{
 					gL.addTitle(new OnlineTitle(name, price, releaseDate, ar, static_cast<gameLibraryPlatform>(plat), genre, company, new FixedSubscription(subsPrice)));
 				}
@@ -255,7 +267,7 @@ void addGames(GameLibrary & gL)
 			}
 			else
 			{
-				for (int plat = pc; plat != last; plat++)
+				for (int plat = nds; plat != last; plat++)
 				{
 					gL.addTitle(new OnlineTitle(name, price, releaseDate, ar, static_cast<gameLibraryPlatform>(plat), genre, company, new DynamicSubscription(subsPrice)));
 				}
@@ -323,10 +335,37 @@ unsigned gameIDinput(GameLibrary & gL) {
 	}
 }
 
+void titleInfo(GameLibrary & gl, Title * game) 
+{
+	cout << " Title ID:\t" << game->getTitleID() << endl;
+	cout << " Game:\t\t" << game->getName() << endl;
+	cout << " Price:\t\t" << game->getBasePrice() << endl;
+	cout << " Current Price:\t" << game->getCurrentPrice(Date::getCurrentDate()) << endl;
+	cout << " Release Date:\t" << game->getReleaseDate() << endl;
+	cout << " Age Range:\t" << game->getAgeRange().minAge << " - " << game->getAgeRange().maxAge << endl;
+	cout << " Platform:\t" << game->getPlatformName() << endl;
+	cout << " Genre:\t\t" << game->getGenreName() << endl;
+	cout << " Company:\t" << game->getCompany() << endl;
+	cout << " Number of Users:\t" << game->getNumberUsers() << endl;
+	cout << " Last Schedule Sale:\n";
+	cout << "  - Begin Date:\t" << game->getLastSale().getStartDate() << endl;
+	cout << "  - End Date:\t" << game->getLastSale().getEndDate() << endl;
+	cout << "  - Promotion:\t" << game->getLastSale().getSaleFactor()*100 << "%" << endl;
+	
+	///////
+	game->getStats();
+	game->getSubscription();
+	//game->getTimePlayed();
+	//game->getUpdatePrice();
+	game->getUpdates();
+
+	system("pause");
+}
 void GameOperationsMenu(GameLibrary & gl, unsigned titleID) {
 	header("Game Info");
 
 	Title * game = gl.getTitle(titleID);
+	bool isOnline = gl.isOnlineTitle(game);
 
 	int option_number;
 
@@ -334,15 +373,14 @@ void GameOperationsMenu(GameLibrary & gl, unsigned titleID) {
 
 	cout << "   1 - Detailed Info" << endl;
 
-	cout << "   2 - " << endl;
-
-	cout << "   3 - " << endl;
-
-	cout << "   4 - " << endl;
+	cout << "   2 - Promotions" << endl;
+	
+	if (isOnline) cout << "   3 - Sessions" << endl;
+	else cout << "   3 - Updates" << endl;
 
 	cout << "   0 - Go back" << endl << endl;
 
-	option_number = menuInput(" Option ? ", 0, 4);
+	option_number = menuInput(" Option ? ", 0, 3);
 
 	switch (option_number)
 	{
