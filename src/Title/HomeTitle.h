@@ -22,6 +22,7 @@ class HomeTitle : public Title {
 private:
 	std::vector<Update> titleUpdateHistory; /**< @brief Vector of Updates to keep track of the update history of the home title */
 	std::map<User*, std::vector<Update*>, ComparePtr<User>> userUpdates; /**< @brief Map of User to their update history */
+	double updateCost; /**< @brief Price to pay when an Update of this Title is made */
 
 public:
 	/**
@@ -35,9 +36,10 @@ public:
 	 * @param platform gameLibraryPlatform that initializes the platform Private Member
 	 * @param genre gameLibraryGenre that initializes the genre Private Member
 	 * @param company String that initializes the company Private Member
+	 * @param updateCost Double that initializes the updateCost Private Member
 	 * @see Update(Date)
 	 */
-	HomeTitle(std::string name, double price, Date releaseDate, ageRange ageR, gameLibraryPlatform platform, gameLibraryGenre genre, std::string company);
+	HomeTitle(std::string name, double price, Date releaseDate, ageRange ageR, gameLibraryPlatform platform, gameLibraryGenre genre, std::string company, double updateCost = 1);
 	
 	/**
 	 * @brief Function that helps to add a new User to the list of owners of that Title
@@ -102,6 +104,15 @@ public:
 	Subscription * getSubscription() const { throw NotOnlineTitle(getTitleID()); };
 
 	/**
+	* @brief Get the price to pay for a Home Title Update
+	* Virtual function that may throw exceptions if called on the incorrect object
+	*
+	* @return double Return the updateCost Private object Member
+	* @throw NotHomeTitle If it is called on an Online Title Object
+	*/
+	double getUpdatePrice() const { return updateCost; }
+
+	/**
 	 * @brief Get the Current Update Version object
 	 * 
 	 * @return const Update& Return the Last Update made to the Home Title
@@ -140,7 +151,17 @@ public:
 	 * @throw OldUpdate() If the Update that we are trying to add is already passed
 	 */
 	void updateTitle(Update * newUpdate) override;
-	
+
+	/**
+	* @brief Function that verifies if a User needs an Update
+	* Virtual function that may throw exceptions if called on the incorrect object
+	*
+	* @param usr User that you want to check if needs an Update
+	* @throw NotHomeTitle() If it is called on a Online Title Object
+	* @throw InexistentUser() If the user specified doesn't own the game
+	*/
+	bool userNeedsUpdate(User * usr) const override;
+
 	/**
 	 * @brief Function that Updates the User Home Title Version to the latest
 	 * Virtual function that may throw exceptions if called on the incorrect object

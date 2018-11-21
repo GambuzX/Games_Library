@@ -3,6 +3,7 @@
 
 #include <map>
 #include <vector>
+#include "..\Utilities\Exceptions.h"
 #include "..\Utilities\CompareObj.h"
 #include "Title.h"
 
@@ -92,6 +93,15 @@ public:
 	double getStats(const User & u) const;
 
 	/**
+	* @brief Get the price to pay for a Home Title Update
+	* Virtual function that may throw exceptions if called on the incorrect object
+	*
+	* @return double Return the updateCost Private object Member
+	* @throw NotHomeTitle If it is called on an Online Title Object
+	*/
+	double getUpdatePrice() const { throw NotHomeTitle(getTitleID()); }
+
+	/**
 	 * @brief Get the Stats of a Title of a certain User (hours played)
 	 * May also throw other exceptions if the user is not a owner of the Title
 	 * 
@@ -111,6 +121,16 @@ public:
 	 * @throw OldUpdate() If the Update that we are trying to add is already passed
 	 */
 	void updateTitle(Update * newUpdate) override;
+
+	/**
+	* @brief Function that verifies if a User needs an Update
+	* Virtual function that may throw exceptions if called on the incorrect object
+	*
+	* @param usr User that you want to check if needs an Update
+	* @throw NotHomeTitle() If it is called on a Online Title Object
+	* @throw InexistentUser() If the user specified doesn't own the game
+	*/
+	bool userNeedsUpdate(User * usr) const override { throw NotHomeTitle(getTitleID()); }
 
 	/**
 	 * @brief Function that Updates the User Home Title Version to the latest

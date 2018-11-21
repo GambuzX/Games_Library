@@ -3,7 +3,7 @@
 
 using namespace std;
 
-HomeTitle::HomeTitle(string name, double price, Date releaseDate, ageRange ageR, gameLibraryPlatform platform, gameLibraryGenre genre, string company) : Title(name, price, releaseDate, ageR, platform, genre, company)
+HomeTitle::HomeTitle(string name, double price, Date releaseDate, ageRange ageR, gameLibraryPlatform platform, gameLibraryGenre genre, string company, double updatePrice) : Title(name, price, releaseDate, ageR, platform, genre, company)
 {
 	titleUpdateHistory.push_back(Update(releaseDate));
 }
@@ -37,6 +37,20 @@ void HomeTitle::updateTitle(Update * newUpdate)
 		titleUpdateHistory.push_back(*newUpdate);
 	else
 		throw OldUpdate(*newUpdate, getCurrentVersion());
+}
+
+bool HomeTitle::userNeedsUpdate(User * usr) const
+{
+	map<User*, vector<Update*>, ComparePtr<User>>::const_iterator it;
+	it = userUpdates.find(usr);
+
+	if (it == userUpdates.end())
+		throw InexistentUser(usr->getUserID());
+	// Verificar se é a versão atual
+	if (getCurrentUserVersion(*usr) == getCurrentVersion())
+		return false;
+
+	return true;
 }
 
 void HomeTitle::updateUserVersion(const User & usr)
