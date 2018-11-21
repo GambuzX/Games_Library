@@ -120,6 +120,16 @@ public:
 	virtual void addNewUser(User & u) = 0;
 
 	/**
+	* @brief Function that verifies if a User needs an Update
+	* Virtual function that may throw exceptions if called on the incorrect object
+	*
+	* @param usr User that you want to check if needs an Update
+	* @throw NotHomeTitle() If it is called on a Online Title Object
+	* @throw InexistentUser() If the user specified doesn't own the game
+	*/
+	virtual bool userNeedsUpdate(User * usr) const = 0;
+
+	/**
 	 * @brief Function that Updates the User Home Title Version to the latest
 	 * Virtual function that may throw exceptions if called on the incorrect object
 	 * May also throw other exceptions
@@ -160,6 +170,15 @@ public:
 	 * @throw NotOnlineTitle If it is called on a Home Title Object
 	 */
 	virtual Subscription * getSubscription() const = 0;
+
+	/**
+	* @brief Get the price to pay for a Home Title Update
+	* Virtual function that may throw exceptions if called on the incorrect object
+	*
+	* @return double Return the updateCost Private object Member
+	* @throw NotHomeTitle If it is called on an Online Title Object
+	*/
+	virtual double getUpdatePrice() const = 0;
 
 	/**
 	 * @brief Get the Name Private Member
