@@ -30,7 +30,7 @@ public:
 	 * @param sPrice Double that initializes the subPrice Private Member of the Base Class
 	 * @see Subscription(double sPrice) 
 	 */
-	DynamicSubscription(double sPrice) : Subscription(sPrice) {};
+    explicit DynamicSubscription(double sPrice) : Subscription(sPrice) {};
 
 	/**
 	 * @brief Function that calculates the price of the Session Played
@@ -38,7 +38,8 @@ public:
 	 * @param sessionHours Number of hours played in that Session
 	 * @return double Returns the final Session Price
 	 */
-	double sessionPrice(double sessionHours) { return sessionHours * getSubscriptionPrice(); };
+	double sessionPrice(double sessionHours) override
+    { return sessionHours * getSubscriptionPrice(); };
 
 	/**
 	* @brief Virtual Function that tells whether a subscription is fixed or dynamic
@@ -46,7 +47,8 @@ public:
 	* @return true If the Subscription is Fixed
 	* @return false If the Subscription is Dynamic
 	*/
-	bool isFixedSubscription() const { return false; };
+	bool isFixedSubscription() const override
+    { return false; };
 };
 
 /** @} */

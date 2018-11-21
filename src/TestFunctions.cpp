@@ -44,7 +44,7 @@ void mainHeader(string title)
 *
 * @see		lineAcrossConsole	(@ConsoleFunctions)
 */
-void header(string header)
+void header(const string &header)
 {
 	cout << endl;
 	setcolor(3);
@@ -78,7 +78,6 @@ bool menuOnlineHome() {
 	default:
 		throw invalid_argument(" Error in menuOnlineHome() ");
 	}
-	cout << endl;
 }
 
 // TODO: Por para 2 em vez de todas??
@@ -122,7 +121,6 @@ gameLibraryPlatform menuPlatform() {
 	default:
 		throw invalid_argument(" Error in menuPlatform() ");
 	}
-	cout << endl;
 }
 
 gameLibraryGenre menuGenre() {
@@ -177,7 +175,6 @@ gameLibraryGenre menuGenre() {
 	default:
 		throw invalid_argument(" Error in menuGenre() ");
 	}
-	cout << endl;
 }
 
 bool menuSubcription() {
@@ -200,7 +197,7 @@ bool menuSubcription() {
 	default:
 		throw invalid_argument(" Error in menuSubcription() ");
 	}
-	cout << endl;
+	//cout << endl;
 }
 
 void titleSummary(GameLibrary & gameL) {
@@ -279,13 +276,13 @@ void addGames(GameLibrary & gL)
 }
 
 void removeGame(GameLibrary & gL) {
-	if (gL.getTitles().size() == 0)
+	if (gL.getTitles().empty())
 	{
 		cout << " There are no games to remove\n";
 		return;
 	}
 	int nameErrors = 0;
-	int titleID = intInput(" Title ID Number (0 to go back): ");
+	unsigned int titleID = intInput(" Title ID Number (0 to go back): ");
 	while (titleID != 0) {
 		if (!gL.removeTitle(titleID))
 		{
@@ -307,7 +304,7 @@ void removeGame(GameLibrary & gL) {
 }
 
 unsigned gameIDinput(GameLibrary & gL) {
-	if (gL.getTitles().size() == 0)
+	if (gL.getTitles().empty())
 	{
 		cout << " There are no games in the library\n";
 		return 0;
@@ -316,7 +313,7 @@ unsigned gameIDinput(GameLibrary & gL) {
 		int nameErrors = 0;
 		unsigned titleID = intInput(" Title ID Number (0 to go back): ");
 		while (titleID != 0) {
-			if (gL.getTitle(titleID) == NULL)
+			if (GameLibrary::getTitle(titleID) == nullptr)
 			{
 				nameErrors++;
 				cout << " Inexistent title ID\n";
@@ -364,8 +361,8 @@ void titleInfo(GameLibrary & gl, Title * game)
 void GameOperationsMenu(GameLibrary & gl, unsigned titleID) {
 	header("Game Info");
 
-	Title * game = gl.getTitle(titleID);
-	bool isOnline = gl.isOnlineTitle(game);
+	Title * game = GameLibrary::getTitle(titleID);
+	bool isOnline = GameLibrary::isOnlineTitle(game);
 
 	int option_number;
 
@@ -409,7 +406,8 @@ void GameOperationsMenu(GameLibrary & gl, unsigned titleID) {
 	case 0:
 		GamesMenu(gl);
 		break;
-	}
+    default:break;
+    }
 
 
 }
@@ -464,7 +462,8 @@ void GamesMenu(GameLibrary & gameL) {
 		header("CREATE GAME LIBRARY");
 		PrincipalMenu(gameL);
 		break;
-	}
+    default:break;
+    }
 }
 
 void PrincipalMenu(GameLibrary & gameL)
@@ -504,7 +503,8 @@ void PrincipalMenu(GameLibrary & gameL)
 		mainHeader("Welcome to the Game Library");
 		InicialMenu();
 		break;
-	}
+    default:break;
+    }
 }
 
 void InicialMenu()
@@ -545,7 +545,8 @@ void InicialMenu()
 	case 0:
 		system("cls");
 		return;
-	}
+    default:break;
+    }
 	    PrincipalMenu(gl);
 }
 
@@ -554,10 +555,6 @@ int main() {
 	mainHeader("Welcome to the Game Library");
 	
 	InicialMenu();
-
-
-
-
 
 	return 0;
 }

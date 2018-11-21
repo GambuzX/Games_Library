@@ -35,7 +35,7 @@ class NotHomeTitle
 private:
 	unsigned titleID;
 public:
-	NotHomeTitle(unsigned id) { titleID = id; }
+	explicit NotHomeTitle(unsigned id) { titleID = id; }
 	unsigned getTitleID() { return titleID; }
 };
 
@@ -44,7 +44,7 @@ class NotOnlineTitle
 private:
 	unsigned titleID;
 public:
-	NotOnlineTitle(unsigned id) { titleID = id; }
+	explicit NotOnlineTitle(unsigned id) { titleID = id; }
 	unsigned getTitleID() { return titleID; }
 };
 
@@ -56,7 +56,7 @@ private:
 
 public:
 	InexistentSale() { message = "There is no existing sale!"; date = Date(); };
-	InexistentSale(const Date & d1) {
+	explicit InexistentSale(const Date & d1) {
 		date = d1;
 		std::ostringstream os;
 		os << date;
@@ -85,7 +85,7 @@ private:
 
 public:
 	ExpiredSale() { currentDate = Date::getCurrentDate(); endSalesDate = Date(); };
-	ExpiredSale(Date endSalesDate) { this->endSalesDate = endSalesDate; currentDate = Date::getCurrentDate(); };
+	explicit ExpiredSale(Date endSalesDate) { this->endSalesDate = endSalesDate; currentDate = Date::getCurrentDate(); };
 	std::string getMessage() const
 	{
 		std::ostringstream os1, os2;
@@ -105,7 +105,7 @@ private:
 
 public:
 	SaleStarted() { currentDate = Date::getCurrentDate(); beginSalesDate = Date(); };
-	SaleStarted(Date beginSalesDate) { this->beginSalesDate = beginSalesDate; currentDate = Date::getCurrentDate(); };
+	explicit SaleStarted(Date beginSalesDate) { this->beginSalesDate = beginSalesDate; currentDate = Date::getCurrentDate(); };
 	std::string getMessage() const
 	{
 		std::ostringstream os1, os2;
@@ -124,19 +124,19 @@ private:
 	unsigned int month;
 
 public:
-	InvalidMonth() {};
-	InvalidMonth(const unsigned int m) { month = m; };
+	InvalidMonth() = default;
+	explicit InvalidMonth(const unsigned int m) { month = m; };
 	unsigned getMonth() const { return month; };
 };
 
 class InvalidDay
 {
 private:
-	unsigned int day;
+	unsigned int day{};
 
 public:
-	InvalidDay() {};
-	InvalidDay(const unsigned int d) { day = d; };
+	InvalidDay() = default;
+	explicit InvalidDay(const unsigned int d) { day = d; };
 	unsigned getDay() const { return day; };
 };
 
@@ -146,8 +146,8 @@ private:
 	unsigned int year;
 
 public:
-	InvalidYear() {};
-	InvalidYear(const unsigned int y) { year = y; };
+	InvalidYear() = default;
+	explicit InvalidYear(const unsigned int y) { year = y; };
 	unsigned getYear() const { return year; };
 };
 
@@ -157,8 +157,8 @@ private:
 	std::string date;
 
 public:
-	InvalidDateFormat() {};
-	InvalidDateFormat(const std::string d) { date = d; };
+	InvalidDateFormat() = default;
+	explicit InvalidDateFormat(const std::string d) { date = d; };
 	std::string getInvalidDate() const { return date; };
 };
 
@@ -167,7 +167,7 @@ class NegativeFunds
 private:
 	double funds;
 public:
-	NegativeFunds(double f) : funds(f) {}
+	explicit NegativeFunds(double f) : funds(f) {}
 	double getFunds() const { return funds; }
 };
 
@@ -176,7 +176,7 @@ class NotEnoughFunds
 private:
 	double funds;
 public:
-	NotEnoughFunds(double f) : funds(f) {}
+	explicit NotEnoughFunds(double f) : funds(f) {}
 	double getFunds() const { return funds; }
 };
 
@@ -185,7 +185,7 @@ class InexistentUser
 private:
 	unsigned userID;
 public:
-	InexistentUser(unsigned id) { userID = id; }
+	explicit InexistentUser(unsigned id) { userID = id; }
 	unsigned getUserID() { return userID; }
 };
 
@@ -194,7 +194,7 @@ class DuplicatedUser
 private:
 	unsigned userID;
 public:
-	DuplicatedUser(unsigned id) { userID = id; }
+	explicit DuplicatedUser(unsigned id) { userID = id; }
 	unsigned getUserID() { return userID; }
 };
 
@@ -203,7 +203,7 @@ class TitleUpToDate
 private:
 	unsigned titleID;
 public:
-	TitleUpToDate(unsigned id) { titleID = id; }
+	explicit TitleUpToDate(unsigned id) { titleID = id; }
 	unsigned getTitleID() { return titleID; }
 };
 #endif

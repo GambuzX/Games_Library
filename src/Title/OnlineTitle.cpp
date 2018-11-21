@@ -46,7 +46,7 @@ const std::vector<Update>& OnlineTitle::getUpdates() const
 
 unsigned int OnlineTitle::getNumberUsers(ageRange ageR) const
 {
-	int total = 0;
+	unsigned int total = 0;
 	for (const auto & ref : titleStats)
 		if (ref.first->getAge() >= ageR.minAge && ref.first->getAge() <= ageR.maxAge)
 			total++;

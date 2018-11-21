@@ -9,7 +9,6 @@ map<Title*, double, ComparePtr<Title>> GameLibrary::titlesRevenue;
 
 class User;
 
-
 GameLibrary::~GameLibrary()
 {
 	// Free space of users
@@ -211,8 +210,8 @@ void GameLibrary::buildUserMostPlayedTitlesRanking(std::ostream & os, User * usr
 			double timePlayed = title->getTimePlayed(usr);
 			rankedList.insert(pair<double, const Title*>(timePlayed, title));
 		}
-		catch (NotOnlineTitle) { continue; }
-		catch (InexistentUser) { continue; }
+		catch (const NotOnlineTitle &notOnlineTitle) { continue; }
+		catch (const InexistentUser &inexistentUser) { continue; }
 	}
 
 	os << "User Most Played Titles" << endl << endl;

@@ -5,7 +5,7 @@ using namespace std;
 
 HomeTitle::HomeTitle(string name, double price, Date releaseDate, ageRange ageR, gameLibraryPlatform platform, gameLibraryGenre genre, string company) : Title(name, price, releaseDate, ageR, platform, genre, company)
 {
-	titleUpdateHistory.push_back(Update(releaseDate));
+	titleUpdateHistory.emplace_back(releaseDate);
 }
 
 void HomeTitle::addNewUser(User * u)
@@ -22,7 +22,7 @@ void HomeTitle::addNewUser(User * u)
 
 unsigned int HomeTitle::getNumberUsers(ageRange ageR) const
 {
-	int total = 0;
+	unsigned int total = 0;
 	for (const auto & ref : userUpdates)
 		if (ref.first->getAge() >= ageR.minAge && ref.first->getAge() <= ageR.maxAge)
 			total++;
@@ -31,7 +31,7 @@ unsigned int HomeTitle::getNumberUsers(ageRange ageR) const
 
 void HomeTitle::updateTitle(Update * newUpdate)
 {
-	if (titleUpdateHistory.size() == 0)
+	if (titleUpdateHistory.empty())
 		titleUpdateHistory.push_back(*newUpdate);
 	else if (getCurrentVersion() < *newUpdate)
 		titleUpdateHistory.push_back(*newUpdate);
@@ -47,10 +47,7 @@ bool HomeTitle::userNeedsUpdate(User * usr) const
 	if (it == userUpdates.end())
 		throw InexistentUser(usr->getUserID());
 	// Verificar se é a versão atual
-	if (getCurrentUserVersion(usr) == getCurrentVersion())
-		return false;
-
-	return true;
+    return !(getCurrentUserVersion(usr) == getCurrentVersion());
 }
 
 void HomeTitle::updateUserVersion(const User * usr)
@@ -113,7 +110,6 @@ const Update & HomeTitle::getCurrentUserVersion(unsigned int userID) const
 void HomeTitle::displayTitleInfo(std::ostream &os)
 {
 	Title::displayTitleInfo(os);
-	os << updateCost << endl;
 }
 
 /*

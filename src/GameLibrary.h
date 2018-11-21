@@ -10,8 +10,6 @@
 #include "Utilities\Update.h"
 #include "Utilities\CompareObj.h"
 
-using user_map = std::map<User*, std::set<Title*, ComparePtr<Title>>, ComparePtr<User>>;
-
 /** @defgroup GameLibrary Game Library Class
 * @{
 *

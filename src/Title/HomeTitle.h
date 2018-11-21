@@ -70,7 +70,7 @@ public:
 	 * @param Age range Users must belong to
 	 * @return unsigned int Returns the number of Users that have the Title
 	 */
-	unsigned int getNumberUsers(ageRange ageR) const;
+	unsigned int getNumberUsers(ageRange ageR) const override;
 
 	/**
 	 * @brief Get the Stats of a Title (hours played)
@@ -99,7 +99,8 @@ public:
 	 * @return const Subscription* Return the subscription Private object Member
 	 * @throw NotOnlineTitle If it is called on a Home Title Object
 	 */
-	Subscription * getSubscription() const { throw NotOnlineTitle(getTitleID()); };
+	Subscription * getSubscription() const override
+    { throw NotOnlineTitle(getTitleID()); };
 
 	/**
 	 * @brief Get the Current Update Version object
@@ -108,7 +109,8 @@ public:
 	 * @return const Update& Return the Last Update made to the Home Title
 	 * @throw NotHomeTitle() If it is called on a Online Title Object
 	 */
-	const Update & getCurrentVersion() const { return titleUpdateHistory.at(titleUpdateHistory.size() - 1); };
+	const Update & getCurrentVersion() const override
+    { return titleUpdateHistory.at(titleUpdateHistory.size() - 1); };
 
 	/**
 	 * @brief Get the Current User Update Version object
@@ -187,7 +189,7 @@ public:
 	*/
 	double getTimePlayed(const User * usr) const override { throw NotOnlineTitle(getTitleID()); }
 
-	void displayTitleInfo(std::ostream& os);
+	void displayTitleInfo(std::ostream& os) override;
 
 	//void updateUserVersion(std::string name);
 

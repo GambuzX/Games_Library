@@ -35,7 +35,7 @@ CreditCard & CreditCard::operator-(const double & val) {
 	try {
 		removeFunds(val);
 	}
-	catch (NotEnoughFunds) {
+	catch (const NotEnoughFunds &nef) {
 		throw;
 	}
 	return *this;

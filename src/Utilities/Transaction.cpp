@@ -27,7 +27,7 @@ TransactionType Transaction::getType() const {
 
 std::ostream & operator<<(std::ostream & os, const Transaction & trans)
 {
-	std::string desc = "";
+	std::string desc;
 
 	if (trans.getType() == gamePurchase) desc = "Purchased a Title";
 	else if (trans.getType() == homeUpdate) desc = "Updated a Home Title";

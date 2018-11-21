@@ -284,7 +284,7 @@ public:
 	* @param date Date of transaction
 	* @param t TransactionType enum value representing the type of transaction
 	*/
-	void addTransaction(double value, Date date, TransactionType t) { transactions.push_back(Transaction(value, date, t)); }
+	void addTransaction(double value, Date date, TransactionType t) { transactions.emplace_back(value, date, t); }
 
 	/**
 	* @brief Overload of the less operator

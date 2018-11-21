@@ -14,7 +14,8 @@ string platformEnum2string(gameLibraryPlatform platform)
 	case switche: return "Nintendo Switch";
 	case wii: return "WII";
 	case xbox1: return "XBOX ONE";
-	case xbox360: return "XBOX 360";}
+	case xbox360: return "XBOX 360";
+	}
 	// TODO CHANGE THIS???
 	return "Invalid platform";
 }

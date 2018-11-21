@@ -19,7 +19,7 @@ Title::Title(string name, double price, Date releaseDate, ageRange ageR, gameLib
 
 const Sale & Title::getLastSale() const
 {
-	if (0 == pricesHistory.size())
+	if (pricesHistory.empty())
 		throw InexistentSale();
 	/*
 	Date lastEndDate = pricesHistory.at(0).getEndDate();
@@ -32,7 +32,7 @@ const Sale & Title::getLastSale() const
 	
 	return pricesHistory.at(lastSaleInd);
 	*/
-	return pricesHistory.at(pricesHistory.size() - 1);
+	return pricesHistory.back();
 }
 
 double Title::getCurrentPrice(Date & date) const
@@ -52,7 +52,7 @@ void Title::addPromotion(Sale & promotion) {
 	{
 		throw ExpiredSale(promotion.getEndDate());
 	}
-	if(0 == pricesHistory.size() || getLastSale().getEndDate() < promotion.getStartDate())
+	if(pricesHistory.empty() || getLastSale().getEndDate() < promotion.getStartDate())
 		pricesHistory.push_back(promotion);
 	else if (promotion.getStartDate() < pricesHistory.at(0).getStartDate())
 	{

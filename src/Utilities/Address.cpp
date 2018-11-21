@@ -6,10 +6,6 @@ using namespace std;
 Address::Address()
 {
 	this->houseNumber = 0;
-	this->streetName = "";
-	this->city = "";
-	this->country = "";
-
 }
 
 //Address::Address(string streetName, string city, string country, string state)

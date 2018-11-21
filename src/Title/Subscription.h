@@ -26,7 +26,7 @@ public:
 	 * 
 	 * @param sPrice Double that initializes the subPrice Private Member
 	 */
-	Subscription(double sPrice) { subPrice = sPrice; };
+	explicit Subscription(double sPrice) { subPrice = sPrice; };
 
 	/**
 	 * @brief Get the Subscription Price Private Member
