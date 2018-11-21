@@ -253,6 +253,13 @@ public:
 	std::string getCompany() const { return company; };
 
 	/**
+	* @brief Get the Sale History Private Member
+	*
+	* @return const std::vector<Sale>& Return the pricesHistory Vector Private Member
+	*/
+	const std::vector<Sale> & getSaleHistory() const{ return pricesHistory; };
+
+	/**
 	 * @brief Get the Last Sale object
 	 * May throw some exceptions if there are no sales
 	 * 
@@ -260,6 +267,16 @@ public:
 	 * @throw InexistentSale() If there are no Sales
 	 */
 	const Sale & getLastSale() const;
+
+	/**
+	* @brief Get the Sale object on specified Date
+	* May throw some exceptions if there are no sales
+	*
+	* @param date Date when we want to know if there is a Sale
+	* @return const Sale& Return the Current Sale active on the Date
+	* @throw InexistentSale() If there are no Sales
+	*/
+	const Sale & getSaleOn(Date & date) const;
 
 	/**
 	 * @brief Get the Current Price object

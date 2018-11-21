@@ -215,6 +215,24 @@ void titleSummary(GameLibrary & gameL) {
 	system("pause");
 }
 
+void promotionDisplay(string firstLine, const Sale & sale) {
+	cout << firstLine << endl;
+	cout << "  - Begin Date:\t" << sale.getStartDate() << endl;
+	cout << "  - End Date:\t" << sale.getEndDate() << endl;
+	cout << "  - Promotion:\t" << sale.getSaleFactor() * 100 << "%" << endl << endl;
+}
+
+void promotionSummary(Title*  game) {
+	vector<Sale> prov = game->getSaleHistory();
+	unsigned int i = 1;
+	for (auto & sale : prov)
+	{
+		promotionDisplay(" Sale " + i + ':', sale);
+		i++;
+	}
+	system("pause");
+}
+
 void addGames(GameLibrary & gL)
 {
 	bool isOnline = menuOnlineHome();
@@ -278,6 +296,27 @@ void addGames(GameLibrary & gL)
 
 }
 
+void addSale(Title*  game) {
+	Date beginDate = dateInput(" Begin date: ");
+	Date endDate = dateInput(" End date: ");
+	double saleFactor = menuInput(" Sale Factor (from 0 to 100): ", 0, 100) / 100;
+	try
+	{
+		game->addPromotion(Sale(beginDate, endDate, saleFactor));
+	}
+	catch (ExpiredSale & e)
+	{
+		cout << "  - " << e.getMessage() << endl << endl;
+		return;
+	}
+	catch (OverlappingSales & e)
+	{
+		cout << "  - " << e.getMessage() << endl << endl;
+		return;
+	}
+	cout << "\n Sale Added Successfully";
+}
+
 void removeGame(GameLibrary & gL) {
 	if (gL.getTitles().size() == 0)
 	{
@@ -304,6 +343,31 @@ void removeGame(GameLibrary & gL) {
 		}
 	}
 
+}
+
+void removeSale(Title*  game) {
+	if (game->getSaleHistory().size() == 0)
+	{
+		cout << " There are no sales to be removed\n";
+		return;
+	}
+	Date beginDate = dateInput(" Begin date of the Sale to be Removed: ");
+	try
+	{
+		game->removePromotion(beginDate);
+	}
+	catch (SaleStarted & e)
+	{
+		cout << "  - " << e.getMessage() << endl << endl;
+		return;
+	}
+	catch (InexistentSale & e)
+	{
+		cout << "  - " << e.getMessage() << endl;
+		cout << "  - Please consider taking a look at the Sales Summary Menu\n\n";
+		return;
+	}
+	cout << "\n Sale Removed Successfully";
 }
 
 unsigned gameIDinput(GameLibrary & gL) {
@@ -335,32 +399,153 @@ unsigned gameIDinput(GameLibrary & gL) {
 	}
 }
 
-void titleInfo(GameLibrary & gl, Title * game) 
+void titleInfo(Title * game, bool isOnline)
 {
 	cout << " Title ID:\t" << game->getTitleID() << endl;
 	cout << " Game:\t\t" << game->getName() << endl;
 	cout << " Price:\t\t" << game->getBasePrice() << endl;
 	cout << " Current Price:\t" << game->getCurrentPrice(Date::getCurrentDate()) << endl;
+	if (isOnline) {
+		cout << " Subscription:\n";
+		cout << "  - Type:\t";
+		if (game->getSubscription()->isFixedSubscription()) cout << "Fixed\n";
+		else cout << "Dynamic\n";
+		cout << "  - Price:\t" << game->getSubscription()->getSubscriptionPrice() << endl;
+	}
+	else
+	{
+		cout << " Last Update:\n";
+		cout << "  - Version:\t\t" << game->getCurrentVersion().getVersion() << endl;
+		cout << "  - Description:\t" << game->getCurrentVersion().getDescription() << endl;
+		cout << "  - Price:\t\t" << game->getCurrentVersion().getuUpdatePrice() << endl;
+		cout << "  - Date:\t\t" << game->getCurrentVersion().getDate() << endl << endl;
+	}
 	cout << " Release Date:\t" << game->getReleaseDate() << endl;
 	cout << " Age Range:\t" << game->getAgeRange().minAge << " - " << game->getAgeRange().maxAge << endl;
 	cout << " Platform:\t" << game->getPlatformName() << endl;
 	cout << " Genre:\t\t" << game->getGenreName() << endl;
 	cout << " Company:\t" << game->getCompany() << endl;
-	cout << " Number of Users:\t" << game->getNumberUsers() << endl;
+	cout << " Users Numbe:\t" << game->getNumberUsers() << endl;
+	if (isOnline) cout << " Hours Played:\t" << game->getStats() << endl;
 	cout << " Last Schedule Sale:\n";
-	cout << "  - Begin Date:\t" << game->getLastSale().getStartDate() << endl;
-	cout << "  - End Date:\t" << game->getLastSale().getEndDate() << endl;
-	cout << "  - Promotion:\t" << game->getLastSale().getSaleFactor()*100 << "%" << endl;
+	try
+	{
+		cout << "  - Begin Date:\t" << game->getLastSale().getStartDate() << endl;
+		cout << "  - End Date:\t" << game->getLastSale().getEndDate() << endl;
+		cout << "  - Promotion:\t" << game->getLastSale().getSaleFactor() * 100 << "%" << endl << endl;
+	}
+	catch (InexistentSale & e)
+	{
+		cout << "  - " << e.getMessage() << endl << endl;
+	}
 	
-	///////
-	game->getStats();
-	game->getSubscription();
-	//game->getTimePlayed();
-	//game->getUpdatePrice();
-	game->getUpdates();
-
 	system("pause");
 }
+
+void PromotionMenu(GameLibrary & gl, Title * game) {
+	int option_number;
+	
+	cout << " Possible Actions:" << endl << endl;
+
+	cout << "   1 - Promotions Summary" << endl;
+
+	cout << "   2 - Add Promotion" << endl;
+
+	cout << "   3 - Remove Promotion" << endl;
+
+	cout << "   4 - Current Promotion" << endl;
+
+	cout << "   0 - Go back" << endl << endl;
+
+	option_number = menuInput(" Option ? ", 0, 4);
+
+	switch (option_number)
+	{
+	case 1:
+		header("Promotions Summary");
+		promotionSummary(game);
+		cout << endl << endl;
+		PromotionMenu(gl, game);
+		break;
+
+	case 2:
+		header("Add Sale");
+		addSale(game);
+		cout << endl << endl;
+		PromotionMenu(gl, game);
+		break;
+	case 3:
+		header("Remove Sale");
+		removeSale(game);
+		cout << endl << endl;
+		PromotionMenu(gl, game);
+		break;
+	case 4:
+		header("Current Sale");
+		promotionDisplay(" Current Promotion:", game->getSaleOn(Date::getCurrentDate()));
+		system("pause");
+		cout << endl << endl;
+		PromotionMenu(gl, game);
+		break;
+	case 0:
+		GameOperationsMenu(gl, game->getTitleID());
+		break;
+	}
+}
+
+void UpdateMenu(GameLibrary & gl, Title * game) {
+	int option_number;
+	//game->getStats
+	//game->getCurrentVersion
+
+	cout << " Possible Actions:" << endl << endl;
+
+	cout << "   1 - Promotions Summary" << endl;
+
+	cout << "   2 - Add Promotion" << endl;
+
+	cout << "   3 - Remove Promotion" << endl;
+
+	cout << "   4 - Current Promotion" << endl;
+
+	cout << "   0 - Go back" << endl << endl;
+
+	option_number = menuInput(" Option ? ", 0, 4);
+
+	switch (option_number)
+	{
+	case 1:
+		//header("Promotions Summary");
+		//promotionSummary(game);
+		//cout << endl << endl;
+		//PromotionMenu(gl, game);
+		break;
+
+	case 2:
+		//header("Add Sale");
+		//addSale(game);
+		//cout << endl << endl;
+		//PromotionMenu(gl, game);
+		break;
+	case 3:
+		//header("Remove Sale");
+		//removeSale(game);
+		//cout << endl << endl;
+		//PromotionMenu(gl, game);
+		break;
+	case 4:
+		//header("Current Sale");
+		//promotionDisplay(" Current Promotion:", game->getSaleOn(Date::getCurrentDate()));
+		//system("pause");
+		//cout << endl << endl;
+		//PromotionMenu(gl, game);
+		break;
+	case 0:
+		GameOperationsMenu(gl, game->getTitleID());
+		break;
+	}
+}
+
 void GameOperationsMenu(GameLibrary & gl, unsigned titleID) {
 	header("Game Info");
 
@@ -385,17 +570,17 @@ void GameOperationsMenu(GameLibrary & gl, unsigned titleID) {
 	switch (option_number)
 	{
 	case 1:
-		//eader("Games Summary");
-		//titleSummary(gameL);
-		//cout << endl << endl;
-		//GamesMenu(gameL);
+		header("Detailed Information");
+		titleInfo(game, isOnline);
+		cout << endl << endl;
+		GameOperationsMenu(gl, titleID);
 		break;
 
 	case 2:
-		//header("Add Game");
-		//addGames(gameL);
-		//cout << endl << endl;
-		//GamesMenu(gameL);
+		header("Promotions");
+		PromotionMenu(gl, game);
+		cout << endl << endl;
+		GameOperationsMenu(gl, titleID);
 		break;
 	case 3:
 		//header("Remove Game");

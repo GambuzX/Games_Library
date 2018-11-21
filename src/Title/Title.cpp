@@ -35,6 +35,18 @@ const Sale & Title::getLastSale() const
 	return pricesHistory.at(pricesHistory.size() - 1);
 }
 
+const Sale & Title::getSaleOn(Date & date) const
+{
+	for (size_t i = 0; i < pricesHistory.size(); i++)
+	{
+		if (pricesHistory.at(i).isActiveOn(date))
+		{
+			return pricesHistory.at(i);
+		}
+	}
+	throw InexistentSale(date);
+}
+
 double Title::getCurrentPrice(Date & date) const
 {
 	for (size_t i = 0; i < pricesHistory.size(); i++)
