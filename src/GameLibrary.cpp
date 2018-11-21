@@ -10,6 +10,11 @@ map<Title*, double, ComparePtr<Title>> GameLibrary::titlesRevenue;
 void GameLibrary::addUser(std::string name, std::string email, int age, Address address)
 {
 	users.insert(pair<User, set<Title*, ComparePtr<Title>>>(User(name, email, age, address), set<Title*, ComparePtr<Title>>()));
+	/*map<User, set<Title*, ComparePtr<Title>>>::iterator it;
+	for (it = users.begin(); it != users.end(); it++)
+		if (it->first.getUserID() == )*/
+
+	// TODO Inicializar purchasedGames do User
 }
 
 void GameLibrary::addUser(User * user) {

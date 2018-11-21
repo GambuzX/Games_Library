@@ -27,9 +27,6 @@ private:
 	static std::map<Title*, double, ComparePtr<Title>> titlesRevenue; /**< @brief Static Map of Titles to their respective total revenue */
 
 	std::map<User, std::set<Title*, ComparePtr<Title>>> users; /**< @brief Map of Users to their respective list of Titles */
-	/*std::vector<std::string> supportedPlatforms;
-	std::vector<std::string> titlesGenres;
-	std::vector<std::string> ageGroups;*/
 
 public:
 	/**

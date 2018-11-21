@@ -31,7 +31,7 @@ class User {
 private:
 	static unsigned int nextUserID; /**< @brief Static Unsigned Int used to assign different IDs to each User */
 	const unsigned int userID; /**< @brief Unsigned Int with the user ID */
-	const Date createdDate; /**< @brief Date the User account was created */
+	Date createdDate; /**< @brief Date the User account was created */
 	std::string name; /**< @brief String with the user name */
 	std::string email; /**< @brief String with the user email */
 	int age; /**< @brief Int with the user age */
@@ -123,6 +123,20 @@ public:
 	* @return const vector<Transaction> & Returns the transactions Private Member
 	*/
 	const std::vector<Transaction> & getTransactions() const { return transactions; }
+
+	/**
+	* @brief Set the createdDate Private Member
+	*
+	* @param date Date to set the createdDate to
+	*/
+	void setCreatedDate(const Date & date) { createdDate = date; }
+
+	/**
+	* @brief Set the purchasedGames Private Member
+	*
+	* @param games Pointer to the User's game list
+	*/
+	void setPurchasedGames(std::set<Title*> * games) { purchasedGames = games; }
 
 	/**
 	* @brief Get the total value of the user's transactions
