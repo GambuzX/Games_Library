@@ -95,8 +95,21 @@ void GameLibrary::saveGameLibrary()
 
 	for (auto &user : users) {
 		users_file << user.first;
+		users_file << "Games:" << endl;
+
+		for (auto &set_it : user.second) {
+			users_file << set_it->getTitleID() << " ";
+		}
 	}
 
+	users_file.close();
+
+	for (auto &set_it : titles) {
+		set_it->displayTitleInfo(titles_file);
+		cout << endl;
+	}
+
+	titles_file.close();
 }
 
 void GameLibrary::loadGameLibraryFromFile(std::fstream& titleFile)
