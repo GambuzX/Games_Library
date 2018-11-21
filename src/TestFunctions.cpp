@@ -87,26 +87,37 @@ gameLibraryPlatform menuPlatform() {
 
 	cout << " Platform :" << endl << endl;
 
-	cout << "   1 - PC" << endl;
+	cout << "   1 - Nintendo DS" << endl;
 
-	cout << "   2 - PS4" << endl;
+	cout << "   2 - PC" << endl;
+
+	cout << "   3 - PS3" << endl;
+
+	cout << "   4 - PS4" << endl;
+
+	cout << "   5 - Nintendo Switch" << endl;
+
+	cout << "   6 - WII" << endl;
+
+	cout << "   7 - XBOX 360" << endl;
+
+	cout << "   8 - XBOX ONE" << endl;
 	
-	cout << "   3 - XBOX1" << endl;
-
 	cout << "   0 - All the Plataforms" << endl << endl;
 
-	option_number = menuInput(" Option ? ", 0, 3);
+	option_number = menuInput(" Option ? ", 0, 8);
 	
 	switch (option_number)
 	{
-	case 0:
-		return all_platforms;
-	case 1:
-		return pc;
-	case 2:
-		return ps4;
-	case 3:
-		return xbox1;
+	case 0: return all_platforms;
+	case 1: return nds;
+	case 2: return pc;
+	case 3: return ps3;
+	case 4: return ps4;
+	case 5: return switche;
+	case 6: return wii;
+	case 7: return xbox1;
+	case 8: return xbox360;
 	// Should never reach here
 	default:
 		throw invalid_argument(" Error in menuPlatform() ");

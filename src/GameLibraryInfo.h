@@ -27,13 +27,14 @@ enum gameLibraryGenre
 enum gameLibraryPlatform
 {
 	all_platforms, /*!< All Platforms */
+	nds, /*!< Nintendo DS */
 	pc, /*!< Personal Computer */
 	ps3, /*!< Playstation 3 */
 	ps4, /*!< Playstation 4 */
-	xbox360, /*!< X-Box 360*/
-	xbox1, /*!< X-Box 1*/
+	switche, /*!< Nintendo Switch*/
 	wii, /*!< Wii */
-	nds, /*!< Nintendo DS */
+	xbox1, /*!< X-Box 1*/
+	xbox360, /*!< X-Box 360*/
 	last /*!< Last element to allow iteration through the enum */
 };
 
