@@ -46,7 +46,7 @@ const std::vector<Update>& OnlineTitle::getUpdates() const
 
 unsigned int OnlineTitle::getNumberUsers(ageRange ageR) const
 {
-	int total = 0;
+	unsigned int total = 0;
 	for (const auto & ref : titleStats)
 		if (ref.first->getAge() >= ageR.minAge && ref.first->getAge() <= ageR.maxAge)
 			total++;
@@ -93,6 +93,13 @@ void OnlineTitle::updateTitle(Update * newUpdate)
 void OnlineTitle::updateUserVersion(const User * usr)
 {
 	throw NotHomeTitle(getTitleID());
+}
+
+void OnlineTitle::displayTitleInfo(std::ostream &os)
+{
+	Title::displayTitleInfo(os);
+	os << subscription->getSubscriptionPrice() << endl;
+
 }
 
 /*

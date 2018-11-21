@@ -9,7 +9,6 @@ map<Title*, double, ComparePtr<Title>> GameLibrary::titlesRevenue;
 
 class User;
 
-
 GameLibrary::~GameLibrary()
 {
 	// Free space of users
@@ -95,9 +94,28 @@ bool GameLibrary::removeTitle(unsigned int id) {
 	return true;
 }
 
-void GameLibrary::saveGameLibraryToFile(std::fstream& titleFile)
+void GameLibrary::saveGameLibrary()
 {
+	ofstream users_file("users.txt");
+	ofstream titles_file("titles.txt");
 
+	for (auto &user : users) {
+		users_file << user.first;
+		users_file << "Games:" << endl;
+
+		for (auto &set_it : user.second) {
+			users_file << set_it->getTitleID() << " ";
+		}
+	}
+
+	users_file.close();
+
+	for (auto &set_it : titles) {
+		set_it->displayTitleInfo(titles_file);
+		cout << endl;
+	}
+
+	titles_file.close();
 }
 
 void GameLibrary::loadGameLibraryFromFile(std::fstream& titleFile)
@@ -192,8 +210,8 @@ void GameLibrary::buildUserMostPlayedTitlesRanking(std::ostream & os, User * usr
 			double timePlayed = title->getTimePlayed(usr);
 			rankedList.insert(pair<double, const Title*>(timePlayed, title));
 		}
-		catch (NotOnlineTitle) { continue; }
-		catch (InexistentUser) { continue; }
+		catch (const NotOnlineTitle &notOnlineTitle) { continue; }
+		catch (const InexistentUser &inexistentUser) { continue; }
 	}
 
 	os << "User Most Played Titles" << endl << endl;

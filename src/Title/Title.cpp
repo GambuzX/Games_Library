@@ -19,7 +19,7 @@ Title::Title(string name, double price, Date releaseDate, ageRange ageR, gameLib
 
 const Sale & Title::getLastSale() const
 {
-	if (0 == pricesHistory.size())
+	if (pricesHistory.empty())
 		throw InexistentSale();
 	/*
 	Date lastEndDate = pricesHistory.at(0).getEndDate();
@@ -32,7 +32,7 @@ const Sale & Title::getLastSale() const
 	
 	return pricesHistory.at(lastSaleInd);
 	*/
-	return pricesHistory.at(pricesHistory.size() - 1);
+	return pricesHistory.back();
 }
 
 const Sale & Title::getSaleOn(Date & date) const
@@ -64,7 +64,7 @@ void Title::addPromotion(Sale & promotion) {
 	{
 		throw ExpiredSale(promotion.getEndDate());
 	}
-	if(0 == pricesHistory.size() || getLastSale().getEndDate() < promotion.getStartDate())
+	if(pricesHistory.empty() || getLastSale().getEndDate() < promotion.getStartDate())
 		pricesHistory.push_back(promotion);
 	else if (promotion.getStartDate() < pricesHistory.at(0).getStartDate())
 	{
@@ -101,4 +101,21 @@ void Title::removePromotion(Date & saleBeginning)
 bool Title::operator<(const Title & t2) const
 {
 	return getTitleID() < t2.getTitleID();
+}
+
+ostream &operator<<(ostream &os, const Title &title)
+{
+	os << title.getTitleID() << " " << title.getName() << endl;
+	os << title.getPlatform() << " " << title.getGenre() << endl;
+	os << title.getAgeRange().minAge << " " << title.getAgeRange().maxAge << endl;
+	os << title.getReleaseDate() << endl;
+	return os;
+}
+
+void Title::displayTitleInfo(std::ostream &os)
+{
+	os << getTitleID() << " " << getName() << endl;
+	os << getPlatform() << " " << getGenre() << endl;
+	os << getAgeRange().minAge << " " << getAgeRange().maxAge << endl;
+	os << getReleaseDate() << endl;
 }

@@ -61,7 +61,7 @@ double duobleInput(std::string question);
 * @see		afterNumber
 * @see		getlineZ		(@		ConsoleFunctions)
 */
-int intInput(std::string question);
+unsigned int intInput(std::string question);
 
 Date dateInput(std::string question);
 

@@ -36,7 +36,7 @@ public:
 	 * 
 	 * @param d Release Date to Initialize the date Private Member
 	 */
-	Update(Date d) { date = d; description = "First version"; version = 1.0; updateCost = 0.0; };
+	explicit Update(Date d) { date = d; description = "First version"; version = 1.0; updateCost = 0.0; };
 	/**
 	 * @brief Construct a new Update object
 	 * 

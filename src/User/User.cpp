@@ -356,3 +356,25 @@ bool User::operator<(const User & usr) const
 {
 	return userID < usr.getUserID();
 }
+ostream& operator<<(ostream &os, const User &user)
+{
+	os << user.getUserID() << " " << user.getName() << " " << user.getEmail() << " " << user.getAge() << endl;
+	os << user.getAddress();
+
+	os << "Credit Cards:" << endl;
+	for (const CreditCard &cc : user.getCreditCards()) {
+		os << cc << endl;
+	}
+
+	os << "Transactions:" << endl;
+	for (const Transaction &t : user.getTransactions()) {
+		os << t << endl;
+	}
+
+	os << "Friends:" << endl;
+	for (const User* f : user.getFriendsList()) {
+		os << f->getUserID();
+	}
+
+	return os;
+}

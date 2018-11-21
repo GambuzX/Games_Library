@@ -114,22 +114,22 @@ void Date::setYear(unsigned int year)
 	this->year = year;
 }
 
-Date Date::operator+(int days) const {
+Date Date::operator+(unsigned int days) const {
 	if (days < 0)
 		return *this - (- days);
 
 	Date res(*this);
 
-	days += int(dayNumber(res.day, res.month, res.year));
+	days += dayNumber(res.day, res.month, res.year);
 
-	while (days > int(daysInYear(res.year))) {
+	while (days > daysInYear(res.year)) {
 		days -= daysInYear(res.year);
 		res.year++;
 	}
 
 	res.month = 1;
 
-	while (days > int(daysInMonth(res.month, res.year))) {
+	while (days > daysInMonth(res.month, res.year)) {
 		days -= daysInMonth(res.month, res.year);
 		res.month++;
 	}
@@ -139,19 +139,19 @@ Date Date::operator+(int days) const {
 	return res;
 }
 
-Date Date::operator-(int days) const
+Date Date::operator-(unsigned int days) const
 {
 	if (days < 0)
 		return *this + (- days);
 
 	Date res(*this);
 	
-	while (days > int(daysInYear(res.year))) {
+	while (days > daysInYear(res.year)) {
 		days -= daysInYear(res.year - 1);
 		res.year--;
 	}
 
-	int pres = int(dayNumber(res.day, res.month, res.year));
+	unsigned int pres = dayNumber(res.day, res.month, res.year);
 
 	if (days >= pres){
 		res.year--;
@@ -231,9 +231,9 @@ Date Date::getCurrentDate()
 	time_t theTime = time(nullptr);
 	tm *aTime = localtime(&theTime);
 
-	int day = aTime->tm_mday;
-	int month = aTime->tm_mon + 1; // Month is 0 - 11, add 1 to get a jan-dec 1-12 concept
-	int year = aTime->tm_year + 1900; // Year is # years since 1900
+	auto day = static_cast<unsigned int>(aTime->tm_mday);
+	auto month = static_cast<unsigned int>(aTime->tm_mon + 1); // Month is 0 - 11, add 1 to get a jan-dec 1-12 concept
+	auto year = static_cast<unsigned int>(aTime->tm_year + 1900); // Year is # years since 1900
 
 	return Date(day, month, year);
 }

@@ -1,6 +1,7 @@
 #include "Input.h"
 #include "ConsoleFunctions.h"
 #include <sstream>
+#include <limits>
 
 using namespace std;
 
@@ -99,7 +100,7 @@ string nameInput(string question)
 				}
 			}
 		}
-		if ("" == name || !letterFlag)
+		if (name.empty() || !letterFlag)
 		{
 			ErrorFlag = true;
 		}
@@ -162,7 +163,7 @@ string nameNumbersInput(string question)
 				}
 			}
 		}
-		if ("" == name || !letterFlag)
+		if (name.empty() || !letterFlag)
 		{
 			ErrorFlag = true;
 		}
@@ -246,9 +247,9 @@ double duobleInput(string question)
 	return option;
 }
 
-int intInput(string question)
+unsigned int intInput(string question)
 {
-	int option;
+	unsigned int option;
 	bool valid = false;
 
 	string prov;
@@ -338,7 +339,7 @@ Date dateInput(string question)
 ageRange ageRangeInput(string question)
 {
 
-	ageRange ageR;
+	ageRange ageR{};
 	bool valid = false;
 	int minAge, maxAge;
 
@@ -358,7 +359,7 @@ ageRange ageRangeInput(string question)
 		{
 			valid = false;
 			// Apenas para windows...
-			MessageBoxA(NULL, "    Min Age is greater than Max Age       ", "Error!", MB_OK);
+			MessageBoxA(nullptr, "    Min Age is greater than Max Age       ", "Error!", MB_OK);
 		}
 		else
 		{
@@ -404,7 +405,7 @@ int menuInput(string question, int inferiorLimit, int superiorLimit)
 			cin.ignore((numeric_limits<streamsize>::max)(), '\n');
 			ErrorFlag = true;
 		}
-		if (option == "")
+		if (option.empty())
 		{
 			ErrorFlag = true;
 		}

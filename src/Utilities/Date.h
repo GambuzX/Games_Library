@@ -149,7 +149,7 @@ public:
 	 * @see daysInMonth()
 	 * @see operator-()
 	 */
-	Date operator+(int days) const;
+	Date operator+(unsigned int days) const;
 	/**
 	 * @brief Overload of the minus operator in order to remove a number of days of a date
 	 * May call the symmetric operator if the number of days is negative
@@ -161,7 +161,7 @@ public:
 	 * @see daysInMonth()
 	 * @see operator+()
 	 */
-	Date operator-(int days) const;
+	Date operator-(unsigned int days) const;
 	/**
 	 * @brief Difference in days between to dates
 	 * 

@@ -47,7 +47,8 @@ public:
 	 * @return Subscription* Return the subscription Private object Member
 	 * @throw NotOnlineTitle If it is called on a Home Title Object
 	 */
-	Subscription * getSubscription() const { return subscription; };
+	Subscription * getSubscription() const override
+    { return subscription; };
 
 	/**
 	 * @brief Get the Vector of Updates
@@ -130,7 +131,8 @@ public:
 	* @return const Update& Return the Last Update made to the Home Title
 	* @throw NotHomeTitle() If it is called on a Online Title Object
 	*/
-	const Update & getCurrentVersion() const { throw NotHomeTitle(getTitleID()); };
+	const Update & getCurrentVersion() const override
+    { throw NotHomeTitle(getTitleID()); };
 
 	/**
 	 * @brief Function that Updates the User Home Title Version to the latest
@@ -183,7 +185,7 @@ public:
 	 */
 	void addNewSession(unsigned int userID, const Session & sess);
 
-
+	void displayTitleInfo(std::ostream& os) override;
 	//bool operator<(const Title & t2) const override;
 
 };

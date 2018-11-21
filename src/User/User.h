@@ -284,7 +284,7 @@ public:
 	* @param date Date of transaction
 	* @param t TransactionType enum value representing the type of transaction
 	*/
-	void addTransaction(double value, Date date, TransactionType t) { transactions.push_back(Transaction(value, date, t)); }
+	void addTransaction(double value, Date date, TransactionType t) { transactions.emplace_back(value, date, t); }
 
 	/**
 	* @brief Overload of the less operator
@@ -294,6 +294,8 @@ public:
 	* @return bool Returns the result of the IDs comparison
 	*/
 	bool operator<(const User & usr) const;
+
+	friend std::ostream& operator<<(std::ostream &os, const User &user);
 
 	//TODO Get User info function
 };
