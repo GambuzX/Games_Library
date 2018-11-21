@@ -10,6 +10,8 @@
 #include "Utilities\Update.h"
 #include "Utilities\CompareObj.h"
 
+using user_map = std::map<User*, std::set<Title*, ComparePtr<Title>>, ComparePtr<User>>;
+
 /** @defgroup GameLibrary Game Library Class
 * @{
 *
@@ -95,11 +97,11 @@ public:
 	bool removeTitle(unsigned int id);
 
 	/**
-	* @brief Saves the current Game Library and all of its data to a file
-	*
-	* @param file File to save the data to
+	* Saves the current Game Library and all of its data to 3 different files,
+	* one for the games registered in the library, one for the users and their titles
+	* and another one for the transactions
 	*/
-	void saveGameLibraryToFile(std::fstream& file);
+	void saveGameLibrary();
 
 	/**
 	* @brief Loads a previously saved Game Library data to the current Game Library instance

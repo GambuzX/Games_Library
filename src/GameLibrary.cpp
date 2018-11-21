@@ -88,8 +88,14 @@ bool GameLibrary::removeTitle(unsigned int id) {
 	return true;
 }
 
-void GameLibrary::saveGameLibraryToFile(std::fstream& titleFile)
+void GameLibrary::saveGameLibrary()
 {
+	ofstream users_file("users.txt");
+	ofstream titles_file("titles.txt");
+
+	for (auto &user : users) {
+		users_file << user.first;
+	}
 
 }
 
