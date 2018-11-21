@@ -183,7 +183,7 @@ public:
 	 */
 	void addNewSession(unsigned int userID, const Session & sess);
 
-
+	void displayTitleInfo(std::ostream& os);
 	//bool operator<(const Title & t2) const override;
 
 };

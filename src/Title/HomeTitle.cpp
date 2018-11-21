@@ -110,6 +110,12 @@ const Update & HomeTitle::getCurrentUserVersion(unsigned int userID) const
 	throw InexistentUser(userID);
 }
 
+void HomeTitle::displayTitleInfo(std::ostream &os)
+{
+	Title::displayTitleInfo(os);
+	os << updateCost << endl;
+}
+
 /*
 const Update & HomeTitle::getCurrentUserVersion(std::string name) const
 {

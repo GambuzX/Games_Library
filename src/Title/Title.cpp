@@ -90,3 +90,20 @@ bool Title::operator<(const Title & t2) const
 {
 	return getTitleID() < t2.getTitleID();
 }
+
+ostream &operator<<(ostream &os, const Title &title)
+{
+	os << title.getTitleID() << " " << title.getName() << endl;
+	os << title.getPlatform() << " " << title.getGenre() << endl;
+	os << title.getAgeRange().minAge << " " << title.getAgeRange().maxAge << endl;
+	os << title.getReleaseDate() << endl;
+	return os;
+}
+
+void Title::displayTitleInfo(std::ostream &os)
+{
+	os << getTitleID() << " " << getName() << endl;
+	os << getPlatform() << " " << getGenre() << endl;
+	os << getAgeRange().minAge << " " << getAgeRange().maxAge << endl;
+	os << getReleaseDate() << endl;
+}

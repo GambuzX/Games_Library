@@ -95,6 +95,13 @@ void OnlineTitle::updateUserVersion(const User * usr)
 	throw NotHomeTitle(getTitleID());
 }
 
+void OnlineTitle::displayTitleInfo(std::ostream &os)
+{
+	Title::displayTitleInfo(os);
+	os << subscription->getSubscriptionPrice() << endl;
+
+}
+
 /*
 bool OnlineTitle::operator<(const Title & t2) const
 {

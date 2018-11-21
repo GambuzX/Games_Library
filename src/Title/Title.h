@@ -180,6 +180,8 @@ public:
 	*/
 	virtual double getUpdatePrice() const = 0;
 
+	virtual void displayTitleInfo(std::ostream &os);
+
 	/**
 	 * @brief Get the Name Private Member
 	 * 
@@ -301,6 +303,7 @@ public:
 	 */
 	bool operator<(const Title & t2) const;
 
+	friend std::ostream& operator<<(std::ostream &os, const Title &title);
 	
 	//TODO Get User info function
 };

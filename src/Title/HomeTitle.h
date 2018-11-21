@@ -196,6 +196,8 @@ public:
 	*/
 	double getTimePlayed(const User * usr) const override { throw NotOnlineTitle(getTitleID()); }
 
+	void displayTitleInfo(std::ostream& os);
+
 	//void updateUserVersion(std::string name);
 
 	//bool operator<(const Title & t2) const override;
