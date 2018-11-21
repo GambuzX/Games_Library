@@ -37,7 +37,7 @@ private:
 	int age; /**< @brief Int with the user age */
 	Address address; /**< @brief Address of the user */
 	std::vector<CreditCard> creditCards; /**< @brief Vector of the user CreditCards */
-	std::set<Title*>* purchasedGames; /**< @brief Pointer to this user's set of purchased games */
+	std::set<Title*, ComparePtr<Title>>* purchasedGames; /**< @brief Pointer to this user's set of purchased games */
 	std::set<User*, ComparePtr<User>> friendsList; /**< @brief Set with the user friends */
 	std::vector<Transaction> transactions; /**< @brief Vector with the user transactions */
 
@@ -108,7 +108,7 @@ public:
 	*
 	* @return const set<Title*>* Returns the purchasedGames Private Member
 	*/
-	const std::set<Title*>* getPurchasedGames() const { return purchasedGames; }
+	const std::set<Title*, ComparePtr<Title>>* getPurchasedGames() const { return purchasedGames; }
 
 	/**
 	* @brief Get the friendsList Private Member
@@ -136,7 +136,7 @@ public:
 	*
 	* @param games Pointer to the User's game list
 	*/
-	void setPurchasedGames(std::set<Title*> * games) { purchasedGames = games; }
+	void setPurchasedGames(std::set<Title*, ComparePtr<Title>> * games) { purchasedGames = games; }
 
 	/**
 	* @brief Get the total value of the user's transactions

@@ -8,16 +8,16 @@ HomeTitle::HomeTitle(string name, double price, Date releaseDate, ageRange ageR,
 	titleUpdateHistory.push_back(Update(releaseDate));
 }
 
-void HomeTitle::addNewUser(User & u)
+void HomeTitle::addNewUser(User * u)
 {
 	map<User*, vector<Update*>, ComparePtr<User>>::iterator it;
-	it = userUpdates.find(&u);
+	it = userUpdates.find(u);
 	if (it != userUpdates.end())
-		throw DuplicatedUser(u.getUserID());
+		throw DuplicatedUser(u->getUserID());
 	
 	vector<Update*> v1;
 	v1.push_back(const_cast<Update*>(&getCurrentVersion()));
-	userUpdates.insert(pair<User*, vector<Update*>>(&u, v1));
+	userUpdates.insert(pair<User*, vector<Update*>>(u, v1));
 }
 
 unsigned int HomeTitle::getNumberUsers(ageRange ageR) const
@@ -47,19 +47,19 @@ bool HomeTitle::userNeedsUpdate(User * usr) const
 	if (it == userUpdates.end())
 		throw InexistentUser(usr->getUserID());
 	// Verificar se é a versão atual
-	if (getCurrentUserVersion(*usr) == getCurrentVersion())
+	if (getCurrentUserVersion(usr) == getCurrentVersion())
 		return false;
 
 	return true;
 }
 
-void HomeTitle::updateUserVersion(const User & usr)
+void HomeTitle::updateUserVersion(const User * usr)
 {
 	map<User*, vector<Update*>, ComparePtr<User>>::iterator it;
-	it = userUpdates.find(const_cast<User*>(&usr));
+	it = userUpdates.find(const_cast<User*>(usr));
 
 	if (it == userUpdates.end())
-		throw InexistentUser(usr.getUserID());
+		throw InexistentUser(usr->getUserID());
 	// Verificar se é a versão atual
 	else if (getCurrentUserVersion(usr) == getCurrentVersion())
 		throw TitleUpToDate(getTitleID());
@@ -92,13 +92,13 @@ double HomeTitle::getStats() const {
 	throw NotOnlineTitle(getTitleID());
 }
 
-const Update & HomeTitle::getCurrentUserVersion(const User & u) const
+const Update & HomeTitle::getCurrentUserVersion(const User * u) const
 {
 	map<User*, vector<Update*>, ComparePtr<User>>::const_iterator it;
-	it = userUpdates.find(const_cast<User*>(&u) );
+	it = userUpdates.find(const_cast<User*>(u) );
 
 	if (it == userUpdates.end())
-		throw InexistentUser(u.getUserID());
+		throw InexistentUser(u->getUserID());
 	return *it->second.at(userUpdates.size() - 1);
 }
 

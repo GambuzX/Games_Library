@@ -26,17 +26,14 @@ private:
 	static std::set<Title*, ComparePtr<Title>> titles; /**< @brief Static Set of the Game Library Titles */
 	static std::map<Title*, double, ComparePtr<Title>> titlesRevenue; /**< @brief Static Map of Titles to their respective total revenue */
 
-	std::map<User, std::set<Title*, ComparePtr<Title>>> users; /**< @brief Map of Users to their respective list of Titles */
+	std::map<User*, std::set<Title*, ComparePtr<Title>>, ComparePtr<User>> users; /**< @brief Map of Users to their respective list of Titles */
 
 public:
 	/**
-	* @brief Construct a new Game Library object
-	*
-	* @param platforms Vector of strings representing the supported platforms
-	* @param genres Vector of strings representing the supported title genres
-	* @param ages Vector of strings representing the defined ageGroups
+	* @brief Game Library class Destructor
+	* Frees the space allocated for the Users and Titles
 	*/
-	//GameLibrary(std::vector<std::string> * platforms, std::vector<std::string> * genres, std::vector<std::string> * ages) : supportedPlatforms(*platforms), titlesGenres(*genres), ageGroups(*ages) {}
+	~GameLibrary();
 
 	/**
 	* @brief Adds a User to the Game Library

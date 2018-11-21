@@ -9,21 +9,21 @@ OnlineTitle::OnlineTitle(string name, double price, Date releaseDate, ageRange a
 	subscription = subs;
 }
 
-void OnlineTitle::addNewUser(User & u)
+void OnlineTitle::addNewUser(User * u)
 {
 	map<User*, vector<Session>, ComparePtr<User>>::iterator it;
-	it = titleStats.find(&u);
+	it = titleStats.find(u);
 	if (it != titleStats.end())
-		throw DuplicatedUser(u.getUserID());
-	titleStats.insert(pair<User*, vector<Session>>(&u, {}));
+		throw DuplicatedUser(u->getUserID());
+	titleStats.insert(pair<User*, vector<Session>>(u, {}));
 }
 
-void OnlineTitle::addNewSession(const User & u, const Session & sess)
+void OnlineTitle::addNewSession(const User * u, const Session & sess)
 {
 	map<User*, vector<Session>, ComparePtr<User>>::iterator it;
-	it = titleStats.find(const_cast<User*>(&u));
+	it = titleStats.find(const_cast<User*>(u));
 	if (it == titleStats.end())
-		throw InexistentUser(u.getUserID());
+		throw InexistentUser(u->getUserID());
 	it->second.push_back(sess);
 	//sort(titleStats.begin(), titleStats.end());
 }
@@ -61,12 +61,12 @@ double OnlineTitle::getStats() const{
 	return res;
 }
 
-double OnlineTitle::getStats(const User & u) const
+double OnlineTitle::getStats(const User * u) const
 {
 	map<User*, vector<Session>, ComparePtr<User>>::const_iterator it;
-	it = titleStats.find(const_cast<User*>(&u));
+	it = titleStats.find(const_cast<User*>(u));
 	if (it == titleStats.end())
-		throw InexistentUser(u.getUserID());
+		throw InexistentUser(u->getUserID());
 	double res = 0.0;
 	for (size_t i = 0; i < it->second.size(); i++)
 		res += it->second.at(i).getSessionDuration();
@@ -90,7 +90,7 @@ void OnlineTitle::updateTitle(Update * newUpdate)
 	throw NotHomeTitle(getTitleID());
 }
 
-void OnlineTitle::updateUserVersion(const User & usr)
+void OnlineTitle::updateUserVersion(const User * usr)
 {
 	throw NotHomeTitle(getTitleID());
 }

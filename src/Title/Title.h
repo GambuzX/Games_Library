@@ -117,7 +117,7 @@ public:
 	 * @throw DuplicatetUser() If the user already has the Title
 	 */
 	//TODO: & ou *??
-	virtual void addNewUser(User & u) = 0;
+	virtual void addNewUser(User * u) = 0;
 
 	/**
 	* @brief Function that verifies if a User needs an Update
@@ -139,7 +139,7 @@ public:
 	 * @throw InexistentUser() If the user specified doesn't own the game
 	 * @throw TitleUpToDate() If the Title is already up to date
 	 */
-	virtual void updateUserVersion(const User & usr) = 0;
+	virtual void updateUserVersion(const User * usr) = 0;
 
 	/**
 	 * @brief Adds a new Session to the User's vector of sessions kepping it in order
@@ -150,7 +150,7 @@ public:
 	 * @throw InexistentUser() If the user specified by its ID doesn't own the Home Title
 	 * @throw NotOnlineTitle If it is called on a Home Title Object
 	 */
-	virtual void addNewSession(const User & u, const Session & sess) = 0;
+	virtual void addNewSession(const User * u, const Session & sess) = 0;
 
 	/**
 	* @brief Get the total time played of Title by User

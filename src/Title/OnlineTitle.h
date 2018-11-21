@@ -90,7 +90,7 @@ public:
 	 * @return double Returns the number of hours that an Online Title has been played by a certain User
 	 * @throw InexistentUser() If the user specified doesn't own the Online Title
 	 */
-	double getStats(const User & u) const;
+	double getStats(const User * u) const;
 
 	/**
 	* @brief Get the price to pay for a Home Title Update
@@ -142,7 +142,7 @@ public:
 	 * @throw InexistentUser() If the user specified doesn't own the game
 	 * @throw TitleUpToDate() If the Title is already up to date
 	 */
-	void updateUserVersion(const User & usr) override;
+	void updateUserVersion(const User * usr) override;
 
 	/**
 	 * @brief Function that helps to add a new User to the list of owners of that Title
@@ -151,7 +151,7 @@ public:
 	 * @param u User to be added to the list of owners of the Title
 	 * @throw DuplicatetUser() If the user already has the Title
 	 */
-	void addNewUser(User & u) override;
+	void addNewUser(User * u) override;
 
 	/**
 	* @brief Get the total time played of Title by User
@@ -161,7 +161,7 @@ public:
 	* @throw NotOnlineTitle() If it is called on a Home Title Object
 	* @throw InexistentUser() If the user specified doesn't own the game
 	*/
-	double getTimePlayed(const User * usr) const override { return getStats(*usr); }
+	double getTimePlayed(const User * usr) const override { return getStats(usr); }
 
 	/**
 	 * @brief Adds a new Session to the User's vector of sessions kepping it in order
@@ -171,7 +171,7 @@ public:
 	 * @param sess Session to be added to the Vector of Sessions
 	 * @throw InexistentUser() If the user specified by its ID doesn't own the Home Title
 	 */
-	void addNewSession(const User & u, const Session & sess) override;
+	void addNewSession(const User * u, const Session & sess) override;
 
 	/**
 	 * @brief Adds a new Session to the User's vector of sessions kepping it in order

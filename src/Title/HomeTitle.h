@@ -45,10 +45,10 @@ public:
 	 * @brief Function that helps to add a new User to the list of owners of that Title
 	 * Virtual function that may throw exceptions if User already has the Title
 	 * 
-	 * @param u User to be added to the list of owners of the Title
+	 * @param user User to be added to the list of owners of the Title
 	 * @throw DuplicatetUser() If the user already has the Title
 	 */
-	void addNewUser(User & u) override;
+	void addNewUser(User * user) override;
 
 	/**
 	 * @brief Get the Vector of Updates
@@ -92,7 +92,7 @@ public:
 	 * @throw InexistentUser() If the user specified by its ID doesn't own the Home Title
 	 * @throw NotOnlineTitle If it is called on a Home Title Object
 	 */
-	void addNewSession(const User & u, const Session & sess) override { throw NotOnlineTitle(getTitleID()); }
+	void addNewSession(const User * u, const Session & sess) override { throw NotOnlineTitle(getTitleID()); }
 
 	/**
 	 * @brief Get the Subscription object
@@ -127,7 +127,7 @@ public:
 	 * @return const Update& Return the Last Update made by the User
 	 * @throw InexistentUser() If the user specified doesn't own the Home Title
 	 */
-	const Update & getCurrentUserVersion(const User & u) const;
+	const Update & getCurrentUserVersion(const User * u) const;
 
 	/**
 	 * @brief Get the Current User Update Version object
@@ -172,7 +172,7 @@ public:
 	 * @throw InexistentUser() If the user specified doesn't own the game
 	 * @throw TitleUpToDate() If the Title is already up to date
 	 */
-	void updateUserVersion(const User & usr) override;
+	void updateUserVersion(const User * usr) override;
 
 	/**
 	 * @brief Function that Updates the User Home Title Version to the latest

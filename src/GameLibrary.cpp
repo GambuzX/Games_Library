@@ -7,24 +7,51 @@ using namespace std;
 set<Title*, ComparePtr<Title>> GameLibrary::titles;
 map<Title*, double, ComparePtr<Title>> GameLibrary::titlesRevenue;
 
+class User;
+
+
+GameLibrary::~GameLibrary()
+{
+	// Free space of users
+	for (pair<User* const, set<Title*, ComparePtr<Title>>> & usr : users)
+		delete usr.first;
+	// Free space of titles
+	for (Title * title : titles) 
+		delete title;
+}
+
 void GameLibrary::addUser(std::string name, std::string email, int age, Address address)
 {
-	users.insert(pair<User, set<Title*, ComparePtr<Title>>>(User(name, email, age, address), set<Title*, ComparePtr<Title>>()));
-	/*map<User, set<Title*, ComparePtr<Title>>>::iterator it;
-	for (it = users.begin(); it != users.end(); it++)
-		if (it->first.getUserID() == )*/
+	User * newUser = new User(name, email, age, address);
+	users.insert(pair<User*, set<Title*, ComparePtr<Title>>>(newUser, set<Title*, ComparePtr<Title>>()));
 
-	// TODO Inicializar purchasedGames do User
+	// Assign user set of Titles to the User instance
+	map<User*, set<Title*, ComparePtr<Title>>, ComparePtr<User>>::iterator it;
+	for (it = users.begin(); it != users.end(); it++)
+		if (it->first->getUserID() == newUser->getUserID())
+		{
+			it->first->setPurchasedGames(&(it->second));
+			break;
+		}
 }
 
 void GameLibrary::addUser(User * user) {
-	users.insert(pair<User, set<Title*, ComparePtr<Title>>>(*user, set<Title*, ComparePtr<Title>>()));
+	users.insert(pair<User*, set<Title*, ComparePtr<Title>>>(user, set<Title*, ComparePtr<Title>>()));
+
+	// Assign user set of Titles to the User instance
+	map<User*, set<Title*, ComparePtr<Title>>, ComparePtr<User>>::iterator it;
+	for (it = users.begin(); it != users.end(); it++)
+		if (it->first->getUserID() == user->getUserID())
+		{
+			it->first->setPurchasedGames(&(it->second));
+			break;
+		}
 }
 
 bool GameLibrary::removeUser(User * user) {
-	map<User, set<Title*, ComparePtr<Title>>>::iterator it;
+	map<User*, set<Title*, ComparePtr<Title>>>::iterator it;
 
-	it = users.find(*user);
+	it = users.find(user);
 	if (it == users.end()) return false;
 	users.erase(it);
 	return true;
