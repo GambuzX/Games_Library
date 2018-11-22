@@ -18,7 +18,7 @@
 * @see		removeSpace
 * @see		getlineZ		(@		ConsoleFunctions)
 */
-std::string nameInput(std::string question);
+std::string namesInput(std::string question);
 
 /**
 * Robustness of the name with Numbers Input:

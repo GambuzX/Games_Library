@@ -54,7 +54,7 @@ string removeSpace(string name) {
 
 }
 
-string nameInput(string question)
+string namesInput(string question)
 {
 	bool validInput = false;
 	bool ErrorFlag = false;
