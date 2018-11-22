@@ -193,8 +193,11 @@ class DuplicatedUser
 {
 private:
 	unsigned userID;
+	std::string email;
 public:
 	explicit DuplicatedUser(unsigned id) { userID = id; }
+	DuplicatedUser(std::string mail) {  email = mail; }
+	std::string getEmail() { return email; }
 	unsigned getUserID() { return userID; }
 };
 

@@ -213,6 +213,18 @@ void titleSummary(GameLibrary & gameL) {
 	system("pause");
 }
 
+void usersSummary(GameLibrary & gameL) {
+	map<User*, set<Title*, ComparePtr<Title>>, ComparePtr<User>> prov = gameL.getUsers();
+	for (auto & user : prov)
+	{
+		cout << " User ID:\t" << user.first->getUserID() << endl;
+		cout << " Name:\t\t" << user.first->getName() << endl;
+		cout << " E-Mail:\t\t" << user.first->getEmail() << endl;
+		cout << " Address:\t" << user.first->getAddress() << endl << endl;
+	}
+	system("pause");
+}
+
 void promotionDisplay(string firstLine, const Sale & sale) {
 	cout << firstLine << endl;
 	cout << "  - Begin Date:\t" << sale.getStartDate() << endl;
@@ -313,6 +325,31 @@ void addGames(GameLibrary & gL)
 
 }
 
+void addUser(GameLibrary & gl) {
+	// TODO: Escolher entre com numeros ou sem
+	//string name = nameNumbersInput(" Name (only letters, space and numbers): ");
+	string name = nameInput(" Name (only letters and space): ");
+	string email = emailInput(" Email: ");
+	int age = intInput(" Age: ");
+	cout << " Address:\n";
+	unsigned int houseNumber = intInput("   - House Number: ");
+	string streetName = nameInput("   - Street Name: ");
+	string city = nameInput("   - City Name: ");
+	string country = nameInput("   - Country Name: ");
+	Address address(houseNumber, streetName, city, country);
+	try
+	{
+		gl.addUser(name, email, age, address);
+	}
+	catch (DuplicatedUser & e)
+	{
+		cout << endl << "  - There is already a user with this email: " << e.getEmail() << endl;
+		cout << "  - Please consider taking a look at the Users Summary Menu\n\n";
+		return;
+	}
+	cout << "\n User Added Successfully";
+}
+
 void addSale(Title*  game) {
 	Date beginDate = dateInput(" Begin date: ");
 	Date endDate = dateInput(" End date: ");
@@ -381,6 +418,36 @@ void removeGame(GameLibrary & gL) {
 
 }
 
+void removeUser(GameLibrary & gL) {
+	User * us;
+	if (gL.getUsers.empty())
+	{
+		cout << " There are no games to remove\n";
+		return;
+	}
+	int nameErrors = 0;
+	unsigned int userID = intInput(" User ID Number (0 to go back): ");
+	while (userID != 0) {
+		us = gL.getUser(userID);
+		if (!gL.removeUser(us))
+		{
+			nameErrors++;
+			cout << " Inexistent User ID\n";
+			if (nameErrors > 3)
+			{
+				cout << " You've seem to be struggling. Plz consider taking a look at the Users Summary\n";
+			}
+			userID = intInput(" User ID Number (0 to go back): ");
+		}
+		else
+		{
+			cout << "\n User Removed Successfully";
+			break;
+		}
+	}
+
+}
+
 void removeSale(Title*  game) {
 	if (game->getSaleHistory().size() == 0)
 	{
@@ -416,7 +483,7 @@ unsigned gameIDinput(GameLibrary & gL) {
 		int nameErrors = 0;
 		unsigned titleID = intInput(" Title ID Number (0 to go back): ");
 		while (titleID != 0) {
-			if (GameLibrary::getTitle(titleID) == nullptr)
+			if (gL.getTitle(titleID) == nullptr)
 			{
 				nameErrors++;
 				cout << " Inexistent title ID\n";
@@ -432,6 +499,35 @@ unsigned gameIDinput(GameLibrary & gL) {
 			}
 		}
 		return titleID;
+	}
+}
+
+unsigned userIDinput(GameLibrary & gL) {
+	if (gL.getTitles().empty())
+	{
+		cout << " There are no users in the library\n";
+		return 0;
+	}
+	else {
+		int nameErrors = 0;
+		unsigned userID = intInput(" User ID Number (0 to go back): ");
+		while (userID != 0) {
+			if (gL.getUser(userID) == nullptr)
+			{
+				nameErrors++;
+				cout << " Inexistent user ID\n";
+				if (nameErrors > 3)
+				{
+					cout << " You've seem to be struggling. Plz consider taking a look at the Users Summary\n";
+				}
+				userID = intInput(" Title ID Number (0 to go back): ");
+			}
+			else
+			{
+				return userID;
+			}
+		}
+		return userID;
 	}
 }
 
@@ -634,8 +730,8 @@ void UpdateMenu(GameLibrary & gl, Title * game) {
 void GameOperationsMenu(GameLibrary & gl, unsigned titleID) {
 	header("Game Info");
 
-	Title * game = GameLibrary::getTitle(titleID);
-	bool isOnline = GameLibrary::isOnlineTitle(game);
+	Title * game = gl.getTitle(titleID);
+	bool isOnline = gl.isOnlineTitle(game);
 
 	int option_number;
 
@@ -688,6 +784,56 @@ void GameOperationsMenu(GameLibrary & gl, unsigned titleID) {
 
 
 }
+
+void UserOperationsMenu(GameLibrary & gl, unsigned userID) {
+	header("User Info");
+
+	User * user = gl.getUser(userID);
+
+	int option_number;
+
+	cout << " Possible Actions:" << endl << endl;
+
+	cout << "   1 - Detailed Info" << endl;
+
+	cout << "   2 - Promotions" << endl;
+
+	cout << "   3 - Updates" << endl;
+
+	cout << "   0 - Go back" << endl << endl;
+
+	option_number = menuInput(" Option ? ", 0, 3);
+
+	switch (option_number)
+	{
+	case 1:
+		header("Detailed Information");
+		//titleInfo(game, isOnline);
+		cout << endl << endl;
+		UserOperationsMenu(gl, userID);
+		break;
+
+	case 2:
+		//header("Promotions");
+		//PromotionMenu(gl, game);
+		cout << endl << endl;
+		UserOperationsMenu(gl, userID);
+		break;
+	case 3:
+		//header("Sessions");
+		//SessionsMenu(gl, game);
+		cout << endl << endl;
+		UserOperationsMenu(gl, userID);
+		break;
+	case 0:
+		UsersMenu(gl);
+		break;
+	default:break;
+	}
+
+
+}
+
 
 void GamesMenu(GameLibrary & gameL) {
 	header("Manage Games");
@@ -743,6 +889,60 @@ void GamesMenu(GameLibrary & gameL) {
     }
 }
 
+void UsersMenu(GameLibrary & gl) {
+	header("Manage Users");
+	unsigned ID;
+	int option_number;
+
+	cout << " Possible Actions:" << endl << endl;
+
+	cout << "   1 - Users Summary" << endl;
+
+	cout << "   2 - Add User" << endl;
+
+	cout << "   3 - Remove User" << endl;
+
+	cout << "   4 - User Info" << endl;
+
+	cout << "   0 - Go back" << endl << endl;
+
+	option_number = menuInput(" Option ? ", 0, 4);
+
+	switch (option_number)
+	{
+	case 1:
+		header("Users Summary");
+		usersSummary(gl);
+		cout << endl << endl;
+		UsersMenu(gl);
+		break;
+
+	case 2:
+		header("Add User");
+		addUser(gl);
+		cout << endl << endl;
+		UsersMenu(gl);
+		break;
+	case 3:
+		header("Remove User");
+		removeUser(gl);
+		cout << endl << endl;
+		UsersMenu(gl);
+		break;
+	case 4:
+		cout << endl;
+		ID = userIDinput(gl);
+		if (0 == ID) UsersMenu(gl);
+		else UserOperationsMenu(gl, ID);
+		break;
+	case 0:
+		header("CREATE GAME LIBRARY");
+		PrincipalMenu(gl);
+		break;
+	default:break;
+	}
+}
+
 void PrincipalMenu(GameLibrary & gameL)
 {
 	int option_number;
@@ -767,7 +967,7 @@ void PrincipalMenu(GameLibrary & gameL)
 		GamesMenu(gameL);
 		break;
 	case 2:
-		header("Manage Users");
+		UsersMenu(gameL);
 		break;
 	case 3:
 		header("Login as User");

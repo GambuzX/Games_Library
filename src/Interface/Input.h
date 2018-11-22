@@ -82,4 +82,6 @@ ageRange ageRangeInput(std::string question);
 */
 int menuInput(std::string question, int inferiorLimit, int superiorLimit);
 
+std::string emailInput(std::string question);
+
 #endif

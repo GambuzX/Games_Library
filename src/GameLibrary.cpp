@@ -21,7 +21,12 @@ GameLibrary::~GameLibrary()
 
 void GameLibrary::addUser(std::string name, std::string email, int age, Address address)
 {
+	for (auto & user : users)
+		if (email == user.first->getEmail())
+			throw DuplicatedUser(email);
+
 	User * newUser = new User(name, email, age, address);
+
 	users.insert(pair<User*, set<Title*, ComparePtr<Title>>>(newUser, set<Title*, ComparePtr<Title>>()));
 
 	// Assign user set of Titles to the User instance
@@ -48,6 +53,7 @@ void GameLibrary::addUser(User * user) {
 }
 
 bool GameLibrary::removeUser(User * user) {
+	if (user == nullptr) return false;
 	map<User*, set<Title*, ComparePtr<Title>>>::iterator it;
 	it = users.find(user);
 	if (it == users.end()) return false;

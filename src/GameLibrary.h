@@ -38,11 +38,13 @@ public:
 	/**
 	* @brief Adds a User to the Game Library
 	* Constructs a new user with the given parameters
+	* May throw some exceptions if there is already an user with the specified email
 	*
 	* @param name String that initializes the User's name
 	* @param email String that initializes the User's email
 	* @param age Int that initializes the User's age
 	* @param address Address that initializes the User's address
+	* @throw DuplicatedUser() If the email is a duplicate
 	*/
 	void addUser(std::string name, std::string email, int age, Address address);
 
@@ -53,6 +55,13 @@ public:
 	 * @return const std::set<Title*, ComparePtr<Title>>& Returns titles Private Member
 	 */
 	const std::set<Title*, ComparePtr<Title>> & getTitles() const { return titles; };
+
+	/**
+	* @brief Get the Users Private Member
+	*
+	* @return const std::map<User*, std::set<Title*, ComparePtr<Title>>, ComparePtr<User>>& Returns users Private Member
+	*/
+	const std::map<User*, std::set<Title*, ComparePtr<Title>>, ComparePtr<User>> & getUsers() const { return users; };
 
 	/**
 	* @brief Adds a User to the Game Library
