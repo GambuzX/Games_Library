@@ -352,10 +352,19 @@ bool User::removeFriend(User * frnd) {
 	return true;
 }
 
+set<string> User::getUserPlatforms()
+{
+	set<string> plats;
+	for (const Title * title: *purchasedGames)
+		plats.insert(title->getPlatformName());
+	return plats;
+}
+
 bool User::operator<(const User & usr) const
 {
 	return userID < usr.getUserID();
 }
+
 ostream& operator<<(ostream &os, const User &user)
 {
 	os << user.getUserID() << " " << user.getName() << " " << user.getEmail() << " " << user.getAge() << endl;

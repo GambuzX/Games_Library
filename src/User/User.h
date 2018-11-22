@@ -287,6 +287,13 @@ public:
 	void addTransaction(double value, Date date, TransactionType t) { transactions.emplace_back(value, date, t); }
 
 	/**
+	* @brief Get a set with all the Platforms the User has titles for
+	*
+	* @return set<string> with a string for each platform the User has Titles for
+	*/
+	std::set<std::string> getUserPlatforms();
+
+	/**
 	* @brief Overload of the less operator
 	* A User is "less" than the other if its ID is smaller
 	*
