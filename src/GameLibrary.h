@@ -48,7 +48,6 @@ public:
 	*/
 	void addUser(std::string name, std::string email, int age, Address address);
 
-	// TODO: MARIO GIL espero que nao te importes disto!!!
 	/**
 	 * @brief Get the Titles Private Member
 	 * 

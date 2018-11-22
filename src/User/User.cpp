@@ -197,7 +197,7 @@ bool User::updateTitle(Title* title) {
 		return false;
 	}
 
-	double updatePrice = title->getCurrentVersion().getuUpdatePrice();
+	double updatePrice = title->getCurrentVersion().getUpdatePrice();
 
 	if (!hasEnoughMoney(updatePrice))
 	{
@@ -240,7 +240,7 @@ bool User::updateTitle(unsigned int titleID) {
 		return false;
 	}
 
-	double updatePrice = title->getCurrentVersion().getuUpdatePrice();
+	double updatePrice = title->getCurrentVersion().getUpdatePrice();
 
 	if (!hasEnoughMoney(updatePrice))
 	{
@@ -309,7 +309,7 @@ bool User::playGame(Title * title, double duration) {
 		if (!title->userNeedsUpdate(this)) return true;
 
 		// Get Update Price
-		double updatePrice = title->getCurrentVersion().getuUpdatePrice();
+		double updatePrice = title->getCurrentVersion().getUpdatePrice();
 
 		// Check if has enough money
 		if (!hasEnoughMoney(updatePrice))
