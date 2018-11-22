@@ -298,6 +298,7 @@ unsigned int intInput(string question)
 	return option;
 }
 
+// TODO: negative numbers!!
 Date dateInput(string question)
 {
 
@@ -450,6 +451,7 @@ bool validEmail(string email) {
 	return regex_match(email, pattern);
 }
 
+// < to go back
 string emailInput(string question)
 {
 	bool validInput = false;
@@ -466,6 +468,10 @@ string emailInput(string question)
 		getlineZ(cin, email);
 
 		validInput = validEmail(email);
+		if ('<' == email.at(0) && email.size() == 1)
+		{
+			validInput = true;
+		}
 		if (!validInput)
 		{
 			clrscr(currentPos);

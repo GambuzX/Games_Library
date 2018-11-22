@@ -328,6 +328,10 @@ void addGames(GameLibrary & gL)
 void addUser(GameLibrary & gl) {
 	string name = nameInput(" Name (only letters and space): ");
 	string email = emailInput(" Email: ");
+	while (email.at(0) == '<' && email.size() == 1)
+	{
+		email = emailInput(" Email: ");
+	}
 	int age = intInput(" Age: ");
 	cout << " Address:\n";
 	unsigned int houseNumber = intInput("   - House Number: ");
@@ -424,18 +428,18 @@ void removeUser(GameLibrary & gL) {
 		return;
 	}
 	int nameErrors = 0;
-	unsigned int userID = intInput(" User ID Number (0 to go back): ");
-	while (userID != 0) {
-		us = gL.getUser(userID);
+	string mail = emailInput(" User Email (< to go back): ");
+	while (mail.at(0) != '<') {
+		us = gL.getUser(mail);
 		if (!gL.removeUser(us))
 		{
 			nameErrors++;
-			cout << " Inexistent User ID\n";
+			cout << " Inexistent User Email\n";
 			if (nameErrors > 3)
 			{
 				cout << " You've seem to be struggling. Plz consider taking a look at the Users Summary\n";
 			}
-			userID = intInput(" User ID Number (0 to go back): ");
+			mail = emailInput(" User Email (< to go back): ");
 		}
 		else
 		{
@@ -500,7 +504,7 @@ unsigned gameIDinput(GameLibrary & gL) {
 	}
 }
 
-unsigned userIDinput(GameLibrary & gL) {
+string userMailInput(GameLibrary & gL) {
 	if (gL.getTitles().empty())
 	{
 		cout << " There are no users in the library\n";
@@ -508,24 +512,24 @@ unsigned userIDinput(GameLibrary & gL) {
 	}
 	else {
 		int nameErrors = 0;
-		unsigned userID = intInput(" User ID Number (0 to go back): ");
-		while (userID != 0) {
-			if (gL.getUser(userID) == nullptr)
+		string mail = emailInput(" User Email (< to go back): ");
+		while (mail.at(0) != '<') {
+			if (gL.getUser(mail) == nullptr)
 			{
 				nameErrors++;
-				cout << " Inexistent user ID\n";
+				cout << " Inexistent user mail\n";
 				if (nameErrors > 3)
 				{
 					cout << " You've seem to be struggling. Plz consider taking a look at the Users Summary\n";
 				}
-				userID = intInput(" Title ID Number (0 to go back): ");
+				mail = emailInput(" User Email (< to go back): ");
 			}
 			else
 			{
-				return userID;
+				return mail;
 			}
 		}
-		return userID;
+		return mail;
 	}
 }
 
@@ -785,10 +789,17 @@ void GameOperationsMenu(GameLibrary & gl, unsigned titleID) {
 
 }
 
-void UserOperationsMenu(GameLibrary & gl, unsigned userID) {
+void UserOperationsMenu(GameLibrary & gl, string mail) {
 	header("User Info");
 
-	User * user = gl.getUser(userID);
+	User * user = gl.getUser(mail);
+
+	//user->addCreditCard;
+	//user->addFriend;
+	//user->addTransaction;
+	//user->buyTitle;
+	//user->playGame;
+	//user->updateTitle;
 
 	int option_number;
 
@@ -796,9 +807,11 @@ void UserOperationsMenu(GameLibrary & gl, unsigned userID) {
 
 	cout << "   1 - Detailed Info" << endl;
 
-	cout << "   2 - Promotions" << endl;
+	cout << "   2 - Credit Cards" << endl;
 
-	cout << "   3 - Updates" << endl;
+	cout << "   3 - Friends" << endl;
+
+	cout << "   4 - Games" << endl;
 
 	cout << "   0 - Go back" << endl << endl;
 
@@ -810,20 +823,20 @@ void UserOperationsMenu(GameLibrary & gl, unsigned userID) {
 		header("Detailed Information");
 		//titleInfo(game, isOnline);
 		cout << endl << endl;
-		UserOperationsMenu(gl, userID);
+		UserOperationsMenu(gl, mail);
 		break;
 
 	case 2:
 		//header("Promotions");
 		//PromotionMenu(gl, game);
 		cout << endl << endl;
-		UserOperationsMenu(gl, userID);
+		UserOperationsMenu(gl, mail);
 		break;
 	case 3:
 		//header("Sessions");
 		//SessionsMenu(gl, game);
 		cout << endl << endl;
-		UserOperationsMenu(gl, userID);
+		UserOperationsMenu(gl, mail);
 		break;
 	case 0:
 		UsersMenu(gl);
@@ -833,7 +846,6 @@ void UserOperationsMenu(GameLibrary & gl, unsigned userID) {
 
 
 }
-
 
 void GamesMenu(GameLibrary & gameL) {
 	header("Manage Games");
@@ -891,7 +903,7 @@ void GamesMenu(GameLibrary & gameL) {
 
 void UsersMenu(GameLibrary & gl) {
 	header("Manage Users");
-	unsigned ID;
+	string mail;
 	int option_number;
 
 	cout << " Possible Actions:" << endl << endl;
@@ -931,9 +943,9 @@ void UsersMenu(GameLibrary & gl) {
 		break;
 	case 4:
 		cout << endl;
-		ID = userIDinput(gl);
-		if (0 == ID) UsersMenu(gl);
-		else UserOperationsMenu(gl, ID);
+		mail = userMailInput(gl);
+		if ('<' == mail.at(0)) UsersMenu(gl);
+		else UserOperationsMenu(gl, mail);
 		break;
 	case 0:
 		header("CREATE GAME LIBRARY");
