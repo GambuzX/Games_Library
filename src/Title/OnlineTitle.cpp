@@ -84,30 +84,30 @@ double OnlineTitle::getStats(unsigned int userID) const
 		}
 	throw InexistentUser(userID);	
 }
-/*
-const std::map<User*, std::vector<Session>, ComparePtr<User>>& OnlineTitle::getLastNSessions(unsigned int n) const
+
+const std::map<User*, std::vector<Session>, ComparePtr<User>>& OnlineTitle::getAllUsersLastNSessions(unsigned int n) const
 {
-	if (titleStats.size() == 0)
-	{
-		// TODO: create exception
-		throw;
-	}
-	pair<User*, Session> lastSess;
-	vector<Session> res;
-	for (auto pair : titleStats){
-		if (pair.second.size() != 0 && lastSess.second.getDate() == Date())
-		{
-			lastSess.second = pair.second.at(pair.second.size() - 1);
-			lastSess.first = pair.first;
-		}
-		else if (!(lastSess.second.getDate() == Date()) && pair.second.at(pair.second.size() - 1).getDate() < lastSess.second.getDate())
-		{
-			lastSess.second = pair.second.at(pair.second.size() - 1);
-			lastSess.first = pair.first;
-		}
-	}
+	map<User*, vector<Session>, ComparePtr<User>> userMap;
+	for (const auto & usr : titleStats)
+		userMap.insert(pair<User*, vector<Session>>(usr.first, getLastNUserSessions(usr.first, n)));
+	return userMap;
 }
-*/
+
+const vector<Session> OnlineTitle::getLastNUserSessions(User * usr, int n) const
+{
+	map<User*, vector<Session>, ComparePtr<User>>::const_iterator it;
+	it = titleStats.find(const_cast<User*>(usr));
+	if (it == titleStats.end())
+		throw InexistentUser(usr->getUserID());
+
+	vector<Session> sessions;
+	vector<Session>::reverse_iterator rit;
+	for (rit = it->second.rbegin(); rit != it->second.rend() && n > 0; it++)
+		sessions.push_back(*rit);
+	return sessions;
+}
+
+
 void OnlineTitle::updateTitle(Update * newUpdate)
 {
 	throw NotHomeTitle(getTitleID());
@@ -122,12 +122,4 @@ void OnlineTitle::displayTitleInfo(std::ostream &os)
 {
 	Title::displayTitleInfo(os);
 	os << subscription->getSubscriptionPrice() << endl;
-
 }
-
-/*
-bool OnlineTitle::operator<(const Title & t2) const
-{
-	return getTitleID() < t2.getTitleID();
-}
-*/

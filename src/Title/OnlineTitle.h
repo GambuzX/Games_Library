@@ -85,6 +85,7 @@ public:
 
 	/**
 	 * @brief Get the Stats of a Title of a certain User (hours played)
+	 * Virtual function that may throw exceptions if called on the incorrect object
 	 * May also throw other exceptions if the user is not a owner of the Title
 	 * 
 	 * @param u User that you want to know the amount of time (in hours) that he played the Online Game
@@ -95,6 +96,7 @@ public:
 
 	/**
 	 * @brief Get the Stats of a Title of a certain User (hours played)
+	 * Virtual function that may throw exceptions if called on the incorrect object
 	 * May also throw other exceptions if the user is not a owner of the Title
 	 * 
 	 * @param userID ID of the user that you want to know the amount of time (in hours) that he played the Online Game
@@ -103,7 +105,28 @@ public:
 	 */
 	double getStats(unsigned int userID) const;
 
-	//const std::map<User*, std::vector<Session>, ComparePtr<User>> & getLastNSessions(unsigned int n) const;
+	/**
+	* @brief Get the last N Sessions of all Users for this Title
+	* Virtual function that may throw exceptions if called on the incorrect object
+	* May also throw other exceptions if the user is not a owner of the Title
+	*
+	* @param n Number of sessions to get per User
+	* @return map<User*, vector<Session>, ComparePtr<User>> Containing the last N sessions of all Users
+	* @throw InexistentUser() If the user specified by its ID doesn't own the Online Title
+	*/
+	const std::map<User*, std::vector<Session>, ComparePtr<User>> & getAllUsersLastNSessions(unsigned int n) const;
+
+	/**
+	* @brief Get the last N Sessions of a User for this Title
+	* Virtual function that may throw exceptions if called on the incorrect object
+	* May also throw other exceptions if the user is not a owner of the Title
+	*
+	* @param usr Pointer to the User
+	* @param n Number of sessions to get
+	* @return vector<Session> Containing the last N sessions of User
+	* @throw InexistentUser() If the user specified by its ID doesn't own the Online Title
+	*/
+	const std::vector<Session> getLastNUserSessions(User * usr, int n) const;
 
 	/**
 	 * @brief Updates a Home Title
