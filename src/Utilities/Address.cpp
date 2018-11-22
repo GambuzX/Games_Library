@@ -53,8 +53,8 @@ bool Address::operator==(const Address & a2) const
 
 ostream & operator<<(ostream & os, const Address & a)
 {
-	os << "Street Adress:\t" << a.getStreetName() << ", nº " << a.getHouseNumber() << endl;;
-	os << "City:\t" << a.getCity() << endl;
-	os << "Country:\t" << a.getCountry() << endl;
+	os << " Street:\t\t" << a.getStreetName() << ", nº " << a.getHouseNumber() << endl;;
+	os << " City:\t\t" << a.getCity() << endl;
+	os << " Country:\t\t" << a.getCountry() << endl;
 	return os;
 }

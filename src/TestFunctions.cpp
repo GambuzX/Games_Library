@@ -201,9 +201,8 @@ bool menuSubcription() {
 	//cout << endl;
 }
 
-void titleSummary(GameLibrary & gameL) {
-	set<Title*, ComparePtr<Title>> prov = gameL.getTitles();
-	for (auto & title: prov)
+void titleSummary(const set<Title*, ComparePtr<Title>> & games) {
+	for (auto & title: games)
 	{
 		cout << " Title ID:\t" << title->getTitleID() << endl;
 		cout << " Game:\t\t" << title->getName() << endl;
@@ -213,16 +212,38 @@ void titleSummary(GameLibrary & gameL) {
 	system("pause");
 }
 
+void userShortDisplay(const User * user) {
+	cout << " User ID:\t" << user->getUserID() << endl;
+	cout << " Name:\t\t" << user->getName() << endl;
+	cout << " E-Mail:\t\t" << user->getEmail() << endl;
+	cout << " Address:\t" << user->getAddress() << endl << endl;
+}
+
 void usersSummary(GameLibrary & gameL) {
 	map<User*, set<Title*, ComparePtr<Title>>, ComparePtr<User>> prov = gameL.getUsers();
 	for (auto & user : prov)
 	{
-		cout << " User ID:\t" << user.first->getUserID() << endl;
-		cout << " Name:\t\t" << user.first->getName() << endl;
-		cout << " E-Mail:\t\t" << user.first->getEmail() << endl;
-		cout << " Address:\t" << user.first->getAddress() << endl << endl;
+		userShortDisplay(user.first);
 	}
 	system("pause");
+}
+
+void friendsSummary(const set<User*, ComparePtr<User>> & friends) {
+	for (auto & fr : friends)
+	{
+		userShortDisplay(fr);
+	}
+	system("pause");
+}
+
+void creditCardSummary(const vector<CreditCard> & creditCards) {
+	for (auto & credit : creditCards)
+	{
+		cout << " Holder:\t\t" << credit.getHolder() << endl;
+		cout << " Number:\t" << credit.getNumber() << endl;
+		cout << " Expires On:\t" << credit.getExpiryDate() << endl;
+		cout << " Balance:\t\t" << credit.getBalance() << endl << endl;
+	}
 }
 
 void promotionDisplay(string firstLine, const Sale & sale) {
@@ -577,6 +598,29 @@ void titleInfo(Title * game, bool isOnline)
 	system("pause");
 }
 
+void userInfo(User * user)
+{
+	//user->getFavoritePlatform;
+	//user->getTotalTransactionsValue;
+	//user->getTransactions;
+	//user->getPlatforms();
+
+	cout << " User ID:\t" << user->getUserID() << endl;
+	cout << " Name:\t\t" << user->getName() << endl;
+	cout << " Age:\t\t" << user->getAge() << endl;
+	cout << " Email:\t\t" << user->getEmail() << endl;
+	cout << " User Since:\t" << user->getCreationDate() << endl;
+	cout << " Adress:\n" << user->getAddress() << endl;
+	cout << " Credit Cards:\n";
+	creditCardSummary(user->getCreditCards());
+	cout << " Friends:\n";
+	friendsSummary(user->getFriendsList());
+	cout << " Titles:\n";
+	titleSummary(*(user->getPurchasedGames()));
+	
+	system("pause");
+}
+
 void PromotionMenu(GameLibrary & gl, Title * game) {
 	int option_number;
 	
@@ -652,7 +696,7 @@ void SessionsMenu(GameLibrary & gl, Title * game) {
 
 	cout << "   2 - Top 3 Players Sessions" << endl;
 
-	cout << "   3 - All Sessions (by User ID)" << endl;
+	cout << "   3 - All Sessions (by User Mail)" << endl;
 
 	cout << "   0 - Go back" << endl << endl;
 
@@ -870,7 +914,7 @@ void GamesMenu(GameLibrary & gameL) {
 	{
 	case 1:
 		header("Games Summary");
-		titleSummary(gameL);
+		titleSummary(gameL.getTitles());
 		cout << endl << endl;
 		GamesMenu(gameL);
 		break;

@@ -291,7 +291,7 @@ public:
 	*
 	* @return set<string> with a string for each platform the User has Titles for
 	*/
-	std::set<std::string> getUserPlatforms();
+	std::set<std::string> getPlatforms();
 
 	/**
 	* @brief Overload of the less operator

@@ -352,7 +352,7 @@ bool User::removeFriend(User * frnd) {
 	return true;
 }
 
-set<string> User::getUserPlatforms()
+set<string> User::getPlatforms()
 {
 	set<string> plats;
 	for (const Title * title: *purchasedGames)
