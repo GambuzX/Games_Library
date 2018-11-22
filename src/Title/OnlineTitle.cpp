@@ -25,7 +25,7 @@ void OnlineTitle::addNewSession(const User * u, const Session & sess)
 	if (it == titleStats.end())
 		throw InexistentUser(u->getUserID());
 	it->second.push_back(sess);
-	//sort(titleStats.begin(), titleStats.end());
+	sort(it->second.begin(), it->second.end());
 }
 
 void OnlineTitle::addNewSession(unsigned int userID, const Session & sess)
@@ -33,7 +33,7 @@ void OnlineTitle::addNewSession(unsigned int userID, const Session & sess)
 	for (auto & pair : titleStats)
 		if (pair.first->getUserID() == userID) {
 			pair.second.push_back(sess);
-			//sort(titleStats.begin(), titleStats.end());
+			sort(pair.second.begin(), pair.second.end());
 			return;
 		}
 	throw InexistentUser(userID);
@@ -84,7 +84,30 @@ double OnlineTitle::getStats(unsigned int userID) const
 		}
 	throw InexistentUser(userID);	
 }
-
+/*
+const std::map<User*, std::vector<Session>, ComparePtr<User>>& OnlineTitle::getLastNSessions(unsigned int n) const
+{
+	if (titleStats.size() == 0)
+	{
+		// TODO: create exception
+		throw;
+	}
+	pair<User*, Session> lastSess;
+	vector<Session> res;
+	for (auto pair : titleStats){
+		if (pair.second.size() != 0 && lastSess.second.getDate() == Date())
+		{
+			lastSess.second = pair.second.at(pair.second.size() - 1);
+			lastSess.first = pair.first;
+		}
+		else if (!(lastSess.second.getDate() == Date()) && pair.second.at(pair.second.size() - 1).getDate() < lastSess.second.getDate())
+		{
+			lastSess.second = pair.second.at(pair.second.size() - 1);
+			lastSess.first = pair.first;
+		}
+	}
+}
+*/
 void OnlineTitle::updateTitle(Update * newUpdate)
 {
 	throw NotHomeTitle(getTitleID());

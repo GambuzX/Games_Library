@@ -103,6 +103,8 @@ public:
 	 */
 	double getStats(unsigned int userID) const;
 
+	//const std::map<User*, std::vector<Session>, ComparePtr<User>> & getLastNSessions(unsigned int n) const;
+
 	/**
 	 * @brief Updates a Home Title
 	 * Virtual function that may throw exceptions if called on the incorrect object

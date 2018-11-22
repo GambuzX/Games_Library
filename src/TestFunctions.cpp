@@ -14,6 +14,7 @@ using namespace std;
 void InicialMenu();
 void PrincipalMenu(GameLibrary & gameL);
 void GamesMenu(GameLibrary & gameL);
+void GameOperationsMenu(GameLibrary & gl, unsigned titleID);
 
 /**
 * Writes a neat header in the console with the title centerd and a line above and below all across the screen
@@ -230,6 +231,25 @@ void promotionSummary(Title*  game) {
 	system("pause");
 }
 
+void updateDisplay(string firstLine, const Update & update) {
+	cout << firstLine << endl;
+	cout << "  - Update Version:\t" << update.getVersion() << endl;
+	cout << "  - Description:\t" << update.getDescription() << endl;
+	cout << "  - Update Price:\t" << update.getuUpdatePrice() << endl;
+	cout << "  - Update Date:\t" << update.getDate() << endl << endl;
+}
+
+void updateSummary(Title*  game) {
+	vector<Update> prov = game->getUpdates();
+	unsigned int i = 1;
+	for (auto & update : prov)
+	{
+		updateDisplay(" Update " + i + ':', update);
+		i++;
+	}
+	system("pause");
+}
+
 void addGames(GameLibrary & gL)
 {
 	bool isOnline = menuOnlineHome();
@@ -312,6 +332,25 @@ void addSale(Title*  game) {
 		return;
 	}
 	cout << "\n Sale Added Successfully";
+}
+
+void addUpdate(Title * game) {
+	double version = duobleInput(" Update Version: ");
+	// TODO: Mudar depois??
+	string description = nameNumbersInput(" Description: ");
+	double price = duobleInput(" Update Price: ");
+	Date date = dateInput(" Update Date: ");
+	try
+	{
+		game->updateTitle(new Update(date, description, version, price));
+	}
+	catch (OldUpdate & e)
+	{
+		cout << "  - " << e.getMessage() << endl << endl;
+		cout << "  - Please consider taking a look at the Updates Summary Menu\n\n";
+		return;
+	}
+	cout << "\n Update Added Successfully";
 }
 
 void removeGame(GameLibrary & gL) {
@@ -479,9 +518,17 @@ void PromotionMenu(GameLibrary & gl, Title * game) {
 		break;
 	case 4:
 		header("Current Sale");
-		promotionDisplay(" Current Promotion:", game->getSaleOn(Date::getCurrentDate()));
-		system("pause");
-		cout << endl << endl;
+		try
+		{
+			promotionDisplay(" Current Promotion:", game->getSaleOn(Date::getCurrentDate()));
+			system("pause");
+			cout << endl << endl;
+		}
+		catch (InexistentSale & e)
+		{
+			cout << "  - " << e.getMessage() << endl;
+			cout << "  - Please consider taking a look at the Sales Summary Menu\n\n";
+		}
 		PromotionMenu(gl, game);
 		break;
 	case 0:
@@ -490,24 +537,26 @@ void PromotionMenu(GameLibrary & gl, Title * game) {
 	}
 }
 
-void UpdateMenu(GameLibrary & gl, Title * game) {
+//TODO: Later if we have time
+void SessionsMenu(GameLibrary & gl, Title * game) {
 	int option_number;
+	//game->updateTitle();
+	//game->getUpdates();
+	//gl.updateTitle
 	//game->getStats
 	//game->getCurrentVersion
 
-	cout << " Possible Actions:" << endl << endl;
+	cout << " List:" << endl << endl;
 
-	cout << "   1 - Promotions Summary" << endl;
+	cout << "   1 - Last 10 Sessions" << endl;
 
-	cout << "   2 - Add Promotion" << endl;
+	cout << "   2 - Top 3 Players Sessions" << endl;
 
-	cout << "   3 - Remove Promotion" << endl;
-
-	cout << "   4 - Current Promotion" << endl;
+	cout << "   3 - All Sessions (by User ID)" << endl;
 
 	cout << "   0 - Go back" << endl << endl;
 
-	option_number = menuInput(" Option ? ", 0, 4);
+	option_number = menuInput(" Option ? ", 0, 3);
 
 	switch (option_number)
 	{
@@ -530,12 +579,51 @@ void UpdateMenu(GameLibrary & gl, Title * game) {
 		//cout << endl << endl;
 		//PromotionMenu(gl, game);
 		break;
-	case 4:
-		//header("Current Sale");
-		//promotionDisplay(" Current Promotion:", game->getSaleOn(Date::getCurrentDate()));
-		//system("pause");
-		//cout << endl << endl;
-		//PromotionMenu(gl, game);
+	case 0:
+		GameOperationsMenu(gl, game->getTitleID());
+		break;
+	}
+}
+
+void UpdateMenu(GameLibrary & gl, Title * game) {
+	int option_number;
+	//game->updateTitle();
+	//game->getUpdates();
+	//gl.updateTitle
+
+	cout << " Possible Actions:" << endl << endl;
+
+	cout << "   1 - Updates Summary" << endl;
+
+	cout << "   2 - Last Update" << endl;
+
+	cout << "   3 - New Update" << endl;
+
+	cout << "   0 - Go back" << endl << endl;
+
+	option_number = menuInput(" Option ? ", 0, 2);
+
+	switch (option_number)
+	{
+	case 1:
+		header("Updates Summary");
+		updateSummary(game);
+		cout << endl << endl;
+		UpdateMenu(gl, game);
+		break;
+
+	case 2:
+		header("Last Update");
+		updateDisplay(" Last Update:", game->getCurrentVersion());
+		system("pause");
+		cout << endl << endl;
+		UpdateMenu(gl, game);
+		break;
+	case 3:
+		header("Add Update");
+		addUpdate(game);
+		cout << endl << endl;
+		UpdateMenu(gl, game);
 		break;
 	case 0:
 		GameOperationsMenu(gl, game->getTitleID());
@@ -580,13 +668,17 @@ void GameOperationsMenu(GameLibrary & gl, unsigned titleID) {
 		GameOperationsMenu(gl, titleID);
 		break;
 	case 3:
-		//header("Remove Game");
-		//removeGame(gameL);
-		//cout << endl << endl;
-		//GamesMenu(gameL);
-		break;
-	case 4:
-		//GameOperationsMenu(gameL);
+		if (isOnline) {
+			header("Sessions");
+			SessionsMenu(gl, game);
+		}
+		else
+		{
+			header("Updates");
+			UpdateMenu(gl, game);
+		}
+		cout << endl << endl;
+		GameOperationsMenu(gl, titleID);
 		break;
 	case 0:
 		GamesMenu(gl);

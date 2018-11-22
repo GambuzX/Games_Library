@@ -17,7 +17,12 @@ private:
 	Date date;	/**< @brief Date corresponding to when the session was played */
 
 public:
-	
+	/**
+	* @brief Construct a new Session object
+	* Empty constructor initializes date to the default date and sessionDuration to 0.0
+	*
+	*/
+	Session() { sessionDuration = 0.0; date = Date(); };
 	/**
  	* @brief Construct a new Session object
  	* 

@@ -114,7 +114,7 @@ void Date::setYear(unsigned int year)
 	this->year = year;
 }
 
-Date Date::operator+(unsigned int days) const {
+Date Date::operator+(int days) const {
 	if (days < 0)
 		return *this - (- days);
 
@@ -122,14 +122,14 @@ Date Date::operator+(unsigned int days) const {
 
 	days += dayNumber(res.day, res.month, res.year);
 
-	while (days > daysInYear(res.year)) {
+	while (days > int(daysInYear(res.year))) {
 		days -= daysInYear(res.year);
 		res.year++;
 	}
 
 	res.month = 1;
 
-	while (days > daysInMonth(res.month, res.year)) {
+	while (days > int(daysInMonth(res.month, res.year))) {
 		days -= daysInMonth(res.month, res.year);
 		res.month++;
 	}
@@ -139,19 +139,19 @@ Date Date::operator+(unsigned int days) const {
 	return res;
 }
 
-Date Date::operator-(unsigned int days) const
+Date Date::operator-(int days) const
 {
 	if (days < 0)
 		return *this + (- days);
 
 	Date res(*this);
 	
-	while (days > daysInYear(res.year)) {
+	while (days > int(daysInYear(res.year))) {
 		days -= daysInYear(res.year - 1);
 		res.year--;
 	}
 
-	unsigned int pres = dayNumber(res.day, res.month, res.year);
+	int pres = dayNumber(res.day, res.month, res.year);
 
 	if (days >= pres){
 		res.year--;

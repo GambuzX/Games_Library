@@ -210,8 +210,8 @@ void GameLibrary::buildUserMostPlayedTitlesRanking(std::ostream & os, User * usr
 			double timePlayed = title->getTimePlayed(usr);
 			rankedList.insert(pair<double, const Title*>(timePlayed, title));
 		}
-		catch (const NotOnlineTitle &notOnlineTitle) { continue; }
-		catch (const InexistentUser &inexistentUser) { continue; }
+		catch (NotOnlineTitle) { continue; }
+		catch (InexistentUser) { continue; }
 	}
 
 	os << "User Most Played Titles" << endl << endl;
