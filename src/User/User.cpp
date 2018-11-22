@@ -373,7 +373,7 @@ ostream& operator<<(ostream &os, const User &user)
 
 	os << "Friends:" << endl;
 	for (const User* f : user.getFriendsList()) {
-		os << f->getUserID();
+		os << f->getUserID() << endl;
 	}
 
 	return os;

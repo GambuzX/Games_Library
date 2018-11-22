@@ -16,6 +16,8 @@ void PrincipalMenu(GameLibrary & gameL);
 void GamesMenu(GameLibrary & gameL);
 void GameOperationsMenu(GameLibrary & gl, unsigned titleID);
 
+void ManageUsersMenu(GameLibrary &library);
+void addUserDialogue(GameLibrary &library);
 /**
 * Writes a neat header in the console with the title centerd and a line above and below all across the screen
 *
@@ -63,9 +65,7 @@ bool menuOnlineHome() {
 	int option_number;
 
 	cout << " Do you want to create one :" << endl << endl;
-
 	cout << "   1 - Home Title" << endl;
-
 	cout << "   2 - Online Title" << endl << endl;
 
 	option_number = menuInput(" Option ? ", 1, 2);
@@ -86,23 +86,14 @@ gameLibraryPlatform menuPlatform() {
 	int option_number;
 
 	cout << " Platform :" << endl << endl;
-
 	cout << "   1 - Nintendo DS" << endl;
-
 	cout << "   2 - PC" << endl;
-
 	cout << "   3 - PS3" << endl;
-
 	cout << "   4 - PS4" << endl;
-
 	cout << "   5 - Nintendo Switch" << endl;
-
 	cout << "   6 - WII" << endl;
-
 	cout << "   7 - XBOX 360" << endl;
-
 	cout << "   8 - XBOX ONE" << endl;
-	
 	cout << "   0 - All the Plataforms" << endl << endl;
 
 	option_number = menuInput(" Option ? ", 0, 8);
@@ -128,25 +119,15 @@ gameLibraryGenre menuGenre() {
 	int option_number;
 
 	cout << " Genre :" << endl << endl;
-
 	cout << "   1 - Action" << endl;
-
 	cout << "   2 - Adventure" << endl;
-
 	cout << "   3 - Puzzle" << endl;
-	
 	cout << "   4 - Shooter" << endl;
-
 	cout << "   5 - Simulation" << endl;
-
 	cout << "   6 - RPG" << endl;
-
 	cout << "   7 - Platformer" << endl;
-
 	cout << "   8 - Strategy" << endl;
-
 	cout << "   9 - Sports" << endl;
-
 	cout << "   10 - MMO" << endl << endl;
 
 	option_number = menuInput(" Option ? ", 1, 10);
@@ -182,9 +163,7 @@ bool menuSubcription() {
 	int option_number;
 
 	cout << " Subscrition type (fixed or dynamic) :" << endl << endl;
-
 	cout << "   1 - Dynamic Subscription" << endl;
-
 	cout << "   2 - Fixed Subscription" << endl << endl;
 
 	option_number = menuInput(" Option ? ", 1, 2);
@@ -199,6 +178,68 @@ bool menuSubcription() {
 		throw invalid_argument(" Error in menuSubcription() ");
 	}
 	//cout << endl;
+}
+
+void addGames(GameLibrary & gL)
+{
+	bool isOnline = menuOnlineHome();
+	string name = nameNumbersInput(" Game name (only letters, space and numbers): ");
+	// TODO: Verify this input control
+	double price = doubleInput(" Game price: ");
+	ageRange ar = ageRangeInput(" Age Range:");
+	Date releaseDate = dateInput(" Release date: ");
+	gameLibraryPlatform platform = menuPlatform();
+	gameLibraryGenre genre = menuGenre();
+	string company = nameInput(" Publisher name (only letters and space): ");;
+
+	//Title(std::string name, double price, Date releaseDate, ageRange ageR, std::string platform, std::string genre, std::string company);
+	if (!isOnline){
+		if(platform != all_platforms){
+			gL.addTitle(new HomeTitle(name, price, releaseDate, ar, platform, genre, company));
+			return;
+		}
+		else
+		{
+			for (int plat = nds; plat != last; plat++)
+			{
+				gL.addTitle(new HomeTitle(name, price, releaseDate, ar, static_cast<gameLibraryPlatform>(plat), genre, company));
+			}
+			return;
+		}
+	}
+	else {
+		bool isFixed = menuSubcription();
+		double subsPrice = doubleInput(" Subscription price: ");
+
+		if (isFixed) {
+			if (platform != all_platforms) {
+				gL.addTitle(new OnlineTitle(name, price, releaseDate, ar, platform, genre, company, new FixedSubscription(subsPrice)));
+				return;
+			}
+			else
+			{
+				for (int plat = nds; plat != last; plat++)
+				{
+					gL.addTitle(new OnlineTitle(name, price, releaseDate, ar, static_cast<gameLibraryPlatform>(plat), genre, company, new FixedSubscription(subsPrice)));
+				}
+				return;
+			}
+		}
+		else {
+			if (platform != all_platforms) {
+				gL.addTitle(new OnlineTitle(name, price, releaseDate, ar, platform, genre, company, new DynamicSubscription(subsPrice)));
+				return;
+			}
+			else
+			{
+				for (int plat = nds; plat != last; plat++)
+				{
+					gL.addTitle(new OnlineTitle(name, price, releaseDate, ar, static_cast<gameLibraryPlatform>(plat), genre, company, new DynamicSubscription(subsPrice)));
+				}
+				return;
+			}
+		}
+	}
 }
 
 void titleSummary(GameLibrary & gameL) {
@@ -250,76 +291,14 @@ void updateSummary(Title*  game) {
 	system("pause");
 }
 
-void addGames(GameLibrary & gL)
-{
-	bool isOnline = menuOnlineHome();
-	string name = nameNumbersInput(" Game name (only letters, space and numbers): ");
-	// TODO: Verify this input control
-	double price = duobleInput(" Game price: ");
-	ageRange ar = ageRangeInput(" Age Range:");
-	Date releaseDate = dateInput(" Release date: ");
-	gameLibraryPlatform platform = menuPlatform();
-	gameLibraryGenre genre = menuGenre();
-	string company = nameInput(" Publisher name (only letters and space): ");;
-
-	//Title(std::string name, double price, Date releaseDate, ageRange ageR, std::string platform, std::string genre, std::string company);
-	if (!isOnline){
-		if(platform != all_platforms){
-			gL.addTitle(new HomeTitle(name, price, releaseDate, ar, platform, genre, company));
-			return;
-		}
-		else
-		{
-			for (int plat = nds; plat != last; plat++)
-			{
-				gL.addTitle(new HomeTitle(name, price, releaseDate, ar, static_cast<gameLibraryPlatform>(plat), genre, company));
-			}
-			return;
-		}
-	}
-	else {
-		bool isFixed = menuSubcription();
-		double subsPrice = duobleInput(" Subscription price: ");
-
-		if (isFixed) {
-			if (platform != all_platforms) {
-				gL.addTitle(new OnlineTitle(name, price, releaseDate, ar, platform, genre, company, new FixedSubscription(subsPrice)));
-				return;
-			}
-			else
-			{
-				for (int plat = nds; plat != last; plat++)
-				{
-					gL.addTitle(new OnlineTitle(name, price, releaseDate, ar, static_cast<gameLibraryPlatform>(plat), genre, company, new FixedSubscription(subsPrice)));
-				}
-				return;
-			}
-		}
-		else {
-			if (platform != all_platforms) {
-				gL.addTitle(new OnlineTitle(name, price, releaseDate, ar, platform, genre, company, new DynamicSubscription(subsPrice)));
-				return;
-			}
-			else
-			{
-				for (int plat = nds; plat != last; plat++)
-				{
-					gL.addTitle(new OnlineTitle(name, price, releaseDate, ar, static_cast<gameLibraryPlatform>(plat), genre, company, new DynamicSubscription(subsPrice)));
-				}
-				return;
-			}
-		}
-	}
-
-}
-
 void addSale(Title*  game) {
 	Date beginDate = dateInput(" Begin date: ");
 	Date endDate = dateInput(" End date: ");
 	double saleFactor = menuInput(" Sale Factor (from 0 to 100): ", 0, 100) / 100;
 	try
 	{
-		game->addPromotion(Sale(beginDate, endDate, saleFactor));
+		//TODO: Fix compilation error
+		//game->addPromotion(Sale(beginDate, endDate, saleFactor));
 	}
 	catch (ExpiredSale & e)
 	{
@@ -335,10 +314,10 @@ void addSale(Title*  game) {
 }
 
 void addUpdate(Title * game) {
-	double version = duobleInput(" Update Version: ");
+	double version = doubleInput(" Update Version: ");
 	// TODO: Mudar depois??
 	string description = nameNumbersInput(" Description: ");
-	double price = duobleInput(" Update Price: ");
+	double price = doubleInput(" Update Price: ");
 	Date date = dateInput(" Update Date: ");
 	try
 	{
@@ -382,7 +361,7 @@ void removeGame(GameLibrary & gL) {
 }
 
 void removeSale(Title*  game) {
-	if (game->getSaleHistory().size() == 0)
+	if (game->getSaleHistory().empty())
 	{
 		cout << " There are no sales to be removed\n";
 		return;
@@ -440,7 +419,8 @@ void titleInfo(Title * game, bool isOnline)
 	cout << " Title ID:\t" << game->getTitleID() << endl;
 	cout << " Game:\t\t" << game->getName() << endl;
 	cout << " Price:\t\t" << game->getBasePrice() << endl;
-	cout << " Current Price:\t" << game->getCurrentPrice(Date::getCurrentDate()) << endl;
+	//TODO: Fix compilation error
+	//cout << " Current Price:\t" << game->getCurrentPrice(Date::getCurrentDate()) << endl;
 	if (isOnline) {
 		cout << " Subscription:\n";
 		cout << "  - Type:\t";
@@ -482,15 +462,10 @@ void PromotionMenu(GameLibrary & gl, Title * game) {
 	int option_number;
 	
 	cout << " Possible Actions:" << endl << endl;
-
 	cout << "   1 - Promotions Summary" << endl;
-
 	cout << "   2 - Add Promotion" << endl;
-
 	cout << "   3 - Remove Promotion" << endl;
-
 	cout << "   4 - Current Promotion" << endl;
-
 	cout << "   0 - Go back" << endl << endl;
 
 	option_number = menuInput(" Option ? ", 0, 4);
@@ -520,7 +495,8 @@ void PromotionMenu(GameLibrary & gl, Title * game) {
 		header("Current Sale");
 		try
 		{
-			promotionDisplay(" Current Promotion:", game->getSaleOn(Date::getCurrentDate()));
+			//TODO: Fix compilation error
+			//promotionDisplay(" Current Promotion:", game->getSaleOn(Date::getCurrentDate()));
 			system("pause");
 			cout << endl << endl;
 		}
@@ -547,13 +523,9 @@ void SessionsMenu(GameLibrary & gl, Title * game) {
 	//game->getCurrentVersion
 
 	cout << " List:" << endl << endl;
-
 	cout << "   1 - Last 10 Sessions" << endl;
-
 	cout << "   2 - Top 3 Players Sessions" << endl;
-
 	cout << "   3 - All Sessions (by User ID)" << endl;
-
 	cout << "   0 - Go back" << endl << endl;
 
 	option_number = menuInput(" Option ? ", 0, 3);
@@ -592,13 +564,9 @@ void UpdateMenu(GameLibrary & gl, Title * game) {
 	//gl.updateTitle
 
 	cout << " Possible Actions:" << endl << endl;
-
 	cout << "   1 - Updates Summary" << endl;
-
 	cout << "   2 - Last Update" << endl;
-
 	cout << "   3 - New Update" << endl;
-
 	cout << "   0 - Go back" << endl << endl;
 
 	option_number = menuInput(" Option ? ", 0, 2);
@@ -640,11 +608,9 @@ void GameOperationsMenu(GameLibrary & gl, unsigned titleID) {
 	int option_number;
 
 	cout << " Possible Actions:" << endl << endl;
-
 	cout << "   1 - Detailed Info" << endl;
-
 	cout << "   2 - Promotions" << endl;
-	
+
 	if (isOnline) cout << "   3 - Sessions" << endl;
 	else cout << "   3 - Updates" << endl;
 
@@ -695,15 +661,10 @@ void GamesMenu(GameLibrary & gameL) {
 	int option_number;
 
 	cout << " Possible Actions:" << endl << endl;
-
 	cout << "   1 - Games Summary" << endl;
-
 	cout << "   2 - Add Game" << endl;
-
 	cout << "   3 - Remove Game" << endl;
-
 	cout << "   4 - Game Info" << endl;
-
 	cout << "   0 - Go back" << endl << endl;
 
 	option_number = menuInput(" Option ? ", 0, 4);
@@ -748,15 +709,11 @@ void PrincipalMenu(GameLibrary & gameL)
 	int option_number;
 
 	cout << " Do you want to:" << endl << endl;
-
 	cout << "   1 - Manage Games" << endl;
-
 	cout << "   2 - Manage Users" << endl;
 	//TODO: Nao gosto mas é para poder ver os jogos, jogar, comprar...
 	cout << "   3 - Login as a User" << endl;
-
 	cout << "   4 - Make a List/Ranking" << endl;
-
 	cout << "   0 - Go back" << endl << endl;
 
 	option_number = menuInput(" Option ? ", 0, 4);
@@ -768,6 +725,7 @@ void PrincipalMenu(GameLibrary & gameL)
 		break;
 	case 2:
 		header("Manage Users");
+		ManageUsersMenu(gameL);
 		break;
 	case 3:
 		header("Login as User");
@@ -784,6 +742,42 @@ void PrincipalMenu(GameLibrary & gameL)
     }
 }
 
+void ManageUsersMenu(GameLibrary &library)
+{
+	cout << "Possible Actions:" << endl;
+	cout << "   1 - Add User" << endl;
+	cout << "   2 - Remove User" << endl;
+	cout << "   0 - Go back" << endl << endl;
+
+	int option_number = menuInput(" Option ? ", 0, 2);
+	cout << endl;
+
+	switch(option_number) {
+	case 1: addUserDialogue(library);
+		header("CREATE GAME LIBRARY");
+		PrincipalMenu(library);
+		break;
+	case 2:
+		cout << "Not yet implemented" << endl;
+		//removeUserMenu(library);
+	case 0:
+		InicialMenu();
+		break;
+	}
+}
+
+void addUserDialogue(GameLibrary &library)
+{
+	//User (std::string name, std::string email, int age, Address address);
+	string name = nameInput(" User name (only letters and space): ");
+	string email = specialInput(" Email (only letters, space and numbers): ");
+	int age = static_cast<int>(doubleInput(" Enter age: "));
+	cout << endl;
+	Address addr = addressInput(" Enter address:");
+
+	library.addUser(new User(name, email, age, addr));
+}
+
 void InicialMenu()
 {
 	GameLibrary gl = GameLibrary();
@@ -791,13 +785,9 @@ void InicialMenu()
 	int option_number;
 
 	cout << " OPTIONS:" << endl << endl;
-
 	cout << "   1 - Create Library" << endl;
-
 	cout << "   2 - Load Library" << endl;
-
 	cout << "   3 - Save Library" << endl;
-
 	cout << "   0 - Exit" << endl << endl;
 
 	option_number = menuInput(" Option ? ", 0, 3);
@@ -806,6 +796,7 @@ void InicialMenu()
 	{
 	case 1:
 		header("CREATE GAME LIBRARY");
+	    PrincipalMenu(gl);
 		break;
 
 	case 2:
@@ -817,14 +808,14 @@ void InicialMenu()
 	    header("SAVE GAME LIBRARY");
 	    cout << " Saving..." << endl;
 	    gl.saveGameLibrary();
-	    cout << " Done" << endl;
+	    cout << " Done\n" << endl;
+	    InicialMenu();
 	    break;
 	case 0:
 		system("cls");
 		return;
     default:break;
     }
-	    PrincipalMenu(gl);
 }
 
 int main() {	

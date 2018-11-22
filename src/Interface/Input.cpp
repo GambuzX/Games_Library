@@ -179,6 +179,68 @@ string nameNumbersInput(string question)
 	return removeSpace(name);
 }
 
+string specialInput(string question)
+{
+	bool validInput = false;
+	bool ErrorFlag;
+	string name;
+
+	cout << question;
+
+	HANDLE hCon = GetStdHandle(STD_OUTPUT_HANDLE);
+	COORD currentPos = GetConsoleCursorPosition(hCon);
+
+	while (!validInput)
+	{
+		cin.clear();
+		getlineZ(cin, name);
+
+		ErrorFlag = false;
+
+		if (cin.eof())
+		{
+			cin.clear();
+			ErrorFlag = true;
+		}
+		if (cin.fail())
+		{
+			cin.clear();
+			cin.ignore((numeric_limits<streamsize>::max)(), '\n');
+			ErrorFlag = true;
+		}
+
+		if (name.empty())
+		{
+			ErrorFlag = true;
+		}
+
+		validInput = !ErrorFlag;
+
+		if (ErrorFlag)
+		{
+			clrscr(currentPos);
+		}
+	}
+
+	return removeSpace(name);
+}
+
+Address addressInput(string question) {
+	Address addr;
+	unsigned int houseNumber;
+	string streetName, city, country;
+	cout << question << endl;
+
+	houseNumber = static_cast<unsigned int>(doubleInput(" Enter House Number: "));
+	streetName = nameInput(" Enter Street name: ");
+	city = nameInput(" Enter city name: ");
+	country = nameInput(" Enter country name: ");
+
+	addr = Address(houseNumber, streetName, city, country);
+
+	return addr;
+}
+
 /**
 * Check if there is any other character than an escape line in the end of the input
 *
@@ -197,7 +259,7 @@ bool afterNumber(istringstream & in)
 	return false;
 }
 
-double duobleInput(string question)
+double doubleInput(string question)
 {
 	double option;
 	bool valid = false;
