@@ -121,7 +121,16 @@ void OnlineTitle::updateUserVersion(const User * usr)
 void OnlineTitle::displayTitleInfo(std::ostream &os)
 {
 	Title::displayTitleInfo(os);
-	os << subscription->getSubscriptionPrice() << endl;
+	os << 0 << endl;
+	os << "Subscription Info:" << endl;
+	os << subscription->getSubscriptionPrice() << " " << subscription->isFixedSubscription() << endl;
+	os << "Sessions:" << endl;
+	os << titleStats.size() << endl;
+
+	for (auto &it : titleStats) {
+	    for (Session &s : it.second)
+	        os << it.first->getUserID() << " " << s;
+	}
 
 }
 

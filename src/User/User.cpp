@@ -358,17 +358,19 @@ bool User::operator<(const User & usr) const
 }
 ostream& operator<<(ostream &os, const User &user)
 {
-	os << user.getUserID() << " " << user.getName() << " " << user.getEmail() << " " << user.getAge() << endl;
-	os << user.getAddress();
+	os << user.getUserID() << " " << user.getName() << endl;
+	os << user.getEmail() << " " << user.getAge() << endl;
+	user.getAddress().writeAddress(os);
 
 	os << "Credit Cards:" << endl;
+	os << user.getCreditCards().size() << endl;
 	for (const CreditCard &cc : user.getCreditCards()) {
 		os << cc << endl;
 	}
 
 	os << "Transactions:" << endl;
-	for (const Transaction &t : user.getTransactions()) {
-		os << t << endl;
+	for (Transaction t : user.getTransactions()) {
+		t.writeTransaction(os);
 	}
 
 	os << "Friends:" << endl;

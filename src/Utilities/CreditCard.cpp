@@ -43,7 +43,8 @@ CreditCard & CreditCard::operator-(const double & val) {
 
 ostream &operator<<(ostream &os, const CreditCard &cc)
 {
-	os << cc.getNumber() << " " << cc.getHolder() << " " << cc.getExpiryDate() << " " << cc.getBalance();
+	os << cc.getNumber() << " " << cc.getHolder() << endl;
+	os << cc.getExpiryDate() << " " << cc.getBalance();
 
     return os;
 }

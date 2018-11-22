@@ -115,6 +115,7 @@ ostream &operator<<(ostream &os, const Title &title)
 void Title::displayTitleInfo(std::ostream &os)
 {
 	os << getTitleID() << " " << getName() << endl;
+	os << getBasePrice() << " " << getCompany() << endl;
 	os << getPlatform() << " " << getGenre() << endl;
 	os << getAgeRange().minAge << " " << getAgeRange().maxAge << endl;
 	os << getReleaseDate() << endl;

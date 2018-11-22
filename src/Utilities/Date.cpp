@@ -2,6 +2,8 @@
 #include "Exceptions.h"
 #include <string>
 #include <chrono>
+#include <algorithm>
+#include <vector>
 
 using namespace std;
 
@@ -236,4 +238,19 @@ Date Date::getCurrentDate()
 	auto year = static_cast<unsigned int>(aTime->tm_year + 1900); // Year is # years since 1900
 
 	return Date(day, month, year);
+}
+Date::Date(string &date)
+{
+	size_t i, j = 0;
+	string temp;
+	vector<unsigned int> values;
+
+	while((i = date.find_first_of('/')) != string::npos) {
+		values.push_back(static_cast<unsigned int &&>(stoi(date.substr(j, i))));
+		date = date.substr(i + 1, j);
+	}
+
+	this->day = values[0];
+	this->month = values[1];
+	this->year = values[0];
 }

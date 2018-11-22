@@ -67,6 +67,8 @@ public:
 	 * @return false If the "Current" Sale starts in the same day or after the one passed as paremeter
 	 */
 	bool operator<(const Sale& s2) const;
+
+	friend std::ostream& operator<<(std::ostream &os, const Sale &s);
 };
 
 /** @} */
