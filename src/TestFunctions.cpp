@@ -586,30 +586,19 @@ void removeSale(Title*  game) {
 
 //-----------------------------------------------------------------------------------------------------------------------//
 
-void removeFriend(User*  user) {
-	/*user->removeFriend
-	if (game->getSaleHistory().size() == 0)
-	{
-		cout << " There are no sales to be removed\n";
+void removeFriend(GameLibrary & gl, User*  user) {
+	string mail = emailInput(" Friend Email: ");
+	User * frd = gl.getUser(mail);
+	if (nullptr == frd) {
+		cout << "\n User with that email does not exist";
 		return;
 	}
-	Date beginDate = dateInput(" Begin date of the Sale to be Removed: ");
-	try
+	else if (user->removeFriend(frd))
 	{
-		game->removePromotion(beginDate);
-	}
-	catch (SaleStarted & e)
-	{
-		cout << "  - " << e.getMessage() << endl << endl;
+		cout << "\n Friend Removed Successfully"; 
 		return;
 	}
-	catch (InexistentSale & e)
-	{
-		cout << "  - " << e.getMessage() << endl;
-		cout << "  - Please consider taking a look at the Sales Summary Menu\n\n";
-		return;
-	}
-	cout << "\n Sale Removed Successfully";*/
+	cout << "\n You don't have that user as a friend";	
 }
 
 //=======================================================================================================================//
@@ -1129,7 +1118,7 @@ void FriendsMenu(GameLibrary & gl, User * user) {
 		break;
 	case 3:
 		header("Remove Sale");
-		removeFriend(user);
+		removeFriend(gl, user);
 		cout << endl << endl;
 		FriendsMenu(gl, user);
 		break;
