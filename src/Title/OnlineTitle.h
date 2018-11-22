@@ -106,6 +106,17 @@ public:
 	double getStats(unsigned int userID) const;
 
 	/**
+	* @brief Get all the Sessions of a User
+	* Virtual function that may throw exceptions if called on the incorrect object
+	* May also throw other exceptions if the user is not a owner of the Title
+	*
+	* @param usr Pointer to the User to get Sessions from
+	* @return vector<Session> * Pointer to the user Sessions
+	* @throw InexistentUser() If the user specified by its ID doesn't own the Online Title
+	*/
+	const std::vector<Session> * getAllUserSessions(User * usr) const;
+
+	/**
 	* @brief Get the last N Sessions of all Users for this Title
 	* Virtual function that may throw exceptions if called on the incorrect object
 	* May also throw other exceptions if the user is not a owner of the Title
@@ -114,7 +125,7 @@ public:
 	* @return map<User*, vector<Session>, ComparePtr<User>> Containing the last N sessions of all Users
 	* @throw InexistentUser() If the user specified by its ID doesn't own the Online Title
 	*/
-	const std::map<User*, std::vector<Session>, ComparePtr<User>> & getAllUsersLastNSessions(unsigned int n) const;
+	const std::map<User*, std::vector<Session>, ComparePtr<User>> getAllUsersLastNSessions(unsigned int n) const;
 
 	/**
 	* @brief Get the last N Sessions of a User for this Title
@@ -127,6 +138,9 @@ public:
 	* @throw InexistentUser() If the user specified by its ID doesn't own the Online Title
 	*/
 	const std::vector<Session> getLastNUserSessions(User * usr, int n) const;
+
+
+	const std::map<User*, const std::vector<Session>*, ComparePtr<User>> getTop3PlayersSessions() const;
 
 	/**
 	 * @brief Updates a Home Title
