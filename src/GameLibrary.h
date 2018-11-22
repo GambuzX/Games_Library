@@ -81,10 +81,10 @@ public:
 	/**
 	* @brief Get the pointer to a User
 	*
-	* @param userID ID of User to get
+	* @param email User email
 	* @return User* Returns pointer to User, nullptr if not found
 	*/
-	User * getUser(unsigned userID);
+	User * getUser(std::string email);
 
 	/**
 	* @brief Adds a Title to the Game Library

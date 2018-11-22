@@ -60,10 +60,10 @@ bool GameLibrary::removeUser(User * user) {
 	return true;
 }
 
-User * GameLibrary::getUser(unsigned userID)
+User * GameLibrary::getUser(string email)
 {
 	for (auto & user : users)
-		if (user.first->getUserID() == userID)
+		if (user.first->getEmail() == email)
 			return user.first;
 	return nullptr;
 }

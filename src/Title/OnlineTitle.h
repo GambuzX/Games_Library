@@ -133,8 +133,7 @@ public:
 	* @return const Update& Return the Last Update made to the Home Title
 	* @throw NotHomeTitle() If it is called on a Online Title Object
 	*/
-	const Update & getCurrentVersion() const override
-    { throw NotHomeTitle(getTitleID()); };
+	const Update & getCurrentVersion() const override { throw NotHomeTitle(getTitleID()); };
 
 	/**
 	 * @brief Function that Updates the User Home Title Version to the latest
