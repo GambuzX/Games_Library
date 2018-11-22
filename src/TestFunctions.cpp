@@ -268,7 +268,7 @@ void updateDisplay(string firstLine, const Update & update) {
 	cout << firstLine << endl;
 	cout << "  - Update Version:\t" << update.getVersion() << endl;
 	cout << "  - Description:\t" << update.getDescription() << endl;
-	cout << "  - Update Price:\t" << update.getuUpdatePrice() << endl;
+	cout << "  - Update Price:\t" << update.getUpdatePrice() << endl;
 	cout << "  - Update Date:\t" << update.getDate() << endl << endl;
 }
 
@@ -573,7 +573,7 @@ void titleInfo(Title * game, bool isOnline)
 		cout << " Last Update:\n";
 		cout << "  - Version:\t\t" << game->getCurrentVersion().getVersion() << endl;
 		cout << "  - Description:\t" << game->getCurrentVersion().getDescription() << endl;
-		cout << "  - Price:\t\t" << game->getCurrentVersion().getuUpdatePrice() << endl;
+		cout << "  - Price:\t\t" << game->getCurrentVersion().getUpdatePrice() << endl;
 		cout << "  - Date:\t\t" << game->getCurrentVersion().getDate() << endl << endl;
 	}
 	cout << " Release Date:\t" << game->getReleaseDate() << endl;

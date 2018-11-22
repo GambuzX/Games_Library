@@ -28,6 +28,7 @@ public:
 	 * 
 	 */
 	Update() { date = Date(); description = ""; version = 0.0; updateCost = 0.0; };
+
 	/**
 	 * @brief Construct a new Update object
 	 * Contructor with the release date, which initializes the date to its release
@@ -37,6 +38,7 @@ public:
 	 * @param d Release Date to Initialize the date Private Member
 	 */
 	explicit Update(Date d) { date = d; description = "First version"; version = 1.0; updateCost = 0.0; };
+
 	/**
 	 * @brief Construct a new Update object
 	 * 
@@ -53,24 +55,27 @@ public:
 	 * @return Date Returns Date object
 	 */
 	Date getDate() const;
+
 	/**
 	 * @brief Get the Description Private Member
 	 * 
 	 * @return string Returns the description Private Member
 	 */
 	std::string getDescription() const;
+
 	/**
 	 * @brief Get the Version Private Member
 	 * 
 	 * @return double Returns the version Private Member
 	 */
 	double getVersion() const;
+
 	/**
 	* @brief Get the Update Cost Private Member
 	*
 	* @return double Returns the updateCost Private Member
 	*/
-	double getuUpdatePrice() const { return updateCost; };
+	double getUpdatePrice() const { return updateCost; };
 
 	/**
 	 * @brief Overload of the equal to operator
@@ -80,6 +85,7 @@ public:
 	 * @return false If the Update version numbers are different
 	 */
 	bool operator==(const Update & update) const;
+
 	/**
 	 * @brief Overload of less than operator
 	 * One Update is "less" than other if its version number is smaller thant the other
