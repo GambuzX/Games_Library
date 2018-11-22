@@ -7,7 +7,6 @@ using namespace std;
 set<Title*, ComparePtr<Title>> GameLibrary::titles;
 map<Title*, double, ComparePtr<Title>> GameLibrary::titlesRevenue;
 
-class User;
 
 GameLibrary::~GameLibrary()
 {

@@ -357,7 +357,8 @@ void addSale(Title*  game) {
 	double saleFactor = menuInput(" Sale Factor (from 0 to 100): ", 0, 100) / 100;
 	try
 	{
-		game->addPromotion(Sale(beginDate, endDate, saleFactor));
+		Sale sale = Sale(beginDate, endDate, saleFactor);
+		game->addPromotion(sale);
 	}
 	catch (ExpiredSale & e)
 	{
@@ -534,10 +535,11 @@ unsigned userIDinput(GameLibrary & gL) {
 
 void titleInfo(Title * game, bool isOnline)
 {
+	Date d = Date::getCurrentDate();
 	cout << " Title ID:\t" << game->getTitleID() << endl;
 	cout << " Game:\t\t" << game->getName() << endl;
 	cout << " Price:\t\t" << game->getBasePrice() << endl;
-	cout << " Current Price:\t" << game->getCurrentPrice(Date::getCurrentDate()) << endl;
+	cout << " Current Price:\t" << game->getCurrentPrice(d) << endl;
 	if (isOnline) {
 		cout << " Subscription:\n";
 		cout << "  - Type:\t";
@@ -617,7 +619,8 @@ void PromotionMenu(GameLibrary & gl, Title * game) {
 		header("Current Sale");
 		try
 		{
-			promotionDisplay(" Current Promotion:", game->getSaleOn(Date::getCurrentDate()));
+			Date d = Date::getCurrentDate();
+			promotionDisplay(" Current Promotion:", game->getSaleOn(d));
 			system("pause");
 			cout << endl << endl;
 		}
