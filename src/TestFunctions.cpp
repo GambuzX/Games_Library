@@ -82,7 +82,6 @@ bool menuOnlineHome() {
 	}
 }
 
-// TODO: Por para 2 em vez de todas??
 gameLibraryPlatform menuPlatform() {
 	int option_number;
 
@@ -327,8 +326,6 @@ void addGames(GameLibrary & gL)
 }
 
 void addUser(GameLibrary & gl) {
-	// TODO: Escolher entre com numeros ou sem
-	//string name = nameNumbersInput(" Name (only letters, space and numbers): ");
 	string name = nameInput(" Name (only letters and space): ");
 	string email = emailInput(" Email: ");
 	int age = intInput(" Age: ");
@@ -375,7 +372,6 @@ void addSale(Title*  game) {
 
 void addUpdate(Title * game) {
 	double version = duobleInput(" Update Version: ");
-	// TODO: Mudar depois??
 	string description = nameNumbersInput(" Description: ");
 	double price = duobleInput(" Update Price: ");
 	Date date = dateInput(" Update Date: ");
