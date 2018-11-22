@@ -16,6 +16,7 @@ void PrincipalMenu(GameLibrary & gameL);
 void GamesMenu(GameLibrary & gameL);
 void UsersMenu(GameLibrary & gl);
 void GameOperationsMenu(GameLibrary & gl, unsigned titleID);
+void UserOperationsMenu(GameLibrary & gl, string mail);
 
 /**
 *  +------------------------+
@@ -291,6 +292,162 @@ void userInfo(User * user)
 		cout << "  - " << p;
 
 	system("pause");
+}
+
+//=======================================================================================================================//
+
+/**
+*  +------------------------+
+*  |                        |
+*  |     Add Game Help      |
+*  |                        |
+*  +------------------------+
+*/
+
+bool menuOnlineHome() {
+	int option_number;
+
+	cout << " Do you want to create one :" << endl << endl;
+
+	cout << "   1 - Home Title" << endl;
+
+	cout << "   2 - Online Title" << endl << endl;
+
+	option_number = menuInput(" Option ? ", 1, 2);
+
+	switch (option_number)
+	{
+	case 1:
+		return false;
+	case 2:
+		return true;
+	default:
+		throw invalid_argument(" Error in menuOnlineHome() ");
+	}
+}
+
+//-----------------------------------------------------------------------------------------------------------------------//
+
+gameLibraryPlatform menuPlatform() {
+	int option_number;
+
+	cout << " Platform :" << endl << endl;
+
+	cout << "   1 - Nintendo DS" << endl;
+
+	cout << "   2 - PC" << endl;
+
+	cout << "   3 - PS3" << endl;
+
+	cout << "   4 - PS4" << endl;
+
+	cout << "   5 - Nintendo Switch" << endl;
+
+	cout << "   6 - WII" << endl;
+
+	cout << "   7 - XBOX 360" << endl;
+
+	cout << "   8 - XBOX ONE" << endl;
+
+	cout << "   0 - All the Plataforms" << endl << endl;
+
+	option_number = menuInput(" Option ? ", 0, 8);
+
+	switch (option_number)
+	{
+	case 0: return all_platforms;
+	case 1: return nds;
+	case 2: return pc;
+	case 3: return ps3;
+	case 4: return ps4;
+	case 5: return switche;
+	case 6: return wii;
+	case 7: return xbox1;
+	case 8: return xbox360;
+		// Should never reach here
+	default:
+		throw invalid_argument(" Error in menuPlatform() ");
+	}
+}
+
+//-----------------------------------------------------------------------------------------------------------------------//
+
+gameLibraryGenre menuGenre() {
+	int option_number;
+
+	cout << " Genre :" << endl << endl;
+
+	cout << "   1 - Action" << endl;
+
+	cout << "   2 - Adventure" << endl;
+
+	cout << "   3 - Puzzle" << endl;
+
+	cout << "   4 - Shooter" << endl;
+
+	cout << "   5 - Simulation" << endl;
+
+	cout << "   6 - RPG" << endl;
+
+	cout << "   7 - Platformer" << endl;
+
+	cout << "   8 - Strategy" << endl;
+
+	cout << "   9 - Sports" << endl;
+
+	cout << "   10 - MMO" << endl << endl;
+
+	option_number = menuInput(" Option ? ", 1, 10);
+
+	switch (option_number)
+	{
+	case 1:
+		return action;
+	case 2:
+		return adventure;
+	case 3:
+		return puzzle;
+	case 4:
+		return shooter;
+	case 5:
+		return simulation;
+	case 6:
+		return rpg;
+	case 7:
+		return platformer;
+	case 8:
+		return strategy;
+	case 9:
+		return sports;
+	case 10:
+		return mmo;
+	default:
+		throw invalid_argument(" Error in menuGenre() ");
+	}
+}
+
+//-----------------------------------------------------------------------------------------------------------------------//
+bool menuSubcription() {
+	int option_number;
+
+	cout << " Subscrition type (fixed or dynamic) :" << endl << endl;
+
+	cout << "   1 - Dynamic Subscription" << endl;
+
+	cout << "   2 - Fixed Subscription" << endl << endl;
+
+	option_number = menuInput(" Option ? ", 1, 2);
+
+	switch (option_number)
+	{
+	case 1:
+		return false;
+	case 2:
+		return true;
+	default:
+		throw invalid_argument(" Error in menuSubcription() ");
+	}
+	//cout << endl;
 }
 
 //=======================================================================================================================//
@@ -700,162 +857,6 @@ string creditCardInput(User * user) {
 		}
 		return number;
 	}
-}
-
-//=======================================================================================================================//
-
-/**
-*  +------------------------+
-*  |                        |
-*  |        SUBMENUS        |
-*  |                        |
-*  +------------------------+
-*/
-
-bool menuOnlineHome() {
-	int option_number;
-
-	cout << " Do you want to create one :" << endl << endl;
-
-	cout << "   1 - Home Title" << endl;
-
-	cout << "   2 - Online Title" << endl << endl;
-
-	option_number = menuInput(" Option ? ", 1, 2);
-
-	switch (option_number)
-	{
-	case 1:
-		return false;
-	case 2:
-		return true;
-	default:
-		throw invalid_argument(" Error in menuOnlineHome() ");
-	}
-}
-
-//-----------------------------------------------------------------------------------------------------------------------//
-
-gameLibraryPlatform menuPlatform() {
-	int option_number;
-
-	cout << " Platform :" << endl << endl;
-
-	cout << "   1 - Nintendo DS" << endl;
-
-	cout << "   2 - PC" << endl;
-
-	cout << "   3 - PS3" << endl;
-
-	cout << "   4 - PS4" << endl;
-
-	cout << "   5 - Nintendo Switch" << endl;
-
-	cout << "   6 - WII" << endl;
-
-	cout << "   7 - XBOX 360" << endl;
-
-	cout << "   8 - XBOX ONE" << endl;
-	
-	cout << "   0 - All the Plataforms" << endl << endl;
-
-	option_number = menuInput(" Option ? ", 0, 8);
-	
-	switch (option_number)
-	{
-	case 0: return all_platforms;
-	case 1: return nds;
-	case 2: return pc;
-	case 3: return ps3;
-	case 4: return ps4;
-	case 5: return switche;
-	case 6: return wii;
-	case 7: return xbox1;
-	case 8: return xbox360;
-	// Should never reach here
-	default:
-		throw invalid_argument(" Error in menuPlatform() ");
-	}
-}
-
-//-----------------------------------------------------------------------------------------------------------------------//
-
-gameLibraryGenre menuGenre() {
-	int option_number;
-
-	cout << " Genre :" << endl << endl;
-
-	cout << "   1 - Action" << endl;
-
-	cout << "   2 - Adventure" << endl;
-
-	cout << "   3 - Puzzle" << endl;
-	
-	cout << "   4 - Shooter" << endl;
-
-	cout << "   5 - Simulation" << endl;
-
-	cout << "   6 - RPG" << endl;
-
-	cout << "   7 - Platformer" << endl;
-
-	cout << "   8 - Strategy" << endl;
-
-	cout << "   9 - Sports" << endl;
-
-	cout << "   10 - MMO" << endl << endl;
-
-	option_number = menuInput(" Option ? ", 1, 10);
-
-	switch (option_number)
-	{
-	case 1:
-		return action;
-	case 2:
-		return adventure;
-	case 3:
-		return puzzle;
-	case 4:
-		return shooter;
-	case 5:
-		return simulation;
-	case 6:
-		return rpg;
-	case 7:
-		return platformer;
-	case 8:
-		return strategy;
-	case 9:
-		return sports;
-	case 10:
-		return mmo;
-	default:
-		throw invalid_argument(" Error in menuGenre() ");
-	}
-}
-
-//-----------------------------------------------------------------------------------------------------------------------//
-bool menuSubcription() {
-	int option_number;
-
-	cout << " Subscrition type (fixed or dynamic) :" << endl << endl;
-
-	cout << "   1 - Dynamic Subscription" << endl;
-
-	cout << "   2 - Fixed Subscription" << endl << endl;
-
-	option_number = menuInput(" Option ? ", 1, 2);
-
-	switch (option_number)
-	{
-	case 1:
-		return false;
-	case 2:
-		return true;
-	default:
-		throw invalid_argument(" Error in menuSubcription() ");
-	}
-	//cout << endl;
 }
 
 //=======================================================================================================================//
