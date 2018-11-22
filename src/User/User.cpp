@@ -15,6 +15,9 @@ User::User (std::string name, std::string email, int age, Address address) : use
 }
 
 bool User::addCreditCard(CreditCard cc) {
+	for (auto & creditC : creditCards)
+		if (cc.getNumber() == creditC.getNumber())
+			return false;
 	creditCards.push_back(cc);
 	return true;
 }
@@ -254,6 +257,14 @@ bool User::updateTitle(unsigned int titleID) {
 	addTransaction(updatePrice, Date::getCurrentDate(), homeUpdate);
 
 	return true;
+}
+
+CreditCard * User::getCreditCard(std::string creditCardNumber)
+{
+	for (auto & creditC : creditCards)
+		if (creditCardNumber == creditC.getNumber())
+			return &creditC;
+	return nullptr;
 }
 
 double User::getTotalTransactionsValue() const

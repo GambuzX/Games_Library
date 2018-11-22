@@ -16,6 +16,7 @@ void PrincipalMenu(GameLibrary & gameL);
 void GamesMenu(GameLibrary & gameL);
 void UsersMenu(GameLibrary & gl);
 void GameOperationsMenu(GameLibrary & gl, unsigned titleID);
+void UserOperationsMenu(GameLibrary & gl, string mail);
 
 /**
 *  +------------------------+
@@ -167,8 +168,10 @@ void usersSummary(GameLibrary & gameL) {
 //-----------------------------------------------------------------------------------------------------------------------//
 
 void friendsSummary(const set<User*, ComparePtr<User>> & friends) {
+	unsigned int i = 1;
 	for (auto & fr : friends)
 	{
+		cout << " Friend " << i << ":\n";
 		userShortDisplay(fr);
 	}
 	system("pause");
@@ -189,6 +192,27 @@ void creditCardSummary(const vector<CreditCard> & creditCards) {
 	}
 	system("pause");
 }
+
+//-----------------------------------------------------------------------------------------------------------------------//
+
+void transactionsSummary(User*  user) {
+	vector<Transaction> prov = user->getTransactions();
+	unsigned int i = 1;
+	for (auto & trans : prov)
+	{
+		cout << " Transaction  " << i << ":\n";
+		cout << "  - Date:\t" << trans.getDate() << endl;
+		cout << "  - Value:\t" << trans.getValue() << endl;
+		cout << "  - Type:\t";
+		if (trans.getType() == gamePurchase) cout << "Purchased a Title";
+		else if (trans.getType() == homeUpdate) cout << "Updated a Home Title";
+		else if (trans.getType() == onlineSubscription) cout << "Payed an Online Title";
+		cout << endl << endl;
+		i++;
+	}
+	system("pause");
+}
+
 
 //=======================================================================================================================//
 
@@ -255,16 +279,11 @@ void userInfo(User * user)
 	cout << " Creation Since:\t" << user->getCreationDate() << endl;
 	cout << " Adress:\n" << user->getAddress() << endl;
 	cout << " # Credit Cards:\t" << user->getCreditCards().size() << endl;
-	//cout << " Credit Cards:\n";
-	//creditCardSummary(user->getCreditCards());
 	cout << " # Friends:\t\t\t" << user->getFriendsList().size() << endl;
-	//cout << " Friends:\n";
-	//friendsSummary(user->getFriendsList());
 	cout << " # Titles:\t\t\t" << user->getPurchasedGames()->size() << endl;
 	//cout << " Titles:\n";
 	//titleSummary(*(user->getPurchasedGames()));
 	cout << " # Transactions:\t" << user->getTransactions().size() << endl;
-	//user->getTransactions();
 	cout << " Money Spend:\t\t" << user->getTotalTransactionsValue();
 	cout << " Favorite Platform:" << user->getFavoritePlatform();
 	cout << " Platforms:\n";
@@ -273,6 +292,162 @@ void userInfo(User * user)
 		cout << "  - " << p;
 
 	system("pause");
+}
+
+//=======================================================================================================================//
+
+/**
+*  +------------------------+
+*  |                        |
+*  |     Add Game Help      |
+*  |                        |
+*  +------------------------+
+*/
+
+bool menuOnlineHome() {
+	int option_number;
+
+	cout << " Do you want to create one :" << endl << endl;
+
+	cout << "   1 - Home Title" << endl;
+
+	cout << "   2 - Online Title" << endl << endl;
+
+	option_number = menuInput(" Option ? ", 1, 2);
+
+	switch (option_number)
+	{
+	case 1:
+		return false;
+	case 2:
+		return true;
+	default:
+		throw invalid_argument(" Error in menuOnlineHome() ");
+	}
+}
+
+//-----------------------------------------------------------------------------------------------------------------------//
+
+gameLibraryPlatform menuPlatform() {
+	int option_number;
+
+	cout << " Platform :" << endl << endl;
+
+	cout << "   1 - Nintendo DS" << endl;
+
+	cout << "   2 - PC" << endl;
+
+	cout << "   3 - PS3" << endl;
+
+	cout << "   4 - PS4" << endl;
+
+	cout << "   5 - Nintendo Switch" << endl;
+
+	cout << "   6 - WII" << endl;
+
+	cout << "   7 - XBOX 360" << endl;
+
+	cout << "   8 - XBOX ONE" << endl;
+
+	cout << "   0 - All the Plataforms" << endl << endl;
+
+	option_number = menuInput(" Option ? ", 0, 8);
+
+	switch (option_number)
+	{
+	case 0: return all_platforms;
+	case 1: return nds;
+	case 2: return pc;
+	case 3: return ps3;
+	case 4: return ps4;
+	case 5: return switche;
+	case 6: return wii;
+	case 7: return xbox1;
+	case 8: return xbox360;
+		// Should never reach here
+	default:
+		throw invalid_argument(" Error in menuPlatform() ");
+	}
+}
+
+//-----------------------------------------------------------------------------------------------------------------------//
+
+gameLibraryGenre menuGenre() {
+	int option_number;
+
+	cout << " Genre :" << endl << endl;
+
+	cout << "   1 - Action" << endl;
+
+	cout << "   2 - Adventure" << endl;
+
+	cout << "   3 - Puzzle" << endl;
+
+	cout << "   4 - Shooter" << endl;
+
+	cout << "   5 - Simulation" << endl;
+
+	cout << "   6 - RPG" << endl;
+
+	cout << "   7 - Platformer" << endl;
+
+	cout << "   8 - Strategy" << endl;
+
+	cout << "   9 - Sports" << endl;
+
+	cout << "   10 - MMO" << endl << endl;
+
+	option_number = menuInput(" Option ? ", 1, 10);
+
+	switch (option_number)
+	{
+	case 1:
+		return action;
+	case 2:
+		return adventure;
+	case 3:
+		return puzzle;
+	case 4:
+		return shooter;
+	case 5:
+		return simulation;
+	case 6:
+		return rpg;
+	case 7:
+		return platformer;
+	case 8:
+		return strategy;
+	case 9:
+		return sports;
+	case 10:
+		return mmo;
+	default:
+		throw invalid_argument(" Error in menuGenre() ");
+	}
+}
+
+//-----------------------------------------------------------------------------------------------------------------------//
+bool menuSubcription() {
+	int option_number;
+
+	cout << " Subscrition type (fixed or dynamic) :" << endl << endl;
+
+	cout << "   1 - Dynamic Subscription" << endl;
+
+	cout << "   2 - Fixed Subscription" << endl << endl;
+
+	option_number = menuInput(" Option ? ", 1, 2);
+
+	switch (option_number)
+	{
+	case 1:
+		return false;
+	case 2:
+		return true;
+	default:
+		throw invalid_argument(" Error in menuSubcription() ");
+	}
+	//cout << endl;
 }
 
 //=======================================================================================================================//
@@ -295,7 +470,7 @@ void addGames(GameLibrary & gL)
 	Date releaseDate = dateInput(" Release date: ");
 	gameLibraryPlatform platform = menuPlatform();
 	gameLibraryGenre genre = menuGenre();
-	string company = nameInput(" Publisher name (only letters and space): ");;
+	string company = namesInput(" Publisher name (only letters and space): ");;
 
 	//Title(std::string name, double price, Date releaseDate, ageRange ageR, std::string platform, std::string genre, std::string company);
 	if (!isOnline) {
@@ -351,7 +526,7 @@ void addGames(GameLibrary & gL)
 //-----------------------------------------------------------------------------------------------------------------------//
 
 void addUser(GameLibrary & gl) {
-	string name = nameInput(" Name (only letters and space): ");
+	string name = namesInput(" Name (only letters and space): ");
 	string email = emailInput(" Email: ");
 	while (email.at(0) == '<' && email.size() == 1)
 	{
@@ -360,9 +535,9 @@ void addUser(GameLibrary & gl) {
 	int age = intInput(" Age: ");
 	cout << " Address:\n";
 	unsigned int houseNumber = intInput("   - House Number: ");
-	string streetName = nameInput("   - Street Name: ");
-	string city = nameInput("   - City Name: ");
-	string country = nameInput("   - Country Name: ");
+	string streetName = namesInput("   - Street Name: ");
+	string city = namesInput("   - City Name: ");
+	string country = namesInput("   - Country Name: ");
 	Address address(houseNumber, streetName, city, country);
 	try
 	{
@@ -425,7 +600,7 @@ void addUpdate(Title * game) {
 
 void addCreditCard(User*  user) {
 	string number = nameNumbersInput(" Credit Card Number: ");
-	string holder = nameInput(" Credit Card Holder: ");
+	string holder = namesInput(" Credit Card Holder: ");
 	Date expiryDate = dateInput(" Expiration Date: ");
 	double balance = duobleInput(" Balance: ");
 	CreditCard c(number, holder, expiryDate, balance);
@@ -433,23 +608,41 @@ void addCreditCard(User*  user) {
 		cout << "\n Credit Card Added Successfully";
 		return;
 	}
-	cout << "\n Credit Card Cannot be Added";
+	cout << "\n Already Exists Credit Card with that Number";
 }
 
 //-----------------------------------------------------------------------------------------------------------------------//
 
-void addFunds(User*  user) {
-	string number = nameNumbersInput(" Credit Card Number: ");
-	string holder = nameInput(" Credit Card Holder: ");
-	Date expiryDate = dateInput(" Expiration Date: ");
-	double balance = duobleInput(" Balance: ");
-	CreditCard c(number, holder, expiryDate, balance);
-	if (user->addCreditCard(c)) {
-		cout << "\n Credit Card Added Successfully";
+void addFunds(User*  user, string creditCardNumber) {
+	double funds = duobleInput(" Amout to be added: ");
+	if (funds < 0)
+	{
+		cout << " Must be a positive number\n";
+		funds = duobleInput(" Amout to be added: ");
+	}
+	cout << "\n Funds Successfully Added\n";
+	cout << " New Balance: " << user->getCreditCard(creditCardNumber)->addFunds(funds) << endl;	
+}
+
+//-----------------------------------------------------------------------------------------------------------------------//
+
+void addFriend(GameLibrary & gl, User * user) {
+	string mail = emailInput(" Friend Email: ");
+	User * frd = gl.getUser(mail);
+	if (nullptr == frd) {
+		cout << "\n User with that email does not exist";
 		return;
 	}
-	cout << "\n Credit Card Cannot be Added";
+	else if (user->addFriend(frd))
+	{
+		cout << "\n Friend Successfully Added\n";
+		return;
+	}
+	cout << "\n You already have this user as a friend:\n";
+	userShortDisplay(frd);
+	system("pause");
 }
+
 
 //=======================================================================================================================//
 
@@ -548,6 +741,23 @@ void removeSale(Title*  game) {
 	cout << "\n Sale Removed Successfully";
 }
 
+//-----------------------------------------------------------------------------------------------------------------------//
+
+void removeFriend(GameLibrary & gl, User*  user) {
+	string mail = emailInput(" Friend Email: ");
+	User * frd = gl.getUser(mail);
+	if (nullptr == frd) {
+		cout << "\n User with that email does not exist";
+		return;
+	}
+	else if (user->removeFriend(frd))
+	{
+		cout << "\n Friend Removed Successfully"; 
+		return;
+	}
+	cout << "\n You don't have that user as a friend";	
+}
+
 //=======================================================================================================================//
 
 /**
@@ -618,160 +828,35 @@ string userMailInput(GameLibrary & gL) {
 	}
 }
 
-//=======================================================================================================================//
-
-/**
-*  +------------------------+
-*  |                        |
-*  |        SUBMENUS        |
-*  |                        |
-*  +------------------------+
-*/
-
-bool menuOnlineHome() {
-	int option_number;
-
-	cout << " Do you want to create one :" << endl << endl;
-
-	cout << "   1 - Home Title" << endl;
-
-	cout << "   2 - Online Title" << endl << endl;
-
-	option_number = menuInput(" Option ? ", 1, 2);
-
-	switch (option_number)
-	{
-	case 1:
-		return false;
-	case 2:
-		return true;
-	default:
-		throw invalid_argument(" Error in menuOnlineHome() ");
-	}
-}
-
 //-----------------------------------------------------------------------------------------------------------------------//
 
-gameLibraryPlatform menuPlatform() {
-	int option_number;
-
-	cout << " Platform :" << endl << endl;
-
-	cout << "   1 - Nintendo DS" << endl;
-
-	cout << "   2 - PC" << endl;
-
-	cout << "   3 - PS3" << endl;
-
-	cout << "   4 - PS4" << endl;
-
-	cout << "   5 - Nintendo Switch" << endl;
-
-	cout << "   6 - WII" << endl;
-
-	cout << "   7 - XBOX 360" << endl;
-
-	cout << "   8 - XBOX ONE" << endl;
-	
-	cout << "   0 - All the Plataforms" << endl << endl;
-
-	option_number = menuInput(" Option ? ", 0, 8);
-	
-	switch (option_number)
+string creditCardInput(User * user) {
+	if (user->getCreditCards().size())
 	{
-	case 0: return all_platforms;
-	case 1: return nds;
-	case 2: return pc;
-	case 3: return ps3;
-	case 4: return ps4;
-	case 5: return switche;
-	case 6: return wii;
-	case 7: return xbox1;
-	case 8: return xbox360;
-	// Should never reach here
-	default:
-		throw invalid_argument(" Error in menuPlatform() ");
+		cout << " The user does not have any Credit Card\n Please Consider Adding one first\n";
+		return "<";
 	}
-}
-
-//-----------------------------------------------------------------------------------------------------------------------//
-
-gameLibraryGenre menuGenre() {
-	int option_number;
-
-	cout << " Genre :" << endl << endl;
-
-	cout << "   1 - Action" << endl;
-
-	cout << "   2 - Adventure" << endl;
-
-	cout << "   3 - Puzzle" << endl;
-	
-	cout << "   4 - Shooter" << endl;
-
-	cout << "   5 - Simulation" << endl;
-
-	cout << "   6 - RPG" << endl;
-
-	cout << "   7 - Platformer" << endl;
-
-	cout << "   8 - Strategy" << endl;
-
-	cout << "   9 - Sports" << endl;
-
-	cout << "   10 - MMO" << endl << endl;
-
-	option_number = menuInput(" Option ? ", 1, 10);
-
-	switch (option_number)
-	{
-	case 1:
-		return action;
-	case 2:
-		return adventure;
-	case 3:
-		return puzzle;
-	case 4:
-		return shooter;
-	case 5:
-		return simulation;
-	case 6:
-		return rpg;
-	case 7:
-		return platformer;
-	case 8:
-		return strategy;
-	case 9:
-		return sports;
-	case 10:
-		return mmo;
-	default:
-		throw invalid_argument(" Error in menuGenre() ");
+	else {
+		int nameErrors = 0;
+		string number = nameNumbersInput(" Credit Card Number (< to go back): ");
+		while (!(number.at(0) == '<' && number.size() == 1)) {
+			if (user->getCreditCard(number) == nullptr)
+			{
+				nameErrors++;
+				cout << " Inexistent Credit Card\n";
+				if (nameErrors > 3)
+				{
+					cout << " You've seem to be struggling. Plz consider taking a look at the Credit Cards Summary\n";
+				}
+				number = nameNumbersInput(" Credit Card Number (< to go back): ");
+			}
+			else
+			{
+				return number;
+			}
+		}
+		return number;
 	}
-}
-
-//-----------------------------------------------------------------------------------------------------------------------//
-bool menuSubcription() {
-	int option_number;
-
-	cout << " Subscrition type (fixed or dynamic) :" << endl << endl;
-
-	cout << "   1 - Dynamic Subscription" << endl;
-
-	cout << "   2 - Fixed Subscription" << endl << endl;
-
-	option_number = menuInput(" Option ? ", 1, 2);
-
-	switch (option_number)
-	{
-	case 1:
-		return false;
-	case 2:
-		return true;
-	default:
-		throw invalid_argument(" Error in menuSubcription() ");
-	}
-	//cout << endl;
 }
 
 //=======================================================================================================================//
@@ -946,6 +1031,7 @@ void UpdateMenu(GameLibrary & gl, Title * game) {
 
 void CreditCardMenu(GameLibrary & gl, User * user) {
 	int option_number;
+	string number;
 
 	cout << " Possible Actions:" << endl << endl;
 
@@ -953,6 +1039,7 @@ void CreditCardMenu(GameLibrary & gl, User * user) {
 
 	cout << "   2 - Add Credit Card" << endl;
 
+	// TODO: Remove Credit Card
 	cout << "   3 - Add Funds" << endl;
 
 	cout << "   4 - Transactions" << endl;
@@ -978,14 +1065,63 @@ void CreditCardMenu(GameLibrary & gl, User * user) {
 		break;
 	case 3:
 		header("Add Funds");
-		//removeSale(game);
+		number = creditCardInput(user);
+		if ('<' == number.at(0)) CreditCardMenu(gl, user);
+		else addFunds(user, number);
 		cout << endl << endl;
 		CreditCardMenu(gl, user);
 		break;
 	case 4:
-		header("Current Sale");
-	
+		header("Transactions");
+		transactionsSummary(user);
+		cout << endl << endl;
 		CreditCardMenu(gl, user);
+		break;
+	case 0:
+		UserOperationsMenu(gl, user->getEmail());
+		break;
+	}
+}
+
+//-----------------------------------------------------------------------------------------------------------------------//
+
+void FriendsMenu(GameLibrary & gl, User * user) {
+	int option_number;
+
+	cout << " Possible Actions:" << endl << endl;
+
+	cout << "   1 - Friends Summary" << endl;
+
+	cout << "   2 - Add Friend" << endl;
+
+	cout << "   3 - Remove Friend" << endl;
+	// TODO: Play with friend
+	//cout << "   4 - Play with Friend" << endl;
+
+	cout << "   0 - Go back" << endl << endl;
+
+	option_number = menuInput(" Option ? ", 0, 3);
+
+	switch (option_number)
+	{
+	case 1:
+		header("Friends Summary");
+		friendsSummary(user->getFriendsList());
+		cout << endl << endl;
+		FriendsMenu(gl, user);
+		break;
+
+	case 2:
+		header("Add Friend");
+		addFriend(gl, user);
+		cout << endl << endl;
+		FriendsMenu(gl, user);
+		break;
+	case 3:
+		header("Remove Sale");
+		removeFriend(gl, user);
+		cout << endl << endl;
+		FriendsMenu(gl, user);
 		break;
 	case 0:
 		UserOperationsMenu(gl, user->getEmail());

@@ -104,6 +104,14 @@ public:
 	const std::vector<CreditCard> & getCreditCards() const { return creditCards; }
 
 	/**
+	* @brief Get the Credit Cards with the specified number
+	*
+	* @param creditCardNumber String with the Credit Card Number that we want
+	* @return const CreditCard * Returns the Credit Card with the Desired Number or NULL if it does not exists
+	*/
+	CreditCard * getCreditCard(std::string creditCardNumber);
+
+	/**
 	* @brief Get the purchasedGames Private Member
 	*
 	* @return const set<Title*>* Returns the purchasedGames Private Member
