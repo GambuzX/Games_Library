@@ -104,6 +104,14 @@ public:
 	const std::vector<CreditCard> & getCreditCards() const { return creditCards; }
 
 	/**
+	* @brief Get the Credit Cards with the specified number
+	*
+	* @param creditCardNumber String with the Credit Card Number that we want
+	* @return const CreditCard * Returns the Credit Card with the Desired Number or NULL if it does not exists
+	*/
+	CreditCard * getCreditCard(std::string creditCardNumber);
+
+	/**
 	* @brief Get the purchasedGames Private Member
 	*
 	* @return const set<Title*>* Returns the purchasedGames Private Member
@@ -285,6 +293,13 @@ public:
 	* @param t TransactionType enum value representing the type of transaction
 	*/
 	void addTransaction(double value, Date date, TransactionType t) { transactions.emplace_back(value, date, t); }
+
+	/**
+	* @brief Get a set with all the Platforms the User has titles for
+	*
+	* @return set<string> with a string for each platform the User has Titles for
+	*/
+	std::set<std::string> getPlatforms();
 
 	/**
 	* @brief Overload of the less operator

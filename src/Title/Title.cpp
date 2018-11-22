@@ -11,7 +11,6 @@ Title::Title(string name, double price, Date releaseDate, ageRange ageR, gameLib
 	this->name = name;
 	basePrice = price;
 	this->ageR = ageR;
-	// TODO: Fazer pertencer a tipo de plataforma e género??
 	this->platform = platform;
 	this->genre = genre;
 	this->company = company;

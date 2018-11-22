@@ -14,7 +14,6 @@ using namespace std;
 set<Title*, ComparePtr<Title>> GameLibrary::titles;
 map<Title*, double, ComparePtr<Title>> GameLibrary::titlesRevenue;
 
-class User;
 
 GameLibrary::~GameLibrary()
 {
@@ -28,7 +27,12 @@ GameLibrary::~GameLibrary()
 
 void GameLibrary::addUser(std::string name, std::string email, int age, Address address)
 {
+	for (auto & user : users)
+		if (email == user.first->getEmail())
+			throw DuplicatedUser(email);
+
 	User * newUser = new User(name, email, age, address);
+
 	users.insert(pair<User*, set<Title*, ComparePtr<Title>>>(newUser, set<Title*, ComparePtr<Title>>()));
 
 	// Assign user set of Titles to the User instance
@@ -55,6 +59,7 @@ void GameLibrary::addUser(User * user) {
 }
 
 bool GameLibrary::removeUser(User * user) {
+	if (user == nullptr) return false;
 	map<User*, set<Title*, ComparePtr<Title>>>::iterator it;
 	it = users.find(user);
 	if (it == users.end()) return false;
@@ -62,10 +67,10 @@ bool GameLibrary::removeUser(User * user) {
 	return true;
 }
 
-User * GameLibrary::getUser(unsigned userID)
+User * GameLibrary::getUser(string email)
 {
 	for (auto & user : users)
-		if (user.first->getUserID() == userID)
+		if (user.first->getEmail() == email)
 			return user.first;
 	return nullptr;
 }

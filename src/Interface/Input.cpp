@@ -2,6 +2,7 @@
 #include "ConsoleFunctions.h"
 #include <sstream>
 #include <limits>
+#include <regex>
 
 using namespace std;
 
@@ -53,7 +54,7 @@ string removeSpace(string name) {
 
 }
 
-string nameInput(string question)
+string namesInput(string question)
 {
 	bool validInput = false;
 	bool ErrorFlag = false;
@@ -359,6 +360,7 @@ unsigned int intInput(string question)
 	return option;
 }
 
+// TODO: negative numbers!!
 Date dateInput(string question)
 {
 
@@ -503,4 +505,40 @@ int menuInput(string question, int inferiorLimit, int superiorLimit)
 	}
 
 	return option_number;
+}
+
+bool validEmail(string email) {
+	//const regex pattern("[A-Za-z][A-Za-z0-9]*((\\.|_|-)[A-Za-z][A-Za-z0-9]*)*@([A-Za-z]+{ 1,63 })(\\.(\\w+))+");
+	const regex pattern("[A-Za-z][A-Za-z0-9]*((\\.|_|-)[A-Za-z][A-Za-z0-9]*)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,62}[a-zA-Z0-9])?\\.){1,8}[a-zA-Z]{2,63}");
+	return regex_match(email, pattern);
+}
+
+// < to go back
+string emailInput(string question)
+{
+	bool validInput = false;
+	string email;
+
+	cout << question;
+
+	HANDLE hCon = GetStdHandle(STD_OUTPUT_HANDLE);
+	COORD currentPos = GetConsoleCursorPosition(hCon);
+
+	while (!validInput)
+	{
+		cin.clear();
+		getlineZ(cin, email);
+
+		validInput = validEmail(email);
+		if ('<' == email.at(0) && email.size() == 1)
+		{
+			validInput = true;
+		}
+		if (!validInput)
+		{
+			clrscr(currentPos);
+		}
+	}
+
+	return email;
 }

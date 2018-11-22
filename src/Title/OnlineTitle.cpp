@@ -84,30 +84,53 @@ double OnlineTitle::getStats(unsigned int userID) const
 		}
 	throw InexistentUser(userID);	
 }
-/*
-const std::map<User*, std::vector<Session>, ComparePtr<User>>& OnlineTitle::getLastNSessions(unsigned int n) const
+
+const vector<Session> * OnlineTitle::getAllUserSessions(User * usr) const
 {
-	if (titleStats.size() == 0)
-	{
-		// TODO: create exception
-		throw;
-	}
-	pair<User*, Session> lastSess;
-	vector<Session> res;
-	for (auto pair : titleStats){
-		if (pair.second.size() != 0 && lastSess.second.getDate() == Date())
-		{
-			lastSess.second = pair.second.at(pair.second.size() - 1);
-			lastSess.first = pair.first;
-		}
-		else if (!(lastSess.second.getDate() == Date()) && pair.second.at(pair.second.size() - 1).getDate() < lastSess.second.getDate())
-		{
-			lastSess.second = pair.second.at(pair.second.size() - 1);
-			lastSess.first = pair.first;
-		}
-	}
+	map<User*, vector<Session>, ComparePtr<User>>::const_iterator it;
+	it = titleStats.find(const_cast<User*>(usr));
+	if (it == titleStats.end())
+		throw InexistentUser(usr->getUserID());
+	return &(it->second);
 }
-*/
+
+const map<User*, vector<Session>, ComparePtr<User>> OnlineTitle::getAllUsersLastNSessions(unsigned int n) const
+{
+	map<User*, vector<Session>, ComparePtr<User>> userMap;
+	for (const auto & usr : titleStats)
+		userMap.insert(pair<User*, vector<Session>>(usr.first, getLastNUserSessions(usr.first, n)));
+	return userMap;
+}
+
+const vector<Session> OnlineTitle::getLastNUserSessions(User * usr, int n) const
+{
+	map<User*, vector<Session>, ComparePtr<User>>::const_iterator it;
+	it = titleStats.find(const_cast<User*>(usr));
+	if (it == titleStats.end())
+		throw InexistentUser(usr->getUserID());
+
+	vector<Session> sessions;
+	vector<Session>::const_reverse_iterator rit;
+	for (rit = it->second.rbegin(); rit != it->second.rend() && n > 0; rit++)
+		sessions.push_back(*rit);
+	return sessions;
+}
+
+const map<User*, const vector<Session>*, ComparePtr<User>> OnlineTitle::getTop3PlayersSessions() const
+{
+	map<double, User*> userTimes;
+	for (const auto & usr : titleStats)
+		userTimes.insert(pair<double, User*>(getStats(usr.first), usr.first));
+
+	map<User*, const vector<Session>*, ComparePtr<User>> returnMap;
+	map<double, User*>::reverse_iterator rit;
+	int inserted = 0;
+	for (rit = userTimes.rbegin(); rit != userTimes.rend() && inserted < 3; rit++)
+		returnMap.insert(pair<User*, const vector<Session>*>(rit->second, getAllUserSessions(rit->second)));
+
+	return returnMap;
+}
+
 void OnlineTitle::updateTitle(Update * newUpdate)
 {
 	throw NotHomeTitle(getTitleID());
@@ -131,12 +154,4 @@ void OnlineTitle::displayTitleInfo(std::ostream &os)
 	    for (Session &s : it.second)
 	        os << it.first->getUserID() << " " << s;
 	}
-
 }
-
-/*
-bool OnlineTitle::operator<(const Title & t2) const
-{
-	return getTitleID() < t2.getTitleID();
-}
-*/

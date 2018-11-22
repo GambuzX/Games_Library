@@ -18,7 +18,7 @@
 * @see		removeSpace
 * @see		getlineZ		(@		ConsoleFunctions)
 */
-std::string nameInput(std::string question);
+std::string namesInput(std::string question);
 
 /**
 * Robustness of the name with Numbers Input:
@@ -47,7 +47,7 @@ std::string nameNumbersInput(std::string question);
 * @see		afterNumber
 * @see		getlineZ		(@		ConsoleFunctions)
 */
-double doubleInput(std::string question);
+double duobleInput(std::string question);
 
 /**
 * Robustness of the int Input:
@@ -82,20 +82,6 @@ ageRange ageRangeInput(std::string question);
 */
 int menuInput(std::string question, int inferiorLimit, int superiorLimit);
 
-/**
- * @brief Asks the user to input a valid address
- *
- * @param question
- * @return Address object
- */
-Address addressInput(std::string question);
-
-/**
- * @brief Asks the user to input anything.
- *  This function accepts all characters.
- * @param question
- * @return
- */
-std::string specialInput(std::string question);
+std::string emailInput(std::string question);
 
 #endif
