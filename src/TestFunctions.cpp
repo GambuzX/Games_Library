@@ -14,6 +14,7 @@ using namespace std;
 void InicialMenu();
 void PrincipalMenu(GameLibrary & gameL);
 void GamesMenu(GameLibrary & gameL);
+void UsersMenu(GameLibrary & gl);
 void GameOperationsMenu(GameLibrary & gl, unsigned titleID);
 
 /**
@@ -420,7 +421,7 @@ void removeGame(GameLibrary & gL) {
 
 void removeUser(GameLibrary & gL) {
 	User * us;
-	if (gL.getUsers.empty())
+	if (gL.getUsers().empty())
 	{
 		cout << " There are no games to remove\n";
 		return;
