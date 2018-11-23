@@ -277,7 +277,7 @@ double doubleInput(string question)
 			getlineZ(cin, prov);
 			iss.str(prov);
 		}
-		if (!afterNumber(iss))
+		if (!afterNumber(iss) && option >= 0)
 		{
 			valid = true;
 		}
@@ -296,7 +296,7 @@ double doubleInput(string question)
 
 unsigned int intInput(string question)
 {
-	unsigned int option;
+	int option;
 	bool valid = false;
 
 	string prov;
@@ -327,7 +327,7 @@ unsigned int intInput(string question)
 			getlineZ(cin, prov);
 			iss.str(prov);
 		}
-		if (!afterNumber(iss))
+		if (!afterNumber(iss) && option >= 0)
 		{
 			valid = true;
 		}
@@ -341,16 +341,15 @@ unsigned int intInput(string question)
 		}
 	}
 
-	return option;
+	return static_cast<unsigned int>(option);
 }
 
-// TODO: negative numbers!!
 Date dateInput(string question)
 {
 
 	Date d;
 	bool valid = false;
-	unsigned day, month, year;
+	int day, month, year;
 
 	string prov;
 
