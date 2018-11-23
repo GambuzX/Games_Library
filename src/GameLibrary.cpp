@@ -488,7 +488,7 @@ bool GameLibrary::updateTitle(Title* title, Update * update) {
 
 void GameLibrary::buildGlobalPopularityRanking(ostream & os, gameLibraryPlatform platform, gameLibraryGenre genre, ageRange ageR) {
 	
-	map<int, const Title*> rankedList;
+	multimap<int, const Title*> rankedList;
 	
 	// Search for all the titles that match and organize them by popularity
 	for (const Title * title : titles)
@@ -515,7 +515,7 @@ void GameLibrary::buildGlobalPopularityRanking(ostream & os, gameLibraryPlatform
 
 void GameLibrary::buildGlobalRevenueRanking(ostream & os, gameLibraryPlatform platform, gameLibraryGenre genre, ageRange ageR)
 {
-	map<double, const Title*> rankedList;
+	multimap<double, const Title*> rankedList;
 
 	// Search for all the titles that match and organize them by revenue
 	for (Title * title : titles)
@@ -542,7 +542,7 @@ void GameLibrary::buildGlobalRevenueRanking(ostream & os, gameLibraryPlatform pl
 
 void GameLibrary::buildUserMostPlayedTitlesRanking(std::ostream & os, User * usr, gameLibraryPlatform platform, gameLibraryGenre genre)
 {
-	map<double, const Title*> rankedList;
+	multimap<double, const Title*> rankedList;
 
 	// Search for all the user titles that match and organize them by time played
 	for (Title * title : *(usr->getPurchasedGames()))
