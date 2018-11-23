@@ -160,7 +160,7 @@ void promotionSummary(Title*  game) {
 	unsigned int i = 1;
 	for (auto & sale : prov)
 	{
-		promotionDisplay(" Sale " + i + ':', sale);
+		promotionDisplay(" Sale " + to_string(i) + ':', sale);
 		i++;
 	}
 	system("pause");
@@ -173,7 +173,7 @@ void updateSummary(Title*  game) {
 	unsigned int i = 1;
 	for (auto & update : prov)
 	{
-		updateDisplay(" Update " + i + ':', update);
+		updateDisplay(" Update " + to_string(i) + ':', update);
 		i++;
 	}
 	system("pause");
@@ -262,7 +262,7 @@ void LastNSessionsSummary(GameLibrary & gl, User * user, unsigned titleID) {
 	string title;
 	for (auto & sess: prov)
 	{
-		title = " Session " + i + ':';
+		title = " Session " + to_string(i) + ':';
 		sessionDisplay(title, sess);
 		i++;
 	}
@@ -277,7 +277,7 @@ void UserSessionSummary(const map<User*, const vector<Session>*, ComparePtr<User
 		cout << " User " << user.first->getUserID() << " :\n\n";
 		for (size_t i = 0; i < user.second->size(); i++)
 		{
-			title = " Session " + i + ':';
+			title = " Session " + to_string(i) + ':';
 			sessionDisplay(title, user.second->at(i));
 		}
 		cout << endl;
@@ -298,7 +298,7 @@ void UserSessionSummary2(const map<User*, vector<Session>, ComparePtr<User>> * p
 		cout << " User " << user.first->getUserID() << " :\n\n";
 		for (size_t i = 0; i < user.second.size(); i++)
 		{
-			title = " Session " + i + ':';
+			title = " Session " + to_string(i) + ':';
 			sessionDisplay(title, user.second.at(i));
 		}
 		cout << endl;
