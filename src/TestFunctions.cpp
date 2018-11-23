@@ -899,6 +899,7 @@ void globalPopRanking(GameLibrary & gl) {
 	system("pause");
 }
 
+//-----------------------------------------------------------------------------------------------------------------------//
 
 void globalRevRanking(GameLibrary & gl) {
 	gameLibraryPlatform platform = menuPlatform();
