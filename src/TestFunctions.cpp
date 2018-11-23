@@ -248,9 +248,15 @@ void otherStatsSummary(GameLibrary & gl, User*  user) {
 //-----------------------------------------------------------------------------------------------------------------------//
 
 void averageStatsSummary(GameLibrary & gl) {
-	cout << " Average User Library Cost:\t" << gl.averageUserLibraryCost() << endl;
-	cout << " Average User Library Size:\t" << gl.averageUserTitles() << endl << endl;
-
+	if (gl.getUsers().size() == 0)
+	{
+		cout << " Average is impossible since there is no user in your Game Library\n\n";
+	}
+	else
+	{
+		cout << " Average User Library Cost:\t" << gl.averageUserLibraryCost() << endl;
+		cout << " Average User Library Size:\t" << gl.averageUserTitles() << endl << endl;
+	}
 }
 
 //-----------------------------------------------------------------------------------------------------------------------//
@@ -1735,20 +1741,20 @@ void ListsRankingsMenu(GameLibrary & gl) {
 	case 1:
 		header("Average Stats");
 		averageStatsSummary(gl);
-		UsersMenu(gl);
+		ListsRankingsMenu(gl);
 		break;
 
 	case 2:
 		header("Popularity Ranking");
 		globalPopRanking(gl);
 		cout << endl << endl;
-		UsersMenu(gl);
+		ListsRankingsMenu(gl);
 		break;
 	case 3:
 		header("Revenue Ranking");
 		globalRevRanking(gl);
 		cout << endl << endl;
-		UsersMenu(gl);
+		ListsRankingsMenu(gl);
 		break;
 	case 0:
 		header("CREATE GAME LIBRARY");
@@ -1785,6 +1791,7 @@ void PrincipalMenu(GameLibrary & gameL)
 		UsersMenu(gameL);
 		break;
 	case 3:
+		ListsRankingsMenu(gameL);
 		break;
 	case 0:
 		system("cls");
