@@ -4,12 +4,15 @@
 #include <sstream>
 #include <string>
 
-/** @defgroup Date Date Class
- * @{
- *
- * Date Class used by most of other classes to keep the date and other related operations
- * 
- */
+/** 
+* @ingroup TitleUtility
+* @ingroup UserUtility
+* @{
+*/
+
+/**
+* @brief Class representing a Date in the format DD/MM/YYYY
+*/
 class Date {
 
 private:

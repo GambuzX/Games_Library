@@ -3,15 +3,13 @@
 
 #include "Subscription.h"
 
-/** @defgroup Subscription Fixed Subscription Class
- * @{
- *
- * Fixed Subscription Class is a derived class of the Subscription Class
- * Charges Users Per Session that they play an online title
- * 
- * @see Subscription
- * @see OnlineTitle
- */
+/** @addtogroup TitleUtility
+* @{
+*/
+
+/**
+* @brief Class representing a FixedSubscription associated with an OnlineTitle, derived from Subscription
+*/
 class FixedSubscription : public Subscription {
 
 public:

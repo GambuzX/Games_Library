@@ -5,14 +5,21 @@
 #include "Date.h"
 #include "Update.h"
 
-/** @defgroup OldUpdate OldUpdate Class
+/** @defgroup Exceptions Exceptions
+ * @ingroup GameLibrary
  * @{
  *
- * OldUpdate Class represents an Exception that is thrown when you try to
- * update a Home Title to a previous version
+ * @brief Group holding information about all the exceptions that may be thrown by the Game Library
  *
- * @see Update
- * @see HomeTitle
+ * Exceptions thrown by the classes inside of the Games Library
+ *
+ * @see GameLibrary
+ * @see User
+ * @see Title
+ */
+
+ /**
+ * @brief Exception that is thrown when you try to update a Home Title to a previous version
  */
 class OldUpdate
 {
@@ -62,21 +69,14 @@ public:
 		if (currentVersion == Update())
 			return "Tried to add old Update: " + oss.str();
 		std::string msg = "Tried to add old Update: " + oss.str() + " while Current Version is: ";
-		oss.clear();
+		oss.str("");
 		oss << currentVersion.getVersion();
 		return msg + oss.str();
 	};
 };
 
-/** @} */
-
-/** @defgroup NotHomeTitle NotHomeTitle Class
- * @{
- *
- * NotHomeTitle Class represents an Exception that is thrown when you try to
- * perform Home Title operations on a Title of a different type
- *
- * @see HomeTitle
+ /**
+ * @brief Exception that is thrown when a Home Title method is called on an Online Title
  */
 class NotHomeTitle
 {
@@ -98,16 +98,9 @@ public:
 	unsigned getTitleID() { return titleID; }
 };
 
-/** @} */
-
-/** @defgroup NotOnlineTitle NotOnlineTitle Class
- * @{
- *
- * NotOnlineTitle Class represents an Exception that is thrown when you try to
- * perform Online Title operations on a Title of a different type
- *
- * @see HomeTitle
- */
+/**
+* @brief Exception that is thrown when an Online Title method is called on a Home Title
+*/
 class NotOnlineTitle
 {
 private:
@@ -128,16 +121,9 @@ public:
 	unsigned getTitleID() { return titleID; }
 };
 
-/** @} */
 
-/** @defgroup InexistentSale InexistentSale Class
- * @{
- *
- * InexistentSale Class represents an Exception that is thrown when you check
- * for a Sale in a Date that has none
- *
- * @see Sale
- * @see Title
+ /**
+ * @brief Exception that is thrown when you check for a Sale in a Date that has none
  */
 class InexistentSale
 {
@@ -180,16 +166,8 @@ public:
 	Date getDate() const { return date; };
 };
 
-/** @} */
-
-/** @defgroup OverlappingSales OverlappingSales Class
- * @{
- *
- * OverlappingSales Class represents an Exception that is thrown when there
- * are Sales for the same Title overlapping
- *
- * @see Sale
- * @see Title
+ /**
+ * @brief Exception that is thrown when there are Sales for the same Title overlapping
  */
 class OverlappingSales
 {
@@ -211,16 +189,9 @@ public:
 	std::string getMessage() const { return message; };
 };
 
-/** @} */
 
-/** @defgroup ExpiredSale ExpiredSale Class
- * @{
- *
- * ExpiredSale Class represents an Exception that is thrown when a Sale
- * has already expired
- *
- * @see Sale
- * @see Title
+ /**
+ * @brief Exception that is thrown when a Sale has already expired
  */
 class ExpiredSale
 {
@@ -265,16 +236,8 @@ public:
 	Date getEndSalesDate() const { return endSalesDate; };
 };
 
-/** @} */
-
-/** @defgroup SaleStarted SaleStarted Class
- * @{
- *
- * SaleStarted Class represents an Exception that is thrown when a Sale
- * has already started and you try to remove it
- *
- * @see Sale
- * @see Title
+ /**
+ * @brief Exception that is thrown when a Sale has already started and you try to remove it
  */
 class SaleStarted
 {
@@ -319,14 +282,8 @@ public:
 	Date getBeginSalesDate() const { return beginSalesDate; };
 };
 
-/** @} */
-
-/** @defgroup InvalidMonth InvalidMonth Class
- * @{
- *
- * InvalidMonth Class represents an Exception that is thrown when a month is invalid
- *
- * @see Date
+ /**
+ * @brief Exception that is thrown when a month is invalid
  */
 class InvalidMonth
 {
@@ -355,15 +312,9 @@ public:
 	unsigned getMonth() const { return month; };
 };
 
-/** @} */
-
-/** @defgroup InvalidDay InvalidDay Class
- * @{
- *
- * InvalidDay Class represents an Exception that is thrown when a day is invalid
- *
- * @see Date
- */
+/**
+* @brief Exception that is thrown when a day is invalid
+*/
 class InvalidDay
 {
 private:
@@ -391,15 +342,9 @@ public:
 	unsigned getDay() const { return day; };
 };
 
-/** @} */
-
-/** @defgroup InvalidYear InvalidYear Class
- * @{
- *
- * InvalidYear Class represents an Exception that is thrown when a year is invalid
- *
- * @see Date
- */
+/**
+* @brief Exception that is thrown when a year is invalid
+*/
 class InvalidYear
 {
 private:
@@ -427,16 +372,9 @@ public:
 	unsigned getYear() const { return year; };
 };
 
-/** @} */
-
-/** @defgroup InvalidDateFormat InvalidDateFormat Class
- * @{
- *
- * InvalidDateFormat Class represents an Exception that is thrown when a Date
- * is specified in an invalid format
- *
- * @see Date
- */
+/**
+* @brief Exception that is thrown when a Date is specified in an invalid format
+*/
 class InvalidDateFormat
 {
 private:
@@ -464,15 +402,8 @@ public:
 	std::string getInvalidDate() const { return date; };
 };
 
-/** @} */
-
-/** @defgroup NegativeFunds NegativeFunds Class
- * @{
- *
- * NegativeFunds Class represents an Exception that is thrown when a Credit Card
- * has negative funds
- *
- * @see CreditCard
+ /**
+ * @brief Exception that is thrown when a Credit Card has negative funds
  */
 class NegativeFunds
 {
@@ -494,16 +425,8 @@ public:
 	double getFunds() const { return funds; }
 };
 
-/** @} */
-
-/** @defgroup NotEnoughFunds NotEnoughFunds Class
- * @{
- *
- * NotEnoughFunds Class represents an Exception that is thrown when a User tries to
- * buy something he has no funds for
- *
- * @see CreditCard
- * @see User
+ /**
+ * @brief Exception that is thrown when a User tries to buy something he has no funds for
  */
 class NotEnoughFunds
 {
@@ -525,18 +448,8 @@ public:
 	double getFunds() const { return funds; }
 };
 
-/** @} */
-
-/** @defgroup InexistentUser InexistentUser Class
- * @{
- *
- * InexistentUser Class represents an Exception that is thrown when you try
- * to access a User's information in a Title that he does not own
- *
- * @see User
- * @see Title
- * @see OnlineTitle
- * @see HomeTitle
+ /**
+ * @brief Exception that is thrown when you try to access a User's information in a Title that he does not own
  */
 class InexistentUser
 {
@@ -558,18 +471,8 @@ public:
 	unsigned getUserID() { return userID; }
 };
 
-/** @} */
-
-/** @defgroup DuplicatedUser DuplicatedUser Class
- * @{
- *
- * DuplicatedUser Class represents an Exception that is thrown when you try
- * to add a repeated User to a Title's User Info map
- *
- * @see User
- * @see Title
- * @see OnlineTitle
- * @see HomeTitle
+ /**
+ * @brief Exception that is thrown when you try to add a repeated User to a Title's User Info map
  */
 class DuplicatedUser
 {
@@ -606,17 +509,8 @@ public:
 	unsigned getUserID() { return userID; }
 };
 
-/** @} */
-
-/** @defgroup TitleUpToDate TitleUpToDate Class
- * @{
- *
- * TitleUpToDate Class represents an Exception that is thrown when you try
- * to update a User version that is already updated
- *
- * @see User
- * @see Update
- * @see HomeTitle
+ /**
+ * @brief Exception that is thrown when you try to update a User version that is already updated
  */
 class TitleUpToDate
 {
@@ -639,5 +533,6 @@ public:
 };
 
 /** @} */
+
 
 #endif

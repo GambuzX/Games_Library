@@ -7,16 +7,12 @@
 #include "..\Utilities\CompareObj.h"
 #include "Title.h"
 
-/** @defgroup Title Online Title
+/** @addtogroup Title
  * @{
- *
- * Online Title Class is a derived class of the Title Class
- * Allows Title to keep track of the User Sessions to calculate the Stats and Saves the type of Subscription
- * 
- * @see Title
- * @see Subscription
- * @see Session
- * @see User
+ */
+
+ /**
+ * @brief Class representing an Online Title in the Game Library, derived from Title
  */
 class OnlineTitle : public Title {
 
