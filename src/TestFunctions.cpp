@@ -294,9 +294,9 @@ void UserSessionSummary(const map<User*, const vector<Session>*, ComparePtr<User
 
 //-----------------------------------------------------------------------------------------------------------------------//
 
-void UserSessionSummary2(const map<User*, vector<Session>, ComparePtr<User>> * prov) {
+void UserSessionSummary2(const map<User*, vector<Session>, ComparePtr<User>> & prov) {
 	string title;
-	for (const auto & user : *prov)
+	for (const auto & user : prov)
 	{
 		cout << " User " << user.first->getUserID() << " :\n\n";
 		for (size_t i = 0; i < user.second.size(); i++)
@@ -350,7 +350,7 @@ void titleInfo(Title * game, bool isOnline)
 	cout << " Platform:\t" << game->getPlatformName() << endl;
 	cout << " Genre:\t\t" << game->getGenreName() << endl;
 	cout << " Company:\t" << game->getCompany() << endl;
-	cout << " Users Numbe:\t" << game->getNumberUsers() << endl;
+	cout << " Users Number:\t" << game->getNumberUsers() << endl;
 	if (isOnline) cout << " Hours Played:\t" << game->getStats() << endl;
 	cout << " Last Schedule Sale:\n";
 	try
@@ -1181,7 +1181,7 @@ void SessionsMenu(GameLibrary & gl, Title * game) {
 	case 1:
 		header("Last N Sessions of Each User");
 		n = intInput(" Maximum Number of Sessions for Each User: ");
-		UserSessionSummary2(&(game->getAllUsersLastNSessions(n)));
+		UserSessionSummary2(game->getAllUsersLastNSessions(n));
 		system("pause");
 		cout << endl << endl;
 		SessionsMenu(gl, game);
@@ -1196,7 +1196,8 @@ void SessionsMenu(GameLibrary & gl, Title * game) {
 		break;
 	case 3:
 		header("All Sessions by User ID");
-		UserSessionSummary2(game->getTitleSessions());
+
+		UserSessionSummary2(*(game->getTitleSessions()));
 		system("pause");
 		cout << endl << endl;
 		SessionsMenu(gl, game);
@@ -1828,14 +1829,17 @@ void InicialMenu(GameLibrary & gl)
 	case 2:
 		header("LOAD GAME LIBRARY");
 		//IR para função que vai buscar o nome da pasta/ficheiro
-		//gl.loadGameLibraryFromFile();
+		cout << " Loading..." << endl;
+		gl.loadGameLibrary();
+		cout << " Done" << endl;
 		PrincipalMenu(gl);
 		break;
 	case 3:
 	    header("SAVE GAME LIBRARY");
 	    cout << " Saving..." << endl;
 	    gl.saveGameLibrary();
-	    cout << " Done" << endl;
+	    cout << " Done" << endl << endl;
+	    InicialMenu(gl);
 	    break;
 	case 0:
 		system("cls");
@@ -1850,7 +1854,7 @@ int main() {
 	system("title   GAME LIBRARY");
 	mainHeader("Welcome to the Game Library");
 	GameLibrary gl = GameLibrary();
-	
+
 	InicialMenu(gl);
 
 	return 0;

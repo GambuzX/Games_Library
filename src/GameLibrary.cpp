@@ -133,7 +133,7 @@ void GameLibrary::saveGameLibrary()
 	    user_file_name.clear();
 
 	    // write user information including games by id
-		user_file << user.first;
+		user_file << *(user.first);
 		user_file << "Games:" << endl;
 
 		for (auto title : user.second) {
@@ -178,6 +178,7 @@ void GameLibrary::loadGameLibrary()
 		subs_value,
 		accept,
 		session,
+		update,
 		sale_history,
 	};
 
@@ -202,9 +203,11 @@ void GameLibrary::loadGameLibrary()
 	ostringstream user_file_name;
 	ostringstream title_file_name;
 
+	vector<pair<unsigned int, vector<unsigned int>>> allfriends;
+
 	for (size_t i = 1; i <= nusers; ++i) {
         string name, email, road_name, city, country, number, holder, expiry, transaction_date;
-        int age, house_number, ncredit_cards, ntransactions, transaction_type;
+        int age, house_number, ncredit_cards, ntransactions, transaction_type, nfriends;
         double balance, transaction_value;
 
 	    user_file_name << "user_" << i << ".txt";
@@ -215,6 +218,7 @@ void GameLibrary::loadGameLibrary()
 	    Address addr;
 	    vector<CreditCard> cc;
 	    vector<Transaction> trans;
+	    vector<unsigned int> friend_ids;
 
 	    while(getline(user_file, str)) {
 
@@ -243,6 +247,9 @@ void GameLibrary::loadGameLibrary()
 	            ncredit_cards = stoi(str);
 	            break;
 	        case credit_cards:
+	            if (ncredit_cards == 0) {
+	                user_current_state = transactions;
+	            }
 	            number = split(str, 1)[0];
 	            holder = split(str, 1)[1];
 
@@ -252,11 +259,9 @@ void GameLibrary::loadGameLibrary()
 
 	            cc.emplace_back(name, holder, expiry, balance);
 	            --ncredit_cards;
-	            if (ncredit_cards == 0) {
-	                user_current_state = transactions;
-	            }
 	            break;
 	        case transactions:
+                if (ntransactions == 0) { user_current_state = friends; getline(user_file, str); nfriends = stoi(str);}
 	            if (str == "Transactions:") { getline(user_file, str); ntransactions = stoi(str);}
 
 	            getline(user_file, str);
@@ -266,13 +271,15 @@ void GameLibrary::loadGameLibrary()
 
                 trans.emplace_back(transaction_value, transaction_date, (TransactionType) transaction_type);
                 --ntransactions;
-                if (ntransactions == 0) { user_current_state = friends;}
                 break;
 	        case friends:
+	        	friend_ids.push_back(stoi(str));
+	        	--nfriends;
 	            break;
 	        default: break;
 	        }
 	    }
+	    user_current_state = _id_name;
 	    User *user = new User(name, email, age, Address(house_number, road_name, city, country));
 	    addUser(user);
 
@@ -283,10 +290,32 @@ void GameLibrary::loadGameLibrary()
 	    for (Transaction & transaction : trans) {
 	        user->addTransaction(transaction.getValue(), transaction.getDate(), transaction.getType());
 	    }
+
+	    allfriends.push_back(make_pair(i, friend_ids));
+
+	    user_file.close();
+	}
+
+	for (pair<unsigned int, vector<unsigned int>> &friends_list : allfriends) {
+			User* user = find_if(users.begin(), users.end(),
+				[friends_list](const std::pair<User* const, std::set<Title*, ComparePtr<Title>>> &user) {
+					return user.first->getUserID() == friends_list.first;
+			})->first;
+
+			for (unsigned int &f : friends_list.second) {
+				User* fr = find_if(users.begin(), users.end(),
+					[f](const std::pair<User* const, std::set<Title*, ComparePtr<Title>>> &user) {
+					return user.first->getUserID() == f;
+				})->first;
+				user->addFriend(fr);
+			}
+
 	}
 
 	for (size_t i = 1; i <= ntitles; ++i) {
-		string title_name, _price, platform, genre, min_age, max_age, _release_date, _subs_value, company, title_type, subs_type, n_title_stats;
+		string title_name, _price, platform, genre, min_age, max_age, _release_date, _subs_value, company, title_type, subs_type, n_title_stats, update_date, description;
+		int n_updates;
+		double update_price, update_version;
 
 		title_file_name << "title_" << i << ".txt";
 		ifstream title_file("titles/" + title_file_name.str());
@@ -295,6 +324,7 @@ void GameLibrary::loadGameLibrary()
 
 		vector<string> sessions;
 		vector<Sale> sales_history;
+		vector<Update> update_vector;
 
 		while(getline(title_file, str)) {
 			vector<string> split_line = split(str, 1);
@@ -334,6 +364,10 @@ void GameLibrary::loadGameLibrary()
 			        title_current_state = session;
 			    } else if (str == "Sales:") {
 			        title_current_state = sale_history;
+			    } else if (str == "Updates:") {
+			        title_current_state = update;
+			        getline(title_file, str);
+			        n_updates = stoi(str);
 			    }
 				break;
 			case subs_value:
@@ -342,21 +376,42 @@ void GameLibrary::loadGameLibrary()
 			    title_current_state = accept;
 			    break;
 			case session: {
-			    sessions.push_back(str);
 			    int title_stats = stoi(n_title_stats);
+			    if (title_stats == 0){
+    			    title_current_state = accept;
+    			    break;
+			    }
+			    sessions.push_back(str);
 
 			    --title_stats;
-			    if (title_stats == 0) title_current_state = accept;
 			    break;
 			}
 			case sale_history: {
 			    vector<string> _split_line = split(str);
-			    sales_history.push_back(Sale(Date(_split_line[0]), Date(_split_line[1]), stod(_split_line[2])));
+			    sales_history.emplace_back(Date(_split_line[0]), Date(_split_line[1]), stod(_split_line[2]));
+			}
+			case update: {
+			    if (n_updates == 0) {
+			        title_current_state = accept;
+			        break;
+			    }
+			    update_date = split_line[0];
+			    description = split_line[1];
+
+			    getline(title_file, str);
+			    split_line = split(str, 1);
+			    update_version = stod(split_line[0]);
+			    update_price = stod(split_line[1]);
+
+			    update_vector.emplace_back(update_date, description, update_version, update_price);
+			    --n_updates;
+			    break;
 			}
 
 			default:break;
 			}
 		}
+		title_current_state = id_name;
 		//Title(std::string name, double price, Date releaseDate, ageRange ageR, gameLibraryPlatform platform, gameLibraryGenre genre, std::string company);
         struct ageRange ar{stoi(min_age), stoi(max_age)};
         auto glp = (gameLibraryPlatform) stoi(platform);
@@ -367,6 +422,8 @@ void GameLibrary::loadGameLibrary()
 		    addTitle(title);
 		    for (Sale &sale : sales_history)
 		        title->addPromotion(sale);
+		    for (Update up_date : update_vector)
+		        this->updateTitle(title, &up_date);
 		}
 		else if (title_type == "0") {
             if (subs_type == "0") {
@@ -393,6 +450,7 @@ void GameLibrary::loadGameLibrary()
                 addTitle(new OnlineTitle(title_name, stod(_price), Date(_release_date), ar, glp, glg, company, new FixedSubscription(stod(_subs_value))));
             }
 		}
+		title_file.close();
 	}
 }
 

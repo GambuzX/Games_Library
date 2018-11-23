@@ -111,6 +111,12 @@ void HomeTitle::displayTitleInfo(std::ostream &os)
 {
 	Title::displayTitleInfo(os);
 	os << 1 << endl;
+	os << "Updates:" << endl;
+	os << titleUpdateHistory.size() << endl;
+
+	for (auto &it : titleUpdateHistory) {
+		os << it;
+	}
 }
 
 /*

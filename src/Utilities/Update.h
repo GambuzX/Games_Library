@@ -92,6 +92,8 @@ public:
 	 * @return false If the Update Version number of the Current Update is greater or equal to the parameter one
 	 */
 	bool operator<(const Update & update) const;
+
+	friend std::ostream& operator<<(std::ostream &os, const Update &update);
 };
 
 /** @} */
