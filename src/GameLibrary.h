@@ -122,7 +122,7 @@ public:
 	*
 	* @param file File to load the data from
 	*/
-	void loadGameLibraryFromFile(std::fstream& file);
+	void loadGameLibrary();
 
 	/**
 	* @brief Updates a Title

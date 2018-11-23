@@ -341,7 +341,7 @@ public:
 	 * @throw ExpiredSale() If the promotion we are trying to add has already expired
 	 * @throw OverlappingSales() If the promotion overlaps one already planned
 	 */
-	void addPromotion(Sale & promotion);
+	void addPromotion(Sale promotion);
 
 	/**
 	 * @brief Remove future Promotion off of the vector of Sales

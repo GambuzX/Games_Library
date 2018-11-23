@@ -157,8 +157,8 @@ void GameLibrary::saveGameLibrary()
 	}
 }
 
-void GameLibrary::loadGameLibraryFromFile(std::fstream& titleFile)
-{/*
+void GameLibrary::loadGameLibrary()
+{
 	ifstream info_file("info.txt");
 	size_t ntitles, nusers;
 	string str;
@@ -346,7 +346,7 @@ void GameLibrary::loadGameLibraryFromFile(std::fstream& titleFile)
 			}
 			case sale_history: {
 			    vector<string> _split_line = split(str);
-			    sales_history.emplace_back(_split_line[0], _split_line[1], _split_line[2]);
+			    sales_history.push_back(Sale(Date(_split_line[0]), Date(_split_line[1]), stod(_split_line[2])));
 			}
 
 			default:break;
@@ -376,8 +376,8 @@ void GameLibrary::loadGameLibraryFromFile(std::fstream& titleFile)
                     double hours_played = stod(split_session[2]);
 
                     User *user = find_if(users.begin(), users.end(),
-                        [user_id](const User* &user) {
-                        return user->getUserID() == user_id;
+                        [user_id](const std::pair<User* const, std::set<Title*, ComparePtr<Title>>> &user) {
+                        return user.first->getUserID() == user_id;
                     })->first;
 
                     Session session = Session(hours_played, session_date);
@@ -388,7 +388,7 @@ void GameLibrary::loadGameLibraryFromFile(std::fstream& titleFile)
                 addTitle(new OnlineTitle(title_name, stod(_price), Date(_release_date), ar, glp, glg, company, new FixedSubscription(stod(_subs_value))));
             }
 		}
-	}*/
+	}
 }
 
 bool GameLibrary::updateTitle(Title* title, Update * update) {

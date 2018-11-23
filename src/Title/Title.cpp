@@ -58,7 +58,7 @@ double Title::getCurrentPrice(Date & date) const
 	return basePrice;
 }
 
-void Title::addPromotion(Sale & promotion) {
+void Title::addPromotion(Sale promotion) {
 	if (promotion.getEndDate() < Date::getCurrentDate())
 	{
 		throw ExpiredSale(promotion.getEndDate());
