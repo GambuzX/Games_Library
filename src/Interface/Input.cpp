@@ -233,9 +233,9 @@ Address addressInput(string question) {
 	cout << question << endl;
 
 	houseNumber = static_cast<unsigned int>(doubleInput(" Enter House Number: "));
-	streetName = nameInput(" Enter Street name: ");
-	city = nameInput(" Enter city name: ");
-	country = nameInput(" Enter country name: ");
+	streetName = namesInput(" Enter Street name: ");
+	city = namesInput(" Enter city name: ");
+	country = namesInput(" Enter country name: ");
 
 	addr = Address(houseNumber, streetName, city, country);
 
