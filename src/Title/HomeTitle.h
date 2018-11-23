@@ -7,15 +7,12 @@
 #include "..\Utilities\Exceptions.h"
 #include "..\Utilities\CompareObj.h"
 
-/** @defgroup Title Home Title
+/** @addtogroup Title
  * @{
- *
- * Home Title Class is a derived class of the Title Class
- * Allows Home Title to keep track of its update history and the one of each user
- * 
- * @see Title
- * @see Update
- * @see User
+ */
+
+ /**
+ * @brief Class representing a Home Title in the Game Library, derived from Title
  */
 class HomeTitle : public Title {
 

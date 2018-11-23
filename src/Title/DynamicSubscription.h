@@ -3,17 +3,14 @@
 
 #include "Subscription.h"
 
-/** @defgroup Subscription Dynamic Subscription Class
- * @{
- *
- * Dynamic Subscription Class is a derived class of the Subscription Class
- * Chargea Users Per Hour that they play an online title
- * 
- * @see Subscription
- * @see OnlineTitle
+/** @addtogroup TitleUtility
+* @{
+*/
+
+ /**
+ * @brief Class representing a DynamicSubscription associated with an OnlineTitle, derived from Subscription
  */
 class DynamicSubscription : public Subscription {
-
 
 public:
 	/**

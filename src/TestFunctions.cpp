@@ -248,9 +248,15 @@ void otherStatsSummary(GameLibrary & gl, User*  user) {
 //-----------------------------------------------------------------------------------------------------------------------//
 
 void averageStatsSummary(GameLibrary & gl) {
-	cout << " Average User Library Cost:\t" << gl.averageUserLibraryCost() << endl;
-	cout << " Average User Library Size:\t" << gl.averageUserTitles() << endl << endl;
-
+	if (gl.getUsers().size() == 0)
+	{
+		cout << " Average is impossible since there is no user in your Game Library\n\n";
+	}
+	else
+	{
+		cout << " Average User Library Cost:\t" << gl.averageUserLibraryCost() << endl;
+		cout << " Average User Library Size:\t" << gl.averageUserTitles() << endl << endl;
+	}
 }
 
 //-----------------------------------------------------------------------------------------------------------------------//
@@ -490,7 +496,7 @@ gameLibraryGenre menuGenre(bool rank) {
 bool menuSubcription() {
 	int option_number;
 
-	cout << " Subscrition type (fixed or dynamic) :" << endl << endl;
+	cout << " Subscription type (fixed or dynamic) :" << endl << endl;
 
 	cout << "   1 - Dynamic Subscription" << endl;
 
@@ -515,7 +521,7 @@ bool menuSubcription() {
 ConsumingHabitsFilter menuTransactionsTypes() {
 	int option_number;
 
-	cout << " Consuming Habit Filter:" << endl << endl;
+	cout << " Consuming Habits Filter:" << endl << endl;
 
 	cout << "   1 - Purchases" << endl;
 
@@ -755,7 +761,7 @@ void removeGame(GameLibrary & gL) {
 			cout << " Inexistent title ID\n";
 			if (nameErrors > 3)
 			{
-				cout << " You've seem to be struggling. Plz consider taking a look at the Game Summary\n";
+				cout << " You seem to be struggling. Please consider taking a look at the Game Summary\n";
 			}
 			titleID = intInput(" Title ID Number (0 to go back): ");
 		}
@@ -787,7 +793,7 @@ void removeUser(GameLibrary & gL) {
 			cout << " Inexistent User Email\n";
 			if (nameErrors > 3)
 			{
-				cout << " You've seem to be struggling. Plz consider taking a look at the Users Summary\n";
+				cout << " You seem to be struggling. Please consider taking a look at the Users Summary\n";
 			}
 			mail = emailInput(" User Email (< to go back): ");
 		}
@@ -892,7 +898,7 @@ void UserConsumingHabits(GameLibrary & gl, User * user) {
 void globalPopRanking(GameLibrary & gl) {
 	gameLibraryPlatform platform = menuPlatform();
 	gameLibraryGenre genre = menuGenre(true);
-	ageRange ageR = ageRangeInput( " Age Restrition:\n");
+	ageRange ageR = ageRangeInput( " Age Restriction:\n");
 	gl.buildGlobalPopularityRanking(cout, platform, genre, ageR);
 	system("pause");
 }
@@ -901,7 +907,7 @@ void globalPopRanking(GameLibrary & gl) {
 void globalRevRanking(GameLibrary & gl) {
 	gameLibraryPlatform platform = menuPlatform();
 	gameLibraryGenre genre = menuGenre(true);
-	ageRange ageR = ageRangeInput(" Age Restrition:\n");
+	ageRange ageR = ageRangeInput(" Age Restriction:\n");
 	gl.buildGlobalRevenueRanking(cout, platform, genre, ageR);
 	system("pause");
 }
@@ -962,7 +968,7 @@ unsigned gameIDinput(GameLibrary & gL) {
 				cout << " Inexistent title ID\n";
 				if (nameErrors > 3)
 				{
-					cout << " You've seem to be struggling. Plz consider taking a look at the Game Summary\n";
+					cout << " You seem to be struggling. Please consider taking a look at the Game Summary\n";
 				}
 				titleID = intInput(" Title ID Number (0 to go back): ");
 			}
@@ -998,7 +1004,7 @@ unsigned userGameIDinput(User * user, bool hasToBeHome, bool hasToBeOnline, Game
 				cout << " User doesn't have a title with that ID\n";
 				if (nameErrors > 3)
 				{
-					cout << " You've seem to be struggling. Plz consider taking a look at the Users Titles Summary\n";
+					cout << " You seem to be struggling. Please consider taking a look at the Users Titles Summary\n";
 				}
 				titleID = intInput(" Title ID Number (0 to go back): ");
 			}
@@ -1041,7 +1047,7 @@ string userMailInput(GameLibrary & gL) {
 				cout << " Inexistent user mail\n";
 				if (nameErrors > 3)
 				{
-					cout << " You've seem to be struggling. Plz consider taking a look at the Users Summary\n";
+					cout << " You seem to be struggling. Please consider taking a look at the Users Summary\n";
 				}
 				mail = emailInput(" User Email (< to go back): ");
 			}
@@ -1072,7 +1078,7 @@ string creditCardInput(User * user) {
 				cout << " Inexistent Credit Card\n";
 				if (nameErrors > 3)
 				{
-					cout << " You've seem to be struggling. Plz consider taking a look at the Credit Cards Summary\n";
+					cout << " You seem to be struggling. Please consider taking a look at the Credit Cards Summary\n";
 				}
 				number = nameNumbersInput(" Credit Card Number (< to go back): ");
 			}
@@ -1465,7 +1471,7 @@ void UserGameMenu(GameLibrary & gl, User * user) {
 		}
 		break;
 	case 4:
-		header("Play Tile");
+		header("Play Title");
 		ID = userGameIDinput(user, false, false, gl);
 		if (0 == ID) UserGameMenu(gl, user);
 		else {
@@ -1475,7 +1481,7 @@ void UserGameMenu(GameLibrary & gl, User * user) {
 		}
 		break;
 	case 5:
-		header("Update Tile");
+		header("Update Title");
 		ID = userGameIDinput(user, true, false, gl);
 		if (0 == ID) UserGameMenu(gl, user);
 		else {
@@ -1736,20 +1742,20 @@ void ListsRankingsMenu(GameLibrary & gl) {
 	case 1:
 		header("Average Stats");
 		averageStatsSummary(gl);
-		UsersMenu(gl);
+		ListsRankingsMenu(gl);
 		break;
 
 	case 2:
 		header("Popularity Ranking");
 		globalPopRanking(gl);
 		cout << endl << endl;
-		UsersMenu(gl);
+		ListsRankingsMenu(gl);
 		break;
 	case 3:
 		header("Revenue Ranking");
 		globalRevRanking(gl);
 		cout << endl << endl;
-		UsersMenu(gl);
+		ListsRankingsMenu(gl);
 		break;
 	case 0:
 		header("CREATE GAME LIBRARY");
@@ -1786,6 +1792,7 @@ void PrincipalMenu(GameLibrary & gameL)
 		UsersMenu(gameL);
 		break;
 	case 3:
+		ListsRankingsMenu(gameL);
 		break;
 	case 0:
 		system("cls");

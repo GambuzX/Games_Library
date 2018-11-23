@@ -14,17 +14,24 @@
 
 class Title;
 
-/** @defgroup User User Class
+
+/** @defgroup User Users
+* @ingroup GameLibrary
 * @{
 *
-* User Class represents a User in our Game Library system, with its basic
-* information: id, name, email, age credit cards
-* Each User also has information about its purchased games, friends and transactions
+* @brief Group holding all the information about Users and related classes.
 *
-* @see Title
+* This group contains the class User and others which are related to it.
+*
+*
+* @see User
 * @see CreditCard
-* @see Transaction
 * @see Address
+* @see Transaction
+*/
+
+/**
+* @brief Class that represents an User in the Game Library
 */
 class User {
 

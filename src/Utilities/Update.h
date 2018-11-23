@@ -4,15 +4,12 @@
 #include "Date.h"
 #include <string>
 
-/** @defgroup Update Update Class
- * @{
- *
- * Update Class representing the update of a Home Game
- * Each object has a date of the update, description of the changes, a version number and a price
- * Doing the Update costs the price saved and to play a Game it is required its last version
- * 
- * @see HomeTitle
- * @see Date
+/** @addtogroup TitleUtility
+* @{
+*/
+
+ /**
+ * @brief Class representing an Update of a HomeTitle
  */
 class Update {
 
