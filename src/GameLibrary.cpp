@@ -1,6 +1,13 @@
 #include <iostream>
+#include <string>
+#include <cstdlib>
+#include <algorithm>
 #include "GameLibrary.h"
 #include "Utilities\Exceptions.h"
+#include "Title/HomeTitle.h"
+#include "Title/OnlineTitle.h"
+#include "Title/FixedSubscription.h"
+#include "Title/DynamicSubscription.h"
 
 using namespace std;
 
@@ -101,31 +108,287 @@ bool GameLibrary::removeTitle(unsigned int id) {
 
 void GameLibrary::saveGameLibrary()
 {
-	ofstream users_file("users.txt");
-	ofstream titles_file("titles.txt");
+    // the info files only contains information on the number of games users
+    ofstream library_info_file("info.txt");
+
+    library_info_file << titles.size() << " " << users.size() << endl;
+    library_info_file.close();
+
+    system("mkdir titles >nul 2>nul");
+    system("mkdir users >nul 2>nul");
+
+	ostringstream user_file_name;
+	ostringstream title_file_name;
 
 	for (auto &user : users) {
-		users_file << user.first;
-		users_file << "Games:" << endl;
+	    // open one file per user and generate file name according to user_<id>.txt
+	    user_file_name << "user_" << user.first->getUserID() << ".txt";
+	    ofstream user_file("users/" + user_file_name.str());
+	    user_file_name.str(""); // reset file name
+	    user_file_name.clear();
 
-		for (auto &set_it : user.second) {
-			users_file << set_it->getTitleID() << " ";
+	    // write user information including games by id
+		user_file << user.first;
+		user_file << "Games:" << endl;
+
+		for (auto title : user.second) {
+		    user_file << title->getTitleID() << endl;
 		}
-	}
 
-	users_file.close();
+		user_file.close();
+	}
 
 	for (auto &set_it : titles) {
-		set_it->displayTitleInfo(titles_file);
-		cout << endl;
-	}
+	    title_file_name << "title_" << set_it->getTitleID() << ".txt";
+	    ofstream title_file("titles/" + title_file_name.str());
+	    title_file_name.str("");
+	    title_file_name.clear();
 
-	titles_file.close();
+		set_it->displayTitleInfo(title_file);
+		cout << endl;
+
+		title_file << "Sales:" << endl;
+
+	    for (const Sale &s : set_it->getSaleHistory()) {
+	        title_file << s << endl;
+	    }
+
+	    title_file.close();
+	}
 }
 
 void GameLibrary::loadGameLibraryFromFile(std::fstream& titleFile)
 {
+	ifstream info_file("info.txt");
+	size_t ntitles, nusers;
+	string str;
 
+	enum title_states {
+		id_name,
+		price,
+		platform_genre,
+		age_range,
+		title_types,
+		release_date,
+		subs_value,
+		accept,
+		session,
+		sale_history,
+	};
+
+	enum user_states {
+	    _id_name,
+	    email_age,
+	    address,
+	    credit_cards,
+	    transactions,
+	    friends,
+	};
+
+	enum title_states title_current_state = id_name;
+	enum user_states user_current_state = _id_name;
+
+	if (!info_file) {
+		cout << "Opening of information file failed. Does it exist?" << endl;
+	}
+
+	info_file >> ntitles >> nusers;
+
+	ostringstream user_file_name;
+	ostringstream title_file_name;
+
+	for (size_t i = 1; i <= nusers; ++i) {
+        string name, email, road_name, city, country, number, holder, expiry, transaction_date;
+        int age, house_number, ncredit_cards, ntransactions, transaction_type;
+        double balance, transaction_value;
+
+	    user_file_name << "user_" << i << ".txt";
+	    ifstream user_file("users/" + user_file_name.str());
+	    user_file_name.str("");
+	    user_file_name.clear();
+
+	    Address addr;
+	    vector<CreditCard> cc;
+	    vector<Transaction> trans;
+
+	    while(getline(user_file, str)) {
+
+	        switch (user_current_state) {
+	        case _id_name:
+	            name = split(str)[1];
+	            user_current_state = email_age;
+	            break;
+	        case email_age:
+	            email = split(str)[0];
+	            age = stoi(split(str)[1]);
+	            getline(user_file, str);
+	            if (str == "Address:") user_current_state = address;
+	            break;
+	        case address:
+	            house_number = stoi(split(str)[0]);
+	            road_name = split(str)[1];
+
+	            getline(user_file, str);
+	            city = str;
+	            getline(user_file, str);
+	            country = str;
+	            getline(user_file, str);
+	            if (str == "Credit Cards:") user_current_state = credit_cards;
+	            getline(user_file, str);
+	            ncredit_cards = stoi(str);
+	            break;
+	        case credit_cards:
+	            number = split(str, 1)[0];
+	            holder = split(str, 1)[1];
+
+	            getline(user_file, str);
+	            expiry = split(str)[0];
+	            balance = stod(split(str)[1]);
+
+	            cc.emplace_back(name, holder, expiry, balance);
+	            --ncredit_cards;
+	            if (ncredit_cards == 0) {
+	                user_current_state = transactions;
+	            }
+	            break;
+	        case transactions:
+	            if (str == "Transactions:") { getline(user_file, str); ntransactions = stoi(str);}
+
+	            getline(user_file, str);
+	            transaction_type = stoi(split(str)[0]);
+                transaction_date = split(str)[1];
+                transaction_value = stod(split(str)[2]);
+
+                trans.emplace_back(transaction_value, transaction_date, (TransactionType) transaction_type);
+                --ntransactions;
+                if (ntransactions == 0) { user_current_state = friends;}
+                break;
+	        case friends:
+	            break;
+	        default: break;
+	        }
+	    }
+	    User *user = new User(name, email, age, Address(house_number, road_name, city, country));
+	    addUser(user);
+
+	    for (CreditCard &ccs : cc) {
+	        user->addCreditCard(ccs);
+	    }
+
+	    for (Transaction & transaction : trans) {
+	        user->addTransaction(transaction.getValue(), transaction.getDate(), transaction.getType());
+	    }
+	}
+
+	for (size_t i = 1; i <= ntitles; ++i) {
+		string title_name, _price, platform, genre, min_age, max_age, _release_date, _subs_value, company, title_type, subs_type, n_title_stats;
+
+		title_file_name << "title_" << i << ".txt";
+		ifstream title_file("titles/" + title_file_name.str());
+		title_file_name.str("");
+		title_file_name.clear();
+
+		vector<string> sessions;
+		vector<Sale> sales_history;
+
+		while(getline(title_file, str)) {
+			vector<string> split_line = split(str, 1);
+
+			switch(title_current_state) {
+			case id_name: title_name = split_line[1];
+				title_current_state = price;
+				break;
+			case price:
+			    _price = split_line[0];
+			    company = split_line[1];
+			    title_current_state = platform_genre;
+			    break;
+			case platform_genre: platform = split_line[0];
+				genre = split_line[1];
+				title_current_state = age_range;
+				break;
+			case age_range: min_age = split_line[0];
+				max_age = split_line[1];
+				title_current_state = release_date;
+				break;
+			case release_date:
+			    _release_date = str;
+				title_current_state = title_types;
+				break;
+			case title_types:
+			    title_type = str;
+			    title_current_state = accept;
+			    break;
+			case accept:
+			    if (str == "Subscription Info:"){
+    			    title_current_state = subs_value;
+			    }
+			    else if (str == "Sessions:") {
+			        getline(title_file, str);
+			        n_title_stats = str;
+			        title_current_state = session;
+			    } else if (str == "Sales:") {
+			        title_current_state = sale_history;
+			    }
+				break;
+			case subs_value:
+			    _subs_value = split_line[0];
+			    title_type = split_line[1];
+			    title_current_state = accept;
+			    break;
+			case session: {
+			    sessions.push_back(str);
+			    int title_stats = stoi(n_title_stats);
+
+			    --title_stats;
+			    if (title_stats == 0) title_current_state = accept;
+			    break;
+			}
+			case sale_history: {
+			    vector<string> _split_line = split(str);
+			    sales_history.emplace_back(_split_line[0], _split_line[1], _split_line[2]);
+			}
+
+			default:break;
+			}
+		}
+		//Title(std::string name, double price, Date releaseDate, ageRange ageR, gameLibraryPlatform platform, gameLibraryGenre genre, std::string company);
+        struct ageRange ar{stoi(min_age), stoi(max_age)};
+        auto glp = (gameLibraryPlatform) stoi(platform);
+        auto glg = (gameLibraryGenre) stoi(genre);
+
+		if (title_type == "1") {
+		    Title* title = new HomeTitle(title_name, stod(_price), Date(_release_date), ar, glp, glg, company);
+		    addTitle(title);
+		    for (Sale &sale : sales_history)
+		        title->addPromotion(sale);
+		}
+		else if (title_type == "0") {
+            if (subs_type == "0") {
+                Title* online_title = new OnlineTitle(title_name, stod(_price), Date(_release_date), ar, glp, glg, company, new DynamicSubscription(stod(_subs_value)));
+                addTitle(online_title);
+
+                for (const string &s : sessions) {
+                    vector<string> split_session = split(s);
+
+                    auto user_id = static_cast<unsigned int>(stoi(split_session[0]));
+                    Date session_date(split_session[1]);
+                    double hours_played = stod(split_session[2]);
+
+                    User *user = find_if(users.begin(), users.end(),
+                        [user_id](const User* &user) {
+                        return user->getUserID() == user_id;
+                    })->first;
+
+                    Session session = Session(hours_played, session_date);
+
+                    online_title->addNewSession(user, session);
+                }
+            } else if (subs_type == "1") {
+                addTitle(new OnlineTitle(title_name, stod(_price), Date(_release_date), ar, glp, glg, company, new FixedSubscription(stod(_subs_value))));
+            }
+		}
+	}
 }
 
 bool GameLibrary::updateTitle(Title* title, Update * update) {
@@ -387,4 +650,26 @@ bool GameLibrary::isOnlineTitle(Title * title)
 		return false;
 	}
 	return true;
+}
+
+vector<string> GameLibrary::split(std::string long_string, int num_unique)
+{
+	vector<string> result;
+	size_t i = 0;
+	size_t space_index = long_string.find_first_of(' '), j = space_index;
+
+	if (space_index != string::npos && num_unique == 1) {
+        result.push_back(long_string.substr(0, space_index));
+        result.push_back(long_string.substr(space_index + 1));
+	} else if (space_index != string::npos) {
+	    while(space_index != string::npos) {
+	        string sub = long_string.substr(i, j);
+	        result.push_back(sub);
+	        space_index = sub.find_first_of(' ');
+	        i = j + 1;
+	        j = space_index;
+	    }
+	}
+
+	return result;
 }

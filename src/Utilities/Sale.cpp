@@ -26,3 +26,8 @@ bool Sale::operator<(const Sale & s2) const
 {
 	return startDate < s2.getStartDate();
 }
+std::ostream &operator<<(std::ostream &os, const Sale &s)
+{
+	os << s.getStartDate() << " " << s.getEndDate() << " " << s.getSaleFactor();
+    return os;
+}

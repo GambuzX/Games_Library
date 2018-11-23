@@ -136,6 +136,8 @@ public:
 	 * @return ostream& The ostream object (os) passed as parameter
 	 */
 	friend std::ostream & operator<<(std::ostream & os, const Address & a);
+
+	void writeAddress(std::ostream& os);
 };
 
 /** @} */

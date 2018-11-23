@@ -53,6 +53,8 @@ public:
 	* @return false If the Session was played after or on the same day as sess2 (right hand side of the signal)
 	*/
 	bool operator<(const Session & sess2) const;
+
+	friend std::ostream& operator<<(std::ostream &os, const Session &session);
 };
 
 /** @} */
