@@ -11,7 +11,7 @@
 
 using namespace std;
 
-void InicialMenu();
+void InicialMenu(GameLibrary & gl);
 void PrincipalMenu(GameLibrary & gameL);
 void GamesMenu(GameLibrary & gameL);
 void UsersMenu(GameLibrary & gl);
@@ -1789,7 +1789,7 @@ void PrincipalMenu(GameLibrary & gameL)
 	case 0:
 		system("cls");
 		mainHeader("Welcome to the Game Library");
-		InicialMenu();
+		InicialMenu(gameL);
 		break;
     default:break;
     }
@@ -1797,9 +1797,8 @@ void PrincipalMenu(GameLibrary & gameL)
 
 //-----------------------------------------------------------------------------------------------------------------------//
 
-void InicialMenu()
+void InicialMenu(GameLibrary & gl)
 {
-	GameLibrary gl = GameLibrary();
 
 	int option_number;
 
@@ -1846,8 +1845,9 @@ void InicialMenu()
 int main() {	
 	system("title   GAME LIBRARY");
 	mainHeader("Welcome to the Game Library");
+	GameLibrary gl = GameLibrary();
 	
-	InicialMenu();
+	InicialMenu(gl);
 
 	return 0;
 }
