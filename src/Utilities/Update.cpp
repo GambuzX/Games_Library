@@ -27,3 +27,10 @@ bool Update::operator==(const Update & update) const {
 bool Update::operator<(const Update & update) const {
 	return version < update.getVersion();
 }
+
+std::ostream &operator<<(std::ostream &os, const Update &update)
+{
+	os << update.getDate() << " " << update.getDescription() << std::endl;
+	os << update.getVersion() << " " << update.getUpdatePrice() << std::endl;
+    return os;
+}
