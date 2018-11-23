@@ -89,8 +89,8 @@ void header(const string &header)
 void userShortDisplay(const User * user) {
 	cout << " User ID:\t" << user->getUserID() << endl;
 	cout << " Name:\t\t" << user->getName() << endl;
-	cout << " E-Mail:\t\t" << user->getEmail() << endl;
-	cout << " Address:\t" << user->getAddress() << endl << endl;
+	cout << " E-Mail:\t" << user->getEmail() << endl;
+	cout << " Address:\n" << user->getAddress() << endl << endl;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------//
@@ -371,20 +371,20 @@ void userInfo(User * user)
 	cout << " User ID:\t\t" << user->getUserID() << endl;
 	cout << " Name:\t\t\t" << user->getName() << endl;
 	cout << " Age:\t\t\t" << user->getAge() << endl;
-	cout << " Email:			\t\t\t" << user->getEmail() << endl;
+	cout << " Email:\t\t\t" << user->getEmail() << endl;
 	cout << " Creation Since:\t" << user->getCreationDate() << endl;
 	cout << " Adress:\n" << user->getAddress() << endl;
 	cout << " # Credit Cards:\t" << user->getCreditCards().size() << endl;
-	cout << " # Friends:\t\t\t" << user->getFriendsList().size() << endl;
-	cout << " # Titles:\t\t\t" << user->getPurchasedGames()->size() << endl;
+	cout << " # Friends:\t\t" << user->getFriendsList().size() << endl;
+	cout << " # Titles:\t\t" << user->getPurchasedGames()->size() << endl;
 	cout << " # Transactions:\t" << user->getTransactions().size() << endl;
-	cout << " Money Spend:\t\t" << user->getTotalTransactionsValue();
-	cout << " Favorite Platform:" << user->getFavoritePlatform();
+	cout << " Money Spend:\t\t" << user->getTotalTransactionsValue() << endl;
+	cout << " Favorite Platform:" << user->getFavoritePlatform() << endl;
 	cout << " Platforms:\n";
 	set<string> plat = user->getPlatforms();
 	for (auto & p : plat)
 		cout << "  - " << p;
-
+	cout << endl;
 	system("pause");
 }
 
@@ -627,7 +627,7 @@ void addUser(GameLibrary & gl) {
 	Address address(houseNumber, streetName, city, country);
 	try
 	{
-		gl.addUser(name, email, age, address);
+		gl.addUser(new User(name, email, age, address));
 	}
 	catch (DuplicatedUser & e)
 	{
@@ -643,7 +643,7 @@ void addUser(GameLibrary & gl) {
 void addSale(Title*  game) {
 	Date beginDate = dateInput(" Begin date: ");
 	Date endDate = dateInput(" End date: ");
-	double saleFactor = menuInput(" Sale Factor (from 0 to 100): ", 0, 100) / 100;
+	double saleFactor = static_cast<double>(menuInput(" Sale Factor (from 0 to 100): ", 0, 100)) / 100.0;
 	try
 	{
 		Sale sale = Sale(beginDate, endDate, saleFactor);
@@ -1026,7 +1026,7 @@ unsigned userGameIDinput(User * user, bool hasToBeHome, bool hasToBeOnline, Game
 //-----------------------------------------------------------------------------------------------------------------------//
 
 string userMailInput(GameLibrary & gL) {
-	if (gL.getTitles().empty())
+	if (gL.getUsers().empty())
 	{
 		cout << " There are no users in the library\n";
 		return "<";
@@ -1208,9 +1208,6 @@ void SessionsMenu(GameLibrary & gl, Title * game) {
 
 void UpdateMenu(GameLibrary & gl, Title * game) {
 	int option_number;
-	//game->updateTitle();
-	//game->getUpdates();
-	//gl.updateTitle
 
 	cout << " Possible Actions:" << endl << endl;
 
@@ -1222,7 +1219,7 @@ void UpdateMenu(GameLibrary & gl, Title * game) {
 
 	cout << "   0 - Go back" << endl << endl;
 
-	option_number = menuInput(" Option ? ", 0, 2);
+	option_number = menuInput(" Option ? ", 0, 3);
 
 	switch (option_number)
 	{
@@ -1822,12 +1819,14 @@ void InicialMenu()
 	{
 	case 1:
 		header("CREATE GAME LIBRARY");
+		PrincipalMenu(gl);
 		break;
 
 	case 2:
 		header("LOAD GAME LIBRARY");
 		//IR para função que vai buscar o nome da pasta/ficheiro
 		//gl.loadGameLibraryFromFile();
+		PrincipalMenu(gl);
 		break;
 	case 3:
 	    header("SAVE GAME LIBRARY");
@@ -1840,7 +1839,6 @@ void InicialMenu()
 		return;
     default:break;
     }
-	    PrincipalMenu(gl);
 }
 
 //=======================================================================================================================//
