@@ -327,7 +327,6 @@ public:
 
 	friend std::ostream& operator<<(std::ostream &os, const User &user);
 
-	//TODO Get User info function
 };
 
 /** @} */

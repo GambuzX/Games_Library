@@ -67,7 +67,6 @@ void Title::addPromotion(Sale promotion) {
 		pricesHistory.push_back(promotion);
 	else if (promotion.getStartDate() < pricesHistory.at(0).getStartDate())
 	{
-		//TODO: maneira mais eficiente de acrescentar ao início??
 		pricesHistory.push_back(promotion);
 		sort(pricesHistory.begin(), pricesHistory.end());
 	}

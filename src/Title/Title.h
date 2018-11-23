@@ -127,7 +127,6 @@ public:
 	 * @param u User to be added to the list of owners of the Title
 	 * @throw DuplicatetUser() If the user already has the Title
 	 */
-	//TODO: & ou *??
 	virtual void addNewUser(User * u) = 0;
 
 	/**
@@ -340,7 +339,6 @@ public:
 	 */
 	double getCurrentPrice(Date & date) const;
 
-	// TODO: Acho que set's neste faz sentido pq j� tem cenas associadas (podes s� querer mudar plat, gen ou emp a n�o ser que const)
 	/**
 	 * @brief Add new Promotion to the vector of Sales
 	 * May throw some exceptions if the promotions overlap or the "new" one is old
@@ -374,7 +372,6 @@ public:
 
 	friend std::ostream& operator<<(std::ostream &os, const Title &title);
 	
-	//TODO Get User info function
 };
 
 /** @} */

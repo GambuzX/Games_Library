@@ -16,7 +16,6 @@ string platformEnum2string(gameLibraryPlatform platform)
 	case xbox1: return "XBOX ONE";
 	case xbox360: return "XBOX 360";
 	}
-	// TODO CHANGE THIS???
 	return "Invalid platform";
 }
 
@@ -36,6 +35,5 @@ string genreEnum2string(gameLibraryGenre genre)
 	case mmo: return "MMO";
 	case all_genres: return "All Genres";
 	}
-	// TODO CHANGE THIS???
 	return "Invalid genre";
 }

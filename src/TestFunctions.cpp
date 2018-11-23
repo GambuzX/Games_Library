@@ -20,9 +20,6 @@ void UserOperationsMenu(GameLibrary & gl, string mail);
 void UserGameMenu(GameLibrary & gl, User * user);
 
 // TODO: Se houver tempo mudar input para lista de ajuda
-// TODO: Date problem
-// TODO: promotionDisplay and updateDisplay prblem with first line
-// TODO: promotion percentagem problem
 /**
 *  +------------------------+
 *  |                        |
@@ -556,7 +553,6 @@ void addGames(GameLibrary & gL)
 {
 	bool isOnline = menuOnlineHome();
 	string name = nameNumbersInput(" Game name (only letters, space and numbers): ");
-	// TODO: Verify this input control
 	double price = doubleInput(" Game price: ");
 	ageRange ar = ageRangeInput(" Age Range:");
 	Date releaseDate = dateInput(" Release date: ");
