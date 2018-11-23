@@ -22,6 +22,16 @@ bool User::addCreditCard(CreditCard cc) {
 	return true;
 }
 
+bool User::removeCreditCard(string creditCardNumber)
+{
+	for (size_t i = 0; i < creditCards.size(); i++)
+		if (creditCardNumber == creditCards.at(i).getNumber()) {
+			creditCards.erase(creditCards.begin() + i);
+			return true;
+		}
+	return false;
+}
+
 bool User::hasEnoughMoney(double val) const {
 	double amountOwned = 0;
 
@@ -126,7 +136,8 @@ bool User::buyTitle(unsigned int titleID) {
 	// Title repeated 
 	if (hasTitle(title))
 	{
-		cout << "(" << __func__ << ") User " << name << " already owns title with ID " << titleID << endl;
+		cout << " User " << name << " already owns title with ID " << titleID << endl;
+		//cout << "(" << __func__ << ") User " << name << " already owns title with ID " << titleID << endl;
 		return false;
 	}
 
@@ -136,7 +147,8 @@ bool User::buyTitle(unsigned int titleID) {
 	// Charge price ; Checks if has enough money
 	if (!subtractValue(price))
 	{
-		cout << "(" << __func__ << ") Could not subtract value " << price << endl;
+		//cout << "(" << __func__ << ") Could not subtract value " << price << endl;
+		cout << " User " << name << "Does not have enough money: " << price << endl;
 		return false;
 	}
 	GameLibrary::updateTitleRevenue(title, price);
@@ -239,7 +251,8 @@ bool User::updateTitle(unsigned int titleID) {
 
 	if (!title->userNeedsUpdate(this))
 	{
-		cout << "(" << __func__ << ") User " << name << " already has title with ID " << title->getTitleID() << " updated" << endl;
+		//cout << "(" << __func__ << ") User " << name << " already has title with ID " << title->getTitleID() << " updated" << endl;
+		cout << " User " << name << " already has title with ID " << title->getTitleID() << " updated" << endl;
 		return false;
 	}
 
@@ -247,7 +260,8 @@ bool User::updateTitle(unsigned int titleID) {
 
 	if (!hasEnoughMoney(updatePrice))
 	{
-		cout << "(" << __func__ << ") User " << name << " does not have enough money to pay the update price: " << updatePrice << endl;
+		//cout << "(" << __func__ << ") User " << name << " does not have enough money to pay the update price: " << updatePrice << endl;
+		cout << " User " << name << " does not have enough money to pay the update price: " << updatePrice << endl;
 		return false;
 	}
 
@@ -304,7 +318,8 @@ bool User::playGame(Title * title, double duration) {
 		// Check if has enough money
 		if (!hasEnoughMoney(playPrice))
 		{
-			cout << "(" << __func__ << ") User " << name << " does not have enough money to pay the subscription price: " << playPrice << endl;
+			//cout << "(" << __func__ << ") User " << name << " does not have enough money to pay the subscription price: " << playPrice << endl;
+			cout << " User " << name << " does not have enough money to pay the subscription price: " << playPrice << endl;
 			return false;
 		}
 		if (!subtractValue(playPrice)) return false;
@@ -325,7 +340,8 @@ bool User::playGame(Title * title, double duration) {
 		// Check if has enough money
 		if (!hasEnoughMoney(updatePrice))
 		{
-			cout << "(" << __func__ << ") User " << name << " does not have enough money to pay the update price: " << updatePrice << endl;
+			//cout << "(" << __func__ << ") User " << name << " does not have enough money to pay the update price: " << updatePrice << endl;
+			cout << " User " << name << " does not have enough money to pay the update needed price: " << updatePrice << endl;
 			return false;
 		}
 
