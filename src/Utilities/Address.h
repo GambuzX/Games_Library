@@ -3,14 +3,12 @@
 
 #include <string>
 
+/** @addtogroup UserUtility
+* @{
+*/
 
-/** @defgroup Address Address Class
- * @{
- *
- * Address Class representing an Address constituted by an House Number, Street Name, City and Coutry
- * Used mainly by the User
- * 
- * @see User
+/**
+ * @brief Class representing an Address
  */
 class Address {
 

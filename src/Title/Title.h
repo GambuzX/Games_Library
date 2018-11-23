@@ -16,28 +16,37 @@
 // TODO: tentar evitar inclusao de bibliotecas circular (??) para ja esta isto
 class User;
 
-/** @defgroup Title Title
+/** @defgroup Title Titles
+ * @ingroup GameLibrary
  * @{
  *
- * Title Class is the abstract base class for the Home Title and Online Title Classes
- * All the Titles are included in the GamesLibrary
- * Also uses the Date Class to save the release Date and the Sales to keep track of the price history
+ * @brief  Group holding all the information about Titles and related classes.
+ *
+ * This group contains the base class Title and its derived classes HomeTitle and OnlineTitle. The other classes included are
+ * structures that were needed to implement all the functionalities related to the titles.
  * 
- * @see GamesLibrary
- * @see Date
+ * 
+ * @see Title
+ * @see HomeTitle
+ * @see OnlineTitle
  * @see Sale
- * @see User
+ * @see Update
+ * @see Subscription
+ * @see Session
  */
 
 /**
- * @brief Age Range Struct to Save the minimun and the maximum recommended age of a Game
- * 
+ * @brief Age Range Struct to save the minimum and the maximum recommended age of a Game
  */
 struct ageRange {
 	int minAge;	/*!< Minimum Recommended Age */
 	int maxAge;	/*!< Maximum Recommended Age */
 };
 
+/**
+* @brief Abstract class that represents a Title in the Game Library.
+*
+*/
 class Title {
 
 private:

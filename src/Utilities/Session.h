@@ -3,13 +3,13 @@
 
 #include "Date.h"
 
-/** @defgroup Seesion Session Class
- * @{
- *
- * Session Class representing the time played and the date when an online Game is played
- * @see OnlineTitle
- * @see Date
- */
+/** @addtogroup TitleUtility
+* @{
+*/
+
+/**
+* @brief Class representing a player Session of an OnlineTitle
+*/
 class Session {
 
 private:

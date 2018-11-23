@@ -4,15 +4,20 @@
 #include <string>
 #include "Date.h"
 
-/** @defgroup CreditCard Credit Card Class
- * @{
- *
- * Credit Card Class represents a credit card with a number, an holder name, an Expiration Date and the balance
- * Every user should have at least one in order to buy, play and update his games
- * 
- * @see User
- * @see Date
- */
+/** @defgroup UserUtility Users Utility
+* @ingroup User
+* @{
+*
+* @brief Group holding the classes required to implement User
+*
+* Utility classes related to the GameLibrary Users
+*
+* @see User
+*/
+
+/**
+* @brief Class representing a Credit Card
+*/
 class CreditCard {
 
 private:

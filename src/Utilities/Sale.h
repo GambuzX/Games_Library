@@ -3,16 +3,21 @@
 
 #include "Date.h"
 
-/** @defgroup Sale Sale Class
- * @{
- *
- * Sale Class representing a promotion of a Title
- * Each object has a starting date for the beginnig of the Sale and an End Date
- * It also has a Sale Factor that will alter the price. 
- * Ex: sale factor = 0.5, price of the game is half of the original during the period that the sale lasts
- * 
- * @see Title
- * @see Date
+/** @defgroup TitleUtility Titles Utility
+* @ingroup Title
+* @{
+*
+* @brief Group holding the classes required to implement Title and its derived classes
+*
+* Utility classes related to the GameLibrary Titles, HomeTitles and OnlineTitles
+*
+* @see Title
+* @see HomeTitle
+* @see OnlineTitle
+*/
+
+ /**
+ * @brief Class representing a promotion of a Title
  */
 class Sale {
 

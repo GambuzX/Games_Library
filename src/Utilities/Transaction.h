@@ -4,16 +4,9 @@
 #include "Date.h"
 #include <string>
 
-/** @defgroup Transaction Transaction Class
- * @{
- *
- * Transaction Class represents the different types of transactions possible to be done by the user
- * Each object has a date of the transaction, an enum corresponding to a transation type and a value
- * Each User should have a Transaction vector
- * 
- * @see User
- * @see Date
- */
+/** @addtogroup UserUtility
+* @{
+*/
 
 /**
  * @brief Enumerated type for identifying the different types of transactions possible
@@ -24,6 +17,9 @@ enum TransactionType {
 	onlineSubscription	/*!< Paying the Subscription of an Online Game Transaction */ 
 };
 
+/**
+ * @brief Class that represents a Transaction
+ */
 class Transaction {
 
 private:

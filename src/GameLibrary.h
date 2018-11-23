@@ -10,17 +10,19 @@
 #include "Utilities\Update.h"
 #include "Utilities\CompareObj.h"
 
-/** @defgroup GameLibrary Game Library Class
+/** @defgroup GameLibrary Game Library
 * @{
 *
-* GameLibrary Class represents a Game Library system to manage Users and Titles
-* There are two types of Title, Home and Online.
-* Users may buy, play and update Titles, as well as having other Users as friends.
+* @brief Game Library system to manage Users and Titles
+* GameLibrary Class represents a Game Library system to manage Users and Titles.
 *
 * @see User
 * @see Title
 */
 
+/**
+ * @brief Class representing the Game Library system
+ */
 class GameLibrary {
 private:
 	static std::set<Title*, ComparePtr<Title>> titles; /**< @brief Static Set of the Game Library Titles */

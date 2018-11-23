@@ -1,16 +1,12 @@
 #ifndef COMPARE_OBJ_H
 #define COMPARE_OBJ_H
 
-/** @defgroup ComparePtr Compare Pointer
+/** @addtogroup GameLibrary
  * @{
- *
- * Template Struct for Object Pointer comparation
- * Requires definition of the operator< in the Comparable class
- * Used to mantain the order of sets and maps of Users and Titles
- * 
- * @tparam Comparable Object that we which to mantain in order
- * @see User
- * @see Title
+ */
+
+/**
+ * @brief Comparable class used to order pointers by comparing the pointed elements
  */
 template<class Comparable>
 struct ComparePtr

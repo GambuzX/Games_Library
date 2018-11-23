@@ -1,13 +1,12 @@
 #ifndef SUBSCRIPTION_H
 #define SUBSCRIPTION_H
 
-/** @defgroup Subscription Subscription
- * @{
- *
- * Subscription Class is the abstract base class for the Fixed Subscription and Dynamic Subscription Classes
- * Used by the Online Games to know how Charge Users per online Session
- * 
- * @see OnlineTitle
+/** @addtogroup TitleUtility
+* @{
+*/
+
+ /**
+ * @brief Interface class representing a Subscription associated with an OnlineTitle
  */
 class Subscription {
 
