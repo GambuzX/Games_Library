@@ -1827,7 +1827,9 @@ void InicialMenu()
 	case 2:
 		header("LOAD GAME LIBRARY");
 		//IR para função que vai buscar o nome da pasta/ficheiro
-		//gl.loadGameLibraryFromFile();
+		cout << " Loading..." << endl;
+		gl.loadGameLibrary();
+		cout << " Done" << endl;
 		break;
 	case 3:
 	    header("SAVE GAME LIBRARY");
