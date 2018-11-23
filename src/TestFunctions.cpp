@@ -348,7 +348,7 @@ gameLibraryPlatform menuPlatform() {
 	cout << "   7 - XBOX 360" << endl;
 
 	cout << "   8 - XBOX ONE" << endl;
-	
+
 	cout << "   0 - All the Plataforms" << endl << endl;
 
 	option_number = menuInput(" Option ? ", 0, 8);
@@ -382,7 +382,7 @@ gameLibraryGenre menuGenre() {
 	cout << "   2 - Adventure" << endl;
 
 	cout << "   3 - Puzzle" << endl;
-	
+
 	cout << "   4 - Shooter" << endl;
 
 	cout << "   5 - Simulation" << endl;
@@ -450,54 +450,15 @@ bool menuSubcription() {
 	//cout << endl;
 }
 
-void titleSummary(GameLibrary & gameL) {
-	set<Title*, ComparePtr<Title>> prov = gameL.getTitles();
-	for (auto & title: prov)
-	{
-		cout << " Title ID:\t" << title->getTitleID() << endl;
-		cout << " Game:\t\t" << title->getName() << endl;
-		cout << " Price:\t\t" << title->getBasePrice() << endl;
-		cout << " Platform:\t" << title->getPlatformName() << endl << endl;
-	}
-	system("pause");
-}
+//=======================================================================================================================//
 
-void promotionDisplay(string firstLine, const Sale & sale) {
-	cout << firstLine << endl;
-	cout << "  - Begin Date:\t" << sale.getStartDate() << endl;
-	cout << "  - End Date:\t" << sale.getEndDate() << endl;
-	cout << "  - Promotion:\t" << sale.getSaleFactor() * 100 << "%" << endl << endl;
-}
-
-void promotionSummary(Title*  game) {
-	vector<Sale> prov = game->getSaleHistory();
-	unsigned int i = 1;
-	for (auto & sale : prov)
-	{
-		promotionDisplay(" Sale " + i + ':', sale);
-		i++;
-	}
-	system("pause");
-}
-
-void updateDisplay(string firstLine, const Update & update) {
-	cout << firstLine << endl;
-	cout << "  - Update Version:\t" << update.getVersion() << endl;
-	cout << "  - Description:\t" << update.getDescription() << endl;
-	cout << "  - Update Price:\t" << update.getuUpdatePrice() << endl;
-	cout << "  - Update Date:\t" << update.getDate() << endl << endl;
-}
-
-void updateSummary(Title*  game) {
-	vector<Update> prov = game->getUpdates();
-	unsigned int i = 1;
-	for (auto & update : prov)
-	{
-		updateDisplay(" Update " + i + ':', update);
-		i++;
-	}
-	system("pause");
-}
+/**
+*  +------------------------+
+*  |                        |
+*  |          ADDS          |
+*  |                        |
+*  +------------------------+
+*/
 
 void addGames(GameLibrary & gL)
 {
@@ -599,7 +560,8 @@ void addSale(Title*  game) {
 	double saleFactor = menuInput(" Sale Factor (from 0 to 100): ", 0, 100) / 100;
 	try
 	{
-		game->addPromotion(Sale(beginDate, endDate, saleFactor));
+		Sale sale = Sale(beginDate, endDate, saleFactor);
+		game->addPromotion(sale);
 	}
 	catch (ExpiredSale & e)
 	{
@@ -618,7 +580,6 @@ void addSale(Title*  game) {
 
 void addUpdate(Title * game) {
 	double version = duobleInput(" Update Version: ");
-	// TODO: Mudar depois??
 	string description = nameNumbersInput(" Description: ");
 	double price = duobleInput(" Update Price: ");
 	Date date = dateInput(" Update Date: ");
@@ -836,26 +797,34 @@ unsigned gameIDinput(GameLibrary & gL) {
 	}
 }
 
-void titleInfo(Title * game, bool isOnline)
-{
-	cout << " Title ID:\t" << game->getTitleID() << endl;
-	cout << " Game:\t\t" << game->getName() << endl;
-	cout << " Price:\t\t" << game->getBasePrice() << endl;
-	cout << " Current Price:\t" << game->getCurrentPrice(Date::getCurrentDate()) << endl;
-	if (isOnline) {
-		cout << " Subscription:\n";
-		cout << "  - Type:\t";
-		if (game->getSubscription()->isFixedSubscription()) cout << "Fixed\n";
-		else cout << "Dynamic\n";
-		cout << "  - Price:\t" << game->getSubscription()->getSubscriptionPrice() << endl;
-	}
-	else
+//-----------------------------------------------------------------------------------------------------------------------//
+
+string userMailInput(GameLibrary & gL) {
+	if (gL.getTitles().empty())
 	{
-		cout << " Last Update:\n";
-		cout << "  - Version:\t\t" << game->getCurrentVersion().getVersion() << endl;
-		cout << "  - Description:\t" << game->getCurrentVersion().getDescription() << endl;
-		cout << "  - Price:\t\t" << game->getCurrentVersion().getuUpdatePrice() << endl;
-		cout << "  - Date:\t\t" << game->getCurrentVersion().getDate() << endl << endl;
+		cout << " There are no users in the library\n";
+		return "<";
+	}
+	else {
+		int nameErrors = 0;
+		string mail = emailInput(" User Email (< to go back): ");
+		while (mail.at(0) != '<') {
+			if (gL.getUser(mail) == nullptr)
+			{
+				nameErrors++;
+				cout << " Inexistent user mail\n";
+				if (nameErrors > 3)
+				{
+					cout << " You've seem to be struggling. Plz consider taking a look at the Users Summary\n";
+				}
+				mail = emailInput(" User Email (< to go back): ");
+			}
+			else
+			{
+				return mail;
+			}
+		}
+		return mail;
 	}
 }
 
@@ -902,7 +871,7 @@ string creditCardInput(User * user) {
 
 void PromotionMenu(GameLibrary & gl, Title * game) {
 	int option_number;
-	
+
 	cout << " Possible Actions:" << endl << endl;
 
 	cout << "   1 - Promotions Summary" << endl;
@@ -942,7 +911,8 @@ void PromotionMenu(GameLibrary & gl, Title * game) {
 		header("Current Sale");
 		try
 		{
-			promotionDisplay(" Current Promotion:", game->getSaleOn(Date::getCurrentDate()));
+			Date d = Date::getCurrentDate();
+			promotionDisplay(" Current Promotion:", game->getSaleOn(d));
 			system("pause");
 			cout << endl << endl;
 		}
@@ -976,7 +946,7 @@ void SessionsMenu(GameLibrary & gl, Title * game) {
 
 	cout << "   2 - Top 3 Players Sessions" << endl;
 
-	cout << "   3 - All Sessions (by User ID)" << endl;
+	cout << "   3 - All Sessions (by User Mail)" << endl;
 
 	cout << "   0 - Go back" << endl << endl;
 
@@ -1174,7 +1144,7 @@ void GameOperationsMenu(GameLibrary & gl, unsigned titleID) {
 	cout << "   1 - Detailed Info" << endl;
 
 	cout << "   2 - Promotions" << endl;
-	
+
 	if (isOnline) cout << "   3 - Sessions" << endl;
 	else cout << "   3 - Updates" << endl;
 
@@ -1213,8 +1183,8 @@ void GameOperationsMenu(GameLibrary & gl, unsigned titleID) {
 	case 0:
 		GamesMenu(gl);
 		break;
-    default:break;
-    }
+	default:break;
+	}
 
 
 }
@@ -1331,8 +1301,8 @@ void GamesMenu(GameLibrary & gameL) {
 		header("CREATE GAME LIBRARY");
 		PrincipalMenu(gameL);
 		break;
-    default:break;
-    }
+	default:break;
+	}
 }
 
 //-----------------------------------------------------------------------------------------------------------------------//
@@ -1402,7 +1372,7 @@ void PrincipalMenu(GameLibrary & gameL)
 	cout << "   1 - Manage Games" << endl;
 
 	cout << "   2 - Manage Users" << endl;
-	//TODO: Nao gosto mas é para poder ver os jogos, jogar, comprar...
+	//TODO: Nao gosto mas ? para poder ver os jogos, jogar, comprar...
 	cout << "   3 - Login as a User" << endl;
 
 	cout << "   4 - Make a List/Ranking" << endl;
@@ -1417,7 +1387,7 @@ void PrincipalMenu(GameLibrary & gameL)
 		GamesMenu(gameL);
 		break;
 	case 2:
-		header("Manage Users");
+		UsersMenu(gameL);
 		break;
 	case 3:
 		header("Login as User");
@@ -1430,9 +1400,11 @@ void PrincipalMenu(GameLibrary & gameL)
 		mainHeader("Welcome to the Game Library");
 		InicialMenu();
 		break;
-    default:break;
-    }
+	default:break;
+	}
 }
+
+//-----------------------------------------------------------------------------------------------------------------------//
 
 void InicialMenu()
 {
@@ -1460,21 +1432,22 @@ void InicialMenu()
 
 	case 2:
 		header("LOAD GAME LIBRARY");
-		//IR para função que vai buscar o nome da pasta/ficheiro
-		//gl.loadGameLibraryFromFile();
+		cout << " Loading..." << endl;
+		gl.loadGameLibrary();
+		cout << " Done" << endl;
 		break;
 	case 3:
-	    header("SAVE GAME LIBRARY");
-	    cout << " Saving..." << endl;
-	    gl.saveGameLibrary();
-	    cout << " Done" << endl;
-	    break;
+		header("SAVE GAME LIBRARY");
+		cout << " Saving..." << endl;
+		gl.saveGameLibrary();
+		cout << " Done" << endl;
+		break;
 	case 0:
 		system("cls");
 		return;
-    default:break;
-    }
-	    PrincipalMenu(gl);
+	default:break;
+	}
+	PrincipalMenu(gl);
 }
 
 //=======================================================================================================================//
@@ -1482,7 +1455,7 @@ void InicialMenu()
 int main() {
 	system("title   GAME LIBRARY");
 	mainHeader("Welcome to the Game Library");
-	
+
 	InicialMenu();
 
 	return 0;
