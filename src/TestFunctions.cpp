@@ -551,7 +551,7 @@ void addGames(GameLibrary & gL)
 	bool isOnline = menuOnlineHome();
 	string name = nameNumbersInput(" Game name (only letters, space and numbers): ");
 	// TODO: Verify this input control
-	double price = duobleInput(" Game price: ");
+	double price = doubleInput(" Game price: ");
 	ageRange ar = ageRangeInput(" Age Range:");
 	Date releaseDate = dateInput(" Release date: ");
 	gameLibraryPlatform platform = menuPlatform();
@@ -575,7 +575,7 @@ void addGames(GameLibrary & gL)
 	}
 	else {
 		bool isFixed = menuSubcription();
-		double subsPrice = duobleInput(" Subscription price: ");
+		double subsPrice = doubleInput(" Subscription price: ");
 
 		if (isFixed) {
 			if (platform != all_platforms) {
@@ -665,9 +665,9 @@ void addSale(Title*  game) {
 //-----------------------------------------------------------------------------------------------------------------------//
 
 void addUpdate(Title * game) {
-	double version = duobleInput(" Update Version: ");
+	double version = doubleInput(" Update Version: ");
 	string description = nameNumbersInput(" Description: ");
-	double price = duobleInput(" Update Price: ");
+	double price = doubleInput(" Update Price: ");
 	Date date = dateInput(" Update Date: ");
 	try
 	{
@@ -688,7 +688,7 @@ void addCreditCard(User*  user) {
 	string number = nameNumbersInput(" Credit Card Number: ");
 	string holder = namesInput(" Credit Card Holder: ");
 	Date expiryDate = dateInput(" Expiration Date: ");
-	double balance = duobleInput(" Balance: ");
+	double balance = doubleInput(" Balance: ");
 	CreditCard c(number, holder, expiryDate, balance);
 	if (user->addCreditCard(c)) {
 		cout << "\n Credit Card Added Successfully";
@@ -700,11 +700,11 @@ void addCreditCard(User*  user) {
 //-----------------------------------------------------------------------------------------------------------------------//
 
 void addFunds(User*  user, string creditCardNumber) {
-	double funds = duobleInput(" Amout to be added: ");
+	double funds = doubleInput(" Amout to be added: ");
 	if (funds < 0)
 	{
 		cout << " Must be a positive number\n";
-		funds = duobleInput(" Amout to be added: ");
+		funds = doubleInput(" Amout to be added: ");
 	}
 	cout << "\n Funds Successfully Added\n";
 	cout << " New Balance: " << user->getCreditCard(creditCardNumber)->addFunds(funds) << endl;	
@@ -924,7 +924,7 @@ void UpdateTitle(User * user, unsigned titleID) {
 //-----------------------------------------------------------------------------------------------------------------------//
 // TODO: Make animation if we have time
 void PlayTitle(GameLibrary & gl, User * user, unsigned titleID) {
-	double duration = duobleInput(" Play for (in hours): ");
+	double duration = doubleInput(" Play for (in hours): ");
 	if(user->playGame(gl.getTitle(titleID), duration))
 		cout << "\n Oooh... That was fun wasn't it?? You should come more often";
 }

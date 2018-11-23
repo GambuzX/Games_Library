@@ -47,7 +47,7 @@ std::string nameNumbersInput(std::string question);
 * @see		afterNumber
 * @see		getlineZ		(@		ConsoleFunctions)
 */
-double duobleInput(std::string question);
+double doubleInput(std::string question);
 
 /**
 * Robustness of the int Input:

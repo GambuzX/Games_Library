@@ -158,7 +158,7 @@ void GameLibrary::saveGameLibrary()
 }
 
 void GameLibrary::loadGameLibraryFromFile(std::fstream& titleFile)
-{
+{/*
 	ifstream info_file("info.txt");
 	size_t ntitles, nusers;
 	string str;
@@ -388,7 +388,7 @@ void GameLibrary::loadGameLibraryFromFile(std::fstream& titleFile)
                 addTitle(new OnlineTitle(title_name, stod(_price), Date(_release_date), ar, glp, glg, company, new FixedSubscription(stod(_subs_value))));
             }
 		}
-	}
+	}*/
 }
 
 bool GameLibrary::updateTitle(Title* title, Update * update) {

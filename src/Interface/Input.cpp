@@ -226,22 +226,6 @@ string specialInput(string question)
 	return removeSpace(name);
 }
 
-Address addressInput(string question) {
-	Address addr;
-	unsigned int houseNumber;
-	string streetName, city, country;
-	cout << question << endl;
-
-	houseNumber = static_cast<unsigned int>(doubleInput(" Enter House Number: "));
-	streetName = namesInput(" Enter Street name: ");
-	city = namesInput(" Enter city name: ");
-	country = namesInput(" Enter country name: ");
-
-	addr = Address(houseNumber, streetName, city, country);
-
-	return addr;
-}
-
 /**
 * Check if there is any other character than an escape line in the end of the input
 *
@@ -399,6 +383,23 @@ Date dateInput(string question)
 	}
 	return d;
 }
+
+Address addressInput(string question) {
+	Address addr;
+	unsigned int houseNumber;
+	string streetName, city, country;
+	cout << question << endl;
+
+	houseNumber = intInput(" Enter House Number: ");
+	streetName = namesInput(" Enter Street name: ");
+	city = namesInput(" Enter city name: ");
+	country = namesInput(" Enter country name: ");
+
+	addr = Address(houseNumber, streetName, city, country);
+
+	return addr;
+}
+
 
 ageRange ageRangeInput(string question)
 {
