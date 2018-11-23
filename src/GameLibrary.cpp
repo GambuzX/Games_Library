@@ -220,7 +220,7 @@ void GameLibrary::loadGameLibrary()
 
 	for (size_t i = 1; i <= nusers; ++i) {
         string name, email, road_name, city, country, number, holder, expiry, transaction_date;
-        int age, house_number, ncredit_cards, ntransactions, transaction_type, nfriends;
+        int age, house_number, ncredit_cards, ntransactions=0, transaction_type, nfriends;
         double balance, transaction_value;
 
 	    user_file_name << "user_" << i << ".txt";
