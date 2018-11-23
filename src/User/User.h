@@ -170,6 +170,14 @@ public:
 	bool addCreditCard(CreditCard cc);
 
 	/**
+	* @brief Removes a CreditCard to the user's creditCards Private Member
+	*
+	* @param creditCardNumber Credit Card Number to be removed
+	* @return bool Returns true if successfull, false otherwise
+	*/
+	bool removeCreditCard(std::string creditCardNumber);
+
+	/**
 	* @brief Verifies if the user's balance is enough for parameter val
 	*
 	* @param val Value to be compared

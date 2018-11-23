@@ -93,6 +93,47 @@ public:
 	void addNewSession(const User * u, const Session & sess) override { throw NotOnlineTitle(getTitleID()); }
 
 	/**
+	* @brief Get the last N Sessions of a User for this Title
+	* Virtual function that may throw exceptions if called on the incorrect object
+	* May also throw other exceptions if the user is not a owner of the Title
+	*
+	* @param usr Pointer to the User
+	* @param n Number of sessions to get
+	* @return vector<Session> Containing the last N sessions of User
+	* @throw InexistentUser() If the user specified by its ID doesn't own the Online Title
+	* @throw NotOnlineTitle If it is called on a Home Title Object
+	*/
+	const std::vector<Session> getLastNUserSessions(User * usr, int n) const { throw NotOnlineTitle(getTitleID()); };
+
+	/**
+	* @brief Get Top 3 Players Session
+	* Virtual function that may throw exceptions if called on the incorrect object
+	*
+	* @return const map<User*, const std::vector<Session>*, ComparePtr<User> Containing all the sessions of the top 3 users
+	* @throw NotOnlineTitle If it is called on a Home Title Object
+	*/
+	const std::map<User*, const std::vector<Session>*, ComparePtr<User>> getTop3PlayersSessions() const { throw NotOnlineTitle(getTitleID()); };
+
+	/**
+	* @brief Get the last N Sessions of all Users for this Title
+	* Virtual function that may throw exceptions if called on the incorrect object
+	*
+	* @param n Number of sessions to get per User
+	* @return map<User*, vector<Session>, ComparePtr<User>> Containing the last N sessions of all Users
+	* @throw NotOnlineTitle If it is called on a Home Title Object
+	*/
+	const std::map<User*, std::vector<Session>, ComparePtr<User>> getAllUsersLastNSessions(unsigned int n) const { throw NotOnlineTitle(getTitleID()); };
+
+	/**
+	* @brief Get the Title Sessions object
+	* Virtual function that may throw exceptions if called on the incorrect object
+	*
+	* @return const std::map<User*, std::vector<Session>, ComparePtr<User>> * Returns Pointer to the titleStats Private Member
+	* @throw NotOnlineTitle If it is called on a Home Title Object
+	*/
+	const std::map<User*, std::vector<Session>, ComparePtr<User>> * getTitleSessions() const { throw NotOnlineTitle(getTitleID()); };
+
+	/**
 	 * @brief Get the Subscription object
 	 * Virtual function that may throw exceptions if called on the incorrect object
 	 * 

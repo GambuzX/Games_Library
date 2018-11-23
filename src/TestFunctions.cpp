@@ -17,7 +17,12 @@ void GamesMenu(GameLibrary & gameL);
 void UsersMenu(GameLibrary & gl);
 void GameOperationsMenu(GameLibrary & gl, unsigned titleID);
 void UserOperationsMenu(GameLibrary & gl, string mail);
+void UserGameMenu(GameLibrary & gl, User * user);
 
+// TODO: Se houver tempo mudar input para lista de ajuda
+// TODO: Date problem
+// TODO: promotionDisplay and updateDisplay prblem with first line
+// TODO: promotion percentagem problem
 /**
 *  +------------------------+
 *  |                        |
@@ -107,6 +112,15 @@ void updateDisplay(string firstLine, const Update & update) {
 	cout << "  - Update Date:\t" << update.getDate() << endl << endl;
 }
 
+//-----------------------------------------------------------------------------------------------------------------------//
+
+void sessionDisplay(string firstLine, const Session & sess) {
+	cout << firstLine << endl;
+	cout << "  - Date:\t\t" << sess.getDate() << endl;
+	cout << "  - Duration:\t" << sess.getSessionDuration() << endl << endl;
+}
+
+
 //=======================================================================================================================//
 
 /**
@@ -118,12 +132,23 @@ void updateDisplay(string firstLine, const Update & update) {
 */
 
 void titleSummary(const set<Title*, ComparePtr<Title>> & games) {
+	string type = "Online";
 	for (auto & title : games)
 	{
+		try
+		{
+			title->getSubscription();
+		}
+		catch (NotOnlineTitle)
+		{
+			type = "Home";
+		}
 		cout << " Title ID:\t" << title->getTitleID() << endl;
 		cout << " Game:\t\t" << title->getName() << endl;
 		cout << " Price:\t\t" << title->getBasePrice() << endl;
+		cout << " Type:\t\t" << type << endl;
 		cout << " Platform:\t" << title->getPlatformName() << endl << endl;
+		type = "Online";
 	}
 	system("pause");
 }
@@ -213,6 +238,77 @@ void transactionsSummary(User*  user) {
 	system("pause");
 }
 
+//-----------------------------------------------------------------------------------------------------------------------//
+
+void otherStatsSummary(GameLibrary & gl, User*  user) {
+	cout << " Online Titles Play Time:\t" << gl.onlineTitlesPlayTime(user) << endl;
+	cout << " Entire Library Cost:\t\t" << gl.userLibraryCost(user) << endl << endl;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------//
+
+void averageStatsSummary(GameLibrary & gl) {
+	cout << " Average User Library Cost:\t" << gl.averageUserLibraryCost() << endl;
+	cout << " Average User Library Size:\t" << gl.averageUserTitles() << endl << endl;
+
+}
+
+//-----------------------------------------------------------------------------------------------------------------------//
+
+void LastNSessionsSummary(GameLibrary & gl, User * user, unsigned titleID) {
+	unsigned n = intInput(" Maximum Number of Sessions: ");
+	vector<Session> prov = gl.getTitle(titleID)->getLastNUserSessions(user, n);
+	unsigned int i = 1;
+	string title;
+	for (auto & sess: prov)
+	{
+		title = " Session " + i + ':';
+		sessionDisplay(title, sess);
+		i++;
+	}
+}
+
+//-----------------------------------------------------------------------------------------------------------------------//
+
+void UserSessionSummary(const map<User*, const vector<Session>*, ComparePtr<User>> & prov) {
+	string title;
+	for (const auto & user : prov)
+	{
+		cout << " User " << user.first->getUserID() << " :\n\n";
+		for (size_t i = 0; i < user.second->size(); i++)
+		{
+			title = " Session " + i + ':';
+			sessionDisplay(title, user.second->at(i));
+		}
+		cout << endl;
+		setcolor(3);
+		lineAcrossConsole('-');
+		cout << endl;
+		setcolor(15);
+	}
+
+}
+
+//-----------------------------------------------------------------------------------------------------------------------//
+
+void UserSessionSummary2(const map<User*, vector<Session>, ComparePtr<User>> * prov) {
+	string title;
+	for (const auto & user : *prov)
+	{
+		cout << " User " << user.first->getUserID() << " :\n\n";
+		for (size_t i = 0; i < user.second.size(); i++)
+		{
+			title = " Session " + i + ':';
+			sessionDisplay(title, user.second.at(i));
+		}
+		cout << endl;
+		setcolor(3);
+		lineAcrossConsole('-');
+		cout << endl;
+		setcolor(15);
+	}
+
+}
 
 //=======================================================================================================================//
 
@@ -271,7 +367,7 @@ void titleInfo(Title * game, bool isOnline)
 //-----------------------------------------------------------------------------------------------------------------------//
 
 void userInfo(User * user)
-{
+{	
 	cout << " User ID:\t\t" << user->getUserID() << endl;
 	cout << " Name:\t\t\t" << user->getName() << endl;
 	cout << " Age:\t\t\t" << user->getAge() << endl;
@@ -281,8 +377,6 @@ void userInfo(User * user)
 	cout << " # Credit Cards:\t" << user->getCreditCards().size() << endl;
 	cout << " # Friends:\t\t\t" << user->getFriendsList().size() << endl;
 	cout << " # Titles:\t\t\t" << user->getPurchasedGames()->size() << endl;
-	//cout << " Titles:\n";
-	//titleSummary(*(user->getPurchasedGames()));
 	cout << " # Transactions:\t" << user->getTransactions().size() << endl;
 	cout << " Money Spend:\t\t" << user->getTotalTransactionsValue();
 	cout << " Favorite Platform:" << user->getFavoritePlatform();
@@ -353,26 +447,12 @@ gameLibraryPlatform menuPlatform() {
 
 	option_number = menuInput(" Option ? ", 0, 8);
 
-	switch (option_number)
-	{
-	case 0: return all_platforms;
-	case 1: return nds;
-	case 2: return pc;
-	case 3: return ps3;
-	case 4: return ps4;
-	case 5: return switche;
-	case 6: return wii;
-	case 7: return xbox1;
-	case 8: return xbox360;
-		// Should never reach here
-	default:
-		throw invalid_argument(" Error in menuPlatform() ");
-	}
+	return static_cast<gameLibraryPlatform>(option_number);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------//
 
-gameLibraryGenre menuGenre() {
+gameLibraryGenre menuGenre(bool rank) {
 	int option_number;
 
 	cout << " Genre :" << endl << endl;
@@ -395,38 +475,18 @@ gameLibraryGenre menuGenre() {
 
 	cout << "   9 - Sports" << endl;
 
-	cout << "   10 - MMO" << endl << endl;
+	cout << "   10 - MMO" << endl;
 
-	option_number = menuInput(" Option ? ", 1, 10);
+	if (rank) cout << "   0 - All" << endl;
+	cout << endl;
+	if (rank) option_number = menuInput(" Option ? ", 0, 10);
+	else option_number = menuInput(" Option ? ", 1, 10);
 
-	switch (option_number)
-	{
-	case 1:
-		return action;
-	case 2:
-		return adventure;
-	case 3:
-		return puzzle;
-	case 4:
-		return shooter;
-	case 5:
-		return simulation;
-	case 6:
-		return rpg;
-	case 7:
-		return platformer;
-	case 8:
-		return strategy;
-	case 9:
-		return sports;
-	case 10:
-		return mmo;
-	default:
-		throw invalid_argument(" Error in menuGenre() ");
-	}
+	return static_cast<gameLibraryGenre>(option_number);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------//
+
 bool menuSubcription() {
 	int option_number;
 
@@ -450,6 +510,32 @@ bool menuSubcription() {
 	//cout << endl;
 }
 
+//-----------------------------------------------------------------------------------------------------------------------//
+
+ConsumingHabitsFilter menuTransactionsTypes() {
+	int option_number;
+
+	cout << " Consuming Habit Filter:" << endl << endl;
+
+	cout << "   1 - Purchases" << endl;
+
+	cout << "   2 - Updates" << endl;
+
+	cout << "   3 - Subscriptions" << endl;
+
+	cout << "   4 - Purchases and Updates" << endl;
+
+	cout << "   5 - Purchases and Subscriptions" << endl;
+
+	cout << "   6 - Updates and Subscriptions" << endl;
+
+	cout << "   0 - All" << endl << endl;
+
+	option_number = menuInput(" Option ? ", 0, 6);
+
+	return static_cast<ConsumingHabitsFilter> (option_number);
+}
+
 //=======================================================================================================================//
 
 /**
@@ -465,11 +551,11 @@ void addGames(GameLibrary & gL)
 	bool isOnline = menuOnlineHome();
 	string name = nameNumbersInput(" Game name (only letters, space and numbers): ");
 	// TODO: Verify this input control
-	double price = duobleInput(" Game price: ");
+	double price = doubleInput(" Game price: ");
 	ageRange ar = ageRangeInput(" Age Range:");
 	Date releaseDate = dateInput(" Release date: ");
 	gameLibraryPlatform platform = menuPlatform();
-	gameLibraryGenre genre = menuGenre();
+	gameLibraryGenre genre = menuGenre(false);
 	string company = namesInput(" Publisher name (only letters and space): ");;
 
 	//Title(std::string name, double price, Date releaseDate, ageRange ageR, std::string platform, std::string genre, std::string company);
@@ -489,7 +575,7 @@ void addGames(GameLibrary & gL)
 	}
 	else {
 		bool isFixed = menuSubcription();
-		double subsPrice = duobleInput(" Subscription price: ");
+		double subsPrice = doubleInput(" Subscription price: ");
 
 		if (isFixed) {
 			if (platform != all_platforms) {
@@ -579,9 +665,9 @@ void addSale(Title*  game) {
 //-----------------------------------------------------------------------------------------------------------------------//
 
 void addUpdate(Title * game) {
-	double version = duobleInput(" Update Version: ");
+	double version = doubleInput(" Update Version: ");
 	string description = nameNumbersInput(" Description: ");
-	double price = duobleInput(" Update Price: ");
+	double price = doubleInput(" Update Price: ");
 	Date date = dateInput(" Update Date: ");
 	try
 	{
@@ -602,7 +688,7 @@ void addCreditCard(User*  user) {
 	string number = nameNumbersInput(" Credit Card Number: ");
 	string holder = namesInput(" Credit Card Holder: ");
 	Date expiryDate = dateInput(" Expiration Date: ");
-	double balance = duobleInput(" Balance: ");
+	double balance = doubleInput(" Balance: ");
 	CreditCard c(number, holder, expiryDate, balance);
 	if (user->addCreditCard(c)) {
 		cout << "\n Credit Card Added Successfully";
@@ -614,14 +700,14 @@ void addCreditCard(User*  user) {
 //-----------------------------------------------------------------------------------------------------------------------//
 
 void addFunds(User*  user, string creditCardNumber) {
-	double funds = duobleInput(" Amout to be added: ");
+	double funds = doubleInput(" Amout to be added: ");
 	if (funds < 0)
 	{
 		cout << " Must be a positive number\n";
-		funds = duobleInput(" Amout to be added: ");
+		funds = doubleInput(" Amout to be added: ");
 	}
 	cout << "\n Funds Successfully Added\n";
-	cout << " New Balance: " << user->getCreditCard(creditCardNumber)->addFunds(funds) << endl;
+	cout << " New Balance: " << user->getCreditCard(creditCardNumber)->addFunds(funds) << endl;	
 }
 
 //-----------------------------------------------------------------------------------------------------------------------//
@@ -752,10 +838,102 @@ void removeFriend(GameLibrary & gl, User*  user) {
 	}
 	else if (user->removeFriend(frd))
 	{
-		cout << "\n Friend Removed Successfully";
+		cout << "\n Friend Removed Successfully"; 
 		return;
 	}
-	cout << "\n You don't have that user as a friend";
+	cout << "\n You don't have that user as a friend";	
+}
+
+//-----------------------------------------------------------------------------------------------------------------------//
+
+void removeCreditCard(User*  user) {
+	if (user->getCreditCards().size() == 0)
+	{
+		cout << " There are no Credit Cards to be removed\n";
+		return;
+	}
+	string number = nameNumbersInput(" Credit Card Number: ");
+	if (user->removeCreditCard(number))
+	{
+		cout << "\n Credit Card Removed Successfully";
+		return;
+	}
+	cout << "\n There is no Credit Card with that number\n";
+	cout << " Please consider taking a look at the Credit Cards Summary";	
+}
+
+//=======================================================================================================================//
+
+/**
+*  +------------------------+
+*  |                        |
+*  |        RANKINGS        |
+*  |                        |
+*  +------------------------+
+*/
+
+void UserMostPlayedTitlesRanking(GameLibrary & gl, User * user) {
+	gameLibraryPlatform platform = menuPlatform();
+	gameLibraryGenre genre = menuGenre(true);
+	gl.buildUserMostPlayedTitlesRanking(cout, user, platform, genre);
+	system("pause");
+}
+
+//-----------------------------------------------------------------------------------------------------------------------//
+
+void UserConsumingHabits(GameLibrary & gl, User * user) {
+	ConsumingHabitsFilter filter = menuTransactionsTypes();
+	gl.buildUserConsumingHabitsList(user, cout, filter);
+	system("pause");
+}
+
+//-----------------------------------------------------------------------------------------------------------------------//
+
+void globalPopRanking(GameLibrary & gl) {
+	gameLibraryPlatform platform = menuPlatform();
+	gameLibraryGenre genre = menuGenre(true);
+	ageRange ageR = ageRangeInput( " Age Restrition:\n");
+	gl.buildGlobalPopularityRanking(cout, platform, genre, ageR);
+	system("pause");
+}
+
+
+void globalRevRanking(GameLibrary & gl) {
+	gameLibraryPlatform platform = menuPlatform();
+	gameLibraryGenre genre = menuGenre(true);
+	ageRange ageR = ageRangeInput(" Age Restrition:\n");
+	gl.buildGlobalRevenueRanking(cout, platform, genre, ageR);
+	system("pause");
+}
+
+//=======================================================================================================================//
+
+/**
+*  +------------------------+
+*  |                        |
+*  |   TITLE OPERTATIONS    |
+*  |                        |
+*  +------------------------+
+*/
+
+void UpdateTitle(User * user, unsigned titleID) {
+	if (user->updateTitle(titleID))
+		cout << "\n Title Updated Successfully";
+}
+
+//-----------------------------------------------------------------------------------------------------------------------//
+// TODO: Make animation if we have time
+void PlayTitle(GameLibrary & gl, User * user, unsigned titleID) {
+	double duration = doubleInput(" Play for (in hours): ");
+	if(user->playGame(gl.getTitle(titleID), duration))
+		cout << "\n Oooh... That was fun wasn't it?? You should come more often";
+}
+
+//-----------------------------------------------------------------------------------------------------------------------//
+
+void BuyTitle(User * user, unsigned titleID) {
+	if (user->buyTitle(titleID))
+		cout << "\n Title Successfully Bought";
 }
 
 //=======================================================================================================================//
@@ -787,6 +965,54 @@ unsigned gameIDinput(GameLibrary & gL) {
 					cout << " You've seem to be struggling. Plz consider taking a look at the Game Summary\n";
 				}
 				titleID = intInput(" Title ID Number (0 to go back): ");
+			}
+			else
+			{
+				return titleID;
+			}
+		}
+		return titleID;
+	}
+}
+
+//-----------------------------------------------------------------------------------------------------------------------//
+
+unsigned userGameIDinput(User * user, bool hasToBeHome, bool hasToBeOnline, GameLibrary & gl) {
+	if (hasToBeHome && hasToBeOnline)
+	{
+		cout << " Error in (" << __func__ << ") function parameters \n";
+		return 0;
+	}
+	if (user->getPurchasedGames()->empty())
+	{
+		cout << " User has no titles in his library\n";
+		return 0;
+	}
+	else {
+		int nameErrors = 0;
+		unsigned titleID = intInput(" Title ID Number (0 to go back): ");
+		while (titleID != 0) {
+			if (!user->hasTitle(titleID))
+			{
+				nameErrors++;
+				cout << " User doesn't have a title with that ID\n";
+				if (nameErrors > 3)
+				{
+					cout << " You've seem to be struggling. Plz consider taking a look at the Users Titles Summary\n";
+				}
+				titleID = intInput(" Title ID Number (0 to go back): ");
+			}
+			else if (hasToBeHome && gl.isOnlineTitle(gl.getTitle(titleID)))
+			{
+				cout << " Title has to be Home\n";
+				nameErrors++;
+				titleID = 0;
+			}
+			else if (hasToBeOnline && !gl.isOnlineTitle(gl.getTitle(titleID)))
+			{
+				cout << " Title has to be Online\n";
+				nameErrors++;
+				titleID = 0;
 			}
 			else
 			{
@@ -871,7 +1097,7 @@ string creditCardInput(User * user) {
 
 void PromotionMenu(GameLibrary & gl, Title * game) {
 	int option_number;
-
+	
 	cout << " Possible Actions:" << endl << endl;
 
 	cout << "   1 - Promotions Summary" << endl;
@@ -931,22 +1157,17 @@ void PromotionMenu(GameLibrary & gl, Title * game) {
 
 //-----------------------------------------------------------------------------------------------------------------------//
 
-//TODO: Later if we have time
 void SessionsMenu(GameLibrary & gl, Title * game) {
 	int option_number;
-	//game->updateTitle();
-	//game->getUpdates();
-	//gl.updateTitle
-	//game->getStats
-	//game->getCurrentVersion
+	unsigned n;
 
 	cout << " List:" << endl << endl;
 
-	cout << "   1 - Last 10 Sessions" << endl;
+	cout << "   1 - Last N Sessions of Each User" << endl;
 
 	cout << "   2 - Top 3 Players Sessions" << endl;
 
-	cout << "   3 - All Sessions (by User Mail)" << endl;
+	cout << "   3 - All Sessions (by User ID)" << endl;
 
 	cout << "   0 - Go back" << endl << endl;
 
@@ -955,23 +1176,27 @@ void SessionsMenu(GameLibrary & gl, Title * game) {
 	switch (option_number)
 	{
 	case 1:
-		//header("Promotions Summary");
-		//promotionSummary(game);
-		//cout << endl << endl;
-		//PromotionMenu(gl, game);
+		header("Last N Sessions of Each User");
+		n = intInput(" Maximum Number of Sessions for Each User: ");
+		UserSessionSummary2(&(game->getAllUsersLastNSessions(n)));
+		system("pause");
+		cout << endl << endl;
+		SessionsMenu(gl, game);
 		break;
 
 	case 2:
-		//header("Add Sale");
-		//addSale(game);
-		//cout << endl << endl;
-		//PromotionMenu(gl, game);
+		header("Top 3 Player Sessions");
+		UserSessionSummary(game->getTop3PlayersSessions());
+		system("pause");
+		cout << endl << endl;
+		SessionsMenu(gl, game);
 		break;
 	case 3:
-		//header("Remove Sale");
-		//removeSale(game);
-		//cout << endl << endl;
-		//PromotionMenu(gl, game);
+		header("All Sessions by User ID");
+		UserSessionSummary2(game->getTitleSessions());
+		system("pause");
+		cout << endl << endl;
+		SessionsMenu(gl, game);
 		break;
 	case 0:
 		GameOperationsMenu(gl, game->getTitleID());
@@ -1039,14 +1264,15 @@ void CreditCardMenu(GameLibrary & gl, User * user) {
 
 	cout << "   2 - Add Credit Card" << endl;
 
-	// TODO: Remove Credit Card
-	cout << "   3 - Add Funds" << endl;
+	cout << "   3 - Remove Credit Card" << endl;
 
-	cout << "   4 - Transactions" << endl;
+	cout << "   4 - Add Funds" << endl;
+
+	cout << "   5 - Transactions" << endl;
 
 	cout << "   0 - Go back" << endl << endl;
 
-	option_number = menuInput(" Option ? ", 0, 4);
+	option_number = menuInput(" Option ? ", 0, 5);
 
 	switch (option_number)
 	{
@@ -1064,14 +1290,22 @@ void CreditCardMenu(GameLibrary & gl, User * user) {
 		CreditCardMenu(gl, user);
 		break;
 	case 3:
-		header("Add Funds");
-		number = creditCardInput(user);
-		if ('<' == number.at(0)) CreditCardMenu(gl, user);
-		else addFunds(user, number);
+		header("Remove Credit Card");
+		removeCreditCard(user);
 		cout << endl << endl;
 		CreditCardMenu(gl, user);
 		break;
 	case 4:
+		header("Add Funds");
+		number = creditCardInput(user);
+		if ('<' == number.at(0)) CreditCardMenu(gl, user);
+		else {
+			addFunds(user, number);
+			cout << endl << endl;
+			CreditCardMenu(gl, user);
+		}
+		break;
+	case 5:
 		header("Transactions");
 		transactionsSummary(user);
 		cout << endl << endl;
@@ -1131,6 +1365,135 @@ void FriendsMenu(GameLibrary & gl, User * user) {
 
 //-----------------------------------------------------------------------------------------------------------------------//
 
+void UserRankingsMenu(GameLibrary & gl, User * user) {
+	int option_number;
+	unsigned ID;
+
+
+	cout << " Possible Lists:" << endl << endl;
+
+	cout << "   1 - Consuming Habits" << endl;
+
+	cout << "   2 - Most Played Titles Ranking" << endl;
+
+	cout << "   3 - Last N Sessions" << endl;
+
+	cout << "   4 - Other Stats" << endl;
+
+	cout << "   0 - Go back" << endl << endl;
+
+	option_number = menuInput(" Option ? ", 0, 4);
+
+	switch (option_number)
+	{
+	case 1:
+		header("Consuming Habits");
+		UserConsumingHabits(gl, user);
+		cout << endl << endl;
+		UserRankingsMenu(gl, user);
+		break;
+
+	case 2:
+		header("Most Played Titles Ranking");
+		UserMostPlayedTitlesRanking(gl, user);
+		cout << endl << endl;
+		UserRankingsMenu(gl, user);
+		break;
+	case 3:
+		header("Last N Sessions Played Online");
+		ID = userGameIDinput(user, false, true, gl);
+		if (0 == ID) UserRankingsMenu(gl, user);
+		else {
+			LastNSessionsSummary(gl, user, ID);
+			system("pause");
+			cout << endl << endl;
+			UserRankingsMenu(gl, user);
+		}
+		break;
+	case 4:
+		header("Other Stats");
+		otherStatsSummary(gl, user);
+		UserRankingsMenu(gl, user);
+		break;
+	case 0:
+		UserGameMenu(gl, user);
+		break;
+	}
+}
+
+//-----------------------------------------------------------------------------------------------------------------------//
+
+void UserGameMenu(GameLibrary & gl, User * user) {
+	int option_number;
+	unsigned ID;
+
+	cout << " Possible Actions:" << endl << endl;
+
+	cout << "   1 - Titles Summary" << endl;
+
+	cout << "   2 - List and Rankings" << endl;
+
+	cout << "   3 - Buy New Title" << endl;
+
+	cout << "   4 - Play Title" << endl;
+
+	cout << "   5 - Update Title" << endl;
+
+	cout << "   0 - Go back" << endl << endl;
+
+	option_number = menuInput(" Option ? ", 0, 5);
+
+	switch (option_number)
+	{
+	case 1:
+		header("Titles Summary");
+		titleSummary(*(user->getPurchasedGames()));
+		cout << endl << endl;
+		UserGameMenu(gl, user);
+		break;
+
+	case 2:
+		header("Lists and Rankings");
+		UserRankingsMenu(gl, user);
+		break;
+	case 3:
+		header("Buy New Title");
+		ID = gameIDinput(gl);
+		if (0 == ID) UserGameMenu(gl, user);
+		else {
+			BuyTitle(user, ID);
+			cout << endl << endl;
+			UserGameMenu(gl, user);
+		}
+		break;
+	case 4:
+		header("Play Tile");
+		ID = userGameIDinput(user, false, false, gl);
+		if (0 == ID) UserGameMenu(gl, user);
+		else {
+			PlayTitle(gl, user, ID);
+			cout << endl << endl;
+			UserGameMenu(gl, user);
+		}
+		break;
+	case 5:
+		header("Update Tile");
+		ID = userGameIDinput(user, true, false, gl);
+		if (0 == ID) UserGameMenu(gl, user);
+		else {
+			UpdateTitle(user, ID);
+			cout << endl << endl;
+			UserGameMenu(gl, user);
+		}
+		break;
+	case 0:
+		UserOperationsMenu(gl, user->getEmail());
+		break;
+	}
+}
+
+//-----------------------------------------------------------------------------------------------------------------------//
+
 void GameOperationsMenu(GameLibrary & gl, unsigned titleID) {
 	header("Game Info");
 
@@ -1144,7 +1507,7 @@ void GameOperationsMenu(GameLibrary & gl, unsigned titleID) {
 	cout << "   1 - Detailed Info" << endl;
 
 	cout << "   2 - Promotions" << endl;
-
+	
 	if (isOnline) cout << "   3 - Sessions" << endl;
 	else cout << "   3 - Updates" << endl;
 
@@ -1164,8 +1527,6 @@ void GameOperationsMenu(GameLibrary & gl, unsigned titleID) {
 	case 2:
 		header("Promotions");
 		PromotionMenu(gl, game);
-		cout << endl << endl;
-		GameOperationsMenu(gl, titleID);
 		break;
 	case 3:
 		if (isOnline) {
@@ -1177,14 +1538,12 @@ void GameOperationsMenu(GameLibrary & gl, unsigned titleID) {
 			header("Updates");
 			UpdateMenu(gl, game);
 		}
-		cout << endl << endl;
-		GameOperationsMenu(gl, titleID);
 		break;
 	case 0:
 		GamesMenu(gl);
 		break;
-	default:break;
-	}
+    default:break;
+    }
 
 
 }
@@ -1195,13 +1554,6 @@ void UserOperationsMenu(GameLibrary & gl, string mail) {
 	header("User Info");
 
 	User * user = gl.getUser(mail);
-
-	//user->addCreditCard;
-	//user->addFriend;
-	//user->addTransaction;
-	//user->buyTitle;
-	//user->playGame;
-	//user->updateTitle;
 
 	int option_number;
 
@@ -1230,15 +1582,15 @@ void UserOperationsMenu(GameLibrary & gl, string mail) {
 
 	case 2:
 		header("Credit Cards");
-		//PromotionMenu(gl, game);
-		cout << endl << endl;
-		UserOperationsMenu(gl, mail);
+		CreditCardMenu(gl, user);
 		break;
 	case 3:
-		//header("Sessions");
-		//SessionsMenu(gl, game);
-		cout << endl << endl;
-		UserOperationsMenu(gl, mail);
+		header("Friends");
+		FriendsMenu(gl, user);
+		break;
+	case 4:
+		header("Games");
+		UserGameMenu(gl, user);
 		break;
 	case 0:
 		UsersMenu(gl);
@@ -1301,8 +1653,8 @@ void GamesMenu(GameLibrary & gameL) {
 		header("CREATE GAME LIBRARY");
 		PrincipalMenu(gameL);
 		break;
-	default:break;
-	}
+    default:break;
+    }
 }
 
 //-----------------------------------------------------------------------------------------------------------------------//
@@ -1363,6 +1715,54 @@ void UsersMenu(GameLibrary & gl) {
 
 //-----------------------------------------------------------------------------------------------------------------------//
 
+void ListsRankingsMenu(GameLibrary & gl) {
+	header("Lists and Rankings");
+	int option_number;
+
+	cout << " Possible Rankings:" << endl << endl;
+
+	cout << "   1 - Average Stats" << endl;
+
+	cout << "   2 - Popularity Ranking" << endl;
+
+	cout << "   3 - Revenue Ranking" << endl;
+
+	// TODO: Add Online Most Played
+
+	cout << "   0 - Go back" << endl << endl;
+
+	option_number = menuInput(" Option ? ", 0, 3);
+
+	switch (option_number)
+	{
+	case 1:
+		header("Average Stats");
+		averageStatsSummary(gl);
+		UsersMenu(gl);
+		break;
+
+	case 2:
+		header("Popularity Ranking");
+		globalPopRanking(gl);
+		cout << endl << endl;
+		UsersMenu(gl);
+		break;
+	case 3:
+		header("Revenue Ranking");
+		globalRevRanking(gl);
+		cout << endl << endl;
+		UsersMenu(gl);
+		break;
+	case 0:
+		header("CREATE GAME LIBRARY");
+		PrincipalMenu(gl);
+		break;
+	default:break;
+	}
+}
+
+//-----------------------------------------------------------------------------------------------------------------------//
+
 void PrincipalMenu(GameLibrary & gameL)
 {
 	int option_number;
@@ -1372,14 +1772,12 @@ void PrincipalMenu(GameLibrary & gameL)
 	cout << "   1 - Manage Games" << endl;
 
 	cout << "   2 - Manage Users" << endl;
-	//TODO: Nao gosto mas ? para poder ver os jogos, jogar, comprar...
-	cout << "   3 - Login as a User" << endl;
 
-	cout << "   4 - Make a List/Ranking" << endl;
+	cout << "   3 - Lists and Rankings" << endl;
 
 	cout << "   0 - Go back" << endl << endl;
 
-	option_number = menuInput(" Option ? ", 0, 4);
+	option_number = menuInput(" Option ? ", 0, 3);
 
 	switch (option_number)
 	{
@@ -1390,18 +1788,14 @@ void PrincipalMenu(GameLibrary & gameL)
 		UsersMenu(gameL);
 		break;
 	case 3:
-		header("Login as User");
-		break;
-	case 4:
-		header("Lists and Rankings");
 		break;
 	case 0:
 		system("cls");
 		mainHeader("Welcome to the Game Library");
 		InicialMenu();
 		break;
-	default:break;
-	}
+    default:break;
+    }
 }
 
 //-----------------------------------------------------------------------------------------------------------------------//
@@ -1432,30 +1826,29 @@ void InicialMenu()
 
 	case 2:
 		header("LOAD GAME LIBRARY");
-		cout << " Loading..." << endl;
-		gl.loadGameLibrary();
-		cout << " Done" << endl;
+		//IR para função que vai buscar o nome da pasta/ficheiro
+		//gl.loadGameLibraryFromFile();
 		break;
 	case 3:
-		header("SAVE GAME LIBRARY");
-		cout << " Saving..." << endl;
-		gl.saveGameLibrary();
-		cout << " Done" << endl;
-		break;
+	    header("SAVE GAME LIBRARY");
+	    cout << " Saving..." << endl;
+	    gl.saveGameLibrary();
+	    cout << " Done" << endl;
+	    break;
 	case 0:
 		system("cls");
 		return;
-	default:break;
-	}
-	PrincipalMenu(gl);
+    default:break;
+    }
+	    PrincipalMenu(gl);
 }
 
 //=======================================================================================================================//
 
-int main() {
+int main() {	
 	system("title   GAME LIBRARY");
 	mainHeader("Welcome to the Game Library");
-
+	
 	InicialMenu();
 
 	return 0;
