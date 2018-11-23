@@ -131,7 +131,6 @@ const map<User*, const vector<Session>*, ComparePtr<User>> OnlineTitle::getTop3P
 	return returnMap;
 }
 
-
 void OnlineTitle::updateTitle(Update * newUpdate)
 {
 	throw NotHomeTitle(getTitleID());
@@ -145,5 +144,14 @@ void OnlineTitle::updateUserVersion(const User * usr)
 void OnlineTitle::displayTitleInfo(std::ostream &os)
 {
 	Title::displayTitleInfo(os);
-	os << subscription->getSubscriptionPrice() << endl;
+	os << 0 << endl;
+	os << "Subscription Info:" << endl;
+	os << subscription->getSubscriptionPrice() << " " << subscription->isFixedSubscription() << endl;
+	os << "Sessions:" << endl;
+	os << titleStats.size() << endl;
+
+	for (auto &it : titleStats) {
+	    for (Session &s : it.second)
+	        os << it.first->getUserID() << " " << s;
+	}
 }

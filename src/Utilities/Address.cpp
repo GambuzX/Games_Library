@@ -58,3 +58,10 @@ ostream & operator<<(ostream & os, const Address & a)
 	os << " Country:\t\t" << a.getCountry() << endl;
 	return os;
 }
+
+void Address::writeAddress(ostream &os)
+{
+	os << getHouseNumber() << " " << getStreetName() << endl;
+	os << getCity() << endl;
+	os << getCountry() << endl;
+}

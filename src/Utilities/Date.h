@@ -92,6 +92,8 @@ public:
 	 */
 	Date(const Date & date);
 
+	Date(std::string &date);
+
 	/**
 	 * @brief Get the Day Private Member
 	 * 

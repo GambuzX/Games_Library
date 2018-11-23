@@ -110,6 +110,7 @@ const Update & HomeTitle::getCurrentUserVersion(unsigned int userID) const
 void HomeTitle::displayTitleInfo(std::ostream &os)
 {
 	Title::displayTitleInfo(os);
+	os << 1 << endl;
 }
 
 /*

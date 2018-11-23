@@ -78,6 +78,8 @@ public:
 	* @return ostream& Output stream passed as argument
 	*/
 	friend std::ostream & operator<<(std::ostream & os, const Transaction & trans);
+
+	void writeTransaction(std::ostream &os) const;
 };
 
 /** @} */
