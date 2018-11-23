@@ -133,7 +133,7 @@ void GameLibrary::saveGameLibrary()
 	    user_file_name.clear();
 
 	    // write user information including games by id
-		user_file << user.first;
+		user_file << *(user.first);
 		user_file << "Games:" << endl;
 
 		for (auto title : user.second) {
@@ -203,9 +203,11 @@ void GameLibrary::loadGameLibrary()
 	ostringstream user_file_name;
 	ostringstream title_file_name;
 
+	vector<pair<unsigned int, vector<unsigned int>>> allfriends;
+
 	for (size_t i = 1; i <= nusers; ++i) {
         string name, email, road_name, city, country, number, holder, expiry, transaction_date;
-        int age, house_number, ncredit_cards, ntransactions, transaction_type;
+        int age, house_number, ncredit_cards, ntransactions, transaction_type, nfriends;
         double balance, transaction_value;
 
 	    user_file_name << "user_" << i << ".txt";
@@ -216,6 +218,7 @@ void GameLibrary::loadGameLibrary()
 	    Address addr;
 	    vector<CreditCard> cc;
 	    vector<Transaction> trans;
+	    vector<unsigned int> friend_ids;
 
 	    while(getline(user_file, str)) {
 
@@ -258,7 +261,7 @@ void GameLibrary::loadGameLibrary()
 	            --ncredit_cards;
 	            break;
 	        case transactions:
-                if (ntransactions == 0) { user_current_state = friends;}
+                if (ntransactions == 0) { user_current_state = friends; getline(user_file, str); nfriends = stoi(str);}
 	            if (str == "Transactions:") { getline(user_file, str); ntransactions = stoi(str);}
 
 	            getline(user_file, str);
@@ -270,6 +273,8 @@ void GameLibrary::loadGameLibrary()
                 --ntransactions;
                 break;
 	        case friends:
+	        	friend_ids.push_back(stoi(str));
+	        	--nfriends;
 	            break;
 	        default: break;
 	        }
@@ -285,6 +290,26 @@ void GameLibrary::loadGameLibrary()
 	    for (Transaction & transaction : trans) {
 	        user->addTransaction(transaction.getValue(), transaction.getDate(), transaction.getType());
 	    }
+
+	    allfriends.push_back(make_pair(i, friend_ids));
+
+	    user_file.close();
+	}
+
+	for (pair<unsigned int, vector<unsigned int>> &friends_list : allfriends) {
+			User* user = find_if(users.begin(), users.end(),
+				[friends_list](const std::pair<User* const, std::set<Title*, ComparePtr<Title>>> &user) {
+					return user.first->getUserID() == friends_list.first;
+			})->first;
+
+			for (unsigned int &f : friends_list.second) {
+				User* fr = find_if(users.begin(), users.end(),
+					[f](const std::pair<User* const, std::set<Title*, ComparePtr<Title>>> &user) {
+					return user.first->getUserID() == f;
+				})->first;
+				user->addFriend(fr);
+			}
+
 	}
 
 	for (size_t i = 1; i <= ntitles; ++i) {
@@ -425,6 +450,7 @@ void GameLibrary::loadGameLibrary()
                 addTitle(new OnlineTitle(title_name, stod(_price), Date(_release_date), ar, glp, glg, company, new FixedSubscription(stod(_subs_value))));
             }
 		}
+		title_file.close();
 	}
 }
 

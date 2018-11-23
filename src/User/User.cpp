@@ -405,11 +405,13 @@ ostream& operator<<(ostream &os, const User &user)
 	}
 
 	os << "Transactions:" << endl;
+	os << user.getTransactions().size() << endl;
 	for (Transaction t : user.getTransactions()) {
 		t.writeTransaction(os);
 	}
 
 	os << "Friends:" << endl;
+	os << user.getFriendsList().size() << endl;
 	for (const User* f : user.getFriendsList()) {
 		os << f->getUserID() << endl;
 	}
