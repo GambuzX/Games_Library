@@ -1,4 +1,4 @@
-Difficulties:
+﻿Difficulties:
 - Understanding the topic
 - Dealing with the 2 different types of Title : ended up using exceptionst
 - Motivation to work
@@ -43,3 +43,5 @@ Functionalities:
 Esforço:
 - Gil fez tudo
 - Outros levaram carry
+
+Separamos Titulos por plataforma, they are different
