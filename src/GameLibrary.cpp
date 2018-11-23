@@ -14,6 +14,7 @@ using namespace std;
 set<Title*, ComparePtr<Title>> GameLibrary::titles;
 map<Title*, double, ComparePtr<Title>> GameLibrary::titlesRevenue;
 
+class GameLibrary;
 
 GameLibrary::~GameLibrary()
 {
@@ -90,6 +91,7 @@ bool GameLibrary::addTitle(Title * title) {
 		}
 	if (repeated) return false;
 	titles.insert(title);
+	titlesRevenue.insert(pair<Title*, double>(title, 0));
 	return true;
 }
 
@@ -98,16 +100,27 @@ bool GameLibrary::removeTitle(Title * title) {
 	it = titles.find(title);
 	if (it == titles.end()) return false;
 	titles.erase(it);
+
+	map<Title*, double, ComparePtr<Title>>::iterator it2;
+	it2 = titlesRevenue.find(title);
+	if (it2 == titlesRevenue.end()) return false;
+	titlesRevenue.erase(it2);
 	return true;
 }
 
 bool GameLibrary::removeTitle(unsigned int id) {
+	Title * title = getTitle(id);
+	if (title == nullptr) return false;
+
 	std::set<Title*, ComparePtr<Title>>::iterator it;
-	for (it = titles.begin(); it != titles.end(); it++)
-		if ((*it)->getTitleID() == id)
-			break;
+	it = titles.find(title);
 	if (it == titles.end()) return false;
 	titles.erase(it);
+
+	map<Title*, double, ComparePtr<Title>>::iterator it2;
+	it2 = titlesRevenue.find(title);
+	if (it2 == titlesRevenue.end()) return false;
+	titlesRevenue.erase(it2);
 	return true;
 }
 
