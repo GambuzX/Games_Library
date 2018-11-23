@@ -61,7 +61,7 @@ public:
 		oss << oldUpdate.getVersion();
 		if (currentVersion == Update())
 			return "Tried to add old Update: " + oss.str();
-		std::string msg = "Tried to add old Update: " + oss.str() + "while Current Version is: ";
+		std::string msg = "Tried to add old Update: " + oss.str() + " while Current Version is: ";
 		oss.clear();
 		oss << currentVersion.getVersion();
 		return msg + oss.str();
