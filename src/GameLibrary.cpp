@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include <string>
 #include <cstdlib>
 #include <algorithm>
@@ -486,35 +487,53 @@ bool GameLibrary::updateTitle(Title* title, Update * update) {
 	return true;
 }
 
-void GameLibrary::buildGlobalPopularityRanking(ostream & os, gameLibraryPlatform platform, gameLibraryGenre genre, ageRange ageR) {
-	
+void GameLibrary::buildGlobalPopularityRanking(ostream & os, gameLibraryPlatform platform, gameLibraryGenre genre, ageRange ageR)
+{
+
+	unsigned widthID = 6, widthName = 6, witdthR = 6, widthIn = 6;
+
 	multimap<int, const Title*> rankedList;
-	
+
+
 	// Search for all the titles that match and organize them by popularity
 	for (const Title * title : titles)
 	{
 		if (!(title->getPlatform() == platform || platform == all_platforms)) continue;
 		if (!(title->getGenre() == genre || genre == all_genres)) continue;
 		int numberOfPlayers = title->getNumberUsers(ageR);
+		if (title->getName().size() > widthName) widthName = title->getName().size();
+		if (to_string(title->getTitleID()).length() > widthID) widthID = to_string(title->getTitleID()).length();
+		if (numberOfPlayers > int(witdthR)) witdthR = numberOfPlayers;
 		rankedList.insert(pair<int, const Title*>(numberOfPlayers, title));
 	}
 
-	os << "Titles Popularity Ranking" << endl << endl;
-	os << "Filters used:\n" << "Platform = " << platformEnum2string(platform);
+	widthID = rankedList.size();
+
+	widthID += 5;
+	widthName += 5;
+	witdthR += 3;
+	widthIn += 5;
+
+	os << " Titles Popularity Ranking" << endl << endl;
+	os << " Filters used:\n" << " Platform = " << platformEnum2string(platform);
 	os << ", Genre = " << genreEnum2string(genre) << ", Age Group = " << ageR.minAge << " to " << ageR.maxAge << endl << endl;
 
-	os << "N" << " " << "ID" << " " << "Name" << " " << "Popularity" << endl;
+	os << setw(widthIn) << " N" << setw(widthID) << "ID" << setw(widthName) << "Name" << setw(witdthR) << "Popularity" << endl;
 	int counter = 1;
 	for (const auto & entry : rankedList)
 	{
 		// TODO FORMAT THE OUTPUT
-		os << counter << ". " << entry.second->getTitleID() << " " << entry.second->getName() << " " << entry.first << endl;
+		os << setw(widthIn) << counter << ". " << setw(widthID) << entry.second->getTitleID() << setw(widthName) << entry.second->getName() << setw(witdthR) << entry.first << endl;
 		counter++;
-	}	
+	}
 }
+
 
 void GameLibrary::buildGlobalRevenueRanking(ostream & os, gameLibraryPlatform platform, gameLibraryGenre genre, ageRange ageR)
 {
+	unsigned widthID = 6, widthName = 6, witdthR = 6, widthIn = 6;
+
+
 	multimap<double, const Title*> rankedList;
 
 	// Search for all the titles that match and organize them by revenue
@@ -523,25 +542,35 @@ void GameLibrary::buildGlobalRevenueRanking(ostream & os, gameLibraryPlatform pl
 		if (!(title->getPlatform() == platform || platform == all_platforms)) continue;
 		if (!(title->getGenre() == genre || genre == all_genres)) continue;
 		map<Title*, double, ComparePtr<Title>>::iterator it = titlesRevenue.find(title);
+		if (title->getName().size() > widthName) widthName = title->getName().size();
+		if (to_string(title->getTitleID()).length() > widthID) widthID = to_string(title->getTitleID()).length();
+		if (to_string((*it).second).length() > witdthR) witdthR = to_string((*it).second).length();
 		rankedList.insert(pair<double, const Title*>((*it).second, title));
 	}
+	widthID = rankedList.size();
 
-	os << "Titles Revenue Ranking" << endl << endl;
-	os << "Filters used:\n" << "Platform = " << platformEnum2string(platform);
+	widthID += 5;
+	widthName += 5;
+	witdthR += 3;
+	widthIn += 5;
+
+	os << " Titles Revenue Ranking" << endl << endl;
+	os << " Filters used:\n" << " Platform = " << platformEnum2string(platform);
 	os << ", Genre = " << genreEnum2string(genre) << ", Age Group = " << ageR.minAge << " to " << ageR.maxAge << endl << endl;
 
-	os << "N" << " " << "ID" << " " << "Name" << " " << "Revenue" << endl;
+	os << setw(widthIn) << " N" << setw(widthID) << "ID" << setw(widthName) << "Name" << setw(witdthR) << "Revenue" << endl;
 	int counter = 1;
 	for (const auto & entry : rankedList)
 	{
-		// TODO FORMAT THE OUTPUT
-		os << counter << ". " << entry.second->getTitleID() << " " << entry.second->getName() << " " << entry.first << endl;
+		os << setw(widthIn) << counter << ". " << setw(widthID) << entry.second->getTitleID() << setw(widthName) << entry.second->getName() << setw(witdthR) << entry.first << endl;
 		counter++;
 	}
 }
 
 void GameLibrary::buildUserMostPlayedTitlesRanking(std::ostream & os, User * usr, gameLibraryPlatform platform, gameLibraryGenre genre)
 {
+	unsigned widthID = 6, widthName = 6, witdthR = 6, widthIn = 6;
+
 	multimap<double, const Title*> rankedList;
 
 	// Search for all the user titles that match and organize them by time played
@@ -552,22 +581,31 @@ void GameLibrary::buildUserMostPlayedTitlesRanking(std::ostream & os, User * usr
 		try
 		{
 			double timePlayed = title->getTimePlayed(usr);
+			if (title->getName().size() > widthName) widthName = title->getName().size();
+			if (to_string(title->getTitleID()).length() > widthID) widthID = to_string(title->getTitleID()).length();
+			if (to_string(timePlayed).length() > witdthR) witdthR = to_string(timePlayed).length();
 			rankedList.insert(pair<double, const Title*>(timePlayed, title));
 		}
 		catch (NotOnlineTitle) { continue; }
 		catch (InexistentUser) { continue; }
 	}
+	widthID = rankedList.size();
 
-	os << "User Most Played Titles" << endl << endl;
-	os << "Filters used:\n" << "Platform = " << platformEnum2string(platform);
+	widthID += 5;
+	widthName += 5;
+	witdthR += 3;
+	widthIn += 5;
+
+	os << " User Most Played Titles" << endl << endl;
+	os << " Filters used:\n" << " Platform = " << platformEnum2string(platform);
 	os << ", Genre = " << genreEnum2string(genre) << endl << endl;
 
-	os << "N" << " " << "ID" << " " << "Name" << " " << "Hours Played" << endl;
+	os << setw(widthIn) << " N" << setw(widthID) << "ID" << setw(widthName) << "Name" << setw(witdthR) << "Hours Played" << endl;
 	int counter = 1;
 	for (const auto & entry : rankedList)
 	{
 		// TODO FORMAT THE OUTPUT
-		os << counter << ". " << entry.second->getTitleID() << " " << entry.second->getName() << " " << entry.first << endl;
+		os << setw(widthIn) << counter << ". " << setw(widthID) << entry.second->getTitleID() << setw(widthName) << entry.second->getName() << setw(witdthR) << entry.first << endl;
 		counter++;
 	}
 }
