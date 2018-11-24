@@ -38,5 +38,6 @@ std::ostream & operator<<(std::ostream & os, const Transaction & trans)
 }
 
 void Transaction::writeTransaction(std::ostream &os) const {
-	os << getType() << getDate() << getValue() << std::endl;
+	os << getType() << " " << getDate() << std::endl;
+	os << getValue() << std::endl;
 }

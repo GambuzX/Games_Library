@@ -203,6 +203,7 @@ void GameLibrary::loadGameLibrary()
 	    credit_cards,
 	    transactions,
 	    friends,
+	    games,
 	};
 
 	enum title_states title_current_state = id_name;
@@ -217,11 +218,11 @@ void GameLibrary::loadGameLibrary()
 	ostringstream user_file_name;
 	ostringstream title_file_name;
 
-	vector<pair<unsigned int, vector<unsigned int>>> allfriends;
+	vector<pair<unsigned int, vector<unsigned int>>> allfriends, allgames;
 
 	for (size_t i = 1; i <= nusers; ++i) {
         string name, email, road_name, city, country, number, holder, expiry, transaction_date;
-        int age, house_number, ncredit_cards, ntransactions=0, transaction_type, nfriends;
+        int age, house_number, ncredit_cards, ntransactions=0, transaction_type, nfriends, ngames;
         double balance, transaction_value;
 
 	    user_file_name << "user_" << i << ".txt";
@@ -232,7 +233,7 @@ void GameLibrary::loadGameLibrary()
 	    Address addr;
 	    vector<CreditCard> cc;
 	    vector<Transaction> trans;
-	    vector<unsigned int> friend_ids;
+	    vector<unsigned int> friend_ids, game_ids;
 
 	    while(getline(user_file, str)) {
 
@@ -272,7 +273,7 @@ void GameLibrary::loadGameLibrary()
 
 	            getline(user_file, str);
 	            expiry = split(str)[0];
-	            balance = stod(split(str)[1]);
+	            balance = stod(split(str, 1)[1]);
 
 	            cc.emplace_back(name, holder, expiry, balance);
 	            --ncredit_cards;
@@ -280,19 +281,24 @@ void GameLibrary::loadGameLibrary()
 	        case transactions:
                 if (ntransactions == 0) { user_current_state = friends; getline(user_file, str); nfriends = stoi(str); break;}
 
-	            getline(user_file, str);
-	            transaction_type = stoi(split(str)[0]);
-                transaction_date = split(str)[1];
-                transaction_value = stod(split(str)[2]);
+	            transaction_type = stoi(split(str, 1)[0]);
+                transaction_date = split(str, 1)[1];
+
+                getline(user_file, str);
+                transaction_value = stod(str);
 
                 trans.emplace_back(transaction_value, transaction_date, (TransactionType) transaction_type);
                 --ntransactions;
                 break;
 	        case friends:
-	            if (nfriends == 0) break;
+	            if (nfriends == 0){user_current_state = games; getline(user_file, str); ngames = stoi(str); break;}
 	        	friend_ids.push_back(static_cast<unsigned int &&>(stoi(str)));
 	        	--nfriends;
 	            break;
+	        case games:
+	            if (ngames == 0) { break; }
+	            game_ids.push_back(static_cast<unsigned int &&>(stoi(str)));
+                --ngames;
 	        default: break;
 	        }
 	    }
@@ -308,9 +314,29 @@ void GameLibrary::loadGameLibrary()
 	        user->addTransaction(transaction.getValue(), transaction.getDate(), transaction.getType());
 	    }
 
-	    allfriends.push_back(make_pair(i, friend_ids));
-
+	    allfriends.emplace_back(i, friend_ids);
+        allgames.emplace_back(i, game_ids);
 	    user_file.close();
+	}
+
+	for (pair<unsigned int, vector<unsigned int>> &games_list : allgames) {
+        User* user = find_if(users.begin(), users.end(),
+                             [games_list](const std::pair<User* const, std::set<Title*, ComparePtr<Title>>> &user) {
+                                 return user.first->getUserID() == games_list.first;
+                             })->first;
+
+	    if (user == nullptr) break;
+
+	    for (unsigned int &id : games_list.second) {
+	        Title* t = *find_if(titles.begin(), titles.end(),
+	            [id](const Title* title) {
+	            return id == title->getTitleID();
+	        });
+
+	        if (t == nullptr) { break; }
+
+	        user->buyTitle(t);
+	    }
 	}
 
 	for (pair<unsigned int, vector<unsigned int>> &friends_list : allfriends) {
@@ -319,11 +345,15 @@ void GameLibrary::loadGameLibrary()
 					return user.first->getUserID() == friends_list.first;
 			})->first;
 
+			if (user == nullptr) break;
+
 			for (unsigned int &f : friends_list.second) {
 				User* fr = find_if(users.begin(), users.end(),
 					[f](const std::pair<User* const, std::set<Title*, ComparePtr<Title>>> &user) {
 					return user.first->getUserID() == f;
 				})->first;
+
+				if (fr == nullptr) break;
 				user->addFriend(fr);
 			}
 
