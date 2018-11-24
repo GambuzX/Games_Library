@@ -179,7 +179,7 @@ void GameLibrary::saveGameLibrary()
 
 void GameLibrary::loadGameLibrary()
 {
-    if (!titles.size() || !users.empty()) { throw AlreadyLoaded(); }
+    if (!titles.empty() || !users.empty()) { throw AlreadyLoaded(); }
 	ifstream info_file("info.txt");
 	size_t ntitles, nusers;
 	string str;
