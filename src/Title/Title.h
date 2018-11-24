@@ -121,6 +121,14 @@ public:
 	virtual void updateTitle(Update * newUpdate) = 0;
 
 	/**
+	* @brief Reset the vector of updates
+	* Virtual function that may throw exceptions if called on the incorrect object
+	*
+	* @throw NotHomeTitle() If it is called on a Online Title Object
+	*/
+	virtual void resetUpdates() = 0;
+
+	/**
 	 * @brief Function that helps to add a new User to the list of owners of that Title
 	 * Virtual function that may throw exceptions if User already has the Title
 	 * 

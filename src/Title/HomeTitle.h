@@ -55,6 +55,14 @@ public:
 	const std::vector<Update> & getUpdates() const override { return titleUpdateHistory; };
 
 	/**
+	* @brief Reset the vector of updates
+	* Virtual function that may throw exceptions if called on the incorrect object
+	*
+	* @throw NotHomeTitle() If it is called on a Online Title Object
+	*/
+	void resetUpdates() { titleUpdateHistory.clear(); }
+
+	/**
 	 * @brief Get the Number Users
 	 * 
 	 * @return unsigned int Returns the number of Users that have the Title

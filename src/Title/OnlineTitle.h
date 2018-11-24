@@ -165,6 +165,14 @@ public:
 	void updateTitle(Update * newUpdate) override;
 
 	/**
+	* @brief Reset the vector of updates
+	* Virtual function that may throw exceptions if called on the incorrect object
+	*
+	* @throw NotHomeTitle() If it is called on a Online Title Object
+	*/
+	void resetUpdates() { throw NotHomeTitle(getTitleID()); }
+
+	/**
 	* @brief Function that verifies if a User needs an Update
 	* Virtual function that may throw exceptions if called on the incorrect object
 	*
