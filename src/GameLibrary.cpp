@@ -293,7 +293,13 @@ void GameLibrary::loadGameLibrary()
                 --ntransactions;
                 break;
 	        case friends:
-	            if (nfriends == 0){user_current_state = games; getline(user_file, str); if (str == "Games:") ngames = stoi(str); break;}
+	            if (nfriends == 0) {
+	            	user_current_state = games;
+	            	getline(user_file, str);
+	            	ngames = stoi(str);
+					break;
+	            }
+
 	        	friend_ids.push_back(static_cast<unsigned int &&>(stoi(str)));
 	        	--nfriends;
 	            break;
@@ -319,26 +325,6 @@ void GameLibrary::loadGameLibrary()
 	    allfriends.emplace_back(i, friend_ids);
         allgames.emplace_back(i, game_ids);
 	    user_file.close();
-	}
-
-	for (pair<unsigned int, vector<unsigned int>> &games_list : allgames) {
-        User* user = find_if(users.begin(), users.end(),
-                             [games_list](const std::pair<User* const, std::set<Title*, ComparePtr<Title>>> &user) {
-                                 return user.first->getUserID() == games_list.first;
-                             })->first;
-
-	    if (user == nullptr) break;
-
-	    for (unsigned int &id : games_list.second) {
-	        Title* t = *find_if(titles.begin(), titles.end(),
-	            [id](const Title* title) {
-	            return id == title->getTitleID();
-	        });
-
-	        if (t == nullptr) { break; }
-
-	        user->buyTitle(t);
-	    }
 	}
 
 	for (pair<unsigned int, vector<unsigned int>> &friends_list : allfriends) {
@@ -517,6 +503,26 @@ void GameLibrary::loadGameLibrary()
             }
 		}
 		title_file.close();
+	}
+
+	for (pair<unsigned int, vector<unsigned int>> &games_list : allgames) {
+		User* user = find_if(users.begin(), users.end(),
+							 [games_list](const std::pair<User* const, std::set<Title*, ComparePtr<Title>>> &user) {
+								 return user.first->getUserID() == games_list.first;
+							 })->first;
+
+		if (user == nullptr) break;
+
+		for (unsigned int &id : games_list.second) {
+			Title* t = *find_if(titles.begin(), titles.end(),
+								[id](const Title* title) {
+									return id == title->getTitleID();
+								});
+
+			if (t == nullptr) { break; }
+
+			user->buyTitle(t);
+		}
 	}
 }
 
