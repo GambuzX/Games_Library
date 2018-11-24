@@ -1,9 +1,0 @@
-09/11/2018 - Gil
-
-- Tornei chargeUser abstrato
-- Mudei alguns nomes de metodos e atributos
-- Adicionei exceções a Date
-- Mudei nome da classe mãe para Game Library
-- Friends List é agora um set
-- Adicionei algumas exceções que poderão ser úteis
-- Adicionei métodos em: HomeTitle, Title, Date, 
