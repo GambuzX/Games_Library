@@ -159,6 +159,26 @@ bool User::buyTitle(unsigned int titleID) {
 	return true;
 }
 
+bool User::addTitle(unsigned int titleID)
+{
+    Title * title = GameLibrary::getTitle(titleID);
+    if (title == nullptr)
+    {
+        cout << "(" << __func__ << ") Title with ID " << titleID << " does not exist" << endl;
+        return false;
+    }
+
+    Date currentDate = Date::getCurrentDate();
+    double price = title->getCurrentPrice(currentDate);
+
+    GameLibrary::updateTitleRevenue(title, price);
+    title->addNewUser(this);
+    purchasedGames->insert(title);
+
+    return false;
+}
+
+
 bool User::buyTitle(std::string name, gameLibraryPlatform platform)
 {
 	Title * title = GameLibrary::getTitle(name, platform);

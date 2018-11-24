@@ -258,6 +258,8 @@ public:
 	*/
 	bool buyTitle(std::string name, gameLibraryPlatform platform);
 
+	bool addTitle(unsigned int titleID);
+
 	/**
 	* @brief Update User version of a Title
 	*
@@ -307,7 +309,7 @@ public:
 	* @param date Date of transaction
 	* @param t TransactionType enum value representing the type of transaction
 	*/
-	void addTransaction(double value, Date date, TransactionType t) { transactions.emplace_back(value, date, t); }
+	void addTransaction(double value, Date date, TransactionType t) { transactions.push_back(Transaction(value, date, t)); }
 
 	/**
 	* @brief Get a set with all the Platforms the User has titles for

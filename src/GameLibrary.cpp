@@ -514,14 +514,7 @@ void GameLibrary::loadGameLibrary()
 		if (user == nullptr) break;
 
 		for (unsigned int &id : games_list.second) {
-			Title* t = *find_if(titles.begin(), titles.end(),
-								[id](const Title* title) {
-									return id == title->getTitleID();
-								});
-
-			if (t == nullptr) { break; }
-
-			user->buyTitle(t);
+			user->addTitle(id);
 		}
 	}
 }
