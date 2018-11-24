@@ -241,13 +241,13 @@ Date Date::getCurrentDate()
 }
 Date::Date(string &date)
 {
-	size_t i, j = 0;
+	size_t i;
 	string temp;
 	vector<unsigned int> values;
 
 	while((i = date.find_first_of('/')) != string::npos) {
-		values.push_back(static_cast<unsigned int &&>(stoi(date.substr(j, i))));
-		date = date.substr(i + 1, j);
+		values.push_back(static_cast<unsigned int &&>(stoi(date.substr(0, i))));
+		date = date.substr(i + 1, string::npos);
 	}
 
 	this->day = values[0];
