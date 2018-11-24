@@ -409,10 +409,8 @@ void GameLibrary::loadGameLibrary()
 			    }
 			    else if (str == "Sessions:") {
 			        getline(title_file, str);
-			        n_title_stats = str;
+			        title_stats = stoi(str);
 			        title_current_state = session;
-			        getline(title_file, str);
-			        title_stats = stoi(n_title_stats);
 			    } else if (str == "Sales:") {
 			        title_current_state = sale_history;
 			    } else if (str == "Updates:") {
@@ -428,6 +426,7 @@ void GameLibrary::loadGameLibrary()
 			    break;
 			case session: {
 			    if (title_stats == 0){
+			    	if (str == "Sales:") { title_current_state = sale_history; break;}
     			    title_current_state = accept;
     			    break;
 			    }
@@ -438,7 +437,7 @@ void GameLibrary::loadGameLibrary()
 			}
 			case sale_history: {
 			    vector<string> _split_line = split(str);
-			    sales_history.emplace_back(Date(_split_line[0]), Date(_split_line[1]), stod(_split_line[2]));
+			    sales_history.push_back(Sale(Date(_split_line[0]), Date(_split_line[1]), stod(_split_line[2])));
 			    break;
 			}
 			case update: {
@@ -497,9 +496,24 @@ void GameLibrary::loadGameLibrary()
                     Session session = Session(hours_played, session_date);
 
                     online_title->addNewSession(user, session);
+
                 }
+
+				for (Sale sale : sales_history)
+					online_title->addPromotion(sale);
+
+				for (Update up_date : update_vector)
+					this->updateTitle(online_title, &up_date);
+
             } else if (subs_type == "1") {
-                addTitle(new OnlineTitle(title_name, stod(_price), Date(_release_date), ar, glp, glg, company, new FixedSubscription(stod(_subs_value))));
+            	Title* online_titl = new OnlineTitle(title_name, stod(_price), Date(_release_date), ar, glp, glg, company, new FixedSubscription(stod(_subs_value)));
+                addTitle(online_titl);
+
+				for (Sale sale : sales_history)
+					online_titl->addPromotion(sale);
+
+				for (Update up_date : update_vector)
+					this->updateTitle(online_titl, &up_date);
             }
 		}
 		title_file.close();
@@ -813,13 +827,12 @@ vector<string> GameLibrary::split(std::string long_string, int num_unique)
         result.push_back(long_string.substr(0, space_index));
         result.push_back(long_string.substr(space_index + 1));
 	} else if (space_index != string::npos) {
-	    while(space_index != string::npos) {
-	        string sub = long_string.substr(i, j);
-	        result.push_back(sub);
-	        space_index = sub.find_first_of(' ');
-	        i = j + 1;
-	        j = space_index;
-	    }
+		while((i = long_string.find_first_of(' ')) != string::npos) {
+			result.push_back(long_string.substr(0, i));
+			long_string = long_string.substr(i + 1, string::npos);
+		}
+
+		result.push_back(long_string);
 	}
 
 	return result;

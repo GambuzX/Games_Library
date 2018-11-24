@@ -252,5 +252,5 @@ Date::Date(string &date)
 
 	this->day = values[0];
 	this->month = values[1];
-	this->year = values[0];
+	this->year = static_cast<unsigned int>(stoi(date));
 }
