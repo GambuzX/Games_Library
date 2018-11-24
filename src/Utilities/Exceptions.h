@@ -532,6 +532,12 @@ public:
 	unsigned getTitleID() { return titleID; }
 };
 
+class AlreadyLoaded {
+	std::string message = "Games Library was already loaded, please restart the program to load.";
+public:
+	std::string getMessage() const { return message; }
+};
+
 /** @} */
 
 

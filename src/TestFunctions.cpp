@@ -1830,7 +1830,15 @@ void InicialMenu(GameLibrary & gl)
 		header("LOAD GAME LIBRARY");
 		//IR para função que vai buscar o nome da pasta/ficheiro
 		cout << " Loading..." << endl;
-		gl.loadGameLibrary();
+		try {
+		    gl.loadGameLibrary();
+
+		} catch (const AlreadyLoaded &al) {
+		    cout << al.getMessage() << endl;
+		    PrincipalMenu(gl);
+		    break;
+		}
+
 		cout << " Done" << endl;
 		PrincipalMenu(gl);
 		break;
