@@ -247,10 +247,10 @@ Date::Date(string &date)
 
 	while((i = date.find_first_of('/')) != string::npos) {
 		values.push_back(static_cast<unsigned int &&>(stoi(date.substr(j, i))));
-		date = date.substr(i + 1, j);
+		date = date.substr(i + 1, date.size());
 	}
 
 	this->day = values[0];
 	this->month = values[1];
-	this->year = values[0];
+	this->year = static_cast<unsigned int>(stoi(date));
 }
