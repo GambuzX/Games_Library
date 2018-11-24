@@ -423,7 +423,7 @@ void GameLibrary::loadGameLibrary()
 				break;
 			case subs_value:
 			    _subs_value = split_line[0];
-			    title_type = split_line[1];
+			    subs_type = split_line[1];
 			    title_current_state = accept;
 			    break;
 			case session: {
@@ -439,6 +439,7 @@ void GameLibrary::loadGameLibrary()
 			case sale_history: {
 			    vector<string> _split_line = split(str);
 			    sales_history.emplace_back(Date(_split_line[0]), Date(_split_line[1]), stod(_split_line[2]));
+			    break;
 			}
 			case update: {
 			    if (n_updates == 0) {
