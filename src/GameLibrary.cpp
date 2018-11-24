@@ -361,7 +361,7 @@ void GameLibrary::loadGameLibrary()
 
 	for (size_t i = 1; i <= ntitles; ++i) {
 		string title_name, _price, platform, genre, min_age, max_age, _release_date, _subs_value, company, title_type, subs_type, n_title_stats, update_date, description;
-		int n_updates;
+		int n_updates, title_stats;
 		double update_price, update_version;
 
 		title_file_name << "title_" << i << ".txt";
@@ -409,6 +409,8 @@ void GameLibrary::loadGameLibrary()
 			        getline(title_file, str);
 			        n_title_stats = str;
 			        title_current_state = session;
+			        getline(title_file, str);
+			        title_stats = stoi(n_title_stats);
 			    } else if (str == "Sales:") {
 			        title_current_state = sale_history;
 			    } else if (str == "Updates:") {
@@ -423,7 +425,6 @@ void GameLibrary::loadGameLibrary()
 			    title_current_state = accept;
 			    break;
 			case session: {
-			    int title_stats = stoi(n_title_stats);
 			    if (title_stats == 0){
     			    title_current_state = accept;
     			    break;
@@ -469,6 +470,7 @@ void GameLibrary::loadGameLibrary()
 		    addTitle(title);
 		    for (Sale &sale : sales_history)
 		        title->addPromotion(sale);
+		    title->resetUpdates();
 		    for (Update up_date : update_vector)
 		        this->updateTitle(title, &up_date);
 		}
