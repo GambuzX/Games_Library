@@ -61,6 +61,7 @@ ostream & operator<<(ostream & os, const Address & a)
 
 void Address::writeAddress(ostream &os)
 {
+	os << "Address:" << endl;
 	os << getHouseNumber() << " " << getStreetName() << endl;
 	os << getCity() << endl;
 	os << getCountry() << endl;

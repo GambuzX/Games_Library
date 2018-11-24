@@ -238,18 +238,18 @@ void GameLibrary::loadGameLibrary()
 
 	        switch (user_current_state) {
 	        case _id_name:
-	            name = split(str)[1];
+	            name = split(str, 1)[1];
 	            user_current_state = email_age;
 	            break;
 	        case email_age:
 	            email = split(str)[0];
-	            age = stoi(split(str)[1]);
+	            age = stoi(split(str, 1)[1]);
 	            getline(user_file, str);
 	            if (str == "Address:") user_current_state = address;
 	            break;
 	        case address:
 	            house_number = stoi(split(str)[0]);
-	            road_name = split(str)[1];
+	            road_name = split(str, 1)[1];
 
 	            getline(user_file, str);
 	            city = str;
@@ -263,6 +263,9 @@ void GameLibrary::loadGameLibrary()
 	        case credit_cards:
 	            if (ncredit_cards == 0) {
 	                user_current_state = transactions;
+	                getline(user_file, str);
+                    ntransactions = stoi(str);
+	                break;
 	            }
 	            number = split(str, 1)[0];
 	            holder = split(str, 1)[1];
@@ -275,8 +278,7 @@ void GameLibrary::loadGameLibrary()
 	            --ncredit_cards;
 	            break;
 	        case transactions:
-                if (ntransactions == 0) { user_current_state = friends; getline(user_file, str); nfriends = stoi(str);}
-	            if (str == "Transactions:") { getline(user_file, str); ntransactions = stoi(str);}
+                if (ntransactions == 0) { user_current_state = friends; getline(user_file, str); nfriends = stoi(str); break;}
 
 	            getline(user_file, str);
 	            transaction_type = stoi(split(str)[0]);
@@ -287,7 +289,8 @@ void GameLibrary::loadGameLibrary()
                 --ntransactions;
                 break;
 	        case friends:
-	        	friend_ids.push_back(stoi(str));
+	            if (nfriends == 0) break;
+	        	friend_ids.push_back(static_cast<unsigned int &&>(stoi(str)));
 	        	--nfriends;
 	            break;
 	        default: break;
