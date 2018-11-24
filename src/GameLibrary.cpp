@@ -149,6 +149,7 @@ void GameLibrary::saveGameLibrary()
 	    // write user information including games by id
 		user_file << *(user.first);
 		user_file << "Games:" << endl;
+		user_file << user.second.size() << endl;
 
 		for (auto title : user.second) {
 		    user_file << title->getTitleID() << endl;
@@ -291,7 +292,7 @@ void GameLibrary::loadGameLibrary()
                 --ntransactions;
                 break;
 	        case friends:
-	            if (nfriends == 0){user_current_state = games; getline(user_file, str); ngames = stoi(str); break;}
+	            if (nfriends == 0){user_current_state = games; getline(user_file, str); if (str == "Games:") ngames = stoi(str); break;}
 	        	friend_ids.push_back(static_cast<unsigned int &&>(stoi(str)));
 	        	--nfriends;
 	            break;
