@@ -118,12 +118,12 @@ const vector<Session> OnlineTitle::getLastNUserSessions(User * usr, int n) const
 
 const map<User*, const vector<Session>*, ComparePtr<User>> OnlineTitle::getTop3PlayersSessions() const
 {
-	multimap<double, User*> userTimes;
+	multimap<double, User*, DecrescentOrder<double>> userTimes;
 	for (const auto & usr : titleStats)
 		userTimes.insert(pair<double, User*>(getStats(usr.first), usr.first));
 
 	map<User*, const vector<Session>*, ComparePtr<User>> returnMap;
-	multimap<double, User*>::reverse_iterator rit;
+	multimap<double, User*, DecrescentOrder<double>>::reverse_iterator rit;
 	int inserted = 0;
 	for (rit = userTimes.rbegin(); rit != userTimes.rend() && inserted < 3; rit++)
 		returnMap.insert(pair<User*, const vector<Session>*>(rit->second, getAllUserSessions(rit->second)));

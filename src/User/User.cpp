@@ -148,7 +148,7 @@ bool User::buyTitle(unsigned int titleID) {
 	if (!subtractValue(price))
 	{
 		//cout << "(" << __func__ << ") Could not subtract value " << price << endl;
-		cout << " User " << name << "Does not have enough money: " << price << endl;
+		cout << " User " << name << " does not have enough money: " << price << endl;
 		return false;
 	}
 	GameLibrary::updateTitleRevenue(title, price);
