@@ -208,7 +208,7 @@ void creditCardSummary(const vector<CreditCard> & creditCards) {
 		cout << " Credit Card " << i << ":\n";
 		cout << "  - Holder:\t\t" << credit.getHolder() << endl;
 		cout << "  - Number:\t\t" << credit.getNumber() << endl;
-		cout << "  - Expires On:\t" << credit.getExpiryDate() << endl;
+		cout << "  - Expires On:\t\t" << credit.getExpiryDate() << endl;
 		cout << "  - Balance:\t\t" << credit.getBalance() << endl << endl;
 		i++;
 	}
@@ -702,11 +702,11 @@ void addCreditCard(User*  user) {
 //-----------------------------------------------------------------------------------------------------------------------//
 
 void addFunds(User*  user, string creditCardNumber) {
-	double funds = doubleInput(" Amout to be added: ");
+	double funds = doubleInput(" Amount to be added: ");
 	if (funds < 0)
 	{
 		cout << " Must be a positive number\n";
-		funds = doubleInput(" Amout to be added: ");
+		funds = doubleInput(" Amount to be added: ");
 	}
 	cout << "\n Funds Successfully Added\n";
 	cout << " New Balance: " << user->getCreditCard(creditCardNumber)->addFunds(funds) << endl;	
@@ -1060,7 +1060,7 @@ string userMailInput(GameLibrary & gL) {
 //-----------------------------------------------------------------------------------------------------------------------//
 
 string creditCardInput(User * user) {
-	if (user->getCreditCards().size())
+	if (!user->getCreditCards().size())
 	{
 		cout << " The user does not have any Credit Card\n Please Consider Adding one first\n";
 		return "<";

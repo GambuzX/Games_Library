@@ -493,10 +493,9 @@ bool GameLibrary::updateTitle(Title* title, Update * update) {
 void GameLibrary::buildGlobalPopularityRanking(ostream & os, gameLibraryPlatform platform, gameLibraryGenre genre, ageRange ageR)
 {
 
-	unsigned widthID = 6, widthName = 6, witdthR = 6, widthIn = 6;
+	unsigned widthID = 3, widthName = 15, witdthR = 15, widthIn = 3;
 
-	multimap<int, const Title*> rankedList;
-
+	multimap<int, const Title*, DecrescentOrder<int>> rankedList;
 
 	// Search for all the titles that match and organize them by popularity
 	for (const Title * title : titles)
@@ -521,12 +520,11 @@ void GameLibrary::buildGlobalPopularityRanking(ostream & os, gameLibraryPlatform
 	os << " Filters used:\n" << " Platform = " << platformEnum2string(platform);
 	os << ", Genre = " << genreEnum2string(genre) << ", Age Group = " << ageR.minAge << " to " << ageR.maxAge << endl << endl;
 
-	os << setw(widthIn) << " N" << setw(widthID) << "ID" << setw(widthName) << "Name" << setw(witdthR) << "Popularity" << endl;
+	os << setw(widthIn) << "N" << setw(widthID) << "ID" << setw(widthName) << "Name" << setw(witdthR) << "Popularity" << endl;
 	int counter = 1;
 	for (const auto & entry : rankedList)
 	{
-		// TODO FORMAT THE OUTPUT
-		os << setw(widthIn) << counter << ". " << setw(widthID) << entry.second->getTitleID() << setw(widthName) << entry.second->getName() << setw(witdthR) << entry.first << endl;
+		os << setw(widthIn) << counter << setw(widthID) << entry.second->getTitleID() << setw(widthName) << entry.second->getName() << setw(witdthR) << entry.first << endl;
 		counter++;
 	}
 }
@@ -534,10 +532,10 @@ void GameLibrary::buildGlobalPopularityRanking(ostream & os, gameLibraryPlatform
 
 void GameLibrary::buildGlobalRevenueRanking(ostream & os, gameLibraryPlatform platform, gameLibraryGenre genre, ageRange ageR)
 {
-	unsigned widthID = 6, widthName = 6, witdthR = 6, widthIn = 6;
+	unsigned widthID = 3, widthName = 15, witdthR = 15, widthIn = 3;
 
 
-	multimap<double, const Title*> rankedList;
+	multimap<double, const Title*, DecrescentOrder<double>> rankedList;
 
 	// Search for all the titles that match and organize them by revenue
 	for (Title * title : titles)
@@ -561,20 +559,20 @@ void GameLibrary::buildGlobalRevenueRanking(ostream & os, gameLibraryPlatform pl
 	os << " Filters used:\n" << " Platform = " << platformEnum2string(platform);
 	os << ", Genre = " << genreEnum2string(genre) << ", Age Group = " << ageR.minAge << " to " << ageR.maxAge << endl << endl;
 
-	os << setw(widthIn) << " N" << setw(widthID) << "ID" << setw(widthName) << "Name" << setw(witdthR) << "Revenue" << endl;
+	os << setw(widthIn) << "N" << setw(widthID) << "ID" << setw(widthName) << "Name" << setw(witdthR) << "Revenue" << endl;
 	int counter = 1;
 	for (const auto & entry : rankedList)
 	{
-		os << setw(widthIn) << counter << ". " << setw(widthID) << entry.second->getTitleID() << setw(widthName) << entry.second->getName() << setw(witdthR) << entry.first << endl;
+		os << setw(widthIn) << counter << setw(widthID) << entry.second->getTitleID() << setw(widthName) << entry.second->getName() << setw(witdthR) << entry.first << endl;
 		counter++;
 	}
 }
 
 void GameLibrary::buildUserMostPlayedTitlesRanking(std::ostream & os, User * usr, gameLibraryPlatform platform, gameLibraryGenre genre)
 {
-	unsigned widthID = 6, widthName = 6, witdthR = 6, widthIn = 6;
+	unsigned widthID = 3, widthName = 15, witdthR = 15, widthIn = 3;
 
-	multimap<double, const Title*> rankedList;
+	multimap<double, const Title*, DecrescentOrder<double>> rankedList;
 
 	// Search for all the user titles that match and organize them by time played
 	for (Title * title : *(usr->getPurchasedGames()))
@@ -603,12 +601,11 @@ void GameLibrary::buildUserMostPlayedTitlesRanking(std::ostream & os, User * usr
 	os << " Filters used:\n" << " Platform = " << platformEnum2string(platform);
 	os << ", Genre = " << genreEnum2string(genre) << endl << endl;
 
-	os << setw(widthIn) << " N" << setw(widthID) << "ID" << setw(widthName) << "Name" << setw(witdthR) << "Hours Played" << endl;
+	os << setw(widthIn) << "N" << setw(widthID) << "ID" << setw(widthName) << "Name" << setw(witdthR) << "Hours Played" << endl;
 	int counter = 1;
 	for (const auto & entry : rankedList)
 	{
-		// TODO FORMAT THE OUTPUT
-		os << setw(widthIn) << counter << ". " << setw(widthID) << entry.second->getTitleID() << setw(widthName) << entry.second->getName() << setw(witdthR) << entry.first << endl;
+		os << setw(widthIn) << counter << setw(widthID) << entry.second->getTitleID() << setw(widthName) << entry.second->getName() << setw(witdthR) << entry.first << endl;
 		counter++;
 	}
 }
@@ -616,6 +613,7 @@ void GameLibrary::buildUserMostPlayedTitlesRanking(std::ostream & os, User * usr
 double GameLibrary::averageUserTitles() const{
 	double total = 0;
 	for (const auto & user : users) total += user.second.size();
+	if (users.size() == 0) return 0;
 	return total / users.size();
 }
 
@@ -629,7 +627,8 @@ double GameLibrary::userLibraryCost(User* user) const {
 
 double GameLibrary::averageUserLibraryCost() const {
 	double total = 0;
-	for (const auto & user : users) total += userLibraryCost((User *)&user.first);
+	for (const auto & user : users) total += userLibraryCost(user.first);
+	if (users.size() == 0) return 0;
 	return total / users.size();
 }
 
