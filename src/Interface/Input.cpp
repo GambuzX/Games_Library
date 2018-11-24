@@ -148,6 +148,10 @@ string nameNumbersInput(string question)
 			cin.ignore((numeric_limits<streamsize>::max)(), '\n');
 			ErrorFlag = true;
 		}
+		else if ('<' == name.at(0) && name.size() == 1)
+		{
+			letterFlag = true;
+		}
 		else
 		{
 			// Search for invalid characters //

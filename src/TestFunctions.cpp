@@ -558,7 +558,7 @@ void addGames(GameLibrary & gL)
 	Date releaseDate = dateInput(" Release date: ");
 	gameLibraryPlatform platform = menuPlatform();
 	gameLibraryGenre genre = menuGenre(false);
-	string company = namesInput(" Publisher name (only letters and space): ");;
+	string company = namesInput(" Publisher name (only letters and space): ");
 
 	//Title(std::string name, double price, Date releaseDate, ageRange ageR, std::string platform, std::string genre, std::string company);
 	if (!isOnline) {
