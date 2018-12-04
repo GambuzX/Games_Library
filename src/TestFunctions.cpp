@@ -228,7 +228,7 @@ void transactionsSummary(User*  user) {
 		cout << "  - Type:\t";
 		if (trans.getType() == gamePurchase) cout << "Purchased a Title";
 		else if (trans.getType() == homeUpdate) cout << "Updated a Home Title";
-		else if (trans.getType() == onlineSubscription) cout << "Payed an Online Title";
+		else if (trans.getType() == onlineSubscription) cout << "Played an Online Title";
 		cout << endl << endl;
 		i++;
 	}
@@ -280,7 +280,7 @@ void UserSessionSummary(const map<User*, const vector<Session>*, ComparePtr<User
 		cout << " User " << user.first->getUserID() << " :\n\n";
 		for (size_t i = 0; i < user.second->size(); i++)
 		{
-			title = " Session " + to_string(i) + ':';
+			title = " Session " + to_string(i+1) + ':';
 			sessionDisplay(title, user.second->at(i));
 		}
 		cout << endl;
@@ -301,7 +301,7 @@ void UserSessionSummary2(const map<User*, vector<Session>, ComparePtr<User>> & p
 		cout << " User " << user.first->getUserID() << " :\n\n";
 		for (size_t i = 0; i < user.second.size(); i++)
 		{
-			title = " Session " + to_string(i) + ':';
+			title = " Session " + to_string(i+1) + ':';
 			sessionDisplay(title, user.second.at(i));
 		}
 		cout << endl;
@@ -908,6 +908,20 @@ void globalRevRanking(GameLibrary & gl) {
 	gl.buildGlobalRevenueRanking(cout, platform, genre, ageR);
 	system("pause");
 }
+
+//-----------------------------------------------------------------------------------------------------------------------//
+
+void search(GameLibrary & gl)
+{
+	gameLibraryPlatform platform = menuPlatform();
+	gameLibraryGenre genre = menuGenre(true);
+	ageRange ageR = ageRangeInput(" Age Restriction:\n");
+	cout << endl;
+	titleSummary(gl.showMatchingTitles(platform, genre, ageR));
+
+	system("pause");
+}
+
 
 //=======================================================================================================================//
 
@@ -1728,11 +1742,13 @@ void ListsRankingsMenu(GameLibrary & gl) {
 
 	cout << "   3 - Revenue Ranking" << endl;
 
+	cout << "   4 - Search Titles" << endl;
+
 	// TODO: Add Online Most Played
 
 	cout << "   0 - Go back" << endl << endl;
 
-	option_number = menuInput(" Option ? ", 0, 3);
+	option_number = menuInput(" Option ? ", 0, 4);
 
 	switch (option_number)
 	{
@@ -1751,6 +1767,12 @@ void ListsRankingsMenu(GameLibrary & gl) {
 	case 3:
 		header("Revenue Ranking");
 		globalRevRanking(gl);
+		cout << endl << endl;
+		ListsRankingsMenu(gl);
+		break;
+	case 4:
+		header("Search Titles");
+		search(gl);
 		cout << endl << endl;
 		ListsRankingsMenu(gl);
 		break;

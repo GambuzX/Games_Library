@@ -559,6 +559,7 @@ void GameLibrary::buildGlobalPopularityRanking(ostream & os, gameLibraryPlatform
 	{
 		if (!(title->getPlatform() == platform || platform == all_platforms)) continue;
 		if (!(title->getGenre() == genre || genre == all_genres)) continue;
+		//if (!(title->getAgeRange().minAge >= ageR.minAge && title->getAgeRange().maxAge <= ageR.maxAge)) continue;
 		int numberOfPlayers = title->getNumberUsers(ageR);
 		if (title->getName().size() > widthName) widthName = title->getName().size();
 		if (to_string(title->getTitleID()).length() > widthID) widthID = to_string(title->getTitleID()).length();
@@ -599,6 +600,7 @@ void GameLibrary::buildGlobalRevenueRanking(ostream & os, gameLibraryPlatform pl
 	{
 		if (!(title->getPlatform() == platform || platform == all_platforms)) continue;
 		if (!(title->getGenre() == genre || genre == all_genres)) continue;
+		if (!(title->getAgeRange().minAge >= ageR.minAge && title->getAgeRange().maxAge <= ageR.maxAge)) continue;
 		map<Title*, double, ComparePtr<Title>>::iterator it = titlesRevenue.find(title);
 		if (title->getName().size() > widthName) widthName = title->getName().size();
 		if (to_string(title->getTitleID()).length() > widthID) widthID = to_string(title->getTitleID()).length();
@@ -623,6 +625,23 @@ void GameLibrary::buildGlobalRevenueRanking(ostream & os, gameLibraryPlatform pl
 		os << setw(widthIn) << counter << setw(widthID) << entry.second->getTitleID() << setw(widthName) << entry.second->getName() << setw(witdthR) << entry.first << endl;
 		counter++;
 	}
+}
+
+set<Title*, ComparePtr<Title>> GameLibrary::showMatchingTitles(gameLibraryPlatform platform, gameLibraryGenre genre, ageRange ageR)
+{
+	set<Title*, ComparePtr<Title>> games;
+
+	// Search for all the titles that match and organize them by revenue
+	for (Title * title : titles)
+	{
+		if (!(title->getPlatform() == platform || platform == all_platforms)) continue;
+		if (!(title->getGenre() == genre || genre == all_genres)) continue;
+		if (!(title->getAgeRange().minAge >= ageR.minAge && title->getAgeRange().maxAge <= ageR.maxAge)) continue;
+		set<Title*, ComparePtr<Title>>::iterator it = titles.find(title);
+		games.insert(*it);
+	}
+
+	return games;
 }
 
 void GameLibrary::buildUserMostPlayedTitlesRanking(std::ostream & os, User * usr, gameLibraryPlatform platform, gameLibraryGenre genre)
@@ -701,12 +720,12 @@ double GameLibrary::onlineTitlesPlayTime(User * user) const
 		}
 		catch (NotOnlineTitle)
 		{
-			cout << "(" << __func__ << ") Game Library tried to get time played from Home Title " << title->getName() << endl;
+			//cout << "(" << __func__ << ") Game Library tried to get time played from Home Title " << title->getName() << endl;
 			continue;
 		}
 		catch (InexistentUser)
 		{
-			cout << "(" << __func__ << ") Tried to get time played from title " << title->getName() << " for User ";
+			//cout << "(" << __func__ << ") Tried to get time played from title " << title->getName() << " for User ";
 			cout << user->getName() << " who does not own the title" << endl;
 			continue;
 		}

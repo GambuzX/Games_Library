@@ -148,7 +148,12 @@ void OnlineTitle::displayTitleInfo(std::ostream &os)
 	os << "Subscription Info:" << endl;
 	os << subscription->getSubscriptionPrice() << " " << subscription->isFixedSubscription() << endl;
 	os << "Sessions:" << endl;
-	os << titleStats.size() << endl;
+
+	int total = 0;
+	for (auto &it : titleStats)
+		total += it.second.size();
+
+	os << total << endl;
 
 	for (auto &it : titleStats) {
 	    for (Session &s : it.second)

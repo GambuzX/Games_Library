@@ -177,6 +177,8 @@ public:
 	*/
 	void buildUserMostPlayedTitlesRanking(std::ostream & os, User * usr, gameLibraryPlatform platform, gameLibraryGenre genre);
 
+	std::set<Title*, ComparePtr<Title>> showMatchingTitles(gameLibraryPlatform platform, gameLibraryGenre genre, ageRange ageR);
+
 	/**
 	* @brief Determines the average number of titles per user
 	*
