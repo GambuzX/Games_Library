@@ -83,26 +83,20 @@ User * GameLibrary::getUser(string email)
 }
 
 bool GameLibrary::addTitle(Title * title) {
-	bool repeated = false;
-	for (const auto t : titles)
-		if (t->getName() == title->getName() && t->getPlatform() == title->getPlatform())
-		{
-			repeated = true;
-			break;
-		}
-	if (repeated) return false;
-	titles.insert(title);
-	titlesRevenue.insert(pair<Title*, double>(title, 0));
-	return true;
+
+	pair<titlesSet::iterator, bool> it = titles.insert(title);
+	if (it.second)
+		titlesRevenue.insert(pair<Title*, double>(title, 0));
+	return it.second;
 }
 
 bool GameLibrary::removeTitle(Title * title) {
-	std::set<Title*, ComparePtr<Title>>::iterator it;
+	titleSet::iterator it;
 	it = titles.find(title);
 	if (it == titles.end()) return false;
 	titles.erase(it);
 
-	map<Title*, double, ComparePtr<Title>>::iterator it2;
+	titlesRevenueMap::iterator it2;
 	it2 = titlesRevenue.find(title);
 	if (it2 == titlesRevenue.end()) return false;
 	titlesRevenue.erase(it2);
@@ -113,15 +107,29 @@ bool GameLibrary::removeTitle(unsigned int id) {
 	Title * title = getTitle(id);
 	if (title == nullptr) return false;
 
-	std::set<Title*, ComparePtr<Title>>::iterator it;
+	titleSet::iterator it;
 	it = titles.find(title);
 	if (it == titles.end()) return false;
 	titles.erase(it);
 
-	map<Title*, double, ComparePtr<Title>>::iterator it2;
+	titlesRevenueMap::iterator it2;
 	it2 = titlesRevenue.find(title);
 	if (it2 == titlesRevenue.end()) return false;
 	titlesRevenue.erase(it2);
+	return true;
+}
+
+bool GameLibrary::addCompany(Company * comp)
+{
+	pair<companiesSet::iterator, bool> it = platformCompanies.insert(comp);
+	return it.second;
+}
+
+bool GameLibrary::removeCompany(Company * comp)
+{
+	companiesSet::iterator it = platformCompanies.find(comp);
+	if (it == platformCompanies.end()) return false;
+	platformCompanies.erase(it);
 	return true;
 }
 

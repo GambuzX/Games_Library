@@ -1,7 +1,7 @@
 #ifndef COMPARE_OBJ_H
 #define COMPARE_OBJ_H
 
-/** @addtogroup GameLibrary
+/** @addtogroup GameLibraryUtility
  * @{
  */
 

@@ -10,7 +10,7 @@
 #include "..\Utilities\Address.h"
 #include "..\Utilities\CompareObj.h"
 
-// TODO: tentar evitar inclus? de bibliotecas circular (??) para j?est?isto
+// TODO: tentar evitar inclus? de bibliotecas circular (??) para ja esta isto
 
 class Title;
 

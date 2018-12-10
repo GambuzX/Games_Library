@@ -6,6 +6,7 @@
 #include <fstream>
 #include "GameLibraryInfo.h"
 #include "Title\Title.h"
+#include "Title\Company.h"
 #include "User\User.h"
 #include "Utilities\Update.h"
 #include "Utilities\CompareObj.h"
@@ -20,15 +21,22 @@
 * @see Title
 */
 
+typedef std::set<Title*, ComparePtr<Title>> titlesSet;
+typedef std::map<Title*, double, ComparePtr<Title>> titlesRevenueMap;
+typedef std::map<User*, std::set<Title*, ComparePtr<Title>>, ComparePtr<User>> usersMap;
+typedef std::set<Company*, CompareCompany> companiesSet;
+
 /**
  * @brief Class representing the Game Library system
  */
 class GameLibrary {
 private:
-	static std::set<Title*, ComparePtr<Title>> titles; /**< @brief Static Set of the Game Library Titles */
-	static std::map<Title*, double, ComparePtr<Title>> titlesRevenue; /**< @brief Static Map of Titles to their respective total revenue */
+	static titlesSet titles; /**< @brief Static Set of the Game Library Titles */
+	static titlesRevenueMap titlesRevenue; /**< @brief Static Map of Titles to their respective total revenue */
 
-	std::map<User*, std::set<Title*, ComparePtr<Title>>, ComparePtr<User>> users; /**< @brief Map of Users to their respective list of Titles */
+	usersMap users; /**< @brief Map of Users to their respective list of Titles */
+
+	companiesSet platformCompanies; /**< @brief Set of the Companies that exist in this Game Library */
 
 public:
 	/**
@@ -112,6 +120,10 @@ public:
 	*/
 	bool removeTitle(unsigned int id);
 
+	bool addCompany(Company * comp);
+
+	bool removeCompany(Company * comp);
+
 	/**
 	* Saves the current Game Library and all of its data to 3 different files,
 	* one for the games registered in the library, one for the users and their titles
@@ -177,6 +189,14 @@ public:
 	*/
 	void buildUserMostPlayedTitlesRanking(std::ostream & os, User * usr, gameLibraryPlatform platform, gameLibraryGenre genre);
 
+	/**
+	* @brief Returns a set with all the titles that respect a certain criteria
+	*
+	* @param platform Filter to limit titles to this platform
+	* @param genre Filter to limit titles to this genre
+	* @param ageR Filter to limit titles to this age range
+	* @return Set of pointers to the titles that match
+	*/
 	std::set<Title*, ComparePtr<Title>> showMatchingTitles(gameLibraryPlatform platform, gameLibraryGenre genre, ageRange ageR);
 
 	/**
