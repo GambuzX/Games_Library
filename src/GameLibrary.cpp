@@ -517,7 +517,7 @@ void GameLibrary::loadGameLibrary()
 
 					try {
 						online_title->addNewSession(user, session);
-					} catch (InexistentUser &iu) {
+					} catch (InexistentUser) {
 						user->addTitle(online_title->getTitleID());
 						online_title->addNewSession(user, session);
 					}
@@ -555,7 +555,7 @@ void GameLibrary::loadGameLibrary()
 		for (unsigned int &id : games_list.second) {
 			try{
 				user->addTitle(id);
-			} catch (DuplicatedUser &du) {
+			} catch (DuplicatedUser) {
 				continue;
 			}
 		}

@@ -399,6 +399,20 @@ bool User::removeFriend(User * frnd) {
 	return true;
 }
 
+Title * User::nextAdvertisementTitle(float minimumBuyRate) const
+{
+	if (wishlist.empty()) return NULL; // TODO ThrOW SOMETHING
+	if (wishlist.top().getBuyChance() > minimumBuyRate) return wishlist.top().getTitle();
+	priority_queue<WishlistEntry> copy = wishlist;
+	copy.pop();
+	while (!copy.empty())
+	{
+		if (copy.top().getBuyChance() > minimumBuyRate) return copy.top().getTitle();
+		copy.pop();
+	}
+	return NULL; // TODO Throw something
+}
+
 set<string> User::getPlatforms()
 {
 	set<string> plats;

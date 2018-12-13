@@ -4,15 +4,18 @@
 #include <string>
 #include <vector>
 #include <set>
+#include <queue>
 #include "..\Title\Title.h"
 #include "..\Utilities\CreditCard.h"
 #include "..\Utilities\Transaction.h"
 #include "..\Utilities\Address.h"
+#include "..\Utilities\WishlistEntry.h"
 #include "..\Utilities\CompareObj.h"
 
 // TODO: tentar evitar inclus? de bibliotecas circular (??) para ja esta isto
 
 class Title;
+class WishlistEntry;
 
 
 /** @defgroup User Users
@@ -47,6 +50,7 @@ private:
 	std::set<Title*, ComparePtr<Title>>* purchasedGames; /**< @brief Pointer to this user's set of purchased games */
 	std::set<User*, ComparePtr<User>> friendsList; /**< @brief Set with the user friends */
 	std::vector<Transaction> transactions; /**< @brief Vector with the user transactions */
+	std::priority_queue<WishlistEntry> wishlist; /**< @brief Priority queue representing the user wishlist  */
 
 public:
 	/**
@@ -310,6 +314,14 @@ public:
 	* @param t TransactionType enum value representing the type of transaction
 	*/
 	void addTransaction(double value, Date date, TransactionType t) { transactions.push_back(Transaction(value, date, t)); }
+
+	/**
+	* @brief Returns the Title in the wishlist of higher priority, with a minimum buy rate
+	*
+	* @param minimumBuyRate Minimum buy rate for the title to find
+	* @return Title * Pointer to the found Title
+	*/
+	Title * nextAdvertisementTitle(float minimumBuyRate) const;
 
 	/**
 	* @brief Get a set with all the Platforms the User has titles for
