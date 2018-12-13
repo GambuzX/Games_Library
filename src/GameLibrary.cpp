@@ -133,6 +133,32 @@ bool GameLibrary::removeCompany(Company * comp)
 	return true;
 }
 
+Company * GameLibrary::getCompany(string name)
+{
+	companiesSet::iterator it;
+	for (it = platformCompanies.begin(); it != platformCompanies.end(); it++)
+		if ((*it)->getName() == name) return *it;
+	return nullptr;
+}
+
+bool GameLibrary::editCompany(std::string name, unsigned NIF, unsigned contact)
+{
+	Company * comp = getCompany(name);
+	if (comp == nullptr) return false;
+	
+	comp->setNIF(NIF);
+	comp->setContact(contact);
+	return true;
+}
+
+bool GameLibrary::addTitleToCompany(string companyName, Title * title)
+{
+	Company * comp = getCompany(companyName);
+	if (comp == nullptr) return false;
+
+	return comp->addTitle(title);
+}
+
 void GameLibrary::saveGameLibrary()
 {
 	// the info files only contains information on the number of games users

@@ -66,12 +66,25 @@ public:
 	unsigned getNIF() { return NIF; }
 
 	/**
+	* @brief Set the NIF Private Member
+	*
+	* @param nif New NIF value to set
+	*/
+	void setNIF(unsigned nif) { NIF = nif; }
+
+	/**
 	* @brief Get the contact Private Member
 	*
 	* @return Unsigned Returns the contact Private Member
 	*/
 	unsigned getContact() { return contact; }
 
+	/**
+	* @brief Set the contact Private Member
+	*
+	* @param cont New contact value to set
+	*/
+	void setContact(unsigned cont) { contact = cont; }
 	/**
 	* @brief Get the createdTitles Private Member
 	*

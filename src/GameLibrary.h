@@ -120,9 +120,48 @@ public:
 	*/
 	bool removeTitle(unsigned int id);
 
+	/**
+	* @brief Adds a company to the Game Library
+	*
+	* @param comp Pointer to new company
+	* @return bool Returns true if successfull, false otherwise
+	*/
 	bool addCompany(Company * comp);
 
+	/**
+	* @brief Removes a company from the Game Library
+	*
+	* @param comp Pointer to company to remove
+	* @return bool Returns true if successfull, false otherwise
+	*/
 	bool removeCompany(Company * comp);
+
+	/**
+	* @brief Finds a company based on its name
+	*
+	* @param name Name of the company to find
+	* @return Company * Pointer to the company found, nullptr if not found
+	*/
+	Company * getCompany(std::string name);
+
+	/**
+	* @brief Edits a company from the Game Library
+	*
+	* @param name Name of company to edit
+	* @param NIF New NIF for the company
+	* @param contact New contact for the company
+	* @return bool Returns true if successfull, false otherwise
+	*/
+	bool editCompany(std::string name, unsigned NIF, unsigned contact);
+
+	/**
+	* @brief Adds a title to a company
+	*
+	* @param companyName Name of company to add a Title
+	* @param title Pointer to the title to add
+	* @return bool Returns true if successfull, false otherwise
+	*/
+	bool addTitleToCompany(std::string companyName, Title * title);
 
 	/**
 	* Saves the current Game Library and all of its data to 3 different files,
