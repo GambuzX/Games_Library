@@ -538,6 +538,14 @@ public:
 	std::string getMessage() const { return message; }
 };
 
+class NoMatchingWishlistEntry
+{
+	float buyChance;
+public:
+	NoMatchingWishlistEntry(float buyC) : buyChance(buyC) {}
+	float getBuyChance() const { return buyChance; }
+};
+
 /** @} */
 
 

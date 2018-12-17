@@ -262,6 +262,13 @@ public:
 	*/
 	bool buyTitle(std::string name, gameLibraryPlatform platform);
 
+	/**
+	* @brief Add a Title to the User list
+	* Does not perform a purchase
+	*
+	* @param titleID ID of Title to add
+	* @return bool Returns true if successfull, false otherwise
+	*/
 	bool addTitle(unsigned int titleID);
 
 	/**
@@ -319,9 +326,19 @@ public:
 	* @brief Returns the Title in the wishlist of higher priority, with a minimum buy rate
 	*
 	* @param minimumBuyRate Minimum buy rate for the title to find
-	* @return Title * Pointer to the found Title
+	* @return WishlistEntry * Copy of WishlistEntry of most priority
 	*/
-	Title * nextAdvertisementTitle(float minimumBuyRate) const;
+	WishlistEntry nextAdvertisementTitle(float minimumBuyRate) const;
+
+	/**
+	* @brief Creates an entry for the wishlist
+	*
+	* @param interest Interest in the title, from 1 to 10
+	* @param buyChance Chance of the user buying this title, between 0 and 1
+	* @param title Pointer to the title
+	* @return bool Returns true if successfull, false otherwise
+	*/
+	bool addWishlistEntry(unsigned interest, float buyChance, Title * title);
 
 	/**
 	* @brief Get a set with all the Platforms the User has titles for

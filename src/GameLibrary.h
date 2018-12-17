@@ -329,6 +329,8 @@ public:
 	static bool isOnlineTitle(Title * title);
 
 	std::vector<std::string> split(std::string long_string, int num_unique = 0);
+
+	float getPurchaseChance(User * usr, Title * title);
 };
 
 /** @} */

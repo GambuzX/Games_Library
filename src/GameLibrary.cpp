@@ -898,3 +898,13 @@ vector<string> GameLibrary::split(std::string long_string, int num_unique)
 
 	return result;
 }
+
+float GameLibrary::getPurchaseChance(User * usr, Title * title)
+{
+	int nClicks, nSeenPromos;
+	// Real Game Library should store information about user clicks and seen promo videos
+
+	float r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+	
+	return r;
+}

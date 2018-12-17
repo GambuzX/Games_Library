@@ -399,18 +399,36 @@ bool User::removeFriend(User * frnd) {
 	return true;
 }
 
-Title * User::nextAdvertisementTitle(float minimumBuyRate) const
+WishlistEntry User::nextAdvertisementTitle(float minimumBuyRate) const
 {
-	if (wishlist.empty()) return NULL; // TODO ThrOW SOMETHING
-	if (wishlist.top().getBuyChance() > minimumBuyRate) return wishlist.top().getTitle();
+	if (wishlist.empty()) throw NoMatchingWishlistEntry(minimumBuyRate);
+	if (wishlist.top().getBuyChance() > minimumBuyRate) return wishlist.top();
 	priority_queue<WishlistEntry> copy = wishlist;
 	copy.pop();
 	while (!copy.empty())
 	{
-		if (copy.top().getBuyChance() > minimumBuyRate) return copy.top().getTitle();
+		if (copy.top().getBuyChance() > minimumBuyRate) return copy.top();
 		copy.pop();
 	}
-	return NULL; // TODO Throw something
+	throw NoMatchingWishlistEntry(minimumBuyRate);
+}
+
+
+bool User::addWishlistEntry(unsigned interest, float buyChance, Title * title)
+{
+	WishlistEntry newEntry(interest, buyChance, title);
+	
+	priority_queue<WishlistEntry> copy = wishlist;
+	while (!copy.empty())
+	{
+		WishlistEntry curr = copy.top();
+		copy.pop();
+		if (curr.getTitle()->getTitleID() == title->getTitleID())
+			return false;
+	}
+
+	wishlist.push(newEntry);
+	return true;
 }
 
 set<string> User::getPlatforms()
