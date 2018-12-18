@@ -330,6 +330,13 @@ public:
 
 	std::vector<std::string> split(std::string long_string, int num_unique = 0);
 
+	/**
+	* @brief Calculates the purchase change of a user for a title
+	*
+	* @param usr User in question
+	* @param title Title in question
+	* @return float Returns the purchase chance
+	*/
 	float getPurchaseChance(User * usr, Title * title);
 };
 

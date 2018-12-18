@@ -904,6 +904,7 @@ float GameLibrary::getPurchaseChance(User * usr, Title * title)
 	int nClicks, nSeenPromos;
 	// Real Game Library should store information about user clicks and seen promo videos
 
+	// Random float between 0 and 1
 	float r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
 	
 	return r;

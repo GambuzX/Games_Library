@@ -52,6 +52,20 @@ public:
 	Title * getTitle() const { return title;  }
 
 	/**
+	* @brief Set the interest Private Member
+	*
+	* @param New value for the interest Private Member
+	*/
+	void setInterest(unsigned interest);
+
+	/**
+	* @brief Set the buyChance Private Member
+	*
+	* @param New value for buyChance Private Member
+	*/
+	void setBuyChance(float buyChance);
+
+	/**
 	* @brief Compares two WishlistEntry objects
 	* Organized by interest and, if equal, by buyChance
 	*

@@ -12,8 +12,6 @@
 #include "..\Utilities\WishlistEntry.h"
 #include "..\Utilities\CompareObj.h"
 
-// TODO: tentar evitar inclus? de bibliotecas circular (??) para ja esta isto
-
 class Title;
 class WishlistEntry;
 
@@ -339,6 +337,24 @@ public:
 	* @return bool Returns true if successfull, false otherwise
 	*/
 	bool addWishlistEntry(unsigned interest, float buyChance, Title * title);
+
+	/**
+	* @brief Removes an entry from the wishlist
+	*
+	* @param title Pointer to the title to remove
+	* @return bool Returns true if successfull, false otherwise
+	*/
+	bool removeWishlistEntry(Title * title);
+
+	/**
+	* @brief Edits an entry in the wishlist
+	*
+	* @param title Pointer to the title to edit
+	* @param interest Interest in the title, from 1 to 10
+	* @param buyChance Chance of the user buying this title, between 0 and 1
+	* @return bool Returns true if successfull, false otherwise
+	*/
+	bool editWishlistEntry(Title * title, unsigned interest, float buyChance);
 
 	/**
 	* @brief Get a set with all the Platforms the User has titles for

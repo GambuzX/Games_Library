@@ -431,6 +431,59 @@ bool User::addWishlistEntry(unsigned interest, float buyChance, Title * title)
 	return true;
 }
 
+
+bool User::removeWishlistEntry(Title * title)
+{
+	bool removed = false;
+	priority_queue<WishlistEntry> copy = wishlist;
+
+	// Empty the wishlist
+	while (!wishlist.empty()) wishlist.pop();
+
+	// Reconstruct editing the argument title
+	while (!copy.empty())
+	{
+		WishlistEntry curr = copy.top();
+		if (curr.getTitle()->getTitleID() == title->getTitleID())
+		{
+			removed = true;
+			copy.pop();
+			continue;
+		}
+
+		wishlist.push(curr);
+		copy.pop();
+	}
+
+	return removed;
+}
+
+bool User::editWishlistEntry(Title * title, unsigned interest, float buyChance)
+{
+	bool edited = false;
+	priority_queue<WishlistEntry> copy = wishlist;
+
+	// Empty the wishlist
+	while (!wishlist.empty()) wishlist.pop();
+
+	// Reconstruct without the argument title
+	while (!copy.empty())
+	{
+		WishlistEntry curr = copy.top();
+		if (curr.getTitle()->getTitleID() == title->getTitleID())
+		{
+			curr.setInterest(interest);
+			curr.setBuyChance(buyChance);
+			edited = true;
+		}
+
+		wishlist.push(curr);
+		copy.pop();
+	}
+
+	return edited;
+}
+
 set<string> User::getPlatforms()
 {
 	set<string> plats;

@@ -532,17 +532,39 @@ public:
 	unsigned getTitleID() { return titleID; }
 };
 
+/**
+* @brief Exception that is thrown when the Game Library was already loaded and tried to load again
+*/
 class AlreadyLoaded {
-	std::string message = "Games Library was already loaded, please restart the program to load.";
+	std::string message = "Games Library was already loaded, please restart the program to load."; /**< @brief Error message */
 public:
+	/**
+	* @brief Get the message Private Member
+	*
+	* @return string Returns the string Private Member
+	*/
 	std::string getMessage() const { return message; }
 };
 
+/**
+* @brief Exception that is thrown when you try to find a WishlistEntry above a certain buyChance and it does not exist
+*/
 class NoMatchingWishlistEntry
 {
-	float buyChance;
+	float buyChance; /**< @brief Buy chance */
 public:
+	/**
+	* @brief Construct a new NoMatchingWishlistEntry object
+	*
+	* @param buyC Buy chance that was not matched
+	*/
 	NoMatchingWishlistEntry(float buyC) : buyChance(buyC) {}
+
+	/**
+	* @brief Get the buyChance Private Member
+	*
+	* @return float Returns the buyChance Private Member
+	*/
 	float getBuyChance() const { return buyChance; }
 };
 
