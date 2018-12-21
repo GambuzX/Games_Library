@@ -52,6 +52,14 @@ public:
 	bool addTitle(Title * title);
 
 	/**
+	* @brief Removes a title from the list of the company created titles
+	*
+	* @param title Pointer to title to remove from the createdTitles set
+	* @return bool Returns true upon success, false otherwise
+	*/
+	bool removeTitle(Title * title);
+
+	/**
 	* @brief Get the name Private Member
 	*
 	* @return Unsigned Returns the name Private Member
