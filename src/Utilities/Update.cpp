@@ -25,7 +25,7 @@ bool Update::operator==(const Update & update) const {
 }
 
 bool Update::operator<(const Update & update) const {
-	return version < update.getVersion();
+	return version < update.getVersion() && date <= update.getDate();
 }
 
 std::ostream &operator<<(std::ostream &os, const Update &update)

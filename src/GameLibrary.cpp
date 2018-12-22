@@ -14,6 +14,7 @@ using namespace std;
 
 set<Title*, ComparePtr<Title>> GameLibrary::titles;
 map<Title*, double, ComparePtr<Title>> GameLibrary::titlesRevenue;
+Date GameLibrary::libraryDate = Date(29, 11, 1972);
 
 class GameLibrary;
 
@@ -908,4 +909,69 @@ float GameLibrary::getPurchaseChance(User * usr, Title * title)
 	float r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
 	
 	return r;
+}
+
+void GameLibrary::goToDate(Date & d)
+{
+	if (d < this->getLibraryDate())
+		throw OldDate(d);
+	Date initialDate = this->libraryDate;
+	this->libraryDate = d;
+	// Count number of "new yeas" between the 2 dates
+	// TODO: Verify algorithm
+	Date newYear = Date(1, 1, initialDate.getYear() + 1);
+	int numberOfNY = 0;
+	for (int i = 0; ; i++)
+	{
+		if (initialDate < newYear && newYear <= this->libraryDate)
+			numberOfNY++;
+		else
+			break;
+		newYear.setYear(newYear.getYear() + 1);
+	}
+	for (auto & user : users) user.first->setAge(user.first->getAge() + numberOfNY);
+}
+
+void GameLibrary::advanceXdays(unsigned int numberDays)
+{
+	Date initialDate = this->libraryDate;
+	this->libraryDate = this->libraryDate + numberDays;
+	// Count number of "new yeas" between the 2 dates
+	// TODO: Verify algorithm
+	Date newYear = Date(1, 1, initialDate.getYear() + 1);
+	int numberOfNY = 0;
+	for (int i = 0; ; i++)
+	{
+		if (initialDate < newYear && newYear <= this->libraryDate)
+			numberOfNY++;
+		else
+			break;
+		newYear.setYear(newYear.getYear() + 1);
+	}
+	for (auto & user : users) user.first->setAge(user.first->getAge() + numberOfNY);
+}
+
+void GameLibrary::advanceXmonths(unsigned int numberMonths)
+{
+	Date initialDate = this->libraryDate;
+	this->libraryDate.addMonths(numberMonths);
+	// Count number of "new yeas" between the 2 dates
+	// TODO: Verify algorithm
+	Date newYear = Date(1, 1, initialDate.getYear() + 1);
+	int numberOfNY = 0;
+	for (int i = 0; ; i++)
+	{
+		if (initialDate < newYear && newYear <= this->libraryDate)
+			numberOfNY++;
+		else
+			break;
+		newYear.setYear(newYear.getYear() + 1);
+	}
+	for (auto & user : users) user.first->setAge(user.first->getAge() + numberOfNY);
+}
+
+void GameLibrary::advanceXyears(unsigned int numberYears)
+{
+	for (auto & user : users) user.first->setAge(user.first->getAge() + numberYears);
+	this->libraryDate.addYears(numberYears);
 }

@@ -54,7 +54,7 @@ public:
 	/**
 	* @brief Construct a new User object
 	* Uses the nextUserID static int to assign the userID
-	* Assigns the current Date to createdDate
+	* Assigns the current library Date to createdDate
 	*
 	* @param name String that initializes the name Private Member
 	* @param email String that initializes the email Private Member
@@ -147,6 +147,9 @@ public:
 	* @param date Date to set the createdDate to
 	*/
 	void setCreatedDate(const Date & date) { createdDate = date; }
+	
+	// TODO: Comentar
+	void setAge(const int newAge) { age = newAge; }
 
 	/**
 	* @brief Set the purchasedGames Private Member

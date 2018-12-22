@@ -1,6 +1,7 @@
 #include "Title.h"
 #include <algorithm>
 #include "..\Utilities\Exceptions.h"
+#include "..\GameLibrary.h"
 
 using namespace std;
 
@@ -59,7 +60,7 @@ double Title::getCurrentPrice(Date & date) const
 }
 
 void Title::addPromotion(Sale promotion) {
-	if (promotion.getEndDate() < Date::getCurrentDate())
+	if (promotion.getEndDate() < GameLibrary::getLibraryDate())
 	{
 		throw ExpiredSale(promotion.getEndDate());
 	}
@@ -84,7 +85,7 @@ void Title::addPromotion(Sale promotion) {
 
 void Title::removePromotion(Date & saleBeginning)
 {
-	if (saleBeginning < Date::getCurrentDate())
+	if (saleBeginning < GameLibrary::getLibraryDate())
 	{
 		throw SaleStarted(saleBeginning);
 	}

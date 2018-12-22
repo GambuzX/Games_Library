@@ -116,6 +116,18 @@ void Date::setYear(unsigned int year)
 	this->year = year;
 }
 
+void Date::addMonths(unsigned int months)
+{
+	unsigned int monthT = this->month + months;
+	this->month = monthT % 12;
+	this->year = monthT / 12;
+}
+
+void Date::addYears(unsigned int years)
+{
+	this->year += years;
+}
+
 Date Date::operator+(int days) const {
 	if (days < 0)
 		return *this - (- days);

@@ -8,6 +8,7 @@
 #include "Title\Title.h"
 #include "Title\Company.h"
 #include "User\User.h"
+#include "Utilities\Date.h"
 #include "Utilities\Update.h"
 #include "Utilities\CompareObj.h"
 
@@ -16,6 +17,7 @@
 *
 * @brief Game Library system to manage Users and Titles
 * GameLibrary Class represents a Game Library system to manage Users and Titles.
+* This Class has an internal Date to keep track of the time
 *
 * @see User
 * @see Title
@@ -33,6 +35,7 @@ class GameLibrary {
 private:
 	static titlesSet titles; /**< @brief Static Set of the Game Library Titles */
 	static titlesRevenueMap titlesRevenue; /**< @brief Static Map of Titles to their respective total revenue */
+	static Date libraryDate;  /**< @brief Date to keep track of the current time */
 
 	usersMap users; /**< @brief Map of Users to their respective list of Titles */
 
@@ -338,6 +341,19 @@ public:
 	* @return float Returns the purchase chance
 	*/
 	float getPurchaseChance(User * usr, Title * title);
+
+	// TODO: Comentar
+	static Date getLibraryDate() { return libraryDate; };
+
+	void goToDate(Date & d);
+
+	// TODO: advance users age
+	void advanceXdays(unsigned int numberDays);
+
+	void advanceXmonths(unsigned int numberMonths);
+
+	void advanceXyears(unsigned int numberYears);
+
 };
 
 /** @} */
