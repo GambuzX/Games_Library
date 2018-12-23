@@ -145,7 +145,7 @@ bool GameLibrary::editCompany(std::string name, unsigned NIF, unsigned contact)
 {
 	Company * comp = getCompany(name);
 	if (comp == nullptr) return false;
-	
+
 	comp->setNIF(NIF);
 	comp->setContact(contact);
 	return true;
@@ -161,17 +161,19 @@ bool GameLibrary::addTitleToCompany(string companyName, Title * title)
 
 void GameLibrary::saveGameLibrary()
 {
-	// the info files only contains information on the number of games users
+	// the info files only contains information on the number of games, users and companies
 	ofstream library_info_file("info.txt");
 
-	library_info_file << titles.size() << " " << users.size() << endl;
+	library_info_file << titles.size() << " " << users.size() << " " << platformCompanies.size() << endl;
 	library_info_file.close();
 
 	system("mkdir titles >nul 2>nul");
 	system("mkdir users >nul 2>nul");
+	system("mkdir companies >nul 2>nul");
 
 	ostringstream user_file_name;
 	ostringstream title_file_name;
+	ostringstream company_file_name;
 
 	for (auto &user : users) {
 		// open one file per user and generate file name according to user_<id>.txt
@@ -209,13 +211,24 @@ void GameLibrary::saveGameLibrary()
 
 		title_file.close();
 	}
+
+	for (auto &set_it : platformCompanies) {
+	    company_file_name << "company_" << set_it->getNIF() << ".txt";
+	    ofstream company_file("companies/" + company_file_name.str());
+	    company_file_name.str("");
+	    company_file_name.clear();
+
+        set_it->displayCompanyInfo(company_file);
+
+        company_file.close();
+	}
 }
 
 void GameLibrary::loadGameLibrary()
 {
 	if (!titles.empty() || !users.empty()) { throw AlreadyLoaded(); }
 	ifstream info_file("info.txt");
-	size_t ntitles, nusers;
+	size_t ntitles, nusers, ncompanies;
 	string str;
 
 	enum title_states {
@@ -242,17 +255,25 @@ void GameLibrary::loadGameLibrary()
 		games,
 	};
 
+	enum company_states {
+	    nif_name,
+	    contact,
+	    titles,
+	};
+
 	enum title_states title_current_state = id_name;
 	enum user_states user_current_state = _id_name;
+	enum company_states company_current_state = nif_name;
 
 	if (!info_file) {
 		cout << "Opening of information file failed. Does it exist?" << endl;
 	}
 
-	info_file >> ntitles >> nusers;
+	info_file >> ntitles >> nusers >> ncompanies;
 
 	ostringstream user_file_name;
 	ostringstream title_file_name;
+	ostringstream company_file_name;
 
 	vector<pair<unsigned int, vector<unsigned int>>> allfriends, allgames;
 
@@ -543,6 +564,44 @@ void GameLibrary::loadGameLibrary()
 		}
 		title_file.close();
 	}
+
+    for (size_t i = 1; i <= ncompanies; ++i) {
+        string name;
+        unsigned nif = 0, _contact = 0;
+        vector<unsigned> published_games;
+
+        company_file_name << "company_" << i << ".txt";
+        ifstream company_file("companies/" + company_file_name.str());
+        company_file_name.str("");
+        company_file_name.clear();
+
+        while(getline(company_file, str)) {
+            switch (company_current_state) {
+            case nif_name:
+                nif = static_cast<unsigned int>(stoi(split(str, 1)[0]));
+                name = split(str, 1)[1];
+                company_current_state = contact;
+                break;
+            case contact:
+                _contact = static_cast<unsigned int>(stoi(str));
+
+                getline(company_file, str);
+                if (str == "Titles:") company_current_state = titles;
+
+                break;
+            case titles:
+                published_games.push_back(static_cast<unsigned int>(stoi(str)));
+            default: break;
+            }
+        }
+        Company *c = new Company(name, nif, _contact);
+
+        for (unsigned game_id : published_games) {
+            c->addTitle(game_id, GameLibrary::titles);
+        }
+
+        addCompany(c);
+    }
 
 	for (pair<unsigned int, vector<unsigned int>> &games_list : allgames) {
 		User* user = find_if(users.begin(), users.end(),
@@ -906,6 +965,6 @@ float GameLibrary::getPurchaseChance(User * usr, Title * title)
 
 	// Random float between 0 and 1
 	float r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-	
+
 	return r;
 }

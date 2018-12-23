@@ -64,14 +64,14 @@ public:
 	*
 	* @return Unsigned Returns the name Private Member
 	*/
-	std::string getName() { return name;  }
+	std::string getName() const { return name;  }
 
 	/**
 	* @brief Get the NIF Private Member
 	*
 	* @return Unsigned Returns the NIF Private Member
 	*/
-	unsigned getNIF() { return NIF; }
+	unsigned getNIF() const { return NIF; }
 
 	/**
 	* @brief Set the NIF Private Member
@@ -85,7 +85,7 @@ public:
 	*
 	* @return Unsigned Returns the contact Private Member
 	*/
-	unsigned getContact() { return contact; }
+	unsigned getContact() const { return contact; }
 
 	/**
 	* @brief Set the contact Private Member
@@ -98,14 +98,28 @@ public:
 	*
 	* @return titleSet Returns the createdTitles Private Member
 	*/
-	titleSet getTitles() { return createdTitles; }
+	titleSet getTitles() const { return createdTitles; }
 
 	/**
 	* @brief Get the number of titles in the createdTitles set
 	*
 	* @return Unsigned Returns the number of titles in the createdTitles Private Member
 	*/
-	unsigned getNTitles() { return createdTitles.size(); }
+	unsigned getNTitles() const { return createdTitles.size(); }
+
+	/**
+	 * @brief Writes company information into the ostream passed as argument
+	 * @param os Stream to write to
+	 */
+	void displayCompanyInfo(std::ostream& os);
+
+	/**
+	 * @brief Associates a title to a company by checking first if it exists
+	 * @param title_id ID of the title to associate
+	 * @param titles_set Set of titles to search on
+	 * @return Returns success status of insertion operation
+	 */
+    bool addTitle(unsigned int title_id, std::set<Title *, ComparePtr<Title>> titles_set);
 };
 
 
