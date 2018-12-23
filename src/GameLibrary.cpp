@@ -601,6 +601,7 @@ void GameLibrary::loadGameLibrary()
         }
 
         addCompany(c);
+        company_file.close();
     }
 
 	for (pair<unsigned int, vector<unsigned int>> &games_list : allgames) {
