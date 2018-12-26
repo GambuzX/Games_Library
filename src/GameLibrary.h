@@ -4,10 +4,12 @@
 #include <set>
 #include <map>
 #include <fstream>
+#include <unordered_set>
 #include "GameLibraryInfo.h"
 #include "Title\Title.h"
 #include "Title\Company.h"
 #include "User\User.h"
+#include "Utilities\Date.h"
 #include "Utilities\Update.h"
 #include "Utilities\CompareObj.h"
 
@@ -16,14 +18,37 @@
 *
 * @brief Game Library system to manage Users and Titles
 * GameLibrary Class represents a Game Library system to manage Users and Titles.
+* This Class has an internal Date to keep track of the time
 *
 * @see User
 * @see Title
 */
 
+// TODO: comentar e passar para compareobj??
+struct UserPtrHash
+{
+	// PARA já djb2 depois se houver tempo mudar faz 33*...
+	int operator() (const User * user) const
+	{
+		unsigned long hash = 5381;
+		for (char c : user->getEmail()) {
+			if (c != '@')
+				hash = (hash << 5) + hash + c;
+		}
+		return hash;
+	}
+
+	bool operator() (const User * user1, const User * user2) const
+	{
+		return user1->getEmail() == user2->getEmail();
+	}
+};
+
 typedef std::set<Title*, ComparePtr<Title>> titlesSet;
 typedef std::map<Title*, double, ComparePtr<Title>> titlesRevenueMap;
 typedef std::map<User*, std::set<Title*, ComparePtr<Title>>, ComparePtr<User>> usersMap;
+typedef std::unordered_set<User *, UserPtrHash, UserPtrHash> HashTabUsersPtr;
+typedef std::map<Title*, HashTabUsersPtr, ComparePtr<Title>> titleUserHashTabMap;
 typedef std::set<Company*, CompareCompany> companiesSet;
 
 /**
@@ -33,8 +58,10 @@ class GameLibrary {
 private:
 	static titlesSet titles; /**< @brief Static Set of the Game Library Titles */
 	static titlesRevenueMap titlesRevenue; /**< @brief Static Map of Titles to their respective total revenue */
+	static Date libraryDate;  /**< @brief Date to keep track of the current time */
 
 	usersMap users; /**< @brief Map of Users to their respective list of Titles */
+	titleUserHashTabMap asleepUsers; /**< @brief Map of Titles to their respective hash tables with the "asleep" Users pointers */
 
 	companiesSet platformCompanies; /**< @brief Set of the Companies that exist in this Game Library */
 
@@ -338,6 +365,21 @@ public:
 	* @return float Returns the purchase chance
 	*/
 	float getPurchaseChance(User * usr, Title * title);
+
+	// TODO: Comentar
+	static Date getLibraryDate() { return libraryDate; };
+
+	void goToDate(Date & d);
+
+	void advanceXdays(unsigned int numberDays);
+
+	void advanceXmonths(unsigned int numberMonths);
+
+	void advanceXyears(unsigned int numberYears);
+
+	// Generic function to update the users in all the Hash Tables. Mudar depois para sitios que façam sentido e desconstruí-la para usar em outras a as partes
+	void updateHashTable(float minimumProb);
+
 };
 
 /** @} */

@@ -143,6 +143,11 @@ public:
 	 */
 	void setYear(unsigned int year);
 
+	// TODO: Comentar
+	void addMonths(unsigned int months);
+
+	void addYears(unsigned int years);
+
 	/**
 	 * @brief Overload of the plus operator in order to add a number of days to a date
 	 * May call the symmetric operator if the number of days is negative

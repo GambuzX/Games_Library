@@ -1,9 +1,10 @@
 #include "Transaction.h"
+#include "..\GameLibrary.h"
 
 Transaction::Transaction(double val, TransactionType t)
 {
 	value = val;
-	date = Date::getCurrentDate();
+	date = GameLibrary::getLibraryDate();
 	type = t;
 }
 

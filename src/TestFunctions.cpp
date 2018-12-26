@@ -325,7 +325,7 @@ void UserSessionSummary2(const map<User*, vector<Session>, ComparePtr<User>> & p
 
 void titleInfo(Title * game, bool isOnline)
 {
-	Date d = Date::getCurrentDate();
+	Date d = GameLibrary::getLibraryDate();
 	cout << " Title ID:\t" << game->getTitleID() << endl;
 	cout << " Game:\t\t" << game->getName() << endl;
 	cout << " Price:\t\t" << game->getBasePrice() << endl;
@@ -1154,7 +1154,7 @@ void PromotionMenu(GameLibrary & gl, Title * game) {
 		header("Current Sale");
 		try
 		{
-			Date d = Date::getCurrentDate();
+			Date d = GameLibrary::getLibraryDate();
 			promotionDisplay(" Current Promotion:", game->getSaleOn(d));
 			system("pause");
 			cout << endl << endl;

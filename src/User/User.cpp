@@ -7,7 +7,7 @@ using namespace std;
 
 unsigned int User::nextUserID = 0;
 
-User::User (std::string name, std::string email, int age, Address address) : userID(++nextUserID), createdDate(Date::getCurrentDate()) {
+User::User (std::string name, std::string email, int age, Address address) : userID(++nextUserID), createdDate(GameLibrary::getLibraryDate()) {
 	this->name = name;
 	this->email = email;
 	this->age = age;
@@ -37,7 +37,7 @@ bool User::hasEnoughMoney(double val) const {
 
 	for (const auto & cc : creditCards)
 		// if not expired
-		if (Date::getCurrentDate() <= cc.getExpiryDate()) amountOwned += cc.getBalance();
+		if (GameLibrary::getLibraryDate() <= cc.getExpiryDate()) amountOwned += cc.getBalance();
 
 	return amountOwned >= val;
 }
@@ -49,7 +49,7 @@ bool User::subtractValue(double val)
 	for (auto & cc : creditCards)
 	{
 		// If expired, skip card
-		if (cc.getExpiryDate() < Date::getCurrentDate()) continue;
+		if (cc.getExpiryDate() < GameLibrary::getLibraryDate()) continue;
 
 		// Remove money
 		if (cc.getBalance() >= val)
@@ -108,7 +108,7 @@ bool User::buyTitle(Title* title) {
 		return false;
 	}
 
-	Date currentDate = Date::getCurrentDate();
+	Date currentDate = GameLibrary::getLibraryDate();
 	double price = title->getCurrentPrice(currentDate);
 
 	// Charge price ; Checks if has enough money
@@ -119,7 +119,7 @@ bool User::buyTitle(Title* title) {
 	}
 	GameLibrary::updateTitleRevenue(title, price);
 	title->addNewUser(this);
-	addTransaction(price, Date::getCurrentDate(), gamePurchase);
+	addTransaction(price, GameLibrary::getLibraryDate(), gamePurchase);
 	purchasedGames->insert(title);
 
 	return true;
@@ -141,7 +141,7 @@ bool User::buyTitle(unsigned int titleID) {
 		return false;
 	}
 
-	Date currentDate = Date::getCurrentDate();
+	Date currentDate = GameLibrary::getLibraryDate();
 	double price = title->getCurrentPrice(currentDate);
 
 	// Charge price ; Checks if has enough money
@@ -153,7 +153,7 @@ bool User::buyTitle(unsigned int titleID) {
 	}
 	GameLibrary::updateTitleRevenue(title, price);
 	title->addNewUser(this);
-	addTransaction(price, Date::getCurrentDate(), gamePurchase);
+	addTransaction(price, GameLibrary::getLibraryDate(), gamePurchase);
 	purchasedGames->insert(title);
 
 	return true;
@@ -168,7 +168,7 @@ bool User::addTitle(unsigned int titleID)
         return false;
     }
 
-    Date currentDate = Date::getCurrentDate();
+    Date currentDate = GameLibrary::getLibraryDate();
     double price = title->getCurrentPrice(currentDate);
 
     GameLibrary::updateTitleRevenue(title, price);
@@ -195,7 +195,7 @@ bool User::buyTitle(std::string name, gameLibraryPlatform platform)
 		return false;
 	}
 
-	Date currentDate = Date::getCurrentDate();
+	Date currentDate = GameLibrary::getLibraryDate();
 	double price = title->getCurrentPrice(currentDate);
 
 	// Charge price ; Checks if has enough money
@@ -206,7 +206,7 @@ bool User::buyTitle(std::string name, gameLibraryPlatform platform)
 	}
 	GameLibrary::updateTitleRevenue(title, price);
 	title->addNewUser(this);
-	addTransaction(price, Date::getCurrentDate(), gamePurchase);
+	addTransaction(price, GameLibrary::getLibraryDate(), gamePurchase);
 	purchasedGames->insert(title);
 
 	return true;
@@ -243,7 +243,7 @@ bool User::updateTitle(Title* title) {
 	title->updateUserVersion(this);
 	if (!subtractValue(updatePrice)) return false;
 	GameLibrary::updateTitleRevenue(title, updatePrice);
-	addTransaction(updatePrice, Date::getCurrentDate(), homeUpdate);
+	addTransaction(updatePrice, GameLibrary::getLibraryDate(), homeUpdate);
 
 	return true;
 }
@@ -288,7 +288,7 @@ bool User::updateTitle(unsigned int titleID) {
 	title->updateUserVersion(this);
 	if (!subtractValue(updatePrice)) return false;
 	GameLibrary::updateTitleRevenue(title, updatePrice);
-	addTransaction(updatePrice, Date::getCurrentDate(), homeUpdate);
+	addTransaction(updatePrice, GameLibrary::getLibraryDate(), homeUpdate);
 
 	return true;
 }
@@ -344,9 +344,9 @@ bool User::playGame(Title * title, double duration) {
 		}
 		if (!subtractValue(playPrice)) return false;
 
-		title->addNewSession(this, Session(duration, Date::getCurrentDate()));
+		title->addNewSession(this, Session(duration, GameLibrary::getLibraryDate()));
 		GameLibrary::updateTitleRevenue(title, playPrice);
-		addTransaction(playPrice, Date::getCurrentDate(), onlineSubscription);
+		addTransaction(playPrice, GameLibrary::getLibraryDate(), onlineSubscription);
 	}
 	// If Home Title
 	else
@@ -371,7 +371,7 @@ bool User::playGame(Title * title, double duration) {
 		// If nothing is thrown, title was updated
 		if (!subtractValue(updatePrice)) return false;
 		GameLibrary::updateTitleRevenue(title, updatePrice);
-		addTransaction(updatePrice, Date::getCurrentDate(), homeUpdate);
+		addTransaction(updatePrice, GameLibrary::getLibraryDate(), homeUpdate);
 	}
 
 	return true;

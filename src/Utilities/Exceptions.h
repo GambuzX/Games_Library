@@ -4,6 +4,7 @@
 #include <sstream>
 #include "Date.h"
 #include "Update.h"
+#include "..\GameLibrary.h"
 
 /** @defgroup Exceptions Exceptions
  * @ingroup GameLibrary
@@ -204,7 +205,7 @@ public:
 	 * @brief Construct a new ExpiredSale object
 	 * Initializes it with the current date
 	 */
-	ExpiredSale() { currentDate = Date::getCurrentDate(); endSalesDate = Date(); };
+	ExpiredSale() { currentDate = GameLibrary::getLibraryDate(); endSalesDate = Date(); };
 
 	/**
 	 * @brief Construct a new ExpiredSale object
@@ -212,7 +213,7 @@ public:
 	 *
 	 * @param endSalesDate Date when the Sale expired
 	 */
-	explicit ExpiredSale(Date endSalesDate) { this->endSalesDate = endSalesDate; currentDate = Date::getCurrentDate(); };
+	explicit ExpiredSale(Date endSalesDate) { this->endSalesDate = endSalesDate; currentDate = GameLibrary::getLibraryDate(); };
 
 	/**
 	 * @brief Get an error message
@@ -250,7 +251,7 @@ public:
 	 * @brief Construct a new SaleStarted object
 	 * Initializes it with the current date
 	 */
-	SaleStarted() { currentDate = Date::getCurrentDate(); beginSalesDate = Date(); };
+	SaleStarted() { currentDate = GameLibrary::getLibraryDate(); beginSalesDate = Date(); };
 
 	/**
 	 * @brief Construct a new SaleStarted object
@@ -258,7 +259,7 @@ public:
 	 *
 	 * @param beginSalesDate Date when the Sale started
 	 */
-	explicit SaleStarted(Date beginSalesDate) { this->beginSalesDate = beginSalesDate; currentDate = Date::getCurrentDate(); };
+	explicit SaleStarted(Date beginSalesDate) { this->beginSalesDate = beginSalesDate; currentDate = GameLibrary::getLibraryDate(); };
 
 	/**
 	 * @brief Get an error message
@@ -400,6 +401,16 @@ public:
 	 * @return string Returns the date Private Member
 	 */
 	std::string getInvalidDate() const { return date; };
+};
+
+// TODO: comentar
+class OldDate {
+private:
+	Date invDate;
+public:
+	explicit OldDate(const Date & d) { invDate = d; };
+	Date getOldDate() const { return invDate; };
+
 };
 
  /**
