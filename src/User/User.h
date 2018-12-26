@@ -142,6 +142,13 @@ public:
 	const std::vector<Transaction> & getTransactions() const { return transactions; }
 
 	/**
+	* @brief Get the Wishlist Private Member
+	*
+	* @return const priority_queue<WishlistEntry> & Returns the wishlist Private Member
+	*/
+	const std::priority_queue<WishlistEntry> & getWishlist() const { return wishlist; }
+
+	/**
 	* @brief Set the createdDate Private Member
 	*
 	* @param date Date to set the createdDate to

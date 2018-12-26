@@ -4,7 +4,7 @@
 #include <cstdlib>
 #include <algorithm>
 #include "GameLibrary.h"
-#include "Utilities\Exceptions.h"
+#include "Utilities/Exceptions.h"
 #include "Title/HomeTitle.h"
 #include "Title/OnlineTitle.h"
 #include "Title/FixedSubscription.h"
@@ -974,4 +974,26 @@ void GameLibrary::advanceXyears(unsigned int numberYears)
 {
 	for (auto & user : users) user.first->setAge(user.first->getAge() + numberYears);
 	this->libraryDate.addYears(numberYears);
+}
+
+void GameLibrary::updateHashTable(float minimumProb)
+{
+	// typedef std::unordered_set<User *, UserPtrHash, UserPtrHash> HashTabUsersPtr;
+	// typedef std::map<Title*, HashTabUsersPtr, ComparePtr<Title>> titleUserHashTabMap;
+	// typedef std::map<User*, std::set<Title*, ComparePtr<Title>>, ComparePtr<User>> usersMap;
+
+	for (const auto & user : users) {
+		priority_queue<WishlistEntry> prov = user.first->getWishlist();
+		while (!prov.empty()) {
+			if (prov.top().getBuyChance() > minimumProb) {
+				titleUserHashTabMap::iterator it = asleepUsers.find(prov.top().getTitle());
+				if (it != asleepUsers.end()) (*it).second.insert(user.first);
+				else {
+					HashTabUsersPtr temp = { user.first };
+					asleepUsers.insert(make_pair(prov.top().getTitle(), temp));
+				}
+			}
+			prov.pop();
+		}
+	}
 }

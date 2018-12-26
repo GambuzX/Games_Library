@@ -4,6 +4,7 @@
 #include <set>
 #include <map>
 #include <fstream>
+#include <unordered_set>
 #include "GameLibraryInfo.h"
 #include "Title\Title.h"
 #include "Title\Company.h"
@@ -23,9 +24,31 @@
 * @see Title
 */
 
+// TODO: comentar e passar para compareobj??
+struct UserPtrHash
+{
+	// PARA já djb2 depois se houver tempo mudar faz 33*...
+	int operator() (const User * user) const
+	{
+		unsigned long hash = 5381;
+		for (char c : user->getEmail()) {
+			if (c != '@')
+				hash = (hash << 5) + hash + c;
+		}
+		return hash;
+	}
+
+	bool operator() (const User * user1, const User * user2) const
+	{
+		return user1->getEmail() == user2->getEmail();
+	}
+};
+
 typedef std::set<Title*, ComparePtr<Title>> titlesSet;
 typedef std::map<Title*, double, ComparePtr<Title>> titlesRevenueMap;
 typedef std::map<User*, std::set<Title*, ComparePtr<Title>>, ComparePtr<User>> usersMap;
+typedef std::unordered_set<User *, UserPtrHash, UserPtrHash> HashTabUsersPtr;
+typedef std::map<Title*, HashTabUsersPtr, ComparePtr<Title>> titleUserHashTabMap;
 typedef std::set<Company*, CompareCompany> companiesSet;
 
 /**
@@ -38,6 +61,7 @@ private:
 	static Date libraryDate;  /**< @brief Date to keep track of the current time */
 
 	usersMap users; /**< @brief Map of Users to their respective list of Titles */
+	titleUserHashTabMap asleepUsers; /**< @brief Map of Titles to their respective hash tables with the "asleep" Users pointers */
 
 	companiesSet platformCompanies; /**< @brief Set of the Companies that exist in this Game Library */
 
@@ -347,12 +371,14 @@ public:
 
 	void goToDate(Date & d);
 
-	// TODO: advance users age
 	void advanceXdays(unsigned int numberDays);
 
 	void advanceXmonths(unsigned int numberMonths);
 
 	void advanceXyears(unsigned int numberYears);
+
+	// Generic function to update the users in all the Hash Tables. Mudar depois para sitios que façam sentido e desconstruí-la para usar em outras a as partes
+	void updateHashTable(float minimumProb);
 
 };
 
