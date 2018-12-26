@@ -28,6 +28,8 @@ void UserGameMenu(GameLibrary & gl, User * user);
 *  +------------------------+
 */
 
+void CompaniesMenu(GameLibrary &gameL);
+void addCompany(GameLibrary &library);
 /**
 * Writes a neat header in the console with the title centerd and a line above and below all across the screen
 *
@@ -1785,19 +1787,56 @@ void ListsRankingsMenu(GameLibrary & gl) {
 }
 
 //-----------------------------------------------------------------------------------------------------------------------//
+void addCompany(GameLibrary &gameL)
+{
+	string name = namesInput(" Name (only letters and space): ");
+	unsigned nif = intInput(" NIF (only numbers)"), contact = intInput(" Contact (only numbers)");
+
+	gameL.addCompany(new Company(name, nif, contact));
+}
+
+//-----------------------------------------------------------------------------------------------------------------------//
+void CompaniesMenu(GameLibrary &gameL)
+{
+	header("Manage Companies");
+
+	cout << " Possible options:\n" << endl;
+	cout << "   1 - Add Company" << endl;
+	cout << "   2 - Remove Company" << endl;
+	cout << "   3 - Company Info" << endl;
+	cout << "   0 - Go back" << endl << endl;
+
+	int option_number = menuInput(" Option ? ", 0, 3);
+
+	switch (option_number)
+	{
+	case 1:
+		addCompany(gameL);
+		break;
+	case 2:
+		break;
+	case 3:
+		break;
+	case 0:
+		header("CREATE GAME LIBRARY");
+		PrincipalMenu(gameL);
+		break;
+	default:break;
+	}
+}
+
+
+//-----------------------------------------------------------------------------------------------------------------------//
 
 void PrincipalMenu(GameLibrary & gameL)
 {
 	int option_number;
 
 	cout << " Do you want to:" << endl << endl;
-
 	cout << "   1 - Manage Games" << endl;
-
 	cout << "   2 - Manage Users" << endl;
-
-	cout << "   3 - Lists and Rankings" << endl;
-
+	cout << "   3 - Manage Companies" << endl;
+	cout << "   4 - Lists and Rankings" << endl;
 	cout << "   0 - Go back" << endl << endl;
 
 	option_number = menuInput(" Option ? ", 0, 3);
@@ -1811,6 +1850,9 @@ void PrincipalMenu(GameLibrary & gameL)
 		UsersMenu(gameL);
 		break;
 	case 3:
+		CompaniesMenu(gameL);
+		break;
+	case 4:
 		ListsRankingsMenu(gameL);
 		break;
 	case 0:
