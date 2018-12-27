@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <iostream>
 #include "Company.h"
 
 using namespace std;
@@ -35,7 +36,9 @@ bool Company::addTitle(unsigned int title_id, std::set<Title *, ComparePtr<Title
     });
 
     if (it != titles_set.end()) {
-            return addTitle(*it);
+        return addTitle(*it);
+    } else {
+        cout << "Attempting to associate title with id " << title_id << " but it does not exist" << endl;
     }
 
     return false;
