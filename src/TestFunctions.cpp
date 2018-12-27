@@ -31,6 +31,7 @@ void UserGameMenu(GameLibrary & gl, User * user);
 void CompaniesMenu(GameLibrary &gameL);
 void addCompany(GameLibrary &library);
 void removeCompany(GameLibrary &gameL);
+void displayCompanyInfo(GameLibrary &gameL);
 /**
 * Writes a neat header in the console with the title centerd and a line above and below all across the screen
 *
@@ -1817,8 +1818,39 @@ void removeCompany(GameLibrary &gameL)
                 cout << " You seem to be struggling. Please consider taking a look at the Companies Summary\n";
             }
             name = namesInput(" Name (only letters and space, < to cancel): ");
+			company = gameL.getCompany(name);
         } else {
+			gameL.removeCompany(company);
             cout << "\n Company Removed Successfully";
+            break;
+        }
+    }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------//
+void displayCompanyInfo(GameLibrary &gameL)
+{
+    if (gameL.getCompanies().empty()) {
+        cout << " There are no companies to show!\n";
+        return;
+    }
+
+    string name = namesInput(" Name (only letters and space, < to cancel): ");
+
+    Company *company = gameL.getCompany(name);
+
+    int nameErrors = 0;
+    while (name.at(0) != '<') {
+        if (company == nullptr) {
+            nameErrors++;
+            cout << " No such company found!\n";
+            if (nameErrors > 3) {
+                cout << " You seem to be struggling. Please consider taking a look at the Companies Summary\n";
+            }
+            name = namesInput(" Name (only letters and space, < to cancel): ");
+            company = gameL.getCompany(name);
+        } else {
+            cout << company;
             break;
         }
     }
@@ -1852,6 +1884,10 @@ void CompaniesMenu(GameLibrary &gameL)
 	    CompaniesMenu(gameL);
 		break;
 	case 3:
+	    header("Company Info");
+	    displayCompanyInfo(gameL);
+	    cout << endl << endl;
+	    CompaniesMenu(gameL);
 		break;
 	case 0:
 		header("CREATE GAME LIBRARY");
@@ -1860,7 +1896,6 @@ void CompaniesMenu(GameLibrary &gameL)
 	default:break;
 	}
 }
-
 
 //-----------------------------------------------------------------------------------------------------------------------//
 

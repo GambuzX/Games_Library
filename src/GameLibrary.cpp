@@ -598,7 +598,7 @@ void GameLibrary::loadGameLibrary()
         Company *c = new Company(name, nif, _contact);
 
         for (unsigned game_id : published_games) {
-            c->addTitle(game_id, GameLibrary::titles);
+        	c->addTitle(game_id, GameLibrary::titles);
         }
 
         addCompany(c);
