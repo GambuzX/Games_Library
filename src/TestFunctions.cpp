@@ -30,6 +30,7 @@ void UserGameMenu(GameLibrary & gl, User * user);
 
 void CompaniesMenu(GameLibrary &gameL);
 void addCompany(GameLibrary &library);
+void removeCompany(GameLibrary &gameL);
 /**
 * Writes a neat header in the console with the title centerd and a line above and below all across the screen
 *
@@ -1796,6 +1797,34 @@ void addCompany(GameLibrary &gameL)
 }
 
 //-----------------------------------------------------------------------------------------------------------------------//
+void removeCompany(GameLibrary &gameL)
+{
+    if (gameL.getCompanies().empty()) {
+        cout << " There are no companies to remove\n";
+        return;
+    }
+
+    string name = namesInput(" Name (only letters and space, < to cancel): ");
+
+    Company *company = gameL.getCompany(name);
+
+    int nameErrors = 0;
+    while (name.at(0) != '<') {
+        if (company == nullptr) {
+            nameErrors++;
+            cout << " No such company found!\n";
+            if (nameErrors > 3) {
+                cout << " You seem to be struggling. Please consider taking a look at the Companies Summary\n";
+            }
+            name = namesInput(" Name (only letters and space, < to cancel): ");
+        } else {
+            cout << "\n Company Removed Successfully";
+            break;
+        }
+    }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------//
 void CompaniesMenu(GameLibrary &gameL)
 {
 	header("Manage Companies");
@@ -1811,9 +1840,16 @@ void CompaniesMenu(GameLibrary &gameL)
 	switch (option_number)
 	{
 	case 1:
+	    header("Add Company");
 		addCompany(gameL);
+		cout << endl << endl;
+		CompaniesMenu(gameL);
 		break;
 	case 2:
+	    header("Remove Company");
+	    removeCompany(gameL);
+	    cout << endl << endl;
+	    CompaniesMenu(gameL);
 		break;
 	case 3:
 		break;
@@ -1874,11 +1910,8 @@ void InicialMenu(GameLibrary & gl)
 	cout << " OPTIONS:" << endl << endl;
 
 	cout << "   1 - Create Library" << endl;
-
 	cout << "   2 - Load Library" << endl;
-
 	cout << "   3 - Save Library" << endl;
-
 	cout << "   0 - Exit" << endl << endl;
 
 	option_number = menuInput(" Option ? ", 0, 3);
