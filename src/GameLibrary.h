@@ -73,6 +73,12 @@ public:
 	~GameLibrary();
 
 	/**
+	 * @brief Getter method for the set of registered companies
+	 * @return set of registered companies
+	 */
+	companiesSet getCompanies() { return platformCompanies; };
+
+	/**
 	* @brief Adds a User to the Game Library
 	* Constructs a new user with the given parameters
 	* May throw some exceptions if there is already an user with the specified email
