@@ -120,6 +120,14 @@ public:
 	 * @return Returns success status of insertion operation
 	 */
     bool addTitle(unsigned int title_id, std::set<Title *, ComparePtr<Title>> titles_set);
+
+    /**
+     * @brief Displays company information in a human-friendly way
+     * @param out
+     * @param c
+     * @return
+     */
+    friend std::ostream& operator<<(std::ostream &out, const Company &c);
 };
 
 
