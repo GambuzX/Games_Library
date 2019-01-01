@@ -803,7 +803,6 @@ void removeUser(GameLibrary & gL) {
 			break;
 		}
 	}
-
 }
 
 //-----------------------------------------------------------------------------------------------------------------------//
@@ -1805,20 +1804,20 @@ void removeCompany(GameLibrary &gameL)
         return;
     }
 
-    string name = namesInput(" Name (only letters and space, < to cancel): ");
+    unsigned nif = intInput(" NIF (0 to go back): ");
 
-    Company *company = gameL.getCompany(name);
+    Company *company = gameL.getCompany(nif);
 
     int nameErrors = 0;
-    while (name.at(0) != '<') {
+    while (nif != 0) {
         if (company == nullptr) {
             nameErrors++;
             cout << " No such company found!\n";
             if (nameErrors > 3) {
                 cout << " You seem to be struggling. Please consider taking a look at the Companies Summary\n";
             }
-            name = namesInput(" Name (only letters and space, < to cancel): ");
-			company = gameL.getCompany(name);
+            nif = intInput(" NIF (0 to go back): ");
+			company = gameL.getCompany(nif);
         } else {
 			gameL.removeCompany(company);
             cout << "\n Company Removed Successfully";
@@ -1835,22 +1834,22 @@ void displayCompanyInfo(GameLibrary &gameL)
         return;
     }
 
-    string name = namesInput(" Name (only letters and space, < to cancel): ");
+    unsigned nif = intInput(" NIF (0 to go back): ");
 
-    Company *company = gameL.getCompany(name);
+    Company *company = gameL.getCompany(nif);
 
     int nameErrors = 0;
-    while (name.at(0) != '<') {
+    while (nif != 0) {
         if (company == nullptr) {
             nameErrors++;
             cout << " No such company found!\n";
             if (nameErrors > 3) {
                 cout << " You seem to be struggling. Please consider taking a look at the Companies Summary\n";
             }
-            name = namesInput(" Name (only letters and space, < to cancel): ");
-            company = gameL.getCompany(name);
+            nif = intInput(" NIF (0 to go back): ");
+            company = gameL.getCompany(nif);
         } else {
-            cout << company;
+            cout << *company;
             break;
         }
     }
