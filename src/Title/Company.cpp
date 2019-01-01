@@ -45,10 +45,10 @@ bool Company::addTitle(unsigned int title_id, std::set<Title *, ComparePtr<Title
 }
 
 ostream& operator<<(ostream &out, const Company &c) {
-    out << "Company Information:" << endl;
-    out << "Name: " << c.getName() << endl;
-    out << "NIF: " << c.getNIF() << endl;
-    out << "Contact: " << c.getContact() << endl;
+    out << " Company Information:" << endl;
+    out << " Name: " << c.getName() << endl;
+    out << " NIF: " << c.getNIF() << endl;
+    out << " Contact: " << c.getContact() << endl;
 
     for (auto it : c.getTitles()) {
       out << *it << endl;

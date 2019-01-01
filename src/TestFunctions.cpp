@@ -1792,7 +1792,7 @@ void ListsRankingsMenu(GameLibrary & gl) {
 void addCompany(GameLibrary &gameL)
 {
 	string name = namesInput(" Name (only letters and space): ");
-	unsigned nif = intInput(" NIF (only numbers)"), contact = intInput(" Contact (only numbers)");
+	unsigned nif = intInput(" NIF (only numbers): "), contact = intInput(" Contact (only numbers): ");
 
 	gameL.addCompany(new Company(name, nif, contact));
 }
@@ -1862,28 +1862,37 @@ void CompaniesMenu(GameLibrary &gameL)
 	header("Manage Companies");
 
 	cout << " Possible options:\n" << endl;
-	cout << "   1 - Add Company" << endl;
-	cout << "   2 - Remove Company" << endl;
-	cout << "   3 - Company Info" << endl;
+	cout << "   1 - Companies Summary" << endl;
+	cout << "   2 - Add Company" << endl;
+	cout << "   3 - Remove Company" << endl;
+	cout << "   4 - Company Info" << endl;
 	cout << "   0 - Go back" << endl << endl;
 
-	int option_number = menuInput(" Option ? ", 0, 3);
+	int option_number = menuInput(" Option ? ", 0, 4);
 
 	switch (option_number)
 	{
 	case 1:
+		header("Companies Summary");
+		for (auto it : gameL.getCompanies()) {
+			cout << *it << endl;
+		}
+		cout << endl << endl;
+		CompaniesMenu(gameL);
+		break;
+	case 2:
 	    header("Add Company");
 		addCompany(gameL);
 		cout << endl << endl;
 		CompaniesMenu(gameL);
 		break;
-	case 2:
+	case 3:
 	    header("Remove Company");
 	    removeCompany(gameL);
 	    cout << endl << endl;
 	    CompaniesMenu(gameL);
 		break;
-	case 3:
+	case 4:
 	    header("Company Info");
 	    displayCompanyInfo(gameL);
 	    cout << endl << endl;
