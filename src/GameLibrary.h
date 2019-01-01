@@ -170,12 +170,20 @@ public:
 	bool removeCompany(Company * comp);
 
 	/**
-	* @brief Finds a company based on its name
+	* @brief Finds a company based on its nif
 	*
-	* @param name Name of the company to find
+	* @param nif NIF of the company to find
 	* @return Company * Pointer to the company found, nullptr if not found
 	*/
-	Company * getCompany(std::string name);
+	Company * getCompany(unsigned nif);
+
+    /**
+    * @brief Finds a company based on its name
+    *
+    * @param name Name of the company to find
+    * @return Company * Pointer to the company found, nullptr if not found
+    */
+    Company * getCompany(std::string name);
 
 	/**
 	* @brief Edits a company from the Game Library

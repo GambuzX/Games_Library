@@ -134,12 +134,19 @@ bool GameLibrary::removeCompany(Company * comp)
 	return true;
 }
 
-Company * GameLibrary::getCompany(string name)
+Company * GameLibrary::getCompany(unsigned nif)
 {
 	companiesSet::iterator it;
 	for (it = platformCompanies.begin(); it != platformCompanies.end(); it++)
-		if ((*it)->getName() == name) return *it;
+		if ((*it)->getNIF() == nif) return *it;
 	return nullptr;
+}
+
+Company * GameLibrary::getCompany(std::string name) {
+    companiesSet::iterator it;
+    for (it = platformCompanies.begin(); it != platformCompanies.end(); it++)
+        if ((*it)->getName() == name) return *it;
+    return nullptr;
 }
 
 bool GameLibrary::editCompany(std::string name, unsigned NIF, unsigned contact)
