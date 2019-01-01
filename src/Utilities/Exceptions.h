@@ -577,6 +577,60 @@ public:
 	* @return float Returns the buyChance Private Member
 	*/
 	float getBuyChance() const { return buyChance; }
+	
+};
+
+/**
+* @brief Exception that is thrown when you try to find a WishlistEntry above the Titles minimumBuyProbability and it does not exist
+*/
+class NoMatchingWishlistEntryUser
+{
+	const User * user;   /**< @brief User that doesn't have desired WishlistEntry */
+public:
+	/**
+	* @brief Construct a new NoMatchingWishlistEntry object
+	*
+	* @param u Users for which WishlistEntry doesn't exist
+	*/
+	NoMatchingWishlistEntryUser(const User * u) : user(u) {}
+
+
+	/**
+	* @brief Get the user Private Member
+	*
+	* @return const User * Returns the user Private Member
+	*/
+	const User * getUser() const { return user; }
+};
+
+/**
+* @brief Exception that is thrown when a probability is invalid: !(0 <= p <=1)
+*/
+class InvalidProbability
+{
+private:
+	float probability; /**< @brief invalid probability value */
+
+public:
+	/**
+	 * @brief Construct a new InvalidProbability object
+	 * Sets it to the default constructor
+	 */
+	InvalidProbability() = default;
+
+	/**
+	 * @brief Construct a new InvalidDay object
+	 *
+	 * @param d Day that is invalid
+	 */
+	explicit InvalidProbability(const float prob) { probability = prob; };
+
+	/**
+	 * @brief Get the probability Private Member
+	 *
+	 * @return float Returns the probability Private Member
+	 */
+	float getProbability() const { return probability; };
 };
 
 /** @} */

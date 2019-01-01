@@ -60,11 +60,14 @@ private:
 	gameLibraryGenre genre; /**< @brief String with the genre of the Title */
 	std::string company; /**< @brief String with the company name that produced the Title */
 	std::vector<Sale> pricesHistory; /**< @brief Vector of Sales to keep track of the Title current, passed and possible future sales. Sorted by beginning date */
+	// TODO: ver isto
+	float minimumBuyProbability; /**< @brief Float with the minimum Buy Probability so that a User is considered asleep/a potencial buyer*/
 
 public:
 	/**
 	 * @brief Construct a new Title object
 	 * Uses the nextTitleID static unsigned int to assign the titleID
+	 * Defaults minimumBuyProbability to 0
 	 * 
 	 * @param name String that initializes the name Private Member
 	 * @param price Double that initializes the basePrice Private Member
@@ -75,6 +78,22 @@ public:
 	 * @param company String that initializes the company Private Member
 	 */
 	Title(std::string name, double price, Date releaseDate, ageRange ageR, gameLibraryPlatform platform, gameLibraryGenre genre, std::string company);
+
+	/**
+	 * @brief Set the Minimum Buy Probability Private Member
+	 * May throw exception if the parameter is invalid
+	 *
+	 * @param minimumBuyProb float to be set to the minimumBuyProbability Private Member
+	 * @throw InvalidProbability() If minimumBuyProb is not less or equal to 1 and greater or equal to 0
+	 */
+	void setMinimumBuyProbability(float minimumBuyProb);
+
+	/**
+	 * @brief Get the  Minimum Buy Probability Private Member
+	 *
+	 * @return const float Returns the minimumBuyProbability Private Member
+	 */
+	const float getMinimumBuyProbability() { return minimumBuyProbability; };
 
 	/**
 	 * @brief Get the Vector of Updates

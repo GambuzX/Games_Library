@@ -15,6 +15,15 @@ Title::Title(string name, double price, Date releaseDate, ageRange ageR, gameLib
 	this->platform = platform;
 	this->genre = genre;
 	this->company = company;
+	this->minimumBuyProbability = 0;
+}
+
+void Title::setMinimumBuyProbability(float minimumBuyProb)
+{
+	if (!(0 <= minimumBuyProb <= 1))
+		throw InvalidProbability(minimumBuyProb);
+	this->minimumBuyProbability = minimumBuyProb;
+	// TODO: por aqui a atualizar hashTable consoante a mudanca ou isso e por conta da interface/biblioteca
 }
 
 const Sale & Title::getLastSale() const
