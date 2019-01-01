@@ -396,6 +396,10 @@ public:
 
 	void addUserToHashTables(User * user);
 
+	const HashTabUsersPtr & getTitleHashTable(Title * title) { return asleepUsers[title]; };
+
+	const titleUserHashTabMap & getAsleepUsers() { return asleepUsers; };
+
 };
 
 /** @} */
