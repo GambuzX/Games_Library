@@ -220,8 +220,9 @@ void GameLibrary::saveGameLibrary()
 		title_file.close();
 	}
 
+	size_t counter = 0;
 	for (auto &set_it : platformCompanies) {
-	    company_file_name << "company_" << set_it->getNIF() << ".txt";
+	    company_file_name << "company_" << ++counter << ".txt";
 	    ofstream company_file("companies/" + company_file_name.str());
 	    company_file_name.str("");
 	    company_file_name.clear();
