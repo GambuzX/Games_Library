@@ -337,6 +337,9 @@ public:
 	* @return WishlistEntry * Copy of WishlistEntry of most priority
 	*/
 	WishlistEntry nextAdvertisementTitle(float minimumBuyRate) const;
+	
+	//TODO: ver Next Advertsiment mas minimunBuyRate e o especificado pelo fabricante do title
+	WishlistEntry nextAdvertisementTitle() const;
 
 	/**
 	* @brief Creates an entry for the wishlist

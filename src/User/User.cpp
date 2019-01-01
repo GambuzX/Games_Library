@@ -122,6 +122,9 @@ bool User::buyTitle(Title* title) {
 	addTransaction(price, GameLibrary::getLibraryDate(), gamePurchase);
 	purchasedGames->insert(title);
 
+	// Remove from HashTable
+	GameLibrary::removeFromHashTable(title, this);
+
 	return true;
 }
 
@@ -156,28 +159,11 @@ bool User::buyTitle(unsigned int titleID) {
 	addTransaction(price, GameLibrary::getLibraryDate(), gamePurchase);
 	purchasedGames->insert(title);
 
+	// Remove from HashTable
+	GameLibrary::removeFromHashTable(title, this);
+
 	return true;
 }
-
-bool User::addTitle(unsigned int titleID)
-{
-    Title * title = GameLibrary::getTitle(titleID);
-    if (title == nullptr)
-    {
-        cout << "(" << __func__ << ") Title with ID " << titleID << " does not exist" << endl;
-        return false;
-    }
-
-    Date currentDate = GameLibrary::getLibraryDate();
-    double price = title->getCurrentPrice(currentDate);
-
-    GameLibrary::updateTitleRevenue(title, price);
-    title->addNewUser(this);
-    purchasedGames->insert(title);
-
-    return false;
-}
-
 
 bool User::buyTitle(std::string name, gameLibraryPlatform platform)
 {
@@ -209,7 +195,29 @@ bool User::buyTitle(std::string name, gameLibraryPlatform platform)
 	addTransaction(price, GameLibrary::getLibraryDate(), gamePurchase);
 	purchasedGames->insert(title);
 
+	// Remove from HashTable
+	GameLibrary::removeFromHashTable(title, this);
+
 	return true;
+}
+
+bool User::addTitle(unsigned int titleID)
+{
+    Title * title = GameLibrary::getTitle(titleID);
+    if (title == nullptr)
+    {
+        cout << "(" << __func__ << ") Title with ID " << titleID << " does not exist" << endl;
+        return false;
+    }
+
+    Date currentDate = GameLibrary::getLibraryDate();
+    double price = title->getCurrentPrice(currentDate);
+
+    GameLibrary::updateTitleRevenue(title, price);
+    title->addNewUser(this);
+    purchasedGames->insert(title);
+
+    return false;
 }
 
 bool User::updateTitle(Title* title) {
@@ -413,6 +421,19 @@ WishlistEntry User::nextAdvertisementTitle(float minimumBuyRate) const
 	throw NoMatchingWishlistEntry(minimumBuyRate);
 }
 
+WishlistEntry User::nextAdvertisementTitle() const
+{
+	if (wishlist.empty()) throw NoMatchingWishlistEntryUser(this);
+	if (wishlist.top().getBuyChance() > wishlist.top().getTitle()->getMinimumBuyProbability()) return wishlist.top();
+	priority_queue<WishlistEntry> copy = wishlist;
+	copy.pop();
+	while (!copy.empty())
+	{
+		if (copy.top().getBuyChance() > copy.top().getTitle()->getMinimumBuyProbability()) return copy.top();
+		copy.pop();
+	}
+	throw NoMatchingWishlistEntryUser(this);
+}
 
 bool User::addWishlistEntry(unsigned interest, float buyChance, Title * title)
 {

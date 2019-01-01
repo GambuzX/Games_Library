@@ -15,6 +15,7 @@ using namespace std;
 set<Title*, ComparePtr<Title>> GameLibrary::titles;
 map<Title*, double, ComparePtr<Title>> GameLibrary::titlesRevenue;
 Date GameLibrary::libraryDate = Date(29, 11, 1972);
+titleUserHashTabMap GameLibrary::asleepUsers;
 
 class GameLibrary;
 
@@ -1036,24 +1037,61 @@ void GameLibrary::advanceXyears(unsigned int numberYears)
 	this->libraryDate.addYears(numberYears);
 }
 
-void GameLibrary::updateHashTable(float minimumProb)
+void GameLibrary::updateHashTable()
 {
 	// typedef std::unordered_set<User *, UserPtrHash, UserPtrHash> HashTabUsersPtr;
 	// typedef std::map<Title*, HashTabUsersPtr, ComparePtr<Title>> titleUserHashTabMap;
 	// typedef std::map<User*, std::set<Title*, ComparePtr<Title>>, ComparePtr<User>> usersMap;
 
-	for (const auto & user : users) {
-		priority_queue<WishlistEntry> prov = user.first->getWishlist();
-		while (!prov.empty()) {
-			if (prov.top().getBuyChance() > minimumProb) {
-				titleUserHashTabMap::iterator it = asleepUsers.find(prov.top().getTitle());
-				if (it != asleepUsers.end()) (*it).second.insert(user.first);
-				else {
-					HashTabUsersPtr temp = { user.first };
-					asleepUsers.insert(make_pair(prov.top().getTitle(), temp));
-				}
-			}
-			prov.pop();
+	for (const auto & user : users)
+		addUserToHashTables(user.first);
+
+}
+
+void GameLibrary::removeFromHashTable(Title * title, User * user)
+{
+	ageRange ar;
+	ar.minAge = 0; ar.maxAge = 999;
+	titlesSet titleSamePlatform = showMatchingTitles(title->getPlatform(), all_genres, ar);
+	for (const auto & title : titleSamePlatform) {
+		titleUserHashTabMap::iterator itM = asleepUsers.find(title);
+		if (itM != asleepUsers.end()) {
+			// TODO: ver o que acontece quando erase na hash e nao existe
+			itM->second.erase(user);
 		}
 	}
 }
+
+void GameLibrary::addSleepyUsers(unsigned int months)
+{
+	for (const auto & user : users) {
+		// Find last game bought
+		vector<Transaction> userTransictions = user.first->getTransactions();
+		Date lastTitleBoughtDate;
+		for (size_t i = userTransictions.size() - 1; i >= 0 ; i--)
+			if (userTransictions.at(i).getType() == gamePurchase){
+				lastTitleBoughtDate = userTransictions.at(i).getDate();
+				break;
+			}
+		unsigned int elapsedMonths = (this->libraryDate - lastTitleBoughtDate) / 30;
+		if (elapsedMonths >= months)
+			addUserToHashTables(user.first);
+	}
+}
+
+void GameLibrary::addUserToHashTables(User * user)
+{
+	priority_queue<WishlistEntry> prov = user->getWishlist();
+	while (!prov.empty()) {
+		if (prov.top().getBuyChance() > prov.top().getTitle()->getMinimumBuyProbability()) {
+			titleUserHashTabMap::iterator it = asleepUsers.find(prov.top().getTitle());
+			if (it != asleepUsers.end()) (*it).second.insert(user);
+			else {
+				HashTabUsersPtr temp = { user };
+				asleepUsers.insert(make_pair(prov.top().getTitle(), temp));
+			}
+		}
+		prov.pop();
+	}
+}
+
