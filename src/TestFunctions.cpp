@@ -87,7 +87,7 @@ void userShortDisplay(const User * user) {
 	cout << " User ID:\t" << user->getUserID() << endl;
 	cout << " Name:\t\t" << user->getName() << endl;
 	cout << " E-Mail:\t" << user->getEmail() << endl;
-	cout << " Address:\n" << user->getAddress() << endl << endl;
+	cout << " Address:\n" << user->getAddress() << endl;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------//
@@ -182,6 +182,7 @@ void usersSummary(GameLibrary & gameL) {
 	for (auto & user : prov)
 	{
 		userShortDisplay(user.first);
+		cout << endl;
 	}
 	system("pause");
 }
@@ -194,6 +195,7 @@ void friendsSummary(const set<User*, ComparePtr<User>> & friends) {
 	{
 		cout << " Friend " << i << ":\n";
 		userShortDisplay(fr);
+		cout << endl;
 	}
 	system("pause");
 }
@@ -312,6 +314,20 @@ void UserSessionSummary2(const map<User*, vector<Session>, ComparePtr<User>> & p
 
 }
 
+//-----------------------------------------------------------------------------------------------------------------------//
+
+void asleepUsersSummary(const HashTabUsersPtr & asleepUsers, Title * title) {
+	unsigned int i = 1;
+	for (const auto & user : asleepUsers) {
+		cout << " User " << i << ":\n";
+		userShortDisplay(user);
+		cout << " Number of Searches:\t" << user->getNumberOfSearches(title) << endl;
+		cout << " Number of Ads Seen:\t" << user->getNumberOfSeenAds(title) << endl << endl;
+
+	}
+	system("pause");
+}
+
 //=======================================================================================================================//
 
 /**
@@ -393,7 +409,7 @@ void userInfo(User * user)
 }
 
 //-----------------------------------------------------------------------------------------------------------------------//
-// TODO: mudar nome e sitio
+
 void companyInfo(GameLibrary &gameL)
 {
 	if (gameL.getCompanies().empty()) {
@@ -1655,9 +1671,11 @@ void GameOperationsMenu(GameLibrary & gl, unsigned titleID) {
 	if (isOnline) cout << "   3 - Sessions" << endl;
 	else cout << "   3 - Updates" << endl;
 
+	cout << "   4 - Potencial Buyers (asleep users)" << endl;
+
 	cout << "   0 - Go back" << endl << endl;
 
-	option_number = menuInput(" Option ? ", 0, 3);
+	option_number = menuInput(" Option ? ", 0, 4);
 
 	switch (option_number)
 	{
@@ -1682,6 +1700,12 @@ void GameOperationsMenu(GameLibrary & gl, unsigned titleID) {
 			header("Updates");
 			UpdateMenu(gl, game);
 		}
+		break;
+	case 4:
+		header("Potencial Buyers");
+		asleepUsersSummary(gl.getTitleHashTable(game), game);
+		cout << endl << endl;
+		GameOperationsMenu(gl, titleID);
 		break;
 	case 0:
 		GamesMenu(gl);
