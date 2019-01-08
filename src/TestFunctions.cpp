@@ -1557,6 +1557,32 @@ void UserRankingsMenu(GameLibrary & gl, User * user) {
 
 //-----------------------------------------------------------------------------------------------------------------------//
 
+void WishlistMenu(GameLibrary & gl, User * user) {
+    int option_number;
+
+    cout << " Possible Actions:" << endl << endl;
+    cout << "   1 - Add Entry" << endl;
+    cout << "   2 - Remove Entry" << endl;
+    cout << "   0 - Go back" << endl << endl;
+
+    option_number = menuInput(" Option ? ", 0, 2);
+
+    switch (option_number) {
+    case 1:
+        header("Add Entry");
+        break;
+    case 2:
+        header("Remove Entry");
+        break;
+    case 0:
+        UserOperationsMenu(gl, user->getEmail());
+        break;
+
+    }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------//
+
 void UserGameMenu(GameLibrary & gl, User * user) {
 	int option_number;
 	unsigned ID;
@@ -1692,18 +1718,14 @@ void UserOperationsMenu(GameLibrary & gl, string mail) {
 	int option_number;
 
 	cout << " Possible Actions:" << endl << endl;
-
 	cout << "   1 - Detailed Info" << endl;
-
 	cout << "   2 - Credit Cards" << endl;
-
 	cout << "   3 - Friends" << endl;
-
 	cout << "   4 - Games" << endl;
-
+	cout << "   5 - Wishlist" << endl;
 	cout << "   0 - Go back" << endl << endl;
 
-	option_number = menuInput(" Option ? ", 0, 4);
+	option_number = menuInput(" Option ? ", 0, 5);
 
 	switch (option_number)
 	{
@@ -1726,6 +1748,9 @@ void UserOperationsMenu(GameLibrary & gl, string mail) {
 		header("Games");
 		UserGameMenu(gl, user);
 		break;
+	case 5:
+	    header("Wishlist");
+	    WishlistMenu(gl, user);
 	case 0:
 		UsersMenu(gl);
 		break;
