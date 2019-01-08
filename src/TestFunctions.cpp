@@ -1559,7 +1559,7 @@ void UserRankingsMenu(GameLibrary & gl, User * user) {
 
 void AddWishlistEntry(User *user) {
     unsigned id = intInput(" Title ID (0 to go back): ");
-    unsigned interest = intInput(" Enter you interest in this game (1-10) (0 to go back):" );
+    unsigned interest = intInput(" Enter your interest in this game (1-10) (0 to go back):" );
 
     if (interest > 10) interest = 10;
 
@@ -1608,8 +1608,33 @@ void RemoveWishlistEntry(User *user) {
     }
 }
 
+//-----------------------------------------------------------------------------------------------------------------------//
+
 void EditWishlistEntry(User * user) {
-    
+    unsigned id = intInput(" Title ID (0 to go back): ");
+    unsigned interest = intInput(" Enter your interest in this game (1-10) (0 to go back):" );
+
+    if (interest > 10) interest = 10;
+
+    Title *title = GameLibrary::getTitle(id);
+
+    int nameErrors = 0;
+    while (id != 0) {
+        if (title == nullptr) {
+            nameErrors++;
+            cout << " No such game found!\n";
+            if (nameErrors > 3) {
+                cout << " You seem to be struggling. Please consider taking a look at the Games Summary\n";
+            }
+            id = intInput(" Title ID (0 to go back): ");
+            title = GameLibrary::getTitle(id);
+        }
+        else {
+            // TODO: Change second argument for calculated probability
+            user->editWishlistEntry(title, interest, 0);
+            break;
+        }
+    }
 }
 
 //-----------------------------------------------------------------------------------------------------------------------//
