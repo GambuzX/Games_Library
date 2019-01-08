@@ -30,6 +30,7 @@ void UserGameMenu(GameLibrary & gl, User * user);
 
 void CompaniesMenu(GameLibrary &gameL);
 void addCompany(GameLibrary &library);
+void addCompany(GameLibrary &library, string company_name);
 void removeCompany(GameLibrary &gameL);
 void displayCompanyInfo(GameLibrary &gameL);
 /**
@@ -564,17 +565,28 @@ void addGames(GameLibrary & gL)
 	gameLibraryGenre genre = menuGenre(false);
 	string company = namesInput(" Publisher name (only letters and space): ");
 
+	Company *comp = gL.getCompany(company);
+    if (comp == nullptr) {
+        cout << " No company named " << company << " was found in the library, please add further details below to add a new company." << endl;
+        addCompany(gL, company);
+    }
+
 	//Title(std::string name, double price, Date releaseDate, ageRange ageR, std::string platform, std::string genre, std::string company);
 	if (!isOnline) {
+	    Title *ht;
 		if (platform != all_platforms) {
-			gL.addTitle(new HomeTitle(name, price, releaseDate, ar, platform, genre, company));
+		    ht = new HomeTitle(name, price, releaseDate, ar, platform, genre, company);
+			gL.addTitle(ht);
+			gL.addTitleToCompany(company, ht);
 			return;
 		}
 		else
 		{
 			for (int plat = nds; plat != last; plat++)
 			{
-				gL.addTitle(new HomeTitle(name, price, releaseDate, ar, static_cast<gameLibraryPlatform>(plat), genre, company));
+			    ht = new HomeTitle(name, price, releaseDate, ar, static_cast<gameLibraryPlatform>(plat), genre, company);
+				gL.addTitle(ht);
+                gL.addTitleToCompany(company, ht);
 			}
 			return;
 		}
@@ -583,30 +595,41 @@ void addGames(GameLibrary & gL)
 		bool isFixed = menuSubcription();
 		double subsPrice = doubleInput(" Subscription price: ");
 
+		Title *ot;
 		if (isFixed) {
+            auto* fs = new FixedSubscription(subsPrice);
 			if (platform != all_platforms) {
-				gL.addTitle(new OnlineTitle(name, price, releaseDate, ar, platform, genre, company, new FixedSubscription(subsPrice)));
+			    ot = new OnlineTitle(name, price, releaseDate, ar, platform, genre, company, fs);
+				gL.addTitle(ot);
+				gL.addTitleToCompany(company, ot);
 				return;
 			}
 			else
 			{
 				for (int plat = nds; plat != last; plat++)
 				{
-					gL.addTitle(new OnlineTitle(name, price, releaseDate, ar, static_cast<gameLibraryPlatform>(plat), genre, company, new FixedSubscription(subsPrice)));
+				    ot = new OnlineTitle(name, price, releaseDate, ar, static_cast<gameLibraryPlatform>(plat), genre, company, fs);
+					gL.addTitle(ot);
+					gL.addTitleToCompany(company, ot);
 				}
 				return;
 			}
 		}
 		else {
+		    auto* ds = new DynamicSubscription(subsPrice);
 			if (platform != all_platforms) {
-				gL.addTitle(new OnlineTitle(name, price, releaseDate, ar, platform, genre, company, new DynamicSubscription(subsPrice)));
+			    ot = new OnlineTitle(name, price, releaseDate, ar, platform, genre, company, ds);
+				gL.addTitle(ot);
+				gL.addTitleToCompany(company, ot);
 				return;
 			}
 			else
 			{
 				for (int plat = nds; plat != last; plat++)
 				{
-					gL.addTitle(new OnlineTitle(name, price, releaseDate, ar, static_cast<gameLibraryPlatform>(plat), genre, company, new DynamicSubscription(subsPrice)));
+				    ot = new OnlineTitle(name, price, releaseDate, ar, static_cast<gameLibraryPlatform>(plat), genre, company, ds);
+					gL.addTitle(ot);
+					gL.addTitleToCompany(company, ot);
 				}
 				return;
 			}
@@ -1794,6 +1817,14 @@ void addCompany(GameLibrary &gameL)
 	unsigned nif = intInput(" NIF (only numbers): "), contact = intInput(" Contact (only numbers): ");
 
 	gameL.addCompany(new Company(name, nif, contact));
+}
+
+//-----------------------------------------------------------------------------------------------------------------------//
+void addCompany(GameLibrary &gameL, string company_name)
+{
+    unsigned nif = intInput(" NIF (only numbers): "), contact = intInput(" Contact (only numbers): ");
+
+    gameL.addCompany(new Company(company_name, nif, contact));
 }
 
 //-----------------------------------------------------------------------------------------------------------------------//
