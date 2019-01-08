@@ -144,7 +144,6 @@ struct CompareCompany
 	}
 };
 
-
 /** @} */
 
 #endif
