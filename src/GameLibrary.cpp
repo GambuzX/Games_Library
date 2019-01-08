@@ -37,6 +37,10 @@ void GameLibrary::addUser(std::string name, std::string email, int age, Address 
 
 	User * newUser = new User(name, email, age, address);
 
+	// Assign user map of titles with 0 clicks and 0 ads
+	for (auto const & title : titles)
+		newUser->addTitleToTupleMap(title);
+
 	users.insert(pair<User*, set<Title*, ComparePtr<Title>>>(newUser, set<Title*, ComparePtr<Title>>()));
 
 	// Assign user set of Titles to the User instance
@@ -53,6 +57,10 @@ void GameLibrary::addUser(User * user) {
 	for (auto & u : users)
 		if (user->getEmail() == u.first->getEmail())
 			throw DuplicatedUser(user->getEmail());
+	
+	// Assign user map of titles with 0 clicks and 0 ads
+	for (auto const & title : titles)
+		user->addTitleToTupleMap(title);
 
 	users.insert(pair<User*, set<Title*, ComparePtr<Title>>>(user, set<Title*, ComparePtr<Title>>()));
 
@@ -87,8 +95,13 @@ User * GameLibrary::getUser(string email)
 bool GameLibrary::addTitle(Title * title) {
 
 	pair<titlesSet::iterator, bool> it = titles.insert(title);
-	if (it.second)
+	if (it.second) {
 		titlesRevenue.insert(pair<Title*, double>(title, 0));
+
+		// Add game to users searches_ads map
+		for (const auto & user : users)
+			user.first->addTitleToTupleMap(title);
+	}
 	return it.second;
 }
 
@@ -97,6 +110,10 @@ bool GameLibrary::removeTitle(Title * title) {
 	it = titles.find(title);
 	if (it == titles.end()) return false;
 	titles.erase(it);
+
+	// Remove title from the search_ads map
+	for (const auto & user : users)
+		user.first->removeTitleFromTupleMap(title);
 
 	titlesRevenueMap::iterator it2;
 	it2 = titlesRevenue.find(title);
@@ -113,6 +130,10 @@ bool GameLibrary::removeTitle(unsigned int id) {
 	it = titles.find(title);
 	if (it == titles.end()) return false;
 	titles.erase(it);
+
+	// Remove title from the search_ads map
+	for (const auto & user : users)
+		user.first->removeTitleFromTupleMap(title);
 
 	titlesRevenueMap::iterator it2;
 	it2 = titlesRevenue.find(title);
@@ -690,7 +711,6 @@ void GameLibrary::buildGlobalPopularityRanking(ostream & os, gameLibraryPlatform
 		counter++;
 	}
 }
-
 
 void GameLibrary::buildGlobalRevenueRanking(ostream & os, gameLibraryPlatform platform, gameLibraryGenre genre, ageRange ageR)
 {

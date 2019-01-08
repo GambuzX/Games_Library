@@ -28,11 +28,6 @@ void UserGameMenu(GameLibrary & gl, User * user);
 *  +------------------------+
 */
 
-void CompaniesMenu(GameLibrary &gameL);
-void addCompany(GameLibrary &library);
-void addCompany(GameLibrary &library, string company_name);
-void removeCompany(GameLibrary &gameL);
-void displayCompanyInfo(GameLibrary &gameL);
 /**
 * Writes a neat header in the console with the title centerd and a line above and below all across the screen
 *
@@ -584,6 +579,25 @@ ConsumingHabitsFilter menuTransactionsTypes() {
 *  +------------------------+
 */
 
+void addCompany(GameLibrary &gameL)
+{
+	string name = namesInput(" Name (only letters and space): ");
+	unsigned nif = intInput(" NIF (only numbers): "), contact = intInput(" Contact (only numbers): ");
+
+	gameL.addCompany(new Company(name, nif, contact));
+}
+
+//-----------------------------------------------------------------------------------------------------------------------//
+
+void addCompany(GameLibrary &gameL, string company_name)
+{
+	unsigned nif = intInput(" NIF (only numbers): "), contact = intInput(" Contact (only numbers): ");
+
+	gameL.addCompany(new Company(company_name, nif, contact));
+}
+
+//-----------------------------------------------------------------------------------------------------------------------//
+
 void addGames(GameLibrary & gL)
 {
 	bool isOnline = menuOnlineHome();
@@ -786,24 +800,6 @@ void addFriend(GameLibrary & gl, User * user) {
 	cout << "\n You already have this user as a friend:\n";
 	userShortDisplay(frd);
 	system("pause");
-}
-
-//-----------------------------------------------------------------------------------------------------------------------//
-
-void addCompany(GameLibrary &gameL)
-{
-	string name = namesInput(" Name (only letters and space): ");
-	unsigned nif = intInput(" NIF (only numbers): "), contact = intInput(" Contact (only numbers): ");
-
-	gameL.addCompany(new Company(name, nif, contact));
-}
-
-//-----------------------------------------------------------------------------------------------------------------------//
-void addCompany(GameLibrary &gameL, string company_name)
-{
-    unsigned nif = intInput(" NIF (only numbers): "), contact = intInput(" Contact (only numbers): ");
-
-    gameL.addCompany(new Company(company_name, nif, contact));
 }
 
 //=======================================================================================================================//
@@ -1023,14 +1019,19 @@ void globalRevRanking(GameLibrary & gl) {
 
 //-----------------------------------------------------------------------------------------------------------------------//
 
-void search(GameLibrary & gl, bool asUser)
+void search(GameLibrary & gl, User * user)
 {
 	gameLibraryPlatform platform = menuPlatform();
 	gameLibraryGenre genre = menuGenre(true);
 	ageRange ageR = ageRangeInput(" Age Restriction:\n");
 	cout << endl;
-	titleSummary(gl.showMatchingTitles(platform, genre, ageR));
+	const set<Title*, ComparePtr<Title>> & games = gl.showMatchingTitles(platform, genre, ageR);
+	titleSummary(games);
 	// TODO: se for user incrementar n de procuras
+	if (user != NULL) {
+		for (const auto &  title : games)
+			user->incNumberOfSearches(title);
+	}
 
 	system("pause");
 }
@@ -1618,7 +1619,7 @@ void UserGameMenu(GameLibrary & gl, User * user) {
 		break;
 	case 6:
 		header("Search Titles");
-		search(gl, true);
+		search(gl, user);
 		cout << endl << endl;
 		UserGameMenu(gl, user);
 		break;
@@ -1893,7 +1894,7 @@ void ListsRankingsMenu(GameLibrary & gl) {
 		break;
 	case 4:
 		header("Search Titles");
-		search(gl, false);
+		search(gl, NULL);
 		cout << endl << endl;
 		ListsRankingsMenu(gl);
 		break;

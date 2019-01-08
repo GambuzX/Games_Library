@@ -98,6 +98,24 @@ public:
 	void incNumberOfSeenAds(Title * title) { ++std::get<1>(searches_ads[title]); };
 
 	/**
+	 * @brief Adds a New Title to the searches_ads map and initializes the searches and the number of seen ads to 0
+	 * 
+	 * @param title Title to be added to the map
+	 * @return true If the insertion was completed
+	 * @return false If there was already a title in the map
+	 */
+	bool addTitleToTupleMap(Title * title) { return (searches_ads.insert(std::pair<Title*, std::tuple<unsigned int, unsigned int>>(title, std::make_tuple(0, 0)))).second; }
+
+	/**
+	 * @brief Removes a Title from the search_ads map
+	 * 
+	 * @param title Pointer to the Title to be removed
+	 * @return true If the title was removed
+	 * @return false If there was no title to be removed
+	 */
+	bool removeTitleFromTupleMap(Title * title) { return searches_ads.erase(title); };
+	
+	/**
 	* @brief Get the createdDate Private Member
 	*
 	* @return Date Returns the createdDate Private Member
