@@ -1023,13 +1023,14 @@ void globalRevRanking(GameLibrary & gl) {
 
 //-----------------------------------------------------------------------------------------------------------------------//
 
-void search(GameLibrary & gl)
+void search(GameLibrary & gl, bool asUser)
 {
 	gameLibraryPlatform platform = menuPlatform();
 	gameLibraryGenre genre = menuGenre(true);
 	ageRange ageR = ageRangeInput(" Age Restriction:\n");
 	cout << endl;
 	titleSummary(gl.showMatchingTitles(platform, genre, ageR));
+	// TODO: se for user incrementar n de procuras
 
 	system("pause");
 }
@@ -1566,9 +1567,11 @@ void UserGameMenu(GameLibrary & gl, User * user) {
 
 	cout << "   5 - Update Title" << endl;
 
+	cout << "   6 - Search Game" << endl;
+
 	cout << "   0 - Go back" << endl << endl;
 
-	option_number = menuInput(" Option ? ", 0, 5);
+	option_number = menuInput(" Option ? ", 0, 6);
 
 	switch (option_number)
 	{
@@ -1612,6 +1615,12 @@ void UserGameMenu(GameLibrary & gl, User * user) {
 			cout << endl << endl;
 			UserGameMenu(gl, user);
 		}
+		break;
+	case 6:
+		header("Search Titles");
+		search(gl, true);
+		cout << endl << endl;
+		UserGameMenu(gl, user);
 		break;
 	case 0:
 		UserOperationsMenu(gl, user->getEmail());
@@ -1884,7 +1893,7 @@ void ListsRankingsMenu(GameLibrary & gl) {
 		break;
 	case 4:
 		header("Search Titles");
-		search(gl);
+		search(gl, false);
 		cout << endl << endl;
 		ListsRankingsMenu(gl);
 		break;
