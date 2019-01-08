@@ -1637,29 +1637,43 @@ void EditWishlistEntry(User * user) {
     }
 }
 
+void DisplayWishlist(User * user) {
+    priority_queue<WishlistEntry> temp = user->getWishlist();
+
+    while(!temp.empty()) {
+        cout << temp.top();
+        temp.pop();
+    }
+}
+
 //-----------------------------------------------------------------------------------------------------------------------//
 
 void WishlistMenu(GameLibrary & gl, User * user) {
     int option_number;
 
     cout << " Possible Actions:" << endl << endl;
-    cout << "   1 - Add Entry" << endl;
-    cout << "   2 - Remove Entry" << endl;
-    cout << "   3 - Update Entry" << endl;
+    cout << "   1 - Wishlist Summary" << endl;
+    cout << "   2 - Add Entry" << endl;
+    cout << "   3 - Remove Entry" << endl;
+    cout << "   4 - Update Entry" << endl;
     cout << "   0 - Go back" << endl << endl;
 
-    option_number = menuInput(" Option ? ", 0, 3);
+    option_number = menuInput(" Option ? ", 0, 4);
 
     switch (option_number) {
     case 1:
+        header("Wishlist Summary");
+        DisplayWishlist(user);
+        break;
+    case 2:
         header("Add Entry");
         AddWishlistEntry(user);
         break;
-    case 2:
+    case 3:
         header("Remove Entry");
         RemoveWishlistEntry(user);
         break;
-    case 3:
+    case 4:
         header("Edit Entry");
         EditWishlistEntry(user);
         break;
