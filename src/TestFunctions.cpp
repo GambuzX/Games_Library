@@ -18,6 +18,7 @@ void UsersMenu(GameLibrary & gl);
 void GameOperationsMenu(GameLibrary & gl, unsigned titleID);
 void UserOperationsMenu(GameLibrary & gl, string mail);
 void UserGameMenu(GameLibrary & gl, User * user);
+void titleInfo(GameLibrary & gameL, Title * game, bool isOnline);
 
 // TODO: Se houver tempo mudar input para lista de ajuda
 /**
@@ -27,13 +28,6 @@ void UserGameMenu(GameLibrary & gl, User * user);
 *  |                        |
 *  +------------------------+
 */
-
-void CompaniesMenu(GameLibrary &gameL);
-void addCompany(GameLibrary &library);
-void addCompany(GameLibrary &library, string company_name);
-void removeCompany(GameLibrary &gameL);
-void displayCompanyInfo(GameLibrary &gameL);
-void titleInfo(Title * game, bool isOnline);
 
 /**
 * Writes a neat header in the console with the title centerd and a line above and below all across the screen
@@ -126,11 +120,11 @@ void sessionDisplay(string firstLine, const Session & sess) {
 
 //-----------------------------------------------------------------------------------------------------------------------//
 
-void displayWishlist(User *user) {
+void displayWishlist(GameLibrary& gameL, User *user) {
     priority_queue<WishlistEntry> temp = user->getWishlist();
 
     while(!temp.empty()) {
-        titleInfo(temp.top().getTitle(), GameLibrary::isOnlineTitle(temp.top().getTitle()));
+        titleInfo(gameL, temp.top().getTitle(), GameLibrary::isOnlineTitle(temp.top().getTitle()));
         cout << temp.top() << endl;
         temp.pop();
     }
@@ -164,7 +158,7 @@ void displayCompanyInfo(GameLibrary &gameL)
             cout << *company << endl;
 
             for (Title* title : company->getTitles()) {
-                titleInfo(title, GameLibrary::isOnlineTitle(title));
+                titleInfo(gameL, title, GameLibrary::isOnlineTitle(title));
             }
 
 			break;
@@ -377,7 +371,7 @@ void UserSessionSummary2(const map<User*, vector<Session>, ComparePtr<User>> & p
 *  +------------------------+
 */
 
-void titleInfo(Title * game, bool isOnline)
+void titleInfo(GameLibrary & gameL, Title * game, bool isOnline)
 {
 	Date d = GameLibrary::getLibraryDate();
 	cout << " Title ID:\t" << game->getTitleID() << endl;
@@ -401,10 +395,12 @@ void titleInfo(Title * game, bool isOnline)
 	}
 	cout << " Release Date:\t" << game->getReleaseDate() << endl;
 	cout << " Age Range:\t" << game->getAgeRange().minAge << " - " << game->getAgeRange().maxAge << endl;
-	cout << " Platform:\t" << game->getPlatformName() << endl;
+	cout << " Platform:\t\t" << game->getPlatformName() << endl;
 	cout << " Genre:\t\t" << game->getGenreName() << endl;
-	cout << " Company:\t" << game->getCompany() << endl;
+	cout << " Company:\t\t" << game->getCompany() << endl;
 	cout << " Users Number:\t" << game->getNumberUsers() << endl;
+	cout << " Number of Searches:\t" << gameL.numberOfSearches(game) << endl;
+	cout << " Number of Ads Seen:\t" << gameL.numberOfAdsSeen(game) << endl;
 	if (isOnline) cout << " Hours Played:\t" << game->getStats() << endl;
 	cout << " Last Schedule Sale:\n";
 	try
@@ -443,6 +439,42 @@ void userInfo(User * user)
 		cout << "  - " << p;
 	cout << endl;
 	system("pause");
+}
+
+//-----------------------------------------------------------------------------------------------------------------------//
+// TODO: mudar nome e sitio
+void companyInfo(GameLibrary &gameL)
+{
+	if (gameL.getCompanies().empty()) {
+		cout << " There are no companies to show!\n";
+		return;
+	}
+
+	unsigned nif = intInput(" NIF (0 to go back): ");
+
+	Company *company = gameL.getCompany(nif);
+
+	int nameErrors = 0;
+	while (nif != 0) {
+		if (company == nullptr) {
+			nameErrors++;
+			cout << " No such company found!\n";
+			if (nameErrors > 3) {
+				cout << " You seem to be struggling. Please consider taking a look at the Companies Summary\n";
+			}
+			nif = intInput(" NIF (0 to go back): ");
+			company = gameL.getCompany(nif);
+		}
+		else {
+			cout << *company << endl;
+
+			for (Title* title : company->getTitles()) {
+				titleInfo(gameL, title, GameLibrary::isOnlineTitle(title));
+			}
+
+			break;
+		}
+	}
 }
 
 //=======================================================================================================================//
@@ -602,6 +634,25 @@ ConsumingHabitsFilter menuTransactionsTypes() {
 *  |                        |
 *  +------------------------+
 */
+
+void addCompany(GameLibrary &gameL)
+{
+	string name = namesInput(" Name (only letters and space): ");
+	unsigned nif = intInput(" NIF (only numbers): "), contact = intInput(" Contact (only numbers): ");
+
+	gameL.addCompany(new Company(name, nif, contact));
+}
+
+//-----------------------------------------------------------------------------------------------------------------------//
+
+void addCompany(GameLibrary &gameL, string company_name)
+{
+	unsigned nif = intInput(" NIF (only numbers): "), contact = intInput(" Contact (only numbers): ");
+
+	gameL.addCompany(new Company(company_name, nif, contact));
+}
+
+//-----------------------------------------------------------------------------------------------------------------------//
 
 void addGames(GameLibrary & gL)
 {
@@ -834,24 +885,6 @@ void addFriend(GameLibrary & gl, User * user) {
 	cout << "\n You already have this user as a friend:\n";
 	userShortDisplay(frd);
 	system("pause");
-}
-
-//-----------------------------------------------------------------------------------------------------------------------//
-
-void addCompany(GameLibrary &gameL)
-{
-	string name = namesInput(" Name (only letters and space): ");
-	unsigned nif = intInput(" NIF (only numbers): "), contact = intInput(" Contact (only numbers): ");
-
-	gameL.addCompany(new Company(name, nif, contact));
-}
-
-//-----------------------------------------------------------------------------------------------------------------------//
-void addCompany(GameLibrary &gameL, string company_name)
-{
-    unsigned nif = intInput(" NIF (only numbers): "), contact = intInput(" Contact (only numbers): ");
-
-    gameL.addCompany(new Company(company_name, nif, contact));
 }
 
 //=======================================================================================================================//
@@ -1095,13 +1128,19 @@ void globalRevRanking(GameLibrary & gl) {
 
 //-----------------------------------------------------------------------------------------------------------------------//
 
-void search(GameLibrary & gl)
+void search(GameLibrary & gl, User * user)
 {
 	gameLibraryPlatform platform = menuPlatform();
 	gameLibraryGenre genre = menuGenre(true);
 	ageRange ageR = ageRangeInput(" Age Restriction:\n");
 	cout << endl;
-	titleSummary(gl.showMatchingTitles(platform, genre, ageR));
+	const set<Title*, ComparePtr<Title>> & games = gl.showMatchingTitles(platform, genre, ageR);
+	titleSummary(games);
+	// TODO: se for user incrementar n de procuras
+	if (user != NULL) {
+		for (const auto &  title : games)
+			user->incNumberOfSearches(title);
+	}
 
 	system("pause");
 }
@@ -1666,7 +1705,7 @@ void WishlistMenu(GameLibrary & gl, User * user) {
     switch (option_number) {
     case 1:
         header("Wishlist Summary");
-        displayWishlist(user);
+        displayWishlist(gl, user);
         WishlistMenu(gl, user);
         break;
     case 2:
@@ -1708,9 +1747,11 @@ void UserGameMenu(GameLibrary & gl, User * user) {
 
 	cout << "   5 - Update Title" << endl;
 
+	cout << "   6 - Search Game" << endl;
+
 	cout << "   0 - Go back" << endl << endl;
 
-	option_number = menuInput(" Option ? ", 0, 5);
+	option_number = menuInput(" Option ? ", 0, 6);
 
 	switch (option_number)
 	{
@@ -1755,6 +1796,12 @@ void UserGameMenu(GameLibrary & gl, User * user) {
 			UserGameMenu(gl, user);
 		}
 		break;
+	case 6:
+		header("Search Titles");
+		search(gl, user);
+		cout << endl << endl;
+		UserGameMenu(gl, user);
+		break;
 	case 0:
 		UserOperationsMenu(gl, user->getEmail());
 		break;
@@ -1788,7 +1835,7 @@ void GameOperationsMenu(GameLibrary & gl, unsigned titleID) {
 	{
 	case 1:
 		header("Detailed Information");
-		titleInfo(game, isOnline);
+		titleInfo(gl, game, isOnline);
 		cout << endl << endl;
 		GameOperationsMenu(gl, titleID);
 		break;
@@ -2025,7 +2072,7 @@ void ListsRankingsMenu(GameLibrary & gl) {
 		break;
 	case 4:
 		header("Search Titles");
-		search(gl);
+		search(gl, NULL);
 		cout << endl << endl;
 		ListsRankingsMenu(gl);
 		break;
@@ -2037,7 +2084,7 @@ void ListsRankingsMenu(GameLibrary & gl) {
 	}
 }
 
-
+//-----------------------------------------------------------------------------------------------------------------------//
 
 void CompaniesMenu(GameLibrary &gameL)
 {
@@ -2076,7 +2123,7 @@ void CompaniesMenu(GameLibrary &gameL)
 		break;
 	case 4:
 	    header("Company Info");
-	    displayCompanyInfo(gameL);
+		companyInfo(gameL);
 	    cout << endl << endl;
 	    CompaniesMenu(gameL);
 		break;
