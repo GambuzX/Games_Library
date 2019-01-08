@@ -1123,3 +1123,18 @@ void GameLibrary::addUserToHashTables(User * user)
 	}
 }
 
+unsigned int GameLibrary::numberOfSearches(Title * title)
+{
+	unsigned int res = 0;
+	for (const auto & user : users)
+		res += user.first->getNumberOfSearches(title);
+	return res;
+}
+
+unsigned int GameLibrary::numberOfAdsSeen(Title * title)
+{
+	unsigned int res = 0;
+	for (const auto & user : users)
+		res += user.first->getNumberOfSeenAds(title);
+	return res;
+}

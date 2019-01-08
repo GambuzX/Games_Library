@@ -497,6 +497,21 @@ public:
 	 */
 	const titleUserHashTabMap & getAsleepUsers() { return asleepUsers; };
 
+	/**
+	 * @brief Calculates the number of times that a title was searched
+	 * 
+	 * @param title Title searched
+	 * @return unsigned int Number of times that a title was searched
+	 */
+	unsigned int numberOfSearches(Title * title);
+
+	/**
+	 * @brief Calculates the number of times that a title ad was seen
+	 * 
+	 * @param title Title in the ads
+	 * @return unsigned int Number of times that a title add was seen
+	 */
+	unsigned int numberOfAdsSeen(Title * title);
 };
 
 /** @} */
