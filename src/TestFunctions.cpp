@@ -1573,7 +1573,7 @@ void AddWishlistEntry(User *user) {
             if (nameErrors > 3) {
                 cout << " You seem to be struggling. Please consider taking a look at the Games Summary\n";
             }
-            id = intInput(" NIF (0 to go back): ");
+            id = intInput(" Title ID (0 to go back): ");
             title = GameLibrary::getTitle(id);
         }
         else {
@@ -1587,7 +1587,29 @@ void AddWishlistEntry(User *user) {
 //-----------------------------------------------------------------------------------------------------------------------//
 
 void RemoveWishlistEntry(User *user) {
+    unsigned id = intInput(" Title ID (0 to go back): ");
+    Title *title = GameLibrary::getTitle(id);
 
+    int nameErrors = 0;
+    while (id != 0) {
+        if (title == nullptr) {
+            nameErrors++;
+            cout << " No such game found!\n";
+            if (nameErrors > 3) {
+                cout << " You seem to be struggling. Please consider taking a look at the Games Summary\n";
+            }
+            id = intInput(" Title ID (0 to go back): ");
+            title = GameLibrary::getTitle(id);
+        }
+        else {
+            user->removeWishlistEntry(title);
+            break;
+        }
+    }
+}
+
+void EditWishlistEntry(User * user) {
+    
 }
 
 //-----------------------------------------------------------------------------------------------------------------------//
@@ -1598,9 +1620,10 @@ void WishlistMenu(GameLibrary & gl, User * user) {
     cout << " Possible Actions:" << endl << endl;
     cout << "   1 - Add Entry" << endl;
     cout << "   2 - Remove Entry" << endl;
+    cout << "   3 - Update Entry" << endl;
     cout << "   0 - Go back" << endl << endl;
 
-    option_number = menuInput(" Option ? ", 0, 2);
+    option_number = menuInput(" Option ? ", 0, 3);
 
     switch (option_number) {
     case 1:
@@ -1609,11 +1632,15 @@ void WishlistMenu(GameLibrary & gl, User * user) {
         break;
     case 2:
         header("Remove Entry");
+        RemoveWishlistEntry(user);
+        break;
+    case 3:
+        header("Edit Entry");
+        EditWishlistEntry(user);
         break;
     case 0:
         UserOperationsMenu(gl, user->getEmail());
         break;
-
     }
 }
 
