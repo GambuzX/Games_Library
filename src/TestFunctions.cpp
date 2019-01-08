@@ -93,6 +93,16 @@ void userShortDisplay(const User * user) {
 
 //-----------------------------------------------------------------------------------------------------------------------//
 
+void asleepUserDisplay(string firstLine, User * user, Title* title) {
+	// TODO 4: esta funcao ajuda a mostar só um user
+	cout << firstLine << endl;
+	userShortDisplay(user);
+	cout << " Number of Searches:\t" << user->getNumberOfSearches(title) << endl;
+	cout << " Number of Ads Seen:\t" << user->getNumberOfSeenAds(title) << endl << endl;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------//
+
 void promotionDisplay(string firstLine, const Sale & sale) {
 	cout << firstLine << endl;
 	cout << "  - Begin Date:\t" << sale.getStartDate() << endl;
@@ -128,42 +138,6 @@ void displayWishlist(GameLibrary& gameL, User *user) {
         cout << temp.top() << endl;
         temp.pop();
     }
-}
-
-//-----------------------------------------------------------------------------------------------------------------------//
-
-void displayCompanyInfo(GameLibrary &gameL)
-{
-	if (gameL.getCompanies().empty()) {
-		cout << " There are no companies to show!\n";
-		return;
-	}
-
-	unsigned nif = intInput(" NIF (0 to go back): ");
-
-	Company *company = gameL.getCompany(nif);
-
-	int nameErrors = 0;
-	while (nif != 0) {
-		if (company == nullptr) {
-			nameErrors++;
-			cout << " No such company found!\n";
-			if (nameErrors > 3) {
-				cout << " You seem to be struggling. Please consider taking a look at the Companies Summary\n";
-			}
-			nif = intInput(" NIF (0 to go back): ");
-			company = gameL.getCompany(nif);
-		}
-		else {
-            cout << *company << endl;
-
-            for (Title* title : company->getTitles()) {
-                titleInfo(gameL, title, GameLibrary::isOnlineTitle(title));
-            }
-
-			break;
-		}
-	}
 }
 
 //=======================================================================================================================//
@@ -366,13 +340,11 @@ void UserSessionSummary2(const map<User*, vector<Session>, ComparePtr<User>> & p
 //-----------------------------------------------------------------------------------------------------------------------//
 
 void asleepUsersSummary(const HashTabUsersPtr & asleepUsers, Title * title) {
+	// TODO 3: podes tentar reaproveitar este para fazeres os displays e mudar o input para set por exemplo
 	unsigned int i = 1;
 	for (const auto & user : asleepUsers) {
-		cout << " User " << i << ":\n";
-		userShortDisplay(user);
-		cout << " Number of Searches:\t" << user->getNumberOfSearches(title) << endl;
-		cout << " Number of Ads Seen:\t" << user->getNumberOfSeenAds(title) << endl << endl;
-
+		string fL = " User " + to_string(i) + ':';
+		asleepUserDisplay(fL, user, title);
 	}
 	system("pause");
 }
@@ -1161,7 +1133,6 @@ void search(GameLibrary & gl, User * user)
 	system("pause");
 }
 
-
 //=======================================================================================================================//
 
 /**
@@ -1350,6 +1321,58 @@ string creditCardInput(User * user) {
 *  |                        |
 *  +------------------------+
 */
+
+void AsleepUsersMenu(GameLibrary & gl, Title * game) {
+	int option_number;
+
+	cout << " Possible Actions:" << endl << endl;
+
+	cout << "   1 - List by User ID" << endl;
+
+	cout << "   2 - List by Ads Seen" << endl;
+
+	cout << "   3 - List by Searches" << endl;
+
+	cout << "   4 - List by Probability" << endl;
+
+	cout << "   0 - Go back" << endl << endl;
+
+	option_number = menuInput(" Option ? ", 0, 4);
+
+	switch (option_number)
+	{
+	case 1:
+		header("Potencial Buyers by ID");
+		// TODO 2: aqui vais ter de ordenar so por ID (basicamente é só passar por um set de users que é isso que a nossa comp faz) -> listagem é completa
+		cout << endl << endl;
+		AsleepUsersMenu(gl, game);
+		break;
+
+	case 2:
+		header("Potencial Buyers by Ads Seen");
+		// TODO 2: aqui vais ter de ordenar por num Ads. Precisa de perguntar antes de mostrar se quer completa ou até um certo valor, qual?? inspirar nas já feitas (rankings)
+		cout << endl << endl;
+		AsleepUsersMenu(gl, game);
+		break;
+	case 3:
+		header("Potencial Buyers by Searches");
+		// TODO 2: aqui vais ter de ordenar por num Searches. Precisa de perguntar antes de mostrar se quer completa ou até um certo valor, qual?? inspirar nas já feitas (rankings)
+		cout << endl << endl;
+		AsleepUsersMenu(gl, game);
+		break;
+	case 4:
+		header("Potencial Buyers by Probability");
+		// TODO 2: aqui vais ter de ordenar por prob (a q fizeste). Precisa de perguntar antes de mostrar se quer completa ou até um certo valor, qual?? inspirar nas já feitas (rankings)
+		cout << endl << endl;
+		AsleepUsersMenu(gl, game);
+		break;
+	case 0:
+		GameOperationsMenu(gl, game->getTitleID());
+		break;
+	}
+}
+
+//-----------------------------------------------------------------------------------------------------------------------//
 
 void PromotionMenu(GameLibrary & gl, Title * game) {
 	int option_number;
@@ -1875,7 +1898,7 @@ void GameOperationsMenu(GameLibrary & gl, unsigned titleID) {
 		break;
 	case 4:
 		header("Potencial Buyers");
-		asleepUsersSummary(gl.getTitleHashTable(game), game);
+		// TODO 1: aqui vai ser chamado o menu AsleepUsersMenu
 		cout << endl << endl;
 		GameOperationsMenu(gl, titleID);
 		break;
