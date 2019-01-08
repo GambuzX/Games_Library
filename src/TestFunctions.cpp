@@ -18,6 +18,7 @@ void UsersMenu(GameLibrary & gl);
 void GameOperationsMenu(GameLibrary & gl, unsigned titleID);
 void UserOperationsMenu(GameLibrary & gl, string mail);
 void UserGameMenu(GameLibrary & gl, User * user);
+void titleInfo(GameLibrary & gameL, Title * game, bool isOnline);
 
 // TODO: Se houver tempo mudar input para lista de ajuda
 /**
@@ -115,6 +116,54 @@ void sessionDisplay(string firstLine, const Session & sess) {
 	cout << firstLine << endl;
 	cout << "  - Date:\t\t" << sess.getDate() << endl;
 	cout << "  - Duration:\t" << sess.getSessionDuration() << endl << endl;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------//
+
+void displayWishlist(GameLibrary& gameL, User *user) {
+    priority_queue<WishlistEntry> temp = user->getWishlist();
+
+    while(!temp.empty()) {
+        titleInfo(gameL, temp.top().getTitle(), GameLibrary::isOnlineTitle(temp.top().getTitle()));
+        cout << temp.top() << endl;
+        temp.pop();
+    }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------//
+
+void displayCompanyInfo(GameLibrary &gameL)
+{
+	if (gameL.getCompanies().empty()) {
+		cout << " There are no companies to show!\n";
+		return;
+	}
+
+	unsigned nif = intInput(" NIF (0 to go back): ");
+
+	Company *company = gameL.getCompany(nif);
+
+	int nameErrors = 0;
+	while (nif != 0) {
+		if (company == nullptr) {
+			nameErrors++;
+			cout << " No such company found!\n";
+			if (nameErrors > 3) {
+				cout << " You seem to be struggling. Please consider taking a look at the Companies Summary\n";
+			}
+			nif = intInput(" NIF (0 to go back): ");
+			company = gameL.getCompany(nif);
+		}
+		else {
+            cout << *company << endl;
+
+            for (Title* title : company->getTitles()) {
+                titleInfo(gameL, title, GameLibrary::isOnlineTitle(title));
+            }
+
+			break;
+		}
+	}
 }
 
 //=======================================================================================================================//
@@ -707,6 +756,35 @@ void addGames(GameLibrary & gL)
 
 //-----------------------------------------------------------------------------------------------------------------------//
 
+void addWishlistEntry(User *user) {
+    unsigned id = intInput(" Title ID (0 to go back): ");
+    unsigned interest = intInput(" Enter your interest in this game (1-10) (0 to go back):" );
+
+    if (interest > 10) interest = 10;
+
+    Title *title = GameLibrary::getTitle(id);
+
+    int nameErrors = 0;
+    while (id != 0) {
+        if (title == nullptr) {
+            nameErrors++;
+            cout << " No such game found!\n";
+            if (nameErrors > 3) {
+                cout << " You seem to be struggling. Please consider taking a look at the Games Summary\n";
+            }
+            id = intInput(" Title ID (0 to go back): ");
+            title = GameLibrary::getTitle(id);
+        }
+        else {
+            // TODO: Change second argument for calculated probability
+            user->addWishlistEntry(interest, 0, title);
+            break;
+        }
+    }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------//
+
 void addUser(GameLibrary & gl) {
 	string name = namesInput(" Name (only letters and space): ");
 	string email = emailInput(" Email: ");
@@ -899,6 +977,30 @@ void removeUser(GameLibrary & gL) {
 			break;
 		}
 	}
+}
+
+//-----------------------------------------------------------------------------------------------------------------------//
+
+void removeWishlistEntry(User *user) {
+    unsigned id = intInput(" Title ID (0 to go back): ");
+    Title *title = GameLibrary::getTitle(id);
+
+    int nameErrors = 0;
+    while (id != 0) {
+        if (title == nullptr) {
+            nameErrors++;
+            cout << " No such game found!\n";
+            if (nameErrors > 3) {
+                cout << " You seem to be struggling. Please consider taking a look at the Games Summary\n";
+            }
+            id = intInput(" Title ID (0 to go back): ");
+            title = GameLibrary::getTitle(id);
+        }
+        else {
+            user->removeWishlistEntry(title);
+            break;
+        }
+    }
 }
 
 //-----------------------------------------------------------------------------------------------------------------------//
@@ -1575,6 +1677,76 @@ void UserRankingsMenu(GameLibrary & gl, User * user) {
 
 //-----------------------------------------------------------------------------------------------------------------------//
 
+void EditWishlistEntry(User * user) {
+    unsigned id = intInput(" Title ID (0 to go back): ");
+    unsigned interest = intInput(" Enter your interest in this game (1-10) (0 to go back):" );
+
+    if (interest > 10) interest = 10;
+
+    Title *title = GameLibrary::getTitle(id);
+
+    int nameErrors = 0;
+    while (id != 0) {
+        if (title == nullptr) {
+            nameErrors++;
+            cout << " No such game found!\n";
+            if (nameErrors > 3) {
+                cout << " You seem to be struggling. Please consider taking a look at the Games Summary\n";
+            }
+            id = intInput(" Title ID (0 to go back): ");
+            title = GameLibrary::getTitle(id);
+        }
+        else {
+            // TODO: Change second argument for calculated probability
+            user->editWishlistEntry(title, interest, 0);
+            break;
+        }
+    }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------//
+
+void WishlistMenu(GameLibrary & gl, User * user) {
+    int option_number;
+
+    cout << " Possible Actions:" << endl << endl;
+    cout << "   1 - Wishlist Summary" << endl;
+    cout << "   2 - Add Entry" << endl;
+    cout << "   3 - Remove Entry" << endl;
+    cout << "   4 - Update Entry" << endl;
+    cout << "   0 - Go back" << endl << endl;
+
+    option_number = menuInput(" Option ? ", 0, 4);
+
+    switch (option_number) {
+    case 1:
+        header("Wishlist Summary");
+        displayWishlist(gl, user);
+        WishlistMenu(gl, user);
+        break;
+    case 2:
+        header("Add Entry");
+        addWishlistEntry(user);
+        WishlistMenu(gl, user);
+        break;
+    case 3:
+        header("Remove Entry");
+        removeWishlistEntry(user);
+        WishlistMenu(gl, user);
+        break;
+    case 4:
+        header("Edit Entry");
+        EditWishlistEntry(user);
+        WishlistMenu(gl, user);
+        break;
+    case 0:
+        UserOperationsMenu(gl, user->getEmail());
+        break;
+    }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------//
+
 void UserGameMenu(GameLibrary & gl, User * user) {
 	int option_number;
 	unsigned ID;
@@ -1726,18 +1898,14 @@ void UserOperationsMenu(GameLibrary & gl, string mail) {
 	int option_number;
 
 	cout << " Possible Actions:" << endl << endl;
-
 	cout << "   1 - Detailed Info" << endl;
-
 	cout << "   2 - Credit Cards" << endl;
-
 	cout << "   3 - Friends" << endl;
-
 	cout << "   4 - Games" << endl;
-
+	cout << "   5 - Wishlist" << endl;
 	cout << "   0 - Go back" << endl << endl;
 
-	option_number = menuInput(" Option ? ", 0, 4);
+	option_number = menuInput(" Option ? ", 0, 5);
 
 	switch (option_number)
 	{
@@ -1760,6 +1928,9 @@ void UserOperationsMenu(GameLibrary & gl, string mail) {
 		header("Games");
 		UserGameMenu(gl, user);
 		break;
+	case 5:
+	    header("Wishlist");
+	    WishlistMenu(gl, user);
 	case 0:
 		UsersMenu(gl);
 		break;

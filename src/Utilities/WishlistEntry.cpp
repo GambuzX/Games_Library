@@ -1,3 +1,4 @@
+#include <ostream>
 #include "WishlistEntry.h"
 
 WishlistEntry::WishlistEntry(unsigned interest, float buyChance, Title* title)
@@ -22,4 +23,11 @@ bool WishlistEntry::operator<(const WishlistEntry &ref) const
 	if (interest == ref.getInterest())
 		return buyChance < ref.getBuyChance();
 	return interest < ref.getInterest();
+}
+
+std::ostream &operator<<(std::ostream &out, const WishlistEntry &we1)
+{
+	out << " Interest: " << we1.getInterest() << std::endl;
+
+	return out;
 }

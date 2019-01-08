@@ -73,6 +73,15 @@ public:
 	* @return bool representing if one WishlistEntry has less priority than the other
 	*/
 	bool operator<(const WishlistEntry &ref) const;
+
+	/**
+	 * @brief Print a WishlistEntry object in a friendly way
+	 *
+	 * @param out output stream to write to
+	 * @param we1 WishlistEntry object to be displayed
+	 * @return output stream written on
+	 */
+	friend std::ostream& operator<<(std::ostream& out, const WishlistEntry& we1);
 };
 
 /** @} */
