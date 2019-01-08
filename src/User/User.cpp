@@ -452,7 +452,6 @@ bool User::addWishlistEntry(unsigned interest, float buyChance, Title * title)
 	return true;
 }
 
-
 bool User::removeWishlistEntry(Title * title)
 {
 	bool removed = false;

@@ -41,13 +41,13 @@ void mainHeader(string title)
 {
 	setcolor(3);
 	lineAcrossConsole('=');
-	cout << endl;
+	std::cout << endl;
 	setcolor(14);
 	centerWord(title);
-	cout << endl;
+	std::cout << endl;
 	setcolor(3);
 	lineAcrossConsole('=');
-	cout << endl;
+	std::cout << endl;
 	setcolor(15);
 }
 
@@ -62,15 +62,15 @@ void mainHeader(string title)
 */
 void header(const string &header)
 {
-	cout << endl;
+	std::cout << endl;
 	setcolor(3);
 	lineAcrossConsole('-');
 	setcolor(14);
-	cout << " " << header;
-	cout << endl;
+	std::cout << " " << header;
+	std::cout << endl;
 	setcolor(3);
 	lineAcrossConsole('-');
-	cout << endl;
+	std::cout << endl;
 	setcolor(15);
 }
 
@@ -85,37 +85,47 @@ void header(const string &header)
 */
 
 void userShortDisplay(const User * user) {
-	cout << " User ID:\t" << user->getUserID() << endl;
-	cout << " Name:\t\t" << user->getName() << endl;
-	cout << " E-Mail:\t" << user->getEmail() << endl;
-	cout << " Address:\n" << user->getAddress() << endl << endl;
+	std::cout << " User ID:\t" << user->getUserID() << endl;
+	std::cout << " Name:\t\t" << user->getName() << endl;
+	std::cout << " E-Mail:\t" << user->getEmail() << endl;
+	std::cout << " Address:\n" << user->getAddress() << endl;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------//
+
+void asleepUserDisplay(string firstLine, User * user, Title* title) {
+	// TODO 4: esta funcao ajuda a mostar só um user
+	std::cout << firstLine << endl;
+	userShortDisplay(user);
+	std::cout << " Number of Searches:\t" << user->getNumberOfSearches(title) << endl;
+	std::cout << " Number of Ads Seen:\t" << user->getNumberOfSeenAds(title) << endl << endl;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------//
 
 void promotionDisplay(string firstLine, const Sale & sale) {
-	cout << firstLine << endl;
-	cout << "  - Begin Date:\t" << sale.getStartDate() << endl;
-	cout << "  - End Date:\t" << sale.getEndDate() << endl;
-	cout << "  - Promotion:\t" << sale.getSaleFactor() * 100 << "%" << endl << endl;
+	std::cout << firstLine << endl;
+	std::cout << "  - Begin Date:\t" << sale.getStartDate() << endl;
+	std::cout << "  - End Date:\t" << sale.getEndDate() << endl;
+	std::cout << "  - Promotion:\t" << sale.getSaleFactor() * 100 << "%" << endl << endl;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------//
 
 void updateDisplay(string firstLine, const Update & update) {
-	cout << firstLine << endl;
-	cout << "  - Update Version:\t" << update.getVersion() << endl;
-	cout << "  - Description:\t" << update.getDescription() << endl;
-	cout << "  - Update Price:\t" << update.getUpdatePrice() << endl;
-	cout << "  - Update Date:\t" << update.getDate() << endl << endl;
+	std::cout << firstLine << endl;
+	std::cout << "  - Update Version:\t" << update.getVersion() << endl;
+	std::cout << "  - Description:\t" << update.getDescription() << endl;
+	std::cout << "  - Update Price:\t" << update.getUpdatePrice() << endl;
+	std::cout << "  - Update Date:\t" << update.getDate() << endl << endl;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------//
 
 void sessionDisplay(string firstLine, const Session & sess) {
-	cout << firstLine << endl;
-	cout << "  - Date:\t\t" << sess.getDate() << endl;
-	cout << "  - Duration:\t" << sess.getSessionDuration() << endl << endl;
+	std::cout << firstLine << endl;
+	std::cout << "  - Date:\t\t" << sess.getDate() << endl;
+	std::cout << "  - Duration:\t" << sess.getSessionDuration() << endl << endl;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------//
@@ -125,45 +135,9 @@ void displayWishlist(GameLibrary& gameL, User *user) {
 
     while(!temp.empty()) {
         titleInfo(gameL, temp.top().getTitle(), GameLibrary::isOnlineTitle(temp.top().getTitle()));
-        cout << temp.top() << endl;
+        std::cout << temp.top() << endl;
         temp.pop();
     }
-}
-
-//-----------------------------------------------------------------------------------------------------------------------//
-
-void displayCompanyInfo(GameLibrary &gameL)
-{
-	if (gameL.getCompanies().empty()) {
-		cout << " There are no companies to show!\n";
-		return;
-	}
-
-	unsigned nif = intInput(" NIF (0 to go back): ");
-
-	Company *company = gameL.getCompany(nif);
-
-	int nameErrors = 0;
-	while (nif != 0) {
-		if (company == nullptr) {
-			nameErrors++;
-			cout << " No such company found!\n";
-			if (nameErrors > 3) {
-				cout << " You seem to be struggling. Please consider taking a look at the Companies Summary\n";
-			}
-			nif = intInput(" NIF (0 to go back): ");
-			company = gameL.getCompany(nif);
-		}
-		else {
-            cout << *company << endl;
-
-            for (Title* title : company->getTitles()) {
-                titleInfo(gameL, title, GameLibrary::isOnlineTitle(title));
-            }
-
-			break;
-		}
-	}
 }
 
 //=======================================================================================================================//
@@ -188,11 +162,11 @@ void titleSummary(const set<Title*, ComparePtr<Title>> & games) {
 		{
 			type = "Home";
 		}
-		cout << " Title ID:\t" << title->getTitleID() << endl;
-		cout << " Game:\t\t" << title->getName() << endl;
-		cout << " Price:\t\t" << title->getBasePrice() << endl;
-		cout << " Type:\t\t" << type << endl;
-		cout << " Platform:\t" << title->getPlatformName() << endl << endl;
+		std::cout << " Title ID:\t" << title->getTitleID() << endl;
+		std::cout << " Game:\t\t" << title->getName() << endl;
+		std::cout << " Price:\t\t" << title->getBasePrice() << endl;
+		std::cout << " Type:\t\t" << type << endl;
+		std::cout << " Platform:\t" << title->getPlatformName() << endl << endl;
 		type = "Online";
 	}
 	system("pause");
@@ -231,6 +205,7 @@ void usersSummary(GameLibrary & gameL) {
 	for (auto & user : prov)
 	{
 		userShortDisplay(user.first);
+		std::cout << endl;
 	}
 	system("pause");
 }
@@ -241,8 +216,9 @@ void friendsSummary(const set<User*, ComparePtr<User>> & friends) {
 	unsigned int i = 1;
 	for (auto & fr : friends)
 	{
-		cout << " Friend " << i << ":\n";
+		std::cout << " Friend " << i << ":\n";
 		userShortDisplay(fr);
+		std::cout << endl;
 	}
 	system("pause");
 }
@@ -253,11 +229,11 @@ void creditCardSummary(const vector<CreditCard> & creditCards) {
 	unsigned int i = 1;
 	for (auto & credit : creditCards)
 	{
-		cout << " Credit Card " << i << ":\n";
-		cout << "  - Holder:\t\t" << credit.getHolder() << endl;
-		cout << "  - Number:\t\t" << credit.getNumber() << endl;
-		cout << "  - Expires On:\t\t" << credit.getExpiryDate() << endl;
-		cout << "  - Balance:\t\t" << credit.getBalance() << endl << endl;
+		std::cout << " Credit Card " << i << ":\n";
+		std::cout << "  - Holder:\t\t" << credit.getHolder() << endl;
+		std::cout << "  - Number:\t\t" << credit.getNumber() << endl;
+		std::cout << "  - Expires On:\t\t" << credit.getExpiryDate() << endl;
+		std::cout << "  - Balance:\t\t" << credit.getBalance() << endl << endl;
 		i++;
 	}
 	system("pause");
@@ -270,14 +246,14 @@ void transactionsSummary(User*  user) {
 	unsigned int i = 1;
 	for (auto & trans : prov)
 	{
-		cout << " Transaction  " << i << ":\n";
-		cout << "  - Date:\t" << trans.getDate() << endl;
-		cout << "  - Value:\t" << trans.getValue() << endl;
-		cout << "  - Type:\t";
-		if (trans.getType() == gamePurchase) cout << "Purchased a Title";
-		else if (trans.getType() == homeUpdate) cout << "Updated a Home Title";
-		else if (trans.getType() == onlineSubscription) cout << "Played an Online Title";
-		cout << endl << endl;
+		std::cout << " Transaction  " << i << ":\n";
+		std::cout << "  - Date:\t" << trans.getDate() << endl;
+		std::cout << "  - Value:\t" << trans.getValue() << endl;
+		std::cout << "  - Type:\t";
+		if (trans.getType() == gamePurchase) std::cout << "Purchased a Title";
+		else if (trans.getType() == homeUpdate) std::cout << "Updated a Home Title";
+		else if (trans.getType() == onlineSubscription) std::cout << "Played an Online Title";
+		std::cout << endl << endl;
 		i++;
 	}
 	system("pause");
@@ -286,8 +262,8 @@ void transactionsSummary(User*  user) {
 //-----------------------------------------------------------------------------------------------------------------------//
 
 void otherStatsSummary(GameLibrary & gl, User*  user) {
-	cout << " Online Titles Play Time:\t" << gl.onlineTitlesPlayTime(user) << endl;
-	cout << " Entire Library Cost:\t\t" << gl.userLibraryCost(user) << endl << endl;
+	std::cout << " Online Titles Play Time:\t" << gl.onlineTitlesPlayTime(user) << endl;
+	std::cout << " Entire Library Cost:\t\t" << gl.userLibraryCost(user) << endl << endl;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------//
@@ -295,12 +271,12 @@ void otherStatsSummary(GameLibrary & gl, User*  user) {
 void averageStatsSummary(GameLibrary & gl) {
 	if (gl.getUsers().size() == 0)
 	{
-		cout << " Average is impossible since there is no user in your Game Library\n\n";
+		std::cout << " Average is impossible since there is no user in your Game Library\n\n";
 	}
 	else
 	{
-		cout << " Average User Library Cost:\t" << gl.averageUserLibraryCost() << endl;
-		cout << " Average User Library Size:\t" << gl.averageUserTitles() << endl << endl;
+		std::cout << " Average User Library Cost:\t" << gl.averageUserLibraryCost() << endl;
+		std::cout << " Average User Library Size:\t" << gl.averageUserTitles() << endl << endl;
 	}
 }
 
@@ -325,16 +301,16 @@ void UserSessionSummary(const map<User*, const vector<Session>*, ComparePtr<User
 	string title;
 	for (const auto & user : prov)
 	{
-		cout << " User " << user.first->getUserID() << " :\n\n";
+		std::cout << " User " << user.first->getUserID() << " :\n\n";
 		for (size_t i = 0; i < user.second->size(); i++)
 		{
 			title = " Session " + to_string(i+1) + ':';
 			sessionDisplay(title, user.second->at(i));
 		}
-		cout << endl;
+		std::cout << endl;
 		setcolor(3);
 		lineAcrossConsole('-');
-		cout << endl;
+		std::cout << endl;
 		setcolor(15);
 	}
 
@@ -346,19 +322,31 @@ void UserSessionSummary2(const map<User*, vector<Session>, ComparePtr<User>> & p
 	string title;
 	for (const auto & user : prov)
 	{
-		cout << " User " << user.first->getUserID() << " :\n\n";
+		std::cout << " User " << user.first->getUserID() << " :\n\n";
 		for (size_t i = 0; i < user.second.size(); i++)
 		{
 			title = " Session " + to_string(i+1) + ':';
 			sessionDisplay(title, user.second.at(i));
 		}
-		cout << endl;
+		std::cout << endl;
 		setcolor(3);
 		lineAcrossConsole('-');
-		cout << endl;
+		std::cout << endl;
 		setcolor(15);
 	}
 
+}
+
+//-----------------------------------------------------------------------------------------------------------------------//
+
+void asleepUsersSummary(const HashTabUsersPtr & asleepUsers, Title * title) {
+	// TODO 3: podes tentar reaproveitar este para fazeres os displays e mudar o input para set por exemplo
+	unsigned int i = 1;
+	for (const auto & user : asleepUsers) {
+		string fL = " User " + to_string(i) + ':';
+		asleepUserDisplay(fL, user, title);
+	}
+	system("pause");
 }
 
 //=======================================================================================================================//
@@ -374,44 +362,44 @@ void UserSessionSummary2(const map<User*, vector<Session>, ComparePtr<User>> & p
 void titleInfo(GameLibrary & gameL, Title * game, bool isOnline)
 {
 	Date d = GameLibrary::getLibraryDate();
-	cout << " Title ID:\t" << game->getTitleID() << endl;
-	cout << " Game:\t\t" << game->getName() << endl;
-	cout << " Price:\t\t" << game->getBasePrice() << endl;
-	cout << " Current Price:\t" << game->getCurrentPrice(d) << endl;
+	std::cout << " Title ID:\t" << game->getTitleID() << endl;
+	std::cout << " Game:\t\t" << game->getName() << endl;
+	std::cout << " Price:\t\t" << game->getBasePrice() << endl;
+	std::cout << " Current Price:\t" << game->getCurrentPrice(d) << endl;
 	if (isOnline) {
-		cout << " Subscription:\n";
-		cout << "  - Type:\t";
-		if (game->getSubscription()->isFixedSubscription()) cout << "Fixed\n";
-		else cout << "Dynamic\n";
-		cout << "  - Price:\t" << game->getSubscription()->getSubscriptionPrice() << endl;
+		std::cout << " Subscription:\n";
+		std::cout << "  - Type:\t";
+		if (game->getSubscription()->isFixedSubscription()) std::cout << "Fixed\n";
+		else std::cout << "Dynamic\n";
+		std::cout << "  - Price:\t" << game->getSubscription()->getSubscriptionPrice() << endl;
 	}
 	else
 	{
-		cout << " Last Update:\n";
-		cout << "  - Version:\t\t" << game->getCurrentVersion().getVersion() << endl;
-		cout << "  - Description:\t" << game->getCurrentVersion().getDescription() << endl;
-		cout << "  - Price:\t\t" << game->getCurrentVersion().getUpdatePrice() << endl;
-		cout << "  - Date:\t\t" << game->getCurrentVersion().getDate() << endl << endl;
+		std::cout << " Last Update:\n";
+		std::cout << "  - Version:\t\t" << game->getCurrentVersion().getVersion() << endl;
+		std::cout << "  - Description:\t" << game->getCurrentVersion().getDescription() << endl;
+		std::cout << "  - Price:\t\t" << game->getCurrentVersion().getUpdatePrice() << endl;
+		std::cout << "  - Date:\t\t" << game->getCurrentVersion().getDate() << endl << endl;
 	}
-	cout << " Release Date:\t" << game->getReleaseDate() << endl;
-	cout << " Age Range:\t" << game->getAgeRange().minAge << " - " << game->getAgeRange().maxAge << endl;
-	cout << " Platform:\t\t" << game->getPlatformName() << endl;
-	cout << " Genre:\t\t" << game->getGenreName() << endl;
-	cout << " Company:\t\t" << game->getCompany() << endl;
-	cout << " Users Number:\t" << game->getNumberUsers() << endl;
-	cout << " Number of Searches:\t" << gameL.numberOfSearches(game) << endl;
-	cout << " Number of Ads Seen:\t" << gameL.numberOfAdsSeen(game) << endl;
-	if (isOnline) cout << " Hours Played:\t" << game->getStats() << endl;
-	cout << " Last Schedule Sale:\n";
+	std::cout << " Release Date:\t" << game->getReleaseDate() << endl;
+	std::cout << " Age Range:\t" << game->getAgeRange().minAge << " - " << game->getAgeRange().maxAge << endl;
+	std::cout << " Platform:\t\t" << game->getPlatformName() << endl;
+	std::cout << " Genre:\t\t" << game->getGenreName() << endl;
+	std::cout << " Company:\t\t" << game->getCompany() << endl;
+	std::cout << " Users Number:\t" << game->getNumberUsers() << endl;
+	std::cout << " Number of Searches:\t" << gameL.numberOfSearches(game) << endl;
+	std::cout << " Number of Ads Seen:\t" << gameL.numberOfAdsSeen(game) << endl;
+	if (isOnline) std::cout << " Hours Played:\t" << game->getStats() << endl;
+	std::cout << " Last Schedule Sale:\n";
 	try
 	{
-		cout << "  - Begin Date:\t" << game->getLastSale().getStartDate() << endl;
-		cout << "  - End Date:\t" << game->getLastSale().getEndDate() << endl;
-		cout << "  - Promotion:\t" << game->getLastSale().getSaleFactor() * 100 << "%" << endl << endl;
+		std::cout << "  - Begin Date:\t" << game->getLastSale().getStartDate() << endl;
+		std::cout << "  - End Date:\t" << game->getLastSale().getEndDate() << endl;
+		std::cout << "  - Promotion:\t" << game->getLastSale().getSaleFactor() * 100 << "%" << endl << endl;
 	}
 	catch (InexistentSale & e)
 	{
-		cout << "  - " << e.getMessage() << endl << endl;
+		std::cout << "  - " << e.getMessage() << endl << endl;
 	}
 
 	system("pause");
@@ -421,32 +409,32 @@ void titleInfo(GameLibrary & gameL, Title * game, bool isOnline)
 
 void userInfo(User * user)
 {	
-	cout << " User ID:\t\t" << user->getUserID() << endl;
-	cout << " Name:\t\t\t" << user->getName() << endl;
-	cout << " Age:\t\t\t" << user->getAge() << endl;
-	cout << " Email:\t\t\t" << user->getEmail() << endl;
-	cout << " Creation Since:\t" << user->getCreationDate() << endl;
-	cout << " Adress:\n" << user->getAddress() << endl;
-	cout << " # Credit Cards:\t" << user->getCreditCards().size() << endl;
-	cout << " # Friends:\t\t" << user->getFriendsList().size() << endl;
-	cout << " # Titles:\t\t" << user->getPurchasedGames()->size() << endl;
-	cout << " # Transactions:\t" << user->getTransactions().size() << endl;
-	cout << " Money Spend:\t\t" << user->getTotalTransactionsValue() << endl;
-	cout << " Favorite Platform:" << user->getFavoritePlatform() << endl;
-	cout << " Platforms:\n";
+	std::cout << " User ID:\t\t" << user->getUserID() << endl;
+	std::cout << " Name:\t\t\t" << user->getName() << endl;
+	std::cout << " Age:\t\t\t" << user->getAge() << endl;
+	std::cout << " Email:\t\t\t" << user->getEmail() << endl;
+	std::cout << " Creation Since:\t" << user->getCreationDate() << endl;
+	std::cout << " Adress:\n" << user->getAddress() << endl;
+	std::cout << " # Credit Cards:\t" << user->getCreditCards().size() << endl;
+	std::cout << " # Friends:\t\t" << user->getFriendsList().size() << endl;
+	std::cout << " # Titles:\t\t" << user->getPurchasedGames()->size() << endl;
+	std::cout << " # Transactions:\t" << user->getTransactions().size() << endl;
+	std::cout << " Money Spend:\t\t" << user->getTotalTransactionsValue() << endl;
+	std::cout << " Favorite Platform:" << user->getFavoritePlatform() << endl;
+	std::cout << " Platforms:\n";
 	set<string> plat = user->getPlatforms();
 	for (auto & p : plat)
-		cout << "  - " << p;
-	cout << endl;
+		std::cout << "  - " << p;
+	std::cout << endl;
 	system("pause");
 }
 
 //-----------------------------------------------------------------------------------------------------------------------//
-// TODO: mudar nome e sitio
+
 void companyInfo(GameLibrary &gameL)
 {
 	if (gameL.getCompanies().empty()) {
-		cout << " There are no companies to show!\n";
+		std::cout << " There are no companies to show!\n";
 		return;
 	}
 
@@ -458,15 +446,15 @@ void companyInfo(GameLibrary &gameL)
 	while (nif != 0) {
 		if (company == nullptr) {
 			nameErrors++;
-			cout << " No such company found!\n";
+			std::cout << " No such company found!\n";
 			if (nameErrors > 3) {
-				cout << " You seem to be struggling. Please consider taking a look at the Companies Summary\n";
+				std::cout << " You seem to be struggling. Please consider taking a look at the Companies Summary\n";
 			}
 			nif = intInput(" NIF (0 to go back): ");
 			company = gameL.getCompany(nif);
 		}
 		else {
-			cout << *company << endl;
+			std::cout << *company << endl;
 
 			for (Title* title : company->getTitles()) {
 				titleInfo(gameL, title, GameLibrary::isOnlineTitle(title));
@@ -490,11 +478,11 @@ void companyInfo(GameLibrary &gameL)
 bool menuOnlineHome() {
 	int option_number;
 
-	cout << " Do you want to create one :" << endl << endl;
+	std::cout << " Do you want to create one :" << endl << endl;
 
-	cout << "   1 - Home Title" << endl;
+	std::cout << "   1 - Home Title" << endl;
 
-	cout << "   2 - Online Title" << endl << endl;
+	std::cout << "   2 - Online Title" << endl << endl;
 
 	option_number = menuInput(" Option ? ", 1, 2);
 
@@ -514,25 +502,25 @@ bool menuOnlineHome() {
 gameLibraryPlatform menuPlatform() {
 	int option_number;
 
-	cout << " Platform :" << endl << endl;
+	std::cout << " Platform :" << endl << endl;
 
-	cout << "   1 - Nintendo DS" << endl;
+	std::cout << "   1 - Nintendo DS" << endl;
 
-	cout << "   2 - PC" << endl;
+	std::cout << "   2 - PC" << endl;
 
-	cout << "   3 - PS3" << endl;
+	std::cout << "   3 - PS3" << endl;
 
-	cout << "   4 - PS4" << endl;
+	std::cout << "   4 - PS4" << endl;
 
-	cout << "   5 - Nintendo Switch" << endl;
+	std::cout << "   5 - Nintendo Switch" << endl;
 
-	cout << "   6 - WII" << endl;
+	std::cout << "   6 - WII" << endl;
 
-	cout << "   7 - XBOX 360" << endl;
+	std::cout << "   7 - XBOX 360" << endl;
 
-	cout << "   8 - XBOX ONE" << endl;
+	std::cout << "   8 - XBOX ONE" << endl;
 
-	cout << "   0 - All the Plataforms" << endl << endl;
+	std::cout << "   0 - All the Plataforms" << endl << endl;
 
 	option_number = menuInput(" Option ? ", 0, 8);
 
@@ -544,30 +532,30 @@ gameLibraryPlatform menuPlatform() {
 gameLibraryGenre menuGenre(bool rank) {
 	int option_number;
 
-	cout << " Genre :" << endl << endl;
+	std::cout << " Genre :" << endl << endl;
 
-	cout << "   1 - Action" << endl;
+	std::cout << "   1 - Action" << endl;
 
-	cout << "   2 - Adventure" << endl;
+	std::cout << "   2 - Adventure" << endl;
 
-	cout << "   3 - Puzzle" << endl;
+	std::cout << "   3 - Puzzle" << endl;
 
-	cout << "   4 - Shooter" << endl;
+	std::cout << "   4 - Shooter" << endl;
 
-	cout << "   5 - Simulation" << endl;
+	std::cout << "   5 - Simulation" << endl;
 
-	cout << "   6 - RPG" << endl;
+	std::cout << "   6 - RPG" << endl;
 
-	cout << "   7 - Platformer" << endl;
+	std::cout << "   7 - Platformer" << endl;
 
-	cout << "   8 - Strategy" << endl;
+	std::cout << "   8 - Strategy" << endl;
 
-	cout << "   9 - Sports" << endl;
+	std::cout << "   9 - Sports" << endl;
 
-	cout << "   10 - MMO" << endl;
+	std::cout << "   10 - MMO" << endl;
 
-	if (rank) cout << "   0 - All" << endl;
-	cout << endl;
+	if (rank) std::cout << "   0 - All" << endl;
+	std::cout << endl;
 	if (rank) option_number = menuInput(" Option ? ", 0, 10);
 	else option_number = menuInput(" Option ? ", 1, 10);
 
@@ -579,11 +567,11 @@ gameLibraryGenre menuGenre(bool rank) {
 bool menuSubcription() {
 	int option_number;
 
-	cout << " Subscription type (fixed or dynamic) :" << endl << endl;
+	std::cout << " Subscription type (fixed or dynamic) :" << endl << endl;
 
-	cout << "   1 - Dynamic Subscription" << endl;
+	std::cout << "   1 - Dynamic Subscription" << endl;
 
-	cout << "   2 - Fixed Subscription" << endl << endl;
+	std::cout << "   2 - Fixed Subscription" << endl << endl;
 
 	option_number = menuInput(" Option ? ", 1, 2);
 
@@ -596,7 +584,7 @@ bool menuSubcription() {
 	default:
 		throw invalid_argument(" Error in menuSubcription() ");
 	}
-	//cout << endl;
+	//std::cout << endl;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------//
@@ -604,21 +592,21 @@ bool menuSubcription() {
 ConsumingHabitsFilter menuTransactionsTypes() {
 	int option_number;
 
-	cout << " Consuming Habits Filter:" << endl << endl;
+	std::cout << " Consuming Habits Filter:" << endl << endl;
 
-	cout << "   1 - Purchases" << endl;
+	std::cout << "   1 - Purchases" << endl;
 
-	cout << "   2 - Updates" << endl;
+	std::cout << "   2 - Updates" << endl;
 
-	cout << "   3 - Subscriptions" << endl;
+	std::cout << "   3 - Subscriptions" << endl;
 
-	cout << "   4 - Purchases and Updates" << endl;
+	std::cout << "   4 - Purchases and Updates" << endl;
 
-	cout << "   5 - Purchases and Subscriptions" << endl;
+	std::cout << "   5 - Purchases and Subscriptions" << endl;
 
-	cout << "   6 - Updates and Subscriptions" << endl;
+	std::cout << "   6 - Updates and Subscriptions" << endl;
 
-	cout << "   0 - All" << endl << endl;
+	std::cout << "   0 - All" << endl << endl;
 
 	option_number = menuInput(" Option ? ", 0, 6);
 
@@ -667,7 +655,7 @@ void addGames(GameLibrary & gL)
 
 	Company *comp = gL.getCompany(company);
     if (comp == nullptr) {
-        cout << " No company named " << company << " was found in the library, please add further details below to add a new company." << endl;
+        std::cout << " No company named " << company << " was found in the library, please add further details below to add a new company." << endl;
         addCompany(gL, company);
     }
 
@@ -752,9 +740,9 @@ void addWishlistEntry(User *user) {
     while (id != 0) {
         if (title == nullptr) {
             nameErrors++;
-            cout << " No such game found!\n";
+            std::cout << " No such game found!\n";
             if (nameErrors > 3) {
-                cout << " You seem to be struggling. Please consider taking a look at the Games Summary\n";
+                std::cout << " You seem to be struggling. Please consider taking a look at the Games Summary\n";
             }
             id = intInput(" Title ID (0 to go back): ");
             title = GameLibrary::getTitle(id);
@@ -777,7 +765,7 @@ void addUser(GameLibrary & gl) {
 		email = emailInput(" Email: ");
 	}
 	int age = intInput(" Age: ");
-	cout << " Address:\n";
+	std::cout << " Address:\n";
 	unsigned int houseNumber = intInput("   - House Number: ");
 	string streetName = namesInput("   - Street Name: ");
 	string city = namesInput("   - City Name: ");
@@ -789,11 +777,11 @@ void addUser(GameLibrary & gl) {
 	}
 	catch (DuplicatedUser & e)
 	{
-		cout << endl << "  - There is already a user with this email: " << e.getEmail() << endl;
-		cout << "  - Please consider taking a look at the Users Summary Menu\n\n";
+		std::cout << endl << "  - There is already a user with this email: " << e.getEmail() << endl;
+		std::cout << "  - Please consider taking a look at the Users Summary Menu\n\n";
 		return;
 	}
-	cout << "\n User Added Successfully";
+	std::cout << "\n User Added Successfully";
 }
 
 //-----------------------------------------------------------------------------------------------------------------------//
@@ -809,15 +797,15 @@ void addSale(Title* game) {
 	}
 	catch (ExpiredSale & e)
 	{
-		cout << "  - " << e.getMessage() << endl << endl;
+		std::cout << "  - " << e.getMessage() << endl << endl;
 		return;
 	}
 	catch (OverlappingSales & e)
 	{
-		cout << "  - " << e.getMessage() << endl << endl;
+		std::cout << "  - " << e.getMessage() << endl << endl;
 		return;
 	}
-	cout << "\n Sale Added Successfully";
+	std::cout << "\n Sale Added Successfully";
 }
 
 //-----------------------------------------------------------------------------------------------------------------------//
@@ -833,11 +821,11 @@ void addUpdate(Title * game) {
 	}
 	catch (OldUpdate & e)
 	{
-		cout << "  - " << e.getMessage() << endl << endl;
-		cout << "  - Please consider taking a look at the Updates Summary Menu\n\n";
+		std::cout << "  - " << e.getMessage() << endl << endl;
+		std::cout << "  - Please consider taking a look at the Updates Summary Menu\n\n";
 		return;
 	}
-	cout << "\n Update Added Successfully";
+	std::cout << "\n Update Added Successfully";
 }
 
 //-----------------------------------------------------------------------------------------------------------------------//
@@ -849,10 +837,10 @@ void addCreditCard(User*  user) {
 	double balance = doubleInput(" Balance: ");
 	CreditCard c(number, holder, expiryDate, balance);
 	if (user->addCreditCard(c)) {
-		cout << "\n Credit Card Added Successfully";
+		std::cout << "\n Credit Card Added Successfully";
 		return;
 	}
-	cout << "\n Already Exists Credit Card with that Number";
+	std::cout << "\n Already Exists Credit Card with that Number";
 }
 
 //-----------------------------------------------------------------------------------------------------------------------//
@@ -861,11 +849,11 @@ void addFunds(User*  user, string creditCardNumber) {
 	double funds = doubleInput(" Amount to be added: ");
 	if (funds < 0)
 	{
-		cout << " Must be a positive number\n";
+		std::cout << " Must be a positive number\n";
 		funds = doubleInput(" Amount to be added: ");
 	}
-	cout << "\n Funds Successfully Added\n";
-	cout << " New Balance: " << user->getCreditCard(creditCardNumber)->addFunds(funds) << endl;	
+	std::cout << "\n Funds Successfully Added\n";
+	std::cout << " New Balance: " << user->getCreditCard(creditCardNumber)->addFunds(funds) << endl;	
 }
 
 //-----------------------------------------------------------------------------------------------------------------------//
@@ -874,15 +862,15 @@ void addFriend(GameLibrary & gl, User * user) {
 	string mail = emailInput(" Friend Email: ");
 	User * frd = gl.getUser(mail);
 	if (nullptr == frd) {
-		cout << "\n User with that email does not exist";
+		std::cout << "\n User with that email does not exist";
 		return;
 	}
 	else if (user->addFriend(frd))
 	{
-		cout << "\n Friend Successfully Added\n";
+		std::cout << "\n Friend Successfully Added\n";
 		return;
 	}
-	cout << "\n You already have this user as a friend:\n";
+	std::cout << "\n You already have this user as a friend:\n";
 	userShortDisplay(frd);
 	system("pause");
 }
@@ -900,7 +888,7 @@ void addFriend(GameLibrary & gl, User * user) {
 void removeGame(GameLibrary & gL) {
 	if (gL.getTitles().empty())
 	{
-		cout << " There are no games to remove\n";
+		std::cout << " There are no games to remove\n";
 		return;
 	}
 	int nameErrors = 0;
@@ -916,16 +904,16 @@ void removeGame(GameLibrary & gL) {
 		if (!gL.removeTitle(titleID))
 		{
 			nameErrors++;
-			cout << " Inexistent title ID\n";
+			std::cout << " Inexistent title ID\n";
 			if (nameErrors > 3)
 			{
-				cout << " You seem to be struggling. Please consider taking a look at the Game Summary\n";
+				std::cout << " You seem to be struggling. Please consider taking a look at the Game Summary\n";
 			}
 			titleID = intInput(" Title ID Number (0 to go back): ");
 		}
 		else
 		{
-			cout << "\n Title Removed Successfully";
+			std::cout << "\n Title Removed Successfully";
 			break;
 		}
 	}
@@ -938,7 +926,7 @@ void removeUser(GameLibrary & gL) {
 	User * us;
 	if (gL.getUsers().empty())
 	{
-		cout << " There are no games to remove\n";
+		std::cout << " There are no games to remove\n";
 		return;
 	}
 	int nameErrors = 0;
@@ -948,16 +936,16 @@ void removeUser(GameLibrary & gL) {
 		if (!gL.removeUser(us))
 		{
 			nameErrors++;
-			cout << " Inexistent User Email\n";
+			std::cout << " Inexistent User Email\n";
 			if (nameErrors > 3)
 			{
-				cout << " You seem to be struggling. Please consider taking a look at the Users Summary\n";
+				std::cout << " You seem to be struggling. Please consider taking a look at the Users Summary\n";
 			}
 			mail = emailInput(" User Email (< to go back): ");
 		}
 		else
 		{
-			cout << "\n User Removed Successfully";
+			std::cout << "\n User Removed Successfully";
 			break;
 		}
 	}
@@ -973,9 +961,9 @@ void removeWishlistEntry(User *user) {
     while (id != 0) {
         if (title == nullptr) {
             nameErrors++;
-            cout << " No such game found!\n";
+            std::cout << " No such game found!\n";
             if (nameErrors > 3) {
-                cout << " You seem to be struggling. Please consider taking a look at the Games Summary\n";
+                std::cout << " You seem to be struggling. Please consider taking a look at the Games Summary\n";
             }
             id = intInput(" Title ID (0 to go back): ");
             title = GameLibrary::getTitle(id);
@@ -992,7 +980,7 @@ void removeWishlistEntry(User *user) {
 void removeSale(Title*  game) {
 	if (game->getSaleHistory().size() == 0)
 	{
-		cout << " There are no sales to be removed\n";
+		std::cout << " There are no sales to be removed\n";
 		return;
 	}
 	Date beginDate = dateInput(" Begin date of the Sale to be Removed: ");
@@ -1002,16 +990,16 @@ void removeSale(Title*  game) {
 	}
 	catch (SaleStarted & e)
 	{
-		cout << "  - " << e.getMessage() << endl << endl;
+		std::cout << "  - " << e.getMessage() << endl << endl;
 		return;
 	}
 	catch (InexistentSale & e)
 	{
-		cout << "  - " << e.getMessage() << endl;
-		cout << "  - Please consider taking a look at the Sales Summary Menu\n\n";
+		std::cout << "  - " << e.getMessage() << endl;
+		std::cout << "  - Please consider taking a look at the Sales Summary Menu\n\n";
 		return;
 	}
-	cout << "\n Sale Removed Successfully";
+	std::cout << "\n Sale Removed Successfully";
 }
 
 //-----------------------------------------------------------------------------------------------------------------------//
@@ -1020,15 +1008,15 @@ void removeFriend(GameLibrary & gl, User*  user) {
 	string mail = emailInput(" Friend Email: ");
 	User * frd = gl.getUser(mail);
 	if (nullptr == frd) {
-		cout << "\n User with that email does not exist";
+		std::cout << "\n User with that email does not exist";
 		return;
 	}
 	else if (user->removeFriend(frd))
 	{
-		cout << "\n Friend Removed Successfully"; 
+		std::cout << "\n Friend Removed Successfully"; 
 		return;
 	}
-	cout << "\n You don't have that user as a friend";	
+	std::cout << "\n You don't have that user as a friend";	
 }
 
 //-----------------------------------------------------------------------------------------------------------------------//
@@ -1036,17 +1024,17 @@ void removeFriend(GameLibrary & gl, User*  user) {
 void removeCreditCard(User*  user) {
 	if (user->getCreditCards().size() == 0)
 	{
-		cout << " There are no Credit Cards to be removed\n";
+		std::cout << " There are no Credit Cards to be removed\n";
 		return;
 	}
 	string number = nameNumbersInput(" Credit Card Number: ");
 	if (user->removeCreditCard(number))
 	{
-		cout << "\n Credit Card Removed Successfully";
+		std::cout << "\n Credit Card Removed Successfully";
 		return;
 	}
-	cout << "\n There is no Credit Card with that number\n";
-	cout << " Please consider taking a look at the Credit Cards Summary";	
+	std::cout << "\n There is no Credit Card with that number\n";
+	std::cout << " Please consider taking a look at the Credit Cards Summary";	
 }
 
 //-----------------------------------------------------------------------------------------------------------------------//
@@ -1054,7 +1042,7 @@ void removeCreditCard(User*  user) {
 void removeCompany(GameLibrary &gameL)
 {
 	if (gameL.getCompanies().empty()) {
-		cout << " There are no companies to remove\n";
+		std::cout << " There are no companies to remove\n";
 		return;
 	}
 
@@ -1066,16 +1054,16 @@ void removeCompany(GameLibrary &gameL)
 	while (nif != 0) {
 		if (company == nullptr) {
 			nameErrors++;
-			cout << " No such company found!\n";
+			std::cout << " No such company found!\n";
 			if (nameErrors > 3) {
-				cout << " You seem to be struggling. Please consider taking a look at the Companies Summary\n";
+				std::cout << " You seem to be struggling. Please consider taking a look at the Companies Summary\n";
 			}
 			nif = intInput(" NIF (0 to go back): ");
 			company = gameL.getCompany(nif);
 		}
 		else {
 			gameL.removeCompany(company);
-			cout << "\n Company Removed Successfully";
+			std::cout << "\n Company Removed Successfully";
 			break;
 		}
 	}
@@ -1094,7 +1082,7 @@ void removeCompany(GameLibrary &gameL)
 void UserMostPlayedTitlesRanking(GameLibrary & gl, User * user) {
 	gameLibraryPlatform platform = menuPlatform();
 	gameLibraryGenre genre = menuGenre(true);
-	gl.buildUserMostPlayedTitlesRanking(cout, user, platform, genre);
+	gl.buildUserMostPlayedTitlesRanking(std::cout, user, platform, genre);
 	system("pause");
 }
 
@@ -1102,7 +1090,7 @@ void UserMostPlayedTitlesRanking(GameLibrary & gl, User * user) {
 
 void UserConsumingHabits(GameLibrary & gl, User * user) {
 	ConsumingHabitsFilter filter = menuTransactionsTypes();
-	gl.buildUserConsumingHabitsList(user, cout, filter);
+	gl.buildUserConsumingHabitsList(user, std::cout, filter);
 	system("pause");
 }
 
@@ -1112,7 +1100,7 @@ void globalPopRanking(GameLibrary & gl) {
 	gameLibraryPlatform platform = menuPlatform();
 	gameLibraryGenre genre = menuGenre(true);
 	ageRange ageR = ageRangeInput( " Age Restriction:\n");
-	gl.buildGlobalPopularityRanking(cout, platform, genre, ageR);
+	gl.buildGlobalPopularityRanking(std::cout, platform, genre, ageR);
 	system("pause");
 }
 
@@ -1122,7 +1110,7 @@ void globalRevRanking(GameLibrary & gl) {
 	gameLibraryPlatform platform = menuPlatform();
 	gameLibraryGenre genre = menuGenre(true);
 	ageRange ageR = ageRangeInput(" Age Restriction:\n");
-	gl.buildGlobalRevenueRanking(cout, platform, genre, ageR);
+	gl.buildGlobalRevenueRanking(std::cout, platform, genre, ageR);
 	system("pause");
 }
 
@@ -1133,7 +1121,7 @@ void search(GameLibrary & gl, User * user)
 	gameLibraryPlatform platform = menuPlatform();
 	gameLibraryGenre genre = menuGenre(true);
 	ageRange ageR = ageRangeInput(" Age Restriction:\n");
-	cout << endl;
+	std::cout << endl;
 	const set<Title*, ComparePtr<Title>> & games = gl.showMatchingTitles(platform, genre, ageR);
 	titleSummary(games);
 	// TODO: se for user incrementar n de procuras
@@ -1144,7 +1132,6 @@ void search(GameLibrary & gl, User * user)
 
 	system("pause");
 }
-
 
 //=======================================================================================================================//
 
@@ -1158,7 +1145,7 @@ void search(GameLibrary & gl, User * user)
 
 void UpdateTitle(User * user, unsigned titleID) {
 	if (user->updateTitle(titleID))
-		cout << "\n Title Updated Successfully";
+		std::cout << "\n Title Updated Successfully";
 }
 
 //-----------------------------------------------------------------------------------------------------------------------//
@@ -1166,14 +1153,14 @@ void UpdateTitle(User * user, unsigned titleID) {
 void PlayTitle(GameLibrary & gl, User * user, unsigned titleID) {
 	double duration = doubleInput(" Play for (in hours): ");
 	if(user->playGame(gl.getTitle(titleID), duration))
-		cout << "\n Oooh... That was fun wasn't it?? You should come more often";
+		std::cout << "\n Oooh... That was fun wasn't it?? You should come more often";
 }
 
 //-----------------------------------------------------------------------------------------------------------------------//
 
 void BuyTitle(User * user, unsigned titleID) {
 	if (user->buyTitle(titleID))
-		cout << "\n Title Successfully Bought";
+		std::cout << "\n Title Successfully Bought";
 }
 
 //=======================================================================================================================//
@@ -1189,7 +1176,7 @@ void BuyTitle(User * user, unsigned titleID) {
 unsigned gameIDinput(GameLibrary & gL) {
 	if (gL.getTitles().empty())
 	{
-		cout << " There are no games in the library\n";
+		std::cout << " There are no games in the library\n";
 		return 0;
 	}
 	else {
@@ -1199,10 +1186,10 @@ unsigned gameIDinput(GameLibrary & gL) {
 			if (gL.getTitle(titleID) == nullptr)
 			{
 				nameErrors++;
-				cout << " Inexistent title ID\n";
+				std::cout << " Inexistent title ID\n";
 				if (nameErrors > 3)
 				{
-					cout << " You seem to be struggling. Please consider taking a look at the Game Summary\n";
+					std::cout << " You seem to be struggling. Please consider taking a look at the Game Summary\n";
 				}
 				titleID = intInput(" Title ID Number (0 to go back): ");
 			}
@@ -1220,12 +1207,12 @@ unsigned gameIDinput(GameLibrary & gL) {
 unsigned userGameIDinput(User * user, bool hasToBeHome, bool hasToBeOnline, GameLibrary & gl) {
 	if (hasToBeHome && hasToBeOnline)
 	{
-		cout << " Error in (" << __func__ << ") function parameters \n";
+		std::cout << " Error in (" << __func__ << ") function parameters \n";
 		return 0;
 	}
 	if (user->getPurchasedGames()->empty())
 	{
-		cout << " User has no titles in his library\n";
+		std::cout << " User has no titles in his library\n";
 		return 0;
 	}
 	else {
@@ -1235,22 +1222,22 @@ unsigned userGameIDinput(User * user, bool hasToBeHome, bool hasToBeOnline, Game
 			if (!user->hasTitle(titleID))
 			{
 				nameErrors++;
-				cout << " User doesn't have a title with that ID\n";
+				std::cout << " User doesn't have a title with that ID\n";
 				if (nameErrors > 3)
 				{
-					cout << " You seem to be struggling. Please consider taking a look at the Users Titles Summary\n";
+					std::cout << " You seem to be struggling. Please consider taking a look at the Users Titles Summary\n";
 				}
 				titleID = intInput(" Title ID Number (0 to go back): ");
 			}
 			else if (hasToBeHome && gl.isOnlineTitle(gl.getTitle(titleID)))
 			{
-				cout << " Title has to be Home\n";
+				std::cout << " Title has to be Home\n";
 				nameErrors++;
 				titleID = 0;
 			}
 			else if (hasToBeOnline && !gl.isOnlineTitle(gl.getTitle(titleID)))
 			{
-				cout << " Title has to be Online\n";
+				std::cout << " Title has to be Online\n";
 				nameErrors++;
 				titleID = 0;
 			}
@@ -1268,7 +1255,7 @@ unsigned userGameIDinput(User * user, bool hasToBeHome, bool hasToBeOnline, Game
 string userMailInput(GameLibrary & gL) {
 	if (gL.getUsers().empty())
 	{
-		cout << " There are no users in the library\n";
+		std::cout << " There are no users in the library\n";
 		return "<";
 	}
 	else {
@@ -1278,10 +1265,10 @@ string userMailInput(GameLibrary & gL) {
 			if (gL.getUser(mail) == nullptr)
 			{
 				nameErrors++;
-				cout << " Inexistent user mail\n";
+				std::cout << " Inexistent user mail\n";
 				if (nameErrors > 3)
 				{
-					cout << " You seem to be struggling. Please consider taking a look at the Users Summary\n";
+					std::cout << " You seem to be struggling. Please consider taking a look at the Users Summary\n";
 				}
 				mail = emailInput(" User Email (< to go back): ");
 			}
@@ -1299,7 +1286,7 @@ string userMailInput(GameLibrary & gL) {
 string creditCardInput(User * user) {
 	if (!user->getCreditCards().size())
 	{
-		cout << " The user does not have any Credit Card\n Please Consider Adding one first\n";
+		std::cout << " The user does not have any Credit Card\n Please Consider Adding one first\n";
 		return "<";
 	}
 	else {
@@ -1309,10 +1296,10 @@ string creditCardInput(User * user) {
 			if (user->getCreditCard(number) == nullptr)
 			{
 				nameErrors++;
-				cout << " Inexistent Credit Card\n";
+				std::cout << " Inexistent Credit Card\n";
 				if (nameErrors > 3)
 				{
-					cout << " You seem to be struggling. Please consider taking a look at the Credit Cards Summary\n";
+					std::cout << " You seem to be struggling. Please consider taking a look at the Credit Cards Summary\n";
 				}
 				number = nameNumbersInput(" Credit Card Number (< to go back): ");
 			}
@@ -1335,20 +1322,72 @@ string creditCardInput(User * user) {
 *  +------------------------+
 */
 
+void AsleepUsersMenu(GameLibrary & gl, Title * game) {
+	int option_number;
+
+	std::cout << " Possible Actions:" << endl << endl;
+
+	std::cout << "   1 - List by User ID" << endl;
+
+	std::cout << "   2 - List by Ads Seen" << endl;
+
+	std::cout << "   3 - List by Searches" << endl;
+
+	std::cout << "   4 - List by Probability" << endl;
+
+	std::cout << "   0 - Go back" << endl << endl;
+
+	option_number = menuInput(" Option ? ", 0, 4);
+
+	switch (option_number)
+	{
+	case 1:
+		header("Potencial Buyers by ID");
+		// TODO 2: aqui vais ter de ordenar so por ID (basicamente é só passar por um set de users que é isso que a nossa comp faz) -> listagem é completa
+		std::cout << endl << endl;
+		AsleepUsersMenu(gl, game);
+		break;
+
+	case 2:
+		header("Potencial Buyers by Ads Seen");
+		// TODO 2: aqui vais ter de ordenar por num Ads. Precisa de perguntar antes de mostrar se quer completa ou até um certo valor, qual?? inspirar nas já feitas (rankings)
+		std::cout << endl << endl;
+		AsleepUsersMenu(gl, game);
+		break;
+	case 3:
+		header("Potencial Buyers by Searches");
+		// TODO 2: aqui vais ter de ordenar por num Searches. Precisa de perguntar antes de mostrar se quer completa ou até um certo valor, qual?? inspirar nas já feitas (rankings)
+		std::cout << endl << endl;
+		AsleepUsersMenu(gl, game);
+		break;
+	case 4:
+		header("Potencial Buyers by Probability");
+		// TODO 2: aqui vais ter de ordenar por prob (a q fizeste). Precisa de perguntar antes de mostrar se quer completa ou até um certo valor, qual?? inspirar nas já feitas (rankings)
+		std::cout << endl << endl;
+		AsleepUsersMenu(gl, game);
+		break;
+	case 0:
+		GameOperationsMenu(gl, game->getTitleID());
+		break;
+	}
+}
+
+//-----------------------------------------------------------------------------------------------------------------------//
+
 void PromotionMenu(GameLibrary & gl, Title * game) {
 	int option_number;
 	
-	cout << " Possible Actions:" << endl << endl;
+	std::cout << " Possible Actions:" << endl << endl;
 
-	cout << "   1 - Promotions Summary" << endl;
+	std::cout << "   1 - Promotions Summary" << endl;
 
-	cout << "   2 - Add Promotion" << endl;
+	std::cout << "   2 - Add Promotion" << endl;
 
-	cout << "   3 - Remove Promotion" << endl;
+	std::cout << "   3 - Remove Promotion" << endl;
 
-	cout << "   4 - Current Promotion" << endl;
+	std::cout << "   4 - Current Promotion" << endl;
 
-	cout << "   0 - Go back" << endl << endl;
+	std::cout << "   0 - Go back" << endl << endl;
 
 	option_number = menuInput(" Option ? ", 0, 4);
 
@@ -1357,20 +1396,20 @@ void PromotionMenu(GameLibrary & gl, Title * game) {
 	case 1:
 		header("Promotions Summary");
 		promotionSummary(game);
-		cout << endl << endl;
+		std::cout << endl << endl;
 		PromotionMenu(gl, game);
 		break;
 
 	case 2:
 		header("Add Sale");
 		addSale(game);
-		cout << endl << endl;
+		std::cout << endl << endl;
 		PromotionMenu(gl, game);
 		break;
 	case 3:
 		header("Remove Sale");
 		removeSale(game);
-		cout << endl << endl;
+		std::cout << endl << endl;
 		PromotionMenu(gl, game);
 		break;
 	case 4:
@@ -1380,12 +1419,12 @@ void PromotionMenu(GameLibrary & gl, Title * game) {
 			Date d = GameLibrary::getLibraryDate();
 			promotionDisplay(" Current Promotion:", game->getSaleOn(d));
 			system("pause");
-			cout << endl << endl;
+			std::cout << endl << endl;
 		}
 		catch (InexistentSale & e)
 		{
-			cout << "  - " << e.getMessage() << endl;
-			cout << "  - Please consider taking a look at the Sales Summary Menu\n\n";
+			std::cout << "  - " << e.getMessage() << endl;
+			std::cout << "  - Please consider taking a look at the Sales Summary Menu\n\n";
 		}
 		PromotionMenu(gl, game);
 		break;
@@ -1401,15 +1440,15 @@ void SessionsMenu(GameLibrary & gl, Title * game) {
 	int option_number;
 	unsigned n;
 
-	cout << " List:" << endl << endl;
+	std::cout << " List:" << endl << endl;
 
-	cout << "   1 - Last N Sessions of Each User" << endl;
+	std::cout << "   1 - Last N Sessions of Each User" << endl;
 
-	cout << "   2 - Top 3 Players Sessions" << endl;
+	std::cout << "   2 - Top 3 Players Sessions" << endl;
 
-	cout << "   3 - All Sessions (by User ID)" << endl;
+	std::cout << "   3 - All Sessions (by User ID)" << endl;
 
-	cout << "   0 - Go back" << endl << endl;
+	std::cout << "   0 - Go back" << endl << endl;
 
 	option_number = menuInput(" Option ? ", 0, 3);
 
@@ -1420,7 +1459,7 @@ void SessionsMenu(GameLibrary & gl, Title * game) {
 		n = intInput(" Maximum Number of Sessions for Each User: ");
 		UserSessionSummary2(game->getAllUsersLastNSessions(n));
 		system("pause");
-		cout << endl << endl;
+		std::cout << endl << endl;
 		SessionsMenu(gl, game);
 		break;
 
@@ -1428,7 +1467,7 @@ void SessionsMenu(GameLibrary & gl, Title * game) {
 		header("Top 3 Player Sessions");
 		UserSessionSummary(game->getTop3PlayersSessions());
 		system("pause");
-		cout << endl << endl;
+		std::cout << endl << endl;
 		SessionsMenu(gl, game);
 		break;
 	case 3:
@@ -1436,7 +1475,7 @@ void SessionsMenu(GameLibrary & gl, Title * game) {
 
 		UserSessionSummary2(*(game->getTitleSessions()));
 		system("pause");
-		cout << endl << endl;
+		std::cout << endl << endl;
 		SessionsMenu(gl, game);
 		break;
 	case 0:
@@ -1450,15 +1489,15 @@ void SessionsMenu(GameLibrary & gl, Title * game) {
 void UpdateMenu(GameLibrary & gl, Title * game) {
 	int option_number;
 
-	cout << " Possible Actions:" << endl << endl;
+	std::cout << " Possible Actions:" << endl << endl;
 
-	cout << "   1 - Updates Summary" << endl;
+	std::cout << "   1 - Updates Summary" << endl;
 
-	cout << "   2 - Last Update" << endl;
+	std::cout << "   2 - Last Update" << endl;
 
-	cout << "   3 - New Update" << endl;
+	std::cout << "   3 - New Update" << endl;
 
-	cout << "   0 - Go back" << endl << endl;
+	std::cout << "   0 - Go back" << endl << endl;
 
 	option_number = menuInput(" Option ? ", 0, 3);
 
@@ -1467,7 +1506,7 @@ void UpdateMenu(GameLibrary & gl, Title * game) {
 	case 1:
 		header("Updates Summary");
 		updateSummary(game);
-		cout << endl << endl;
+		std::cout << endl << endl;
 		UpdateMenu(gl, game);
 		break;
 
@@ -1475,13 +1514,13 @@ void UpdateMenu(GameLibrary & gl, Title * game) {
 		header("Last Update");
 		updateDisplay(" Last Update:", game->getCurrentVersion());
 		system("pause");
-		cout << endl << endl;
+		std::cout << endl << endl;
 		UpdateMenu(gl, game);
 		break;
 	case 3:
 		header("Add Update");
 		addUpdate(game);
-		cout << endl << endl;
+		std::cout << endl << endl;
 		UpdateMenu(gl, game);
 		break;
 	case 0:
@@ -1496,19 +1535,19 @@ void CreditCardMenu(GameLibrary & gl, User * user) {
 	int option_number;
 	string number;
 
-	cout << " Possible Actions:" << endl << endl;
+	std::cout << " Possible Actions:" << endl << endl;
 
-	cout << "   1 - Credit Cards Summary" << endl;
+	std::cout << "   1 - Credit Cards Summary" << endl;
 
-	cout << "   2 - Add Credit Card" << endl;
+	std::cout << "   2 - Add Credit Card" << endl;
 
-	cout << "   3 - Remove Credit Card" << endl;
+	std::cout << "   3 - Remove Credit Card" << endl;
 
-	cout << "   4 - Add Funds" << endl;
+	std::cout << "   4 - Add Funds" << endl;
 
-	cout << "   5 - Transactions" << endl;
+	std::cout << "   5 - Transactions" << endl;
 
-	cout << "   0 - Go back" << endl << endl;
+	std::cout << "   0 - Go back" << endl << endl;
 
 	option_number = menuInput(" Option ? ", 0, 5);
 
@@ -1517,20 +1556,20 @@ void CreditCardMenu(GameLibrary & gl, User * user) {
 	case 1:
 		header("Credit Cards Summary");
 		creditCardSummary(user->getCreditCards());
-		cout << endl << endl;
+		std::cout << endl << endl;
 		CreditCardMenu(gl, user);
 		break;
 
 	case 2:
 		header("Add Credit Card");
 		addCreditCard(user);
-		cout << endl << endl;
+		std::cout << endl << endl;
 		CreditCardMenu(gl, user);
 		break;
 	case 3:
 		header("Remove Credit Card");
 		removeCreditCard(user);
-		cout << endl << endl;
+		std::cout << endl << endl;
 		CreditCardMenu(gl, user);
 		break;
 	case 4:
@@ -1539,14 +1578,14 @@ void CreditCardMenu(GameLibrary & gl, User * user) {
 		if ('<' == number.at(0)) CreditCardMenu(gl, user);
 		else {
 			addFunds(user, number);
-			cout << endl << endl;
+			std::cout << endl << endl;
 			CreditCardMenu(gl, user);
 		}
 		break;
 	case 5:
 		header("Transactions");
 		transactionsSummary(user);
-		cout << endl << endl;
+		std::cout << endl << endl;
 		CreditCardMenu(gl, user);
 		break;
 	case 0:
@@ -1560,17 +1599,17 @@ void CreditCardMenu(GameLibrary & gl, User * user) {
 void FriendsMenu(GameLibrary & gl, User * user) {
 	int option_number;
 
-	cout << " Possible Actions:" << endl << endl;
+	std::cout << " Possible Actions:" << endl << endl;
 
-	cout << "   1 - Friends Summary" << endl;
+	std::cout << "   1 - Friends Summary" << endl;
 
-	cout << "   2 - Add Friend" << endl;
+	std::cout << "   2 - Add Friend" << endl;
 
-	cout << "   3 - Remove Friend" << endl;
+	std::cout << "   3 - Remove Friend" << endl;
 	// TODO: Play with friend
-	//cout << "   4 - Play with Friend" << endl;
+	//std::cout << "   4 - Play with Friend" << endl;
 
-	cout << "   0 - Go back" << endl << endl;
+	std::cout << "   0 - Go back" << endl << endl;
 
 	option_number = menuInput(" Option ? ", 0, 3);
 
@@ -1579,20 +1618,20 @@ void FriendsMenu(GameLibrary & gl, User * user) {
 	case 1:
 		header("Friends Summary");
 		friendsSummary(user->getFriendsList());
-		cout << endl << endl;
+		std::cout << endl << endl;
 		FriendsMenu(gl, user);
 		break;
 
 	case 2:
 		header("Add Friend");
 		addFriend(gl, user);
-		cout << endl << endl;
+		std::cout << endl << endl;
 		FriendsMenu(gl, user);
 		break;
 	case 3:
 		header("Remove Sale");
 		removeFriend(gl, user);
-		cout << endl << endl;
+		std::cout << endl << endl;
 		FriendsMenu(gl, user);
 		break;
 	case 0:
@@ -1608,17 +1647,17 @@ void UserRankingsMenu(GameLibrary & gl, User * user) {
 	unsigned ID;
 
 
-	cout << " Possible Lists:" << endl << endl;
+	std::cout << " Possible Lists:" << endl << endl;
 
-	cout << "   1 - Consuming Habits" << endl;
+	std::cout << "   1 - Consuming Habits" << endl;
 
-	cout << "   2 - Most Played Titles Ranking" << endl;
+	std::cout << "   2 - Most Played Titles Ranking" << endl;
 
-	cout << "   3 - Last N Sessions" << endl;
+	std::cout << "   3 - Last N Sessions" << endl;
 
-	cout << "   4 - Other Stats" << endl;
+	std::cout << "   4 - Other Stats" << endl;
 
-	cout << "   0 - Go back" << endl << endl;
+	std::cout << "   0 - Go back" << endl << endl;
 
 	option_number = menuInput(" Option ? ", 0, 4);
 
@@ -1627,14 +1666,14 @@ void UserRankingsMenu(GameLibrary & gl, User * user) {
 	case 1:
 		header("Consuming Habits");
 		UserConsumingHabits(gl, user);
-		cout << endl << endl;
+		std::cout << endl << endl;
 		UserRankingsMenu(gl, user);
 		break;
 
 	case 2:
 		header("Most Played Titles Ranking");
 		UserMostPlayedTitlesRanking(gl, user);
-		cout << endl << endl;
+		std::cout << endl << endl;
 		UserRankingsMenu(gl, user);
 		break;
 	case 3:
@@ -1644,7 +1683,7 @@ void UserRankingsMenu(GameLibrary & gl, User * user) {
 		else {
 			LastNSessionsSummary(gl, user, ID);
 			system("pause");
-			cout << endl << endl;
+			std::cout << endl << endl;
 			UserRankingsMenu(gl, user);
 		}
 		break;
@@ -1673,9 +1712,9 @@ void EditWishlistEntry(User * user) {
     while (id != 0) {
         if (title == nullptr) {
             nameErrors++;
-            cout << " No such game found!\n";
+            std::cout << " No such game found!\n";
             if (nameErrors > 3) {
-                cout << " You seem to be struggling. Please consider taking a look at the Games Summary\n";
+                std::cout << " You seem to be struggling. Please consider taking a look at the Games Summary\n";
             }
             id = intInput(" Title ID (0 to go back): ");
             title = GameLibrary::getTitle(id);
@@ -1693,14 +1732,15 @@ void EditWishlistEntry(User * user) {
 void WishlistMenu(GameLibrary & gl, User * user) {
     int option_number;
 
-    cout << " Possible Actions:" << endl << endl;
-    cout << "   1 - Wishlist Summary" << endl;
-    cout << "   2 - Add Entry" << endl;
-    cout << "   3 - Remove Entry" << endl;
-    cout << "   4 - Update Entry" << endl;
-    cout << "   0 - Go back" << endl << endl;
+    std::cout << " Possible Actions:" << endl << endl;
+    std::cout << "   1 - Wishlist Summary" << endl;
+    std::cout << "   2 - Add Entry" << endl;
+    std::cout << "   3 - Remove Entry" << endl;
+	std::cout << "   4 - Update Entry" << endl;
+	std::cout << "   5 - Show Add" << endl;
+    std::cout << "   0 - Go back" << endl << endl;
 
-    option_number = menuInput(" Option ? ", 0, 4);
+    option_number = menuInput(" Option ? ", 0, 5);
 
     switch (option_number) {
     case 1:
@@ -1723,6 +1763,22 @@ void WishlistMenu(GameLibrary & gl, User * user) {
         EditWishlistEntry(user);
         WishlistMenu(gl, user);
         break;
+	case 5:
+	{
+		header("Show Add");
+		try {
+			WishlistEntry entryAdd = user->nextAdvertisementTitle();
+			user->incNumberOfSeenAds(entryAdd.getTitle());
+			// TODO: Fazer animacao decente
+			std::cout << "\tYour grandma died??\n\tDont't worry we have the perfect game to make you happier\n\t\t" << entryAdd.getTitle()->getName() << endl << endl;
+		}
+		catch (const NoMatchingWishlistEntryUser)
+		{
+			std::cout << " There is no ads to be shown\n\n";
+		}
+		WishlistMenu(gl, user);
+		break;
+	}
     case 0:
         UserOperationsMenu(gl, user->getEmail());
         break;
@@ -1735,21 +1791,21 @@ void UserGameMenu(GameLibrary & gl, User * user) {
 	int option_number;
 	unsigned ID;
 
-	cout << " Possible Actions:" << endl << endl;
+	std::cout << " Possible Actions:" << endl << endl;
 
-	cout << "   1 - Titles Summary" << endl;
+	std::cout << "   1 - Titles Summary" << endl;
 
-	cout << "   2 - List and Rankings" << endl;
+	std::cout << "   2 - List and Rankings" << endl;
 
-	cout << "   3 - Buy New Title" << endl;
+	std::cout << "   3 - Buy New Title" << endl;
 
-	cout << "   4 - Play Title" << endl;
+	std::cout << "   4 - Play Title" << endl;
 
-	cout << "   5 - Update Title" << endl;
+	std::cout << "   5 - Update Title" << endl;
 
-	cout << "   6 - Search Game" << endl;
+	std::cout << "   6 - Search Game" << endl;
 
-	cout << "   0 - Go back" << endl << endl;
+	std::cout << "   0 - Go back" << endl << endl;
 
 	option_number = menuInput(" Option ? ", 0, 6);
 
@@ -1758,7 +1814,7 @@ void UserGameMenu(GameLibrary & gl, User * user) {
 	case 1:
 		header("Titles Summary");
 		titleSummary(*(user->getPurchasedGames()));
-		cout << endl << endl;
+		std::cout << endl << endl;
 		UserGameMenu(gl, user);
 		break;
 
@@ -1772,7 +1828,17 @@ void UserGameMenu(GameLibrary & gl, User * user) {
 		if (0 == ID) UserGameMenu(gl, user);
 		else {
 			BuyTitle(user, ID);
-			cout << endl << endl;
+			std::cout << endl << endl;
+			try
+			{
+				// Show add
+				WishlistEntry entryAdd = user->nextAdvertisementTitle();
+				user->incNumberOfSeenAds(entryAdd.getTitle());
+				// TODO: Fazer animacao decente
+				std::cout << "\t That game is boring af!!\n\t Have you tried the new " << entryAdd.getTitle()->getName() << "??\n\t";
+				std::cout << " Studies say that it can make your reflexes 1.001 times better!!" << endl << endl;
+			}
+			catch (const NoMatchingWishlistEntryUser){}
 			UserGameMenu(gl, user);
 		}
 		break;
@@ -1782,7 +1848,20 @@ void UserGameMenu(GameLibrary & gl, User * user) {
 		if (0 == ID) UserGameMenu(gl, user);
 		else {
 			PlayTitle(gl, user, ID);
-			cout << endl << endl;
+			std::cout << endl << endl;
+			try
+			{
+				// Show add
+				WishlistEntry entryAdd = user->nextAdvertisementTitle();
+				user->incNumberOfSeenAds(entryAdd.getTitle());
+				// TODO: Fazer animacao decente
+				std::cout << "\t Wouldn't you prefer to be spennding your time doing something else??\n\t";
+				std::cout << " Word on the street is that " << entryAdd.getTitle()->getName() << " is freaking great!!\n\t";
+				Date d = GameLibrary::getLibraryDate();
+				std::cout << " Buy it now for as low as " << entryAdd.getTitle()->getCurrentPrice(d) << "!!\n";
+				std::cout << "\t Don't worry about the money, your mother's purse is full of it!!!" << endl << endl;
+			}
+			catch (const NoMatchingWishlistEntryUser) {}
 			UserGameMenu(gl, user);
 		}
 		break;
@@ -1792,16 +1871,28 @@ void UserGameMenu(GameLibrary & gl, User * user) {
 		if (0 == ID) UserGameMenu(gl, user);
 		else {
 			UpdateTitle(user, ID);
-			cout << endl << endl;
+			std::cout << endl << endl;
 			UserGameMenu(gl, user);
 		}
 		break;
 	case 6:
+	{
 		header("Search Titles");
 		search(gl, user);
-		cout << endl << endl;
+		std::cout << endl << endl;
+		try
+		{
+			// Show add
+			WishlistEntry entryAdd = user->nextAdvertisementTitle();
+			user->incNumberOfSeenAds(entryAdd.getTitle());
+			// TODO: Fazer animacao decente
+			std::cout << "\t This is not an ad, but " << entryAdd.getTitle()->getName() << " is the game of the moment\n\t";
+			std::cout << " Thought you would be interested in this information..." << endl << endl;
+		}
+		catch (const NoMatchingWishlistEntryUser) {}
 		UserGameMenu(gl, user);
 		break;
+	}
 	case 0:
 		UserOperationsMenu(gl, user->getEmail());
 		break;
@@ -1818,25 +1909,27 @@ void GameOperationsMenu(GameLibrary & gl, unsigned titleID) {
 
 	int option_number;
 
-	cout << " Possible Actions:" << endl << endl;
+	std::cout << " Possible Actions:" << endl << endl;
 
-	cout << "   1 - Detailed Info" << endl;
+	std::cout << "   1 - Detailed Info" << endl;
 
-	cout << "   2 - Promotions" << endl;
+	std::cout << "   2 - Promotions" << endl;
 	
-	if (isOnline) cout << "   3 - Sessions" << endl;
-	else cout << "   3 - Updates" << endl;
+	if (isOnline) std::cout << "   3 - Sessions" << endl;
+	else std::cout << "   3 - Updates" << endl;
 
-	cout << "   0 - Go back" << endl << endl;
+	std::cout << "   4 - Potencial Buyers (asleep users)" << endl;
 
-	option_number = menuInput(" Option ? ", 0, 3);
+	std::cout << "   0 - Go back" << endl << endl;
+
+	option_number = menuInput(" Option ? ", 0, 4);
 
 	switch (option_number)
 	{
 	case 1:
 		header("Detailed Information");
 		titleInfo(gl, game, isOnline);
-		cout << endl << endl;
+		std::cout << endl << endl;
 		GameOperationsMenu(gl, titleID);
 		break;
 
@@ -1854,6 +1947,12 @@ void GameOperationsMenu(GameLibrary & gl, unsigned titleID) {
 			header("Updates");
 			UpdateMenu(gl, game);
 		}
+		break;
+	case 4:
+		header("Potencial Buyers");
+		// TODO 1: aqui vai ser chamado o menu AsleepUsersMenu
+		std::cout << endl << endl;
+		GameOperationsMenu(gl, titleID);
 		break;
 	case 0:
 		GamesMenu(gl);
@@ -1873,13 +1972,13 @@ void UserOperationsMenu(GameLibrary & gl, string mail) {
 
 	int option_number;
 
-	cout << " Possible Actions:" << endl << endl;
-	cout << "   1 - Detailed Info" << endl;
-	cout << "   2 - Credit Cards" << endl;
-	cout << "   3 - Friends" << endl;
-	cout << "   4 - Games" << endl;
-	cout << "   5 - Wishlist" << endl;
-	cout << "   0 - Go back" << endl << endl;
+	std::cout << " Possible Actions:" << endl << endl;
+	std::cout << "   1 - Detailed Info" << endl;
+	std::cout << "   2 - Credit Cards" << endl;
+	std::cout << "   3 - Friends" << endl;
+	std::cout << "   4 - Games" << endl;
+	std::cout << "   5 - Wishlist" << endl;
+	std::cout << "   0 - Go back" << endl << endl;
 
 	option_number = menuInput(" Option ? ", 0, 5);
 
@@ -1888,7 +1987,7 @@ void UserOperationsMenu(GameLibrary & gl, string mail) {
 	case 1:
 		header("Detailed Information");
 		userInfo(user);
-		cout << endl << endl;
+		std::cout << endl << endl;
 		UserOperationsMenu(gl, mail);
 		break;
 
@@ -1923,17 +2022,17 @@ void GamesMenu(GameLibrary & gameL) {
 	unsigned ID;
 	int option_number;
 
-	cout << " Possible Actions:" << endl << endl;
+	std::cout << " Possible Actions:" << endl << endl;
 
-	cout << "   1 - Games Summary" << endl;
+	std::cout << "   1 - Games Summary" << endl;
 
-	cout << "   2 - Add Game" << endl;
+	std::cout << "   2 - Add Game" << endl;
 
-	cout << "   3 - Remove Game" << endl;
+	std::cout << "   3 - Remove Game" << endl;
 
-	cout << "   4 - Game Info" << endl;
+	std::cout << "   4 - Game Info" << endl;
 
-	cout << "   0 - Go back" << endl << endl;
+	std::cout << "   0 - Go back" << endl << endl;
 
 	option_number = menuInput(" Option ? ", 0, 4);
 
@@ -1942,24 +2041,24 @@ void GamesMenu(GameLibrary & gameL) {
 	case 1:
 		header("Games Summary");
 		titleSummary(gameL.getTitles());
-		cout << endl << endl;
+		std::cout << endl << endl;
 		GamesMenu(gameL);
 		break;
 
 	case 2:
 		header("Add Game");
 		addGames(gameL);
-		cout << endl << endl;
+		std::cout << endl << endl;
 		GamesMenu(gameL);
 		break;
 	case 3:
 		header("Remove Game");
 		removeGame(gameL);
-		cout << endl << endl;
+		std::cout << endl << endl;
 		GamesMenu(gameL);
 		break;
 	case 4:
-		cout << endl;
+		std::cout << endl;
 		ID = gameIDinput(gameL);
 		if (0 == ID) GamesMenu(gameL);
 		else GameOperationsMenu(gameL, ID);
@@ -1979,17 +2078,17 @@ void UsersMenu(GameLibrary & gl) {
 	string mail;
 	int option_number;
 
-	cout << " Possible Actions:" << endl << endl;
+	std::cout << " Possible Actions:" << endl << endl;
 
-	cout << "   1 - Users Summary" << endl;
+	std::cout << "   1 - Users Summary" << endl;
 
-	cout << "   2 - Add User" << endl;
+	std::cout << "   2 - Add User" << endl;
 
-	cout << "   3 - Remove User" << endl;
+	std::cout << "   3 - Remove User" << endl;
 
-	cout << "   4 - User Info" << endl;
+	std::cout << "   4 - User Info" << endl;
 
-	cout << "   0 - Go back" << endl << endl;
+	std::cout << "   0 - Go back" << endl << endl;
 
 	option_number = menuInput(" Option ? ", 0, 4);
 
@@ -1998,24 +2097,24 @@ void UsersMenu(GameLibrary & gl) {
 	case 1:
 		header("Users Summary");
 		usersSummary(gl);
-		cout << endl << endl;
+		std::cout << endl << endl;
 		UsersMenu(gl);
 		break;
 
 	case 2:
 		header("Add User");
 		addUser(gl);
-		cout << endl << endl;
+		std::cout << endl << endl;
 		UsersMenu(gl);
 		break;
 	case 3:
 		header("Remove User");
 		removeUser(gl);
-		cout << endl << endl;
+		std::cout << endl << endl;
 		UsersMenu(gl);
 		break;
 	case 4:
-		cout << endl;
+		std::cout << endl;
 		mail = userMailInput(gl);
 		if ('<' == mail.at(0)) UsersMenu(gl);
 		else UserOperationsMenu(gl, mail);
@@ -2034,19 +2133,19 @@ void ListsRankingsMenu(GameLibrary & gl) {
 	header("Lists and Rankings");
 	int option_number;
 
-	cout << " Possible Rankings:" << endl << endl;
+	std::cout << " Possible Rankings:" << endl << endl;
 
-	cout << "   1 - Average Stats" << endl;
+	std::cout << "   1 - Average Stats" << endl;
 
-	cout << "   2 - Popularity Ranking" << endl;
+	std::cout << "   2 - Popularity Ranking" << endl;
 
-	cout << "   3 - Revenue Ranking" << endl;
+	std::cout << "   3 - Revenue Ranking" << endl;
 
-	cout << "   4 - Search Titles" << endl;
+	std::cout << "   4 - Search Titles" << endl;
 
 	// TODO: Add Online Most Played
 
-	cout << "   0 - Go back" << endl << endl;
+	std::cout << "   0 - Go back" << endl << endl;
 
 	option_number = menuInput(" Option ? ", 0, 4);
 
@@ -2061,19 +2160,19 @@ void ListsRankingsMenu(GameLibrary & gl) {
 	case 2:
 		header("Popularity Ranking");
 		globalPopRanking(gl);
-		cout << endl << endl;
+		std::cout << endl << endl;
 		ListsRankingsMenu(gl);
 		break;
 	case 3:
 		header("Revenue Ranking");
 		globalRevRanking(gl);
-		cout << endl << endl;
+		std::cout << endl << endl;
 		ListsRankingsMenu(gl);
 		break;
 	case 4:
 		header("Search Titles");
 		search(gl, NULL);
-		cout << endl << endl;
+		std::cout << endl << endl;
 		ListsRankingsMenu(gl);
 		break;
 	case 0:
@@ -2090,12 +2189,12 @@ void CompaniesMenu(GameLibrary &gameL)
 {
 	header("Manage Companies");
 
-	cout << " Possible options:\n" << endl;
-	cout << "   1 - Companies Summary" << endl;
-	cout << "   2 - Add Company" << endl;
-	cout << "   3 - Remove Company" << endl;
-	cout << "   4 - Company Info" << endl;
-	cout << "   0 - Go back" << endl << endl;
+	std::cout << " Possible options:\n" << endl;
+	std::cout << "   1 - Companies Summary" << endl;
+	std::cout << "   2 - Add Company" << endl;
+	std::cout << "   3 - Remove Company" << endl;
+	std::cout << "   4 - Company Info" << endl;
+	std::cout << "   0 - Go back" << endl << endl;
 
 	int option_number = menuInput(" Option ? ", 0, 4);
 
@@ -2104,27 +2203,27 @@ void CompaniesMenu(GameLibrary &gameL)
 	case 1:
 		header("Companies Summary");
 		for (auto it : gameL.getCompanies()) {
-			cout << *it << endl;
+			std::cout << *it << endl;
 		}
-		cout << endl << endl;
+		std::cout << endl << endl;
 		CompaniesMenu(gameL);
 		break;
 	case 2:
 	    header("Add Company");
 		addCompany(gameL);
-		cout << endl << endl;
+		std::cout << endl << endl;
 		CompaniesMenu(gameL);
 		break;
 	case 3:
 	    header("Remove Company");
 	    removeCompany(gameL);
-	    cout << endl << endl;
+	    std::cout << endl << endl;
 	    CompaniesMenu(gameL);
 		break;
 	case 4:
 	    header("Company Info");
 		companyInfo(gameL);
-	    cout << endl << endl;
+	    std::cout << endl << endl;
 	    CompaniesMenu(gameL);
 		break;
 	case 0:
@@ -2142,13 +2241,13 @@ void DateMenu(GameLibrary &gameL)
 {
 	header("Date");
 
-	cout << " Possible options:\n" << endl;
-	cout << "   1 - Current Date" << endl;
-	cout << "   2 - Go to a Future Date" << endl;
-	cout << "   3 - Move forward X days" << endl;
-	cout << "   4 - Move forward X months" << endl;
-	cout << "   5 - Move forward X years" << endl;
-	cout << "   0 - Go back" << endl << endl;
+	std::cout << " Possible options:\n" << endl;
+	std::cout << "   1 - Current Date" << endl;
+	std::cout << "   2 - Go to a Future Date" << endl;
+	std::cout << "   3 - Move forward X days" << endl;
+	std::cout << "   4 - Move forward X months" << endl;
+	std::cout << "   5 - Move forward X years" << endl;
+	std::cout << "   0 - Go back" << endl << endl;
 
 	int option_number = menuInput(" Option ? ", 0, 5);
 
@@ -2156,8 +2255,8 @@ void DateMenu(GameLibrary &gameL)
 	{
 	case 1:
 		header("Current Date");
-		cout << " Present Day: " << gameL.getLibraryDate();
-		cout << endl;
+		std::cout << " Present Day: " << gameL.getLibraryDate();
+		std::cout << endl;
 		DateMenu(gameL);
 		break;
 	case 2:
@@ -2175,10 +2274,10 @@ void DateMenu(GameLibrary &gameL)
 			{
 				newDate = false;
 			}
-			cout << endl;
+			std::cout << endl;
 		}
 		gameL.addSleepyUsers();
-		cout << endl;
+		std::cout << endl;
 		DateMenu(gameL);
 		break;
 	}
@@ -2186,21 +2285,21 @@ void DateMenu(GameLibrary &gameL)
 		header("Move X Days Forward");
 		gameL.advanceXdays(intInput(" Number of Days: "));
 		gameL.addSleepyUsers();
-		cout << endl << endl;
+		std::cout << endl << endl;
 		DateMenu(gameL);
 		break;
 	case 4:
 		header("Move X Months Forward");
 		gameL.advanceXmonths(intInput(" Number of Months: "));
 		gameL.addSleepyUsers();
-		cout << endl << endl;
+		std::cout << endl << endl;
 		DateMenu(gameL);
 		break;
 	case 5:
 		header("Move X Years Forward");
 		gameL.advanceXyears(intInput(" Number of Years: "));
 		gameL.addSleepyUsers();
-		cout << endl << endl;
+		std::cout << endl << endl;
 		DateMenu(gameL);
 		break;
 	case 0:
@@ -2217,13 +2316,13 @@ void PrincipalMenu(GameLibrary & gameL)
 {
 	int option_number;
 
-	cout << " Do you want to:" << endl << endl;
-	cout << "   1 - Manage Games" << endl;
-	cout << "   2 - Manage Users" << endl;
-	cout << "   3 - Manage Companies" << endl;
-	cout << "   4 - Lists and Rankings" << endl;
-	cout << "   5 - Fast Forward" << endl;
-	cout << "   0 - Go back" << endl << endl;
+	std::cout << " Do you want to:" << endl << endl;
+	std::cout << "   1 - Manage Games" << endl;
+	std::cout << "   2 - Manage Users" << endl;
+	std::cout << "   3 - Manage Companies" << endl;
+	std::cout << "   4 - Lists and Rankings" << endl;
+	std::cout << "   5 - Fast Forward" << endl;
+	std::cout << "   0 - Go back" << endl << endl;
 
 	option_number = menuInput(" Option ? ", 0, 5);
 
@@ -2260,12 +2359,12 @@ void InicialMenu(GameLibrary & gl)
 
 	int option_number;
 
-	cout << " OPTIONS:" << endl << endl;
+	std::cout << " OPTIONS:" << endl << endl;
 
-	cout << "   1 - Create Library" << endl;
-	cout << "   2 - Load Library" << endl;
-	cout << "   3 - Save Library" << endl;
-	cout << "   0 - Exit" << endl << endl;
+	std::cout << "   1 - Create Library" << endl;
+	std::cout << "   2 - Load Library" << endl;
+	std::cout << "   3 - Save Library" << endl;
+	std::cout << "   0 - Exit" << endl << endl;
 
 	option_number = menuInput(" Option ? ", 0, 3);
 
@@ -2279,24 +2378,24 @@ void InicialMenu(GameLibrary & gl)
 	case 2:
 		header("LOAD GAME LIBRARY");
 		//IR para função que vai buscar o nome da pasta/ficheiro
-		cout << " Loading..." << endl;
+		std::cout << " Loading..." << endl;
 		try {
 		    gl.loadGameLibrary();
 
 		} catch (const AlreadyLoaded &al) {
-		    cout << al.getMessage() << endl;
+		    std::cout << al.getMessage() << endl;
 		    PrincipalMenu(gl);
 		    break;
 		}
 
-		cout << " Done" << endl;
+		std::cout << " Done" << endl;
 		PrincipalMenu(gl);
 		break;
 	case 3:
 	    header("SAVE GAME LIBRARY");
-	    cout << " Saving..." << endl;
+	    std::cout << " Saving..." << endl;
 	    gl.saveGameLibrary();
-	    cout << " Done" << endl << endl;
+	    std::cout << " Done" << endl << endl;
 	    InicialMenu(gl);
 	    break;
 	case 0:
@@ -2314,11 +2413,11 @@ int main() {
 
 	unsigned int months;
 	while ((months = intInput(" Setup number of months that has to go by to a user be considered asleep: ")) == 0) {
-		cout << endl;
+		std::cout << endl;
 	}
 	GameLibrary gl = GameLibrary(months);
 
-	cout << endl << endl;
+	std::cout << endl << endl;
 
 	InicialMenu(gl);
 

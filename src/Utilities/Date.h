@@ -124,6 +124,7 @@ public:
 	 * @throw InvalidDay() If day is bigger than the days in the month of the Date Object
 	 */
 	void setDay(unsigned int day);
+	
 	/**
 	 * @brief Set the Month Private Member
 	 * May throw exception if the parameter is invalid
@@ -133,6 +134,7 @@ public:
 	 * @see daysInMonth()
 	 */
 	void setMonth(unsigned int month);
+	
 	/**
 	 * @brief Set the Year Private Member
 	 * May throw exception if the parameter is invalid
@@ -143,9 +145,18 @@ public:
 	 */
 	void setYear(unsigned int year);
 
-	// TODO: Comentar
+	/**
+	 * @brief Add a number of months to the Date
+	 * 
+	 * @param months Number of months to be added
+	 */
 	void addMonths(unsigned int months);
 
+	/**
+	 * @brief Add a number of years to the Date
+	 * 
+	 * @param years Number of years to be added
+	 */
 	void addYears(unsigned int years);
 
 	/**

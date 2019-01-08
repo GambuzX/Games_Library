@@ -441,8 +441,7 @@ public:
 	 */
 	void updateHashTable();
 
-	// Use when game is bought and now he is active
-	// TODO: verify statics
+	// Use when game is bought and now he is active: done
 	/**
 	 * @brief Removes a user from all the correct hash tables after game is bought
 	 * This function satisfies this part of the handout:
@@ -455,7 +454,7 @@ public:
 	 */
 	static void removeFromHashTable(Title * title, User * user);
 
-	// Use when date is fast forward
+	// Use when date is fast forward: done
 	// Adds user dependent of the last bought game
 	/**
 	 * @brief Adds an user to an Hash Table if no game is bought in a certain amount of time
