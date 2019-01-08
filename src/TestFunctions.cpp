@@ -669,7 +669,7 @@ void addUser(GameLibrary & gl) {
 
 //-----------------------------------------------------------------------------------------------------------------------//
 
-void addSale(Title*  game) {
+void addSale(Title* game) {
 	Date beginDate = dateInput(" Begin date: ");
 	Date endDate = dateInput(" End date: ");
 	double saleFactor = static_cast<double>(menuInput(" Sale Factor (from 0 to 100): ", 0, 100)) / 100.0;
@@ -776,8 +776,15 @@ void removeGame(GameLibrary & gL) {
 		return;
 	}
 	int nameErrors = 0;
+
 	unsigned int titleID = intInput(" Title ID Number (0 to go back): ");
+	Title* title = gL.getTitle(titleID);
+
+	Company* company = gL.getCompany(title->getCompany());
+
 	while (titleID != 0) {
+		company->removeTitle(title);
+
 		if (!gL.removeTitle(titleID))
 		{
 			nameErrors++;
