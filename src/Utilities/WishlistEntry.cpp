@@ -27,8 +27,7 @@ bool WishlistEntry::operator<(const WishlistEntry &ref) const
 
 std::ostream &operator<<(std::ostream &out, const WishlistEntry &we1)
 {
-	out << we1.getTitle();
-	out << "Interest: " << we1.getInterest() << std::endl;
+	out << " Interest: " << we1.getInterest() << std::endl;
 
 	return out;
 }

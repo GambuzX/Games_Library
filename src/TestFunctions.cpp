@@ -126,6 +126,18 @@ void sessionDisplay(string firstLine, const Session & sess) {
 
 //-----------------------------------------------------------------------------------------------------------------------//
 
+void displayWishlist(User *user) {
+    priority_queue<WishlistEntry> temp = user->getWishlist();
+
+    while(!temp.empty()) {
+        titleInfo(temp.top().getTitle(), GameLibrary::isOnlineTitle(temp.top().getTitle()));
+        cout << temp.top() << endl;
+        temp.pop();
+    }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------//
+
 void displayCompanyInfo(GameLibrary &gameL)
 {
 	if (gameL.getCompanies().empty()) {
@@ -677,6 +689,35 @@ void addGames(GameLibrary & gL)
 
 //-----------------------------------------------------------------------------------------------------------------------//
 
+void addWishlistEntry(User *user) {
+    unsigned id = intInput(" Title ID (0 to go back): ");
+    unsigned interest = intInput(" Enter your interest in this game (1-10) (0 to go back):" );
+
+    if (interest > 10) interest = 10;
+
+    Title *title = GameLibrary::getTitle(id);
+
+    int nameErrors = 0;
+    while (id != 0) {
+        if (title == nullptr) {
+            nameErrors++;
+            cout << " No such game found!\n";
+            if (nameErrors > 3) {
+                cout << " You seem to be struggling. Please consider taking a look at the Games Summary\n";
+            }
+            id = intInput(" Title ID (0 to go back): ");
+            title = GameLibrary::getTitle(id);
+        }
+        else {
+            // TODO: Change second argument for calculated probability
+            user->addWishlistEntry(interest, 0, title);
+            break;
+        }
+    }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------//
+
 void addUser(GameLibrary & gl) {
 	string name = namesInput(" Name (only letters and space): ");
 	string email = emailInput(" Email: ");
@@ -887,6 +928,30 @@ void removeUser(GameLibrary & gL) {
 			break;
 		}
 	}
+}
+
+//-----------------------------------------------------------------------------------------------------------------------//
+
+void removeWishlistEntry(User *user) {
+    unsigned id = intInput(" Title ID (0 to go back): ");
+    Title *title = GameLibrary::getTitle(id);
+
+    int nameErrors = 0;
+    while (id != 0) {
+        if (title == nullptr) {
+            nameErrors++;
+            cout << " No such game found!\n";
+            if (nameErrors > 3) {
+                cout << " You seem to be struggling. Please consider taking a look at the Games Summary\n";
+            }
+            id = intInput(" Title ID (0 to go back): ");
+            title = GameLibrary::getTitle(id);
+        }
+        else {
+            user->removeWishlistEntry(title);
+            break;
+        }
+    }
 }
 
 //-----------------------------------------------------------------------------------------------------------------------//
@@ -1557,59 +1622,6 @@ void UserRankingsMenu(GameLibrary & gl, User * user) {
 
 //-----------------------------------------------------------------------------------------------------------------------//
 
-void AddWishlistEntry(User *user) {
-    unsigned id = intInput(" Title ID (0 to go back): ");
-    unsigned interest = intInput(" Enter your interest in this game (1-10) (0 to go back):" );
-
-    if (interest > 10) interest = 10;
-
-    Title *title = GameLibrary::getTitle(id);
-
-    int nameErrors = 0;
-    while (id != 0) {
-        if (title == nullptr) {
-            nameErrors++;
-            cout << " No such game found!\n";
-            if (nameErrors > 3) {
-                cout << " You seem to be struggling. Please consider taking a look at the Games Summary\n";
-            }
-            id = intInput(" Title ID (0 to go back): ");
-            title = GameLibrary::getTitle(id);
-        }
-        else {
-            // TODO: Change second argument for calculated probability
-            user->addWishlistEntry(interest, 0, title);
-            break;
-        }
-    }
-}
-
-//-----------------------------------------------------------------------------------------------------------------------//
-
-void RemoveWishlistEntry(User *user) {
-    unsigned id = intInput(" Title ID (0 to go back): ");
-    Title *title = GameLibrary::getTitle(id);
-
-    int nameErrors = 0;
-    while (id != 0) {
-        if (title == nullptr) {
-            nameErrors++;
-            cout << " No such game found!\n";
-            if (nameErrors > 3) {
-                cout << " You seem to be struggling. Please consider taking a look at the Games Summary\n";
-            }
-            id = intInput(" Title ID (0 to go back): ");
-            title = GameLibrary::getTitle(id);
-        }
-        else {
-            user->removeWishlistEntry(title);
-            break;
-        }
-    }
-}
-
-//-----------------------------------------------------------------------------------------------------------------------//
-
 void EditWishlistEntry(User * user) {
     unsigned id = intInput(" Title ID (0 to go back): ");
     unsigned interest = intInput(" Enter your interest in this game (1-10) (0 to go back):" );
@@ -1637,15 +1649,6 @@ void EditWishlistEntry(User * user) {
     }
 }
 
-void DisplayWishlist(User * user) {
-    priority_queue<WishlistEntry> temp = user->getWishlist();
-
-    while(!temp.empty()) {
-        cout << temp.top();
-        temp.pop();
-    }
-}
-
 //-----------------------------------------------------------------------------------------------------------------------//
 
 void WishlistMenu(GameLibrary & gl, User * user) {
@@ -1663,19 +1666,23 @@ void WishlistMenu(GameLibrary & gl, User * user) {
     switch (option_number) {
     case 1:
         header("Wishlist Summary");
-        DisplayWishlist(user);
+        displayWishlist(user);
+        WishlistMenu(gl, user);
         break;
     case 2:
         header("Add Entry");
-        AddWishlistEntry(user);
+        addWishlistEntry(user);
+        WishlistMenu(gl, user);
         break;
     case 3:
         header("Remove Entry");
-        RemoveWishlistEntry(user);
+        removeWishlistEntry(user);
+        WishlistMenu(gl, user);
         break;
     case 4:
         header("Edit Entry");
         EditWishlistEntry(user);
+        WishlistMenu(gl, user);
         break;
     case 0:
         UserOperationsMenu(gl, user->getEmail());
