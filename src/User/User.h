@@ -5,6 +5,7 @@
 #include <vector>
 #include <set>
 #include <queue>
+#include <tuple>
 #include "..\Title\Title.h"
 #include "..\Utilities\CreditCard.h"
 #include "..\Utilities\Transaction.h"
@@ -31,6 +32,8 @@ class WishlistEntry;
 * @see Transaction
 */
 
+typedef std::map<Title*, std::tuple<unsigned int, unsigned int>, ComparePtr<Title>> mapTitleTuple;
+
 /**
 * @brief Class that represents an User in the Game Library
 */
@@ -49,6 +52,7 @@ private:
 	std::set<User*, ComparePtr<User>> friendsList; /**< @brief Set with the user friends */
 	std::vector<Transaction> transactions; /**< @brief Vector with the user transactions */
 	std::priority_queue<WishlistEntry> wishlist; /**< @brief Priority queue representing the user wishlist  */
+	mapTitleTuple searches_ads; /**< @brief Map of Titles to a tuple with the number of searches for that title and the ads of the same title seen */
 
 public:
 	/**
@@ -62,6 +66,36 @@ public:
 	* @param address Address that initializes the address Private Member
 	*/
 	User (std::string name, std::string email, int age, Address address);
+
+	/**
+	 * @brief Get the Number Of Searches of the desired Title
+	 * 
+	 * @param title From which we want to know the number of times that has been searched
+	 * @return unsigned int Number of times that has been searched a certain Title
+	 */
+	unsigned int getNumberOfSearches(Title * title) { return std::get<0>(searches_ads[title]); };
+
+	/**
+	 * @brief Get the Number Of Seen Ads of the desired Title
+	 * 
+	 * @param title From which we want to know the number of times that an add has been seen
+	 * @return unsigned int Number of times that has been seen an add from a certain Title
+	 */
+	unsigned int getNumberOfSeenAds(Title * title) { return std::get<1>(searches_ads[title]); };
+
+	/**
+	 * @brief Increment the number of times that a certain title has been searched
+	 * 
+	 * @param title Title that has been searched
+	 */
+	void incNumberOfSearches(Title * title) { ++std::get<0>(searches_ads[title]); };
+
+	/**
+	 * @brief Increment the number of times that an add from a certain title has been seen
+	 * 
+	 * @param title Title from which the add was seen
+	 */
+	void incNumberOfSeenAds(Title * title) { ++std::get<1>(searches_ads[title]); };
 
 	/**
 	* @brief Get the createdDate Private Member
