@@ -1858,9 +1858,6 @@ void ListsRankingsMenu(GameLibrary & gl) {
 //-----------------------------------------------------------------------------------------------------------------------//
 
 
-//-----------------------------------------------------------------------------------------------------------------------//
-
-
 void CompaniesMenu(GameLibrary &gameL)
 {
 	header("Manage Companies");
@@ -1912,7 +1909,7 @@ void CompaniesMenu(GameLibrary &gameL)
 
 //-----------------------------------------------------------------------------------------------------------------------//
 
-// TODO: atualizar hashtable
+// TODO: hashtable being updated
 void DateMenu(GameLibrary &gameL)
 {
 	header("Date");
@@ -1952,6 +1949,7 @@ void DateMenu(GameLibrary &gameL)
 			}
 			cout << endl;
 		}
+		gameL.addSleepyUsers();
 		cout << endl;
 		DateMenu(gameL);
 		break;
@@ -1959,18 +1957,21 @@ void DateMenu(GameLibrary &gameL)
 	case 3:
 		header("Move X Days Forward");
 		gameL.advanceXdays(intInput(" Number of Days: "));
+		gameL.addSleepyUsers();
 		cout << endl << endl;
 		DateMenu(gameL);
 		break;
 	case 4:
 		header("Move X Months Forward");
 		gameL.advanceXmonths(intInput(" Number of Months: "));
+		gameL.addSleepyUsers();
 		cout << endl << endl;
 		DateMenu(gameL);
 		break;
 	case 5:
 		header("Move X Years Forward");
 		gameL.advanceXyears(intInput(" Number of Years: "));
+		gameL.addSleepyUsers();
 		cout << endl << endl;
 		DateMenu(gameL);
 		break;
@@ -2082,7 +2083,14 @@ void InicialMenu(GameLibrary & gl)
 int main() {	
 	system("title   GAME LIBRARY");
 	mainHeader("Welcome to the Game Library");
-	GameLibrary gl = GameLibrary();
+
+	unsigned int months;
+	while ((months = intInput(" Setup number of months that has to go by to a user be considered asleep: ")) == 0) {
+		cout << endl;
+	}
+	GameLibrary gl = GameLibrary(months);
+
+	cout << endl << endl;
 
 	InicialMenu(gl);
 
