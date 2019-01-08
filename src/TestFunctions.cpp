@@ -122,6 +122,36 @@ void sessionDisplay(string firstLine, const Session & sess) {
 	cout << "  - Duration:\t" << sess.getSessionDuration() << endl << endl;
 }
 
+//-----------------------------------------------------------------------------------------------------------------------//
+
+void displayCompanyInfo(GameLibrary &gameL)
+{
+	if (gameL.getCompanies().empty()) {
+		cout << " There are no companies to show!\n";
+		return;
+	}
+
+	unsigned nif = intInput(" NIF (0 to go back): ");
+
+	Company *company = gameL.getCompany(nif);
+
+	int nameErrors = 0;
+	while (nif != 0) {
+		if (company == nullptr) {
+			nameErrors++;
+			cout << " No such company found!\n";
+			if (nameErrors > 3) {
+				cout << " You seem to be struggling. Please consider taking a look at the Companies Summary\n";
+			}
+			nif = intInput(" NIF (0 to go back): ");
+			company = gameL.getCompany(nif);
+		}
+		else {
+			cout << *company;
+			break;
+		}
+	}
+}
 
 //=======================================================================================================================//
 
@@ -758,6 +788,23 @@ void addFriend(GameLibrary & gl, User * user) {
 	system("pause");
 }
 
+//-----------------------------------------------------------------------------------------------------------------------//
+
+void addCompany(GameLibrary &gameL)
+{
+	string name = namesInput(" Name (only letters and space): ");
+	unsigned nif = intInput(" NIF (only numbers): "), contact = intInput(" Contact (only numbers): ");
+
+	gameL.addCompany(new Company(name, nif, contact));
+}
+
+//-----------------------------------------------------------------------------------------------------------------------//
+void addCompany(GameLibrary &gameL, string company_name)
+{
+    unsigned nif = intInput(" NIF (only numbers): "), contact = intInput(" Contact (only numbers): ");
+
+    gameL.addCompany(new Company(company_name, nif, contact));
+}
 
 //=======================================================================================================================//
 
@@ -895,6 +942,38 @@ void removeCreditCard(User*  user) {
 	}
 	cout << "\n There is no Credit Card with that number\n";
 	cout << " Please consider taking a look at the Credit Cards Summary";	
+}
+
+//-----------------------------------------------------------------------------------------------------------------------//
+
+void removeCompany(GameLibrary &gameL)
+{
+	if (gameL.getCompanies().empty()) {
+		cout << " There are no companies to remove\n";
+		return;
+	}
+
+	unsigned nif = intInput(" NIF (0 to go back): ");
+
+	Company *company = gameL.getCompany(nif);
+
+	int nameErrors = 0;
+	while (nif != 0) {
+		if (company == nullptr) {
+			nameErrors++;
+			cout << " No such company found!\n";
+			if (nameErrors > 3) {
+				cout << " You seem to be struggling. Please consider taking a look at the Companies Summary\n";
+			}
+			nif = intInput(" NIF (0 to go back): ");
+			company = gameL.getCompany(nif);
+		}
+		else {
+			gameL.removeCompany(company);
+			cout << "\n Company Removed Successfully";
+			break;
+		}
+	}
 }
 
 //=======================================================================================================================//
@@ -1817,83 +1896,8 @@ void ListsRankingsMenu(GameLibrary & gl) {
 	}
 }
 
-//-----------------------------------------------------------------------------------------------------------------------//
-void addCompany(GameLibrary &gameL)
-{
-	string name = namesInput(" Name (only letters and space): ");
-	unsigned nif = intInput(" NIF (only numbers): "), contact = intInput(" Contact (only numbers): ");
 
-	gameL.addCompany(new Company(name, nif, contact));
-}
 
-//-----------------------------------------------------------------------------------------------------------------------//
-void addCompany(GameLibrary &gameL, string company_name)
-{
-    unsigned nif = intInput(" NIF (only numbers): "), contact = intInput(" Contact (only numbers): ");
-
-    gameL.addCompany(new Company(company_name, nif, contact));
-}
-
-//-----------------------------------------------------------------------------------------------------------------------//
-void removeCompany(GameLibrary &gameL)
-{
-    if (gameL.getCompanies().empty()) {
-        cout << " There are no companies to remove\n";
-        return;
-    }
-
-    unsigned nif = intInput(" NIF (0 to go back): ");
-
-    Company *company = gameL.getCompany(nif);
-
-    int nameErrors = 0;
-    while (nif != 0) {
-        if (company == nullptr) {
-            nameErrors++;
-            cout << " No such company found!\n";
-            if (nameErrors > 3) {
-                cout << " You seem to be struggling. Please consider taking a look at the Companies Summary\n";
-            }
-            nif = intInput(" NIF (0 to go back): ");
-			company = gameL.getCompany(nif);
-        } else {
-			gameL.removeCompany(company);
-            cout << "\n Company Removed Successfully";
-            break;
-        }
-    }
-}
-
-//-----------------------------------------------------------------------------------------------------------------------//
-void displayCompanyInfo(GameLibrary &gameL)
-{
-    if (gameL.getCompanies().empty()) {
-        cout << " There are no companies to show!\n";
-        return;
-    }
-
-    unsigned nif = intInput(" NIF (0 to go back): ");
-
-    Company *company = gameL.getCompany(nif);
-
-    int nameErrors = 0;
-    while (nif != 0) {
-        if (company == nullptr) {
-            nameErrors++;
-            cout << " No such company found!\n";
-            if (nameErrors > 3) {
-                cout << " You seem to be struggling. Please consider taking a look at the Companies Summary\n";
-            }
-            nif = intInput(" NIF (0 to go back): ");
-            company = gameL.getCompany(nif);
-        } else {
-            cout << *company;
-            break;
-        }
-    }
-}
-
-//-----------------------------------------------------------------------------------------------------------------------//
 void CompaniesMenu(GameLibrary &gameL)
 {
 	header("Manage Companies");
@@ -1945,6 +1949,82 @@ void CompaniesMenu(GameLibrary &gameL)
 
 //-----------------------------------------------------------------------------------------------------------------------//
 
+// TODO: hashtable being updated
+void DateMenu(GameLibrary &gameL)
+{
+	header("Date");
+
+	cout << " Possible options:\n" << endl;
+	cout << "   1 - Current Date" << endl;
+	cout << "   2 - Go to a Future Date" << endl;
+	cout << "   3 - Move forward X days" << endl;
+	cout << "   4 - Move forward X months" << endl;
+	cout << "   5 - Move forward X years" << endl;
+	cout << "   0 - Go back" << endl << endl;
+
+	int option_number = menuInput(" Option ? ", 0, 5);
+
+	switch (option_number)
+	{
+	case 1:
+		header("Current Date");
+		cout << " Present Day: " << gameL.getLibraryDate();
+		cout << endl;
+		DateMenu(gameL);
+		break;
+	case 2:
+	{
+		header("Choose Future Date");
+		bool newDate = false;
+		while (!newDate) {
+			Date futureDate = dateInput(" Future date: ");
+			try
+			{
+				newDate = true;
+				gameL.goToDate(futureDate);
+			}
+			catch (const OldDate)
+			{
+				newDate = false;
+			}
+			cout << endl;
+		}
+		gameL.addSleepyUsers();
+		cout << endl;
+		DateMenu(gameL);
+		break;
+	}
+	case 3:
+		header("Move X Days Forward");
+		gameL.advanceXdays(intInput(" Number of Days: "));
+		gameL.addSleepyUsers();
+		cout << endl << endl;
+		DateMenu(gameL);
+		break;
+	case 4:
+		header("Move X Months Forward");
+		gameL.advanceXmonths(intInput(" Number of Months: "));
+		gameL.addSleepyUsers();
+		cout << endl << endl;
+		DateMenu(gameL);
+		break;
+	case 5:
+		header("Move X Years Forward");
+		gameL.advanceXyears(intInput(" Number of Years: "));
+		gameL.addSleepyUsers();
+		cout << endl << endl;
+		DateMenu(gameL);
+		break;
+	case 0:
+		header("CREATE GAME LIBRARY");
+		PrincipalMenu(gameL);
+		break;
+	default:break;
+	}
+}
+
+//-----------------------------------------------------------------------------------------------------------------------//
+
 void PrincipalMenu(GameLibrary & gameL)
 {
 	int option_number;
@@ -1954,9 +2034,10 @@ void PrincipalMenu(GameLibrary & gameL)
 	cout << "   2 - Manage Users" << endl;
 	cout << "   3 - Manage Companies" << endl;
 	cout << "   4 - Lists and Rankings" << endl;
+	cout << "   5 - Fast Forward" << endl;
 	cout << "   0 - Go back" << endl << endl;
 
-	option_number = menuInput(" Option ? ", 0, 3);
+	option_number = menuInput(" Option ? ", 0, 5);
 
 	switch (option_number)
 	{
@@ -1971,6 +2052,9 @@ void PrincipalMenu(GameLibrary & gameL)
 		break;
 	case 4:
 		ListsRankingsMenu(gameL);
+		break;
+	case 5:
+		DateMenu(gameL);
 		break;
 	case 0:
 		system("cls");
@@ -2039,7 +2123,14 @@ void InicialMenu(GameLibrary & gl)
 int main() {	
 	system("title   GAME LIBRARY");
 	mainHeader("Welcome to the Game Library");
-	GameLibrary gl = GameLibrary();
+
+	unsigned int months;
+	while ((months = intInput(" Setup number of months that has to go by to a user be considered asleep: ")) == 0) {
+		cout << endl;
+	}
+	GameLibrary gl = GameLibrary(months);
+
+	cout << endl << endl;
 
 	InicialMenu(gl);
 

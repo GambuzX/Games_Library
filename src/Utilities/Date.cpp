@@ -75,9 +75,9 @@ Date::Date()
 }
 
 Date::Date(unsigned int day, unsigned int month, unsigned int year) {
-	if (month > 12)
+	if (month > 12 || month == 0)
 		throw InvalidMonth(month);
-	if (day > daysInMonth(month, year))
+	if (day > daysInMonth(month, year) || day == 0)
 		throw InvalidDay(day);
 	
 	this->day = day;
@@ -120,7 +120,7 @@ void Date::addMonths(unsigned int months)
 {
 	unsigned int monthT = this->month + months;
 	this->month = monthT % 12;
-	this->year = monthT / 12;
+	this->year += (monthT / 12);
 }
 
 void Date::addYears(unsigned int years)

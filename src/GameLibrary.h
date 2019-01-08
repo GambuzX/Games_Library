@@ -27,7 +27,7 @@
 // TODO: comentar e passar para compareobj??
 struct UserPtrHash
 {
-	// PARA j� djb2 depois se houver tempo mudar faz 33*...
+	// PARA j� djb2 depois se houver tempo mudar faz 33*...
 	int operator() (const User * user) const
 	{
 		unsigned long hash = 5381;
@@ -65,12 +65,29 @@ private:
 
 	companiesSet platformCompanies; /**< @brief Set of the Companies that exist in this Game Library */
 
+	unsigned int monthsToUpdateHash; /**< @brief Number of months to consider a user asleep */
+
 public:
+
+	/**
+	 * @brief Construct a new Game Library object
+	 * 
+	 * @param months Number of months that has to pass by for a user to be considered asleep
+	 */
+	GameLibrary(unsigned int months) { this->monthsToUpdateHash = months; };
+
 	/**
 	* @brief Game Library class Destructor
 	* Frees the space allocated for the Users and Titles
 	*/
 	~GameLibrary();
+
+	/**
+	 * @brief Set the Moths To Update Hash Table private parameter
+	 * 
+	 * @param months Number of months that has to pass by for a user to be considered asleep
+	 */
+	void setMothsToUpdate(unsigned int months) { this->monthsToUpdateHash = months; };
 
 	/**
 	 * @brief Getter method for the set of registered companies
@@ -380,32 +397,104 @@ public:
 	*/
 	float getPurchaseChance(User * usr, Title * title);
 
-	// TODO: Comentar
+	/**
+	 * @brief Get the Library Date object
+	 * 
+	 * @return Date Current Date of the Library
+	 */
 	static Date getLibraryDate() { return libraryDate; };
 
+	/**
+	 * @brief Sets the Library Date to a new Date in the Future and atualizes all users age (by counting number of New Years)
+	 * May throw an exception if the input is an old date
+	 * 
+	 * @param d New Future Date to be set
+	 * @throw OldDate() If the the new date has already passed by
+	 */
 	void goToDate(Date & d);
 
+	/**
+	 * @brief Advance a number of days and atualizes all users age (by counting number of New Years)
+	 * 
+	 * @param numberDays Number of days to fast forward
+	 */
 	void advanceXdays(unsigned int numberDays);
 
+	/**
+	 * @brief Advance a number of months and atualizes all users age (by counting number of New Years)
+	 * 
+	 * @param numberMonths Number of months to fast forward
+	 */
 	void advanceXmonths(unsigned int numberMonths);
 
+	/**
+	 * @brief Advance a number of years and atualizes all users age
+	 * 
+	 * @param numberYears Number of years to fast forward
+	 */
 	void advanceXyears(unsigned int numberYears);
 
-	// Generic function to update the users in all the Hash Tables
+	/**
+	 * @brief Generic function that updates all users in all the Hash Tables
+	 * Calls the addUserToHashTables() function for every user in the usersMap
+	 * 
+	 */
 	void updateHashTable();
 
 	// Use when game is bought and now he is active
 	// TODO: verify statics
+	/**
+	 * @brief Removes a user from all the correct hash tables after game is bought
+	 * This function satisfies this part of the handout:
+	 * 		"Quando o utilizador compra este título, ou outro título da mesma plataforma dentro, 
+	 * 		passa a ser considerado ativo e é retirado da tabela de dispersão"
+	 * To find the titles from the same platform a showMatchingTitles() call is used
+	 * 
+	 * @param title Title bought
+	 * @param user User that has bought the title
+	 */
 	static void removeFromHashTable(Title * title, User * user);
 
 	// Use when date is fast forward
 	// Adds user dependent of the last bought game
+	/**
+	 * @brief Adds an user to an Hash Table if no game is bought in a certain amount of time
+	 * This function satisfies this part of the handout:
+	 * 		"devendo voltar a ser adicionado se não comprar nenhum título dentro de X meses."
+	 * Therefore it must be used after a date update
+	 * 
+	 * @param months Number of months that has to go by to a user be considered asleep
+	 */
 	void addSleepyUsers(unsigned int months);
 
+	/**
+	 * @brief Adds an user to an Hash Table if no game is bought in the amount of time specified in the monthsToUpdateHash Private Member
+	 * This function is implemented based on the addSleepyUsers() with one argument function, therefore it must be used in the same circumstances
+	 * 
+	 */
+	void addSleepyUsers() { addSleepyUsers(this->monthsToUpdateHash); };
+
+	/**
+	 * @brief Adds user to all the corresponding hash tables based on his wishlist, 
+	 * the probability of buying the game and the minimum probability that the company is interested in receiving a notification about the user
+	 * 
+	 * @param user User to be added to the hash tables
+	 */
 	void addUserToHashTables(User * user);
 
+	/**
+	 * @brief Get the Title Hash Table object
+	 * 
+	 * @param title Title from which we want the hash table
+	 * @return const HashTabUsersPtr& HashTable with the asleep users of the desired Title
+	 */
 	const HashTabUsersPtr & getTitleHashTable(Title * title) { return asleepUsers[title]; };
 
+	/**
+	 * @brief Get the Asleep Users object
+	 * 
+	 * @return const titleUserHashTabMap& Map with all the Titles and corresponding Hash Tables
+	 */
 	const titleUserHashTabMap & getAsleepUsers() { return asleepUsers; };
 
 };
