@@ -28,9 +28,6 @@ void UserGameMenu(GameLibrary & gl, User * user);
 *  +------------------------+
 */
 
-
-void titleInfo(Title * game, bool isOnline);
-
 /**
 * Writes a neat header in the console with the title centerd and a line above and below all across the screen
 *
@@ -118,42 +115,6 @@ void sessionDisplay(string firstLine, const Session & sess) {
 	cout << firstLine << endl;
 	cout << "  - Date:\t\t" << sess.getDate() << endl;
 	cout << "  - Duration:\t" << sess.getSessionDuration() << endl << endl;
-}
-
-//-----------------------------------------------------------------------------------------------------------------------//
-
-void displayCompanyInfo(GameLibrary &gameL)
-{
-	if (gameL.getCompanies().empty()) {
-		cout << " There are no companies to show!\n";
-		return;
-	}
-
-	unsigned nif = intInput(" NIF (0 to go back): ");
-
-	Company *company = gameL.getCompany(nif);
-
-	int nameErrors = 0;
-	while (nif != 0) {
-		if (company == nullptr) {
-			nameErrors++;
-			cout << " No such company found!\n";
-			if (nameErrors > 3) {
-				cout << " You seem to be struggling. Please consider taking a look at the Companies Summary\n";
-			}
-			nif = intInput(" NIF (0 to go back): ");
-			company = gameL.getCompany(nif);
-		}
-		else {
-            cout << *company << endl;
-
-            for (Title* title : company->getTitles()) {
-                titleInfo(title, GameLibrary::isOnlineTitle(title));
-            }
-
-			break;
-		}
-	}
 }
 
 //=======================================================================================================================//
@@ -361,7 +322,7 @@ void UserSessionSummary2(const map<User*, vector<Session>, ComparePtr<User>> & p
 *  +------------------------+
 */
 
-void titleInfo(Title * game, bool isOnline)
+void titleInfo(GameLibrary & gameL, Title * game, bool isOnline)
 {
 	Date d = GameLibrary::getLibraryDate();
 	cout << " Title ID:\t" << game->getTitleID() << endl;
@@ -385,10 +346,12 @@ void titleInfo(Title * game, bool isOnline)
 	}
 	cout << " Release Date:\t" << game->getReleaseDate() << endl;
 	cout << " Age Range:\t" << game->getAgeRange().minAge << " - " << game->getAgeRange().maxAge << endl;
-	cout << " Platform:\t" << game->getPlatformName() << endl;
+	cout << " Platform:\t\t" << game->getPlatformName() << endl;
 	cout << " Genre:\t\t" << game->getGenreName() << endl;
-	cout << " Company:\t" << game->getCompany() << endl;
+	cout << " Company:\t\t" << game->getCompany() << endl;
 	cout << " Users Number:\t" << game->getNumberUsers() << endl;
+	cout << " Number of Searches:\t" << gameL.numberOfSearches(game) << endl;
+	cout << " Number of Ads Seen:\t" << gameL.numberOfAdsSeen(game) << endl;
 	if (isOnline) cout << " Hours Played:\t" << game->getStats() << endl;
 	cout << " Last Schedule Sale:\n";
 	try
@@ -427,6 +390,42 @@ void userInfo(User * user)
 		cout << "  - " << p;
 	cout << endl;
 	system("pause");
+}
+
+//-----------------------------------------------------------------------------------------------------------------------//
+// TODO: mudar nome e sitio
+void companyInfo(GameLibrary &gameL)
+{
+	if (gameL.getCompanies().empty()) {
+		cout << " There are no companies to show!\n";
+		return;
+	}
+
+	unsigned nif = intInput(" NIF (0 to go back): ");
+
+	Company *company = gameL.getCompany(nif);
+
+	int nameErrors = 0;
+	while (nif != 0) {
+		if (company == nullptr) {
+			nameErrors++;
+			cout << " No such company found!\n";
+			if (nameErrors > 3) {
+				cout << " You seem to be struggling. Please consider taking a look at the Companies Summary\n";
+			}
+			nif = intInput(" NIF (0 to go back): ");
+			company = gameL.getCompany(nif);
+		}
+		else {
+			cout << *company << endl;
+
+			for (Title* title : company->getTitles()) {
+				titleInfo(gameL, title, GameLibrary::isOnlineTitle(title));
+			}
+
+			break;
+		}
+	}
 }
 
 //=======================================================================================================================//
@@ -1664,7 +1663,7 @@ void GameOperationsMenu(GameLibrary & gl, unsigned titleID) {
 	{
 	case 1:
 		header("Detailed Information");
-		titleInfo(game, isOnline);
+		titleInfo(gl, game, isOnline);
 		cout << endl << endl;
 		GameOperationsMenu(gl, titleID);
 		break;
@@ -1914,7 +1913,7 @@ void ListsRankingsMenu(GameLibrary & gl) {
 	}
 }
 
-
+//-----------------------------------------------------------------------------------------------------------------------//
 
 void CompaniesMenu(GameLibrary &gameL)
 {
@@ -1953,7 +1952,7 @@ void CompaniesMenu(GameLibrary &gameL)
 		break;
 	case 4:
 	    header("Company Info");
-	    displayCompanyInfo(gameL);
+		companyInfo(gameL);
 	    cout << endl << endl;
 	    CompaniesMenu(gameL);
 		break;
