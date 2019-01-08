@@ -33,6 +33,8 @@ void addCompany(GameLibrary &library);
 void addCompany(GameLibrary &library, string company_name);
 void removeCompany(GameLibrary &gameL);
 void displayCompanyInfo(GameLibrary &gameL);
+void titleInfo(Title * game, bool isOnline);
+
 /**
 * Writes a neat header in the console with the title centerd and a line above and below all across the screen
 *
@@ -147,7 +149,12 @@ void displayCompanyInfo(GameLibrary &gameL)
 			company = gameL.getCompany(nif);
 		}
 		else {
-			cout << *company;
+            cout << *company << endl;
+
+            for (Title* title : company->getTitles()) {
+                titleInfo(title, GameLibrary::isOnlineTitle(title));
+            }
+
 			break;
 		}
 	}
