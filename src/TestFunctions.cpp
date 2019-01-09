@@ -2264,12 +2264,17 @@ void CompaniesMenu(GameLibrary &gameL)
 	    CompaniesMenu(gameL);
 		break;
 	case 5:
+	{
 		header("Search Company Name");
-		//TODO
-		companyInfo(gameL);
+		string wildSearch = wildStringInput(" Wildstring Input (* = 0+ chars and ? = 1 char): ");
+		set<Company*, CompareCompanyByName> wildComp = gameL.wildcardMatchingCompanies(wildSearch);
+		for (auto it : wildComp) {
+			std::cout << *it << endl;
+		}
 		std::cout << endl << endl;
 		CompaniesMenu(gameL);
 		break;
+	}
 	case 0:
 		header("CREATE GAME LIBRARY");
 		PrincipalMenu(gameL);

@@ -117,6 +117,70 @@ string namesInput(string question)
 	return removeSpace(name);
 }
 
+string wildStringInput(string question) {
+	bool validInput = false;
+	bool ErrorFlag = false;
+	bool letterFlag = false;
+	string name;
+
+	cout << question;
+
+	HANDLE hCon = GetStdHandle(STD_OUTPUT_HANDLE);
+	COORD currentPos = GetConsoleCursorPosition(hCon);
+
+	while (!validInput)
+	{
+		cin.clear();
+		getlineZ(cin, name);
+
+		ErrorFlag = false;
+		letterFlag = false;
+
+		if (cin.eof())
+		{
+			cin.clear();
+			ErrorFlag = true;
+		}
+		if (cin.fail())
+		{
+			cin.clear();
+			cin.ignore((numeric_limits<streamsize>::max)(), '\n');
+			ErrorFlag = true;
+		}
+		else
+		{
+			// Search for invalid characters //
+			for (size_t j = 0; j < name.size(); j++)
+			{
+				if ((unsigned int)name.at(j) != 32 && !isalpha((unsigned char)name.at(j)) && name.at(j) != '*' && name.at(j) != '?')
+				{
+					ErrorFlag = true;
+					break;
+				}
+				if (isalpha((unsigned char)name.at(j)) || name.at(j) == '*' || name.at(j) == '?')
+				{
+					letterFlag = true;
+				}
+			}
+		}
+		if (name.empty() || !letterFlag)
+		{
+			ErrorFlag = true;
+		}
+
+		validInput = !ErrorFlag;
+
+		if (ErrorFlag)
+		{
+			clrscr(currentPos);
+		}
+	}
+
+	return removeSpace(name);
+
+}
+
+
 string nameNumbersInput(string question)
 {
 	bool validInput = false;
