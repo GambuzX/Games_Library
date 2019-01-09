@@ -226,7 +226,7 @@ void GameLibrary::saveGameLibrary()
 	// the info files only contains information on the number of games, users and companies
 	ofstream library_info_file("info.txt");
 
-	library_info_file << titles.size() << " " << users.size() << " " << platformCompanies.size() << endl;
+	library_info_file << titles.size() << " " << users.size() << " " << platformCompanies.size() << " " << monthsToUpdateHash << endl;
 	library_info_file.close();
 
 	system("mkdir titles >nul 2>nul");
@@ -348,7 +348,7 @@ void GameLibrary::loadGameLibrary()
 		cout << "Opening of information file failed. Does it exist?" << endl;
 	}
 
-	info_file >> ntitles >> nusers >> ncompanies;
+	info_file >> ntitles >> nusers >> ncompanies >> monthsToUpdateHash;
 
 	ostringstream user_file_name;
 	ostringstream title_file_name;
@@ -775,6 +775,9 @@ void GameLibrary::loadGameLibrary()
 
 		user->addWishlistEntry(interest, buy_chance, title);
 	}
+	updateHashTable();
+	removeActiveUsers();
+	addSleepyUsers(monthsToUpdateHash);
 }
 
 bool GameLibrary::updateTitle(Title* title, Update * update) {
