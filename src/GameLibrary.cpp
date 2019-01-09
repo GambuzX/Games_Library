@@ -662,7 +662,7 @@ void GameLibrary::loadGameLibrary()
 
 				}
 
-				for (Sale sale : sales_history)
+				for (const Sale &sale : sales_history)
 					online_title->addPromotion(sale);
 
 				for (Update up_date : update_vector)
@@ -672,7 +672,7 @@ void GameLibrary::loadGameLibrary()
 				Title* online_titl = new OnlineTitle(title_name, stod(_price), Date(_release_date), ar, glp, glg, company, new FixedSubscription(stod(_subs_value)));
 				addTitle(online_titl);
 
-				for (Sale sale : sales_history)
+				for (const Sale &sale : sales_history)
 					online_titl->addPromotion(sale);
 
 				for (Update up_date : update_vector)
@@ -740,10 +740,10 @@ void GameLibrary::loadGameLibrary()
 		}
 	}
 
-	for (auto it = allsearches.begin(); it != allsearches.end(); ++it)  {
+	for (auto &allsearche : allsearches) {
 		User* user;
 		mapTitleTuple searches_ads;
-	    for (const auto &search_map : *it) {
+	    for (const auto &search_map : allsearche) {
             const string &email = get<0>(search_map.first);
 	        unsigned titleID = get<1>(search_map.first);
 
