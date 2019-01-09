@@ -49,6 +49,8 @@ std::string nameNumbersInput(std::string question);
 */
 double doubleInput(std::string question);
 
+float probabilityInput(std::string question);
+
 /**
 * Robustness of the int Input:
 * - Checks if there is something left on the istringstream after the numbers

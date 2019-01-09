@@ -298,6 +298,56 @@ double doubleInput(string question)
 	return option;
 }
 
+float probabilityInput(std::string question)
+{
+	float option;
+	bool valid = false;
+
+	string prov;
+
+	cout << question;
+
+	HANDLE hCon = GetStdHandle(STD_OUTPUT_HANDLE);
+	COORD currentPos = GetConsoleCursorPosition(hCon);
+
+	while (!valid)
+	{
+		getlineZ(cin, prov);
+		istringstream iss(prov);
+		while (!(iss >> option))
+		{
+			if (iss.eof())
+			{
+				iss.clear();
+				cin.clear();
+			}
+			if (iss.fail())
+			{
+				iss.clear();
+				cin.clear();
+			}
+
+			clrscr(currentPos);
+			getlineZ(cin, prov);
+			iss.str(prov);
+		}
+		if (!afterNumber(iss) && option >= 0 && option <= 1)
+		{
+			valid = true;
+		}
+		else
+		{
+			cin.clear();
+		}
+		if (!valid)
+		{
+			clrscr(currentPos);
+		}
+	}
+
+	return option;
+}
+
 unsigned int intInput(string question)
 {
 	int option;

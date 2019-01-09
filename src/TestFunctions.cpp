@@ -339,12 +339,41 @@ void UserSessionSummary2(const map<User*, vector<Session>, ComparePtr<User>> & p
 
 //-----------------------------------------------------------------------------------------------------------------------//
 
-void asleepUsersSummary(const HashTabUsersPtr & asleepUsers, Title * title) {
-	// TODO 3: podes tentar reaproveitar este para fazeres os displays e mudar o input para set por exemplo
+void asleepUsersSummary(set<User*, CompareUsr> asleepUsers, Title * title, float minimum, UserCmpType cmd_type) {
 	unsigned int i = 1;
 	for (const auto & user : asleepUsers) {
 		string fL = " User " + to_string(i) + ':';
-		asleepUserDisplay(fL, user, title);
+
+		switch (cmd_type)
+		{
+		case ID:
+			asleepUserDisplay(fL, user, title);
+			break;
+		case ADS:
+			if (user->getNumberOfSeenAds(title) < minimum) {
+				system("pause");
+				return;
+			}
+			asleepUserDisplay(fL, user, title);
+			break;
+		case SEARCHES:
+			if (user->getNumberOfSearches(title) < minimum) {
+				system("pause");
+				return;
+			}
+			asleepUserDisplay(fL, user, title);
+			break;
+		case BUYCHANCE:
+			if (user->getWishlistEntry(title).getBuyChance() < minimum) {
+				system("pause");
+				return;
+			}
+			asleepUserDisplay(fL, user, title);
+			break;
+		default:
+			break;
+		}
+		
 	}
 	system("pause");
 }
@@ -748,8 +777,7 @@ void addWishlistEntry(User *user) {
             title = GameLibrary::getTitle(id);
         }
         else {
-            // TODO: Change second argument for calculated probability
-            user->addWishlistEntry(interest, 0, title);
+            user->addWishlistEntry(interest, title);
             break;
         }
     }
@@ -1120,7 +1148,6 @@ void searchTitles(GameLibrary & gl, User * user)
 	std::cout << endl;
 	const set<Title*, ComparePtr<Title>> & games = gl.showMatchingTitles(platform, genre, ageR);
 	titleSummary(games);
-	// TODO: se for user incrementar n de procuras
 	if (user != NULL) {
 		for (const auto &  title : games)
 			user->incNumberOfSearches(title);
@@ -1335,30 +1362,36 @@ void AsleepUsersMenu(GameLibrary & gl, Title * game) {
 
 	option_number = menuInput(" Option ? ", 0, 4);
 
+	unsigned int min;
+
 	switch (option_number)
 	{
 	case 1:
 		header("Potencial Buyers by ID");
-		// TODO 2: aqui vais ter de ordenar so por ID (basicamente é só passar por um set de users que é isso que a nossa comp faz) -> listagem é completa
+		//asleepUsersSummary(set<User*, CompareUsr> asleepUsers, Title * title, float minimum, UserCmpType cmd_type)
+		asleepUsersSummary(gl.OrderUsersByID(game), game, 0, ID);
 		std::cout << endl << endl;
 		AsleepUsersMenu(gl, game);
 		break;
 
 	case 2:
 		header("Potencial Buyers by Ads Seen");
-		// TODO 2: aqui vais ter de ordenar por num Ads. Precisa de perguntar antes de mostrar se quer completa ou até um certo valor, qual?? inspirar nas já feitas (rankings)
+		min = intInput(" Number minimum of ads seen (0 for complete list): ");
+		asleepUsersSummary(gl.OrderUsersByID(game), game, (float)min, ADS);
 		std::cout << endl << endl;
 		AsleepUsersMenu(gl, game);
 		break;
 	case 3:
 		header("Potencial Buyers by Searches");
-		// TODO 2: aqui vais ter de ordenar por num Searches. Precisa de perguntar antes de mostrar se quer completa ou até um certo valor, qual?? inspirar nas já feitas (rankings)
+		min = intInput(" Number minimum of searches (0 for complete list): ");
+		asleepUsersSummary(gl.OrderUsersByID(game), game, (float)min, SEARCHES);
 		std::cout << endl << endl;
 		AsleepUsersMenu(gl, game);
 		break;
 	case 4:
 		header("Potencial Buyers by Probability");
-		// TODO 2: aqui vais ter de ordenar por prob (a q fizeste). Precisa de perguntar antes de mostrar se quer completa ou até um certo valor, qual?? inspirar nas já feitas (rankings)
+		min = probabilityInput(" Smallest Probability (0 for complete list): ");
+		asleepUsersSummary(gl.OrderUsersByID(game), game, (float)min, BUYCHANCE);
 		std::cout << endl << endl;
 		AsleepUsersMenu(gl, game);
 		break;
@@ -1716,8 +1749,7 @@ void EditWishlistEntry(User * user) {
             title = GameLibrary::getTitle(id);
         }
         else {
-            // TODO: Change second argument for calculated probability
-            user->editWishlistEntry(title, interest, 0);
+            user->editWishlistEntry(title, interest);
             break;
         }
     }
@@ -2389,6 +2421,7 @@ void InicialMenu(GameLibrary & gl)
 		break;
 	case 3:
 	    header("SAVE GAME LIBRARY");
+		gl.updateHashTable();
 	    std::cout << " Saving..." << endl;
 	    gl.saveGameLibrary();
 	    std::cout << " Done" << endl << endl;

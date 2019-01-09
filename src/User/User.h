@@ -6,6 +6,7 @@
 #include <set>
 #include <queue>
 #include <tuple>
+#include "..\Utilities\buy_chance.h"
 #include "..\Title\Title.h"
 #include "..\Utilities\CreditCard.h"
 #include "..\Utilities\Transaction.h"
@@ -388,10 +389,10 @@ public:
 	* @param minimumBuyRate Minimum buy rate for the title to find
 	* @return WishlistEntry * Copy of WishlistEntry of most priority
 	*/
-	WishlistEntry nextAdvertisementTitle(float minimumBuyRate) const;
+	WishlistEntry nextAdvertisementTitle(float minimumBuyRate);
 	
 	//TODO: ver Next Advertsiment mas minimunBuyRate e o especificado pelo fabricante do title
-	WishlistEntry nextAdvertisementTitle() const;
+	WishlistEntry nextAdvertisementTitle();
 
 	/**
 	* @brief Creates an entry for the wishlist
@@ -402,6 +403,15 @@ public:
 	* @return bool Returns true if successfull, false otherwise
 	*/
 	bool addWishlistEntry(unsigned interest, float buyChance, Title * title);
+
+	/**
+	* @brief Creates an entry for the wishlist
+	*
+	* @param interest Interest in the title, from 1 to 10
+	* @param title Pointer to the title
+	* @return bool Returns true if successfull, false otherwise
+	*/
+	bool addWishlistEntry(unsigned interest, Title * title);
 
 	/**
 	* @brief Removes an entry from the wishlist
@@ -416,10 +426,13 @@ public:
 	*
 	* @param title Pointer to the title to edit
 	* @param interest Interest in the title, from 1 to 10
-	* @param buyChance Chance of the user buying this title, between 0 and 1
 	* @return bool Returns true if successfull, false otherwise
 	*/
-	bool editWishlistEntry(Title * title, unsigned interest, float buyChance);
+	bool editWishlistEntry(Title * title, unsigned interest);
+	//TODO: comentar
+	void updateWishlistProbability();
+
+	const WishlistEntry & getWishlistEntry(Title * title);
 
 	/**
 	* @brief Get a set with all the Platforms the User has titles for
@@ -465,11 +478,12 @@ public:
 		case ID:
 			return *usr1 < *usr2;
 		case ADS:
-			return usr1->getNumberOfSeenAds(title) < usr2->getNumberOfSeenAds(title);
+			return usr1->getNumberOfSeenAds(title) > usr2->getNumberOfSeenAds(title);
 		case SEARCHES:
-			return usr1->getNumberOfSearches(title) < usr2->getNumberOfSearches(title);
+			return usr1->getNumberOfSearches(title) > usr2->getNumberOfSearches(title);
 		case BUYCHANCE:
-			return true; // sigmoid(f(usr1, title)) < sigmoid(f(usr2, title));
+			return sigmoid(f(usr1, title)) > sigmoid(f(usr2, title));
+			//return usr1->getWishlistEntry(title).getBuyChance() > usr2->getWishlistEntry(title).getBuyChance();
 		}
 
 		return *usr1 < *usr2;

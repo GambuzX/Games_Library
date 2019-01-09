@@ -122,6 +122,9 @@ bool User::buyTitle(Title* title) {
 	addTransaction(price, GameLibrary::getLibraryDate(), gamePurchase);
 	purchasedGames->insert(title);
 
+	// Remove WishList Entry
+	this->removeWishlistEntry(title);
+
 	// Remove from HashTable
 	GameLibrary::removeFromHashTable(title, this);
 
@@ -159,6 +162,9 @@ bool User::buyTitle(unsigned int titleID) {
 	addTransaction(price, GameLibrary::getLibraryDate(), gamePurchase);
 	purchasedGames->insert(title);
 
+	// Remove WishList Entry
+	this->removeWishlistEntry(title);
+
 	// Remove from HashTable
 	GameLibrary::removeFromHashTable(title, this);
 
@@ -194,6 +200,9 @@ bool User::buyTitle(std::string name, gameLibraryPlatform platform)
 	title->addNewUser(this);
 	addTransaction(price, GameLibrary::getLibraryDate(), gamePurchase);
 	purchasedGames->insert(title);
+
+	// Remove WishList Entry
+	this->removeWishlistEntry(title);
 
 	// Remove from HashTable
 	GameLibrary::removeFromHashTable(title, this);
@@ -407,8 +416,10 @@ bool User::removeFriend(User * frnd) {
 	return true;
 }
 
-WishlistEntry User::nextAdvertisementTitle(float minimumBuyRate) const
+WishlistEntry User::nextAdvertisementTitle(float minimumBuyRate)
 {
+	updateWishlistProbability();
+
 	if (wishlist.empty()) throw NoMatchingWishlistEntry(minimumBuyRate);
 	if (wishlist.top().getBuyChance() > minimumBuyRate) return wishlist.top();
 	priority_queue<WishlistEntry> copy = wishlist;
@@ -421,8 +432,10 @@ WishlistEntry User::nextAdvertisementTitle(float minimumBuyRate) const
 	throw NoMatchingWishlistEntry(minimumBuyRate);
 }
 
-WishlistEntry User::nextAdvertisementTitle() const
+WishlistEntry User::nextAdvertisementTitle()
 {
+	updateWishlistProbability();
+
 	if (wishlist.empty()) throw NoMatchingWishlistEntryUser(this);
 	if (wishlist.top().getBuyChance() > wishlist.top().getTitle()->getMinimumBuyProbability()) return wishlist.top();
 	priority_queue<WishlistEntry> copy = wishlist;
@@ -438,6 +451,23 @@ WishlistEntry User::nextAdvertisementTitle() const
 bool User::addWishlistEntry(unsigned interest, float buyChance, Title * title)
 {
 	WishlistEntry newEntry(interest, buyChance, title);
+
+	priority_queue<WishlistEntry> copy = wishlist;
+	while (!copy.empty())
+	{
+		WishlistEntry curr = copy.top();
+		copy.pop();
+		if (curr.getTitle()->getTitleID() == title->getTitleID())
+			return false;
+	}
+
+	wishlist.push(newEntry);
+	return true;
+}
+
+bool User::addWishlistEntry(unsigned interest, Title * title)
+{
+	WishlistEntry newEntry(interest, sigmoid(f(this, title)), title);
 	
 	priority_queue<WishlistEntry> copy = wishlist;
 	while (!copy.empty())
@@ -458,7 +488,7 @@ bool User::removeWishlistEntry(Title * title)
 	priority_queue<WishlistEntry> copy = wishlist;
 
 	// Empty the wishlist
-	while (!wishlist.empty()) wishlist.pop();
+	wishlist = priority_queue<WishlistEntry>();
 
 	// Reconstruct editing the argument title
 	while (!copy.empty())
@@ -478,13 +508,13 @@ bool User::removeWishlistEntry(Title * title)
 	return removed;
 }
 
-bool User::editWishlistEntry(Title * title, unsigned interest, float buyChance)
+bool User::editWishlistEntry(Title * title, unsigned interest)
 {
 	bool edited = false;
 	priority_queue<WishlistEntry> copy = wishlist;
 
 	// Empty the wishlist
-	while (!wishlist.empty()) wishlist.pop();
+	wishlist = priority_queue<WishlistEntry>();
 
 	// Reconstruct without the argument title
 	while (!copy.empty())
@@ -493,7 +523,7 @@ bool User::editWishlistEntry(Title * title, unsigned interest, float buyChance)
 		if (curr.getTitle()->getTitleID() == title->getTitleID())
 		{
 			curr.setInterest(interest);
-			curr.setBuyChance(buyChance);
+			curr.setBuyChance(sigmoid( f(this, curr.getTitle() )));
 			edited = true;
 		}
 
@@ -502,6 +532,34 @@ bool User::editWishlistEntry(Title * title, unsigned interest, float buyChance)
 	}
 
 	return edited;
+}
+
+void User::updateWishlistProbability()
+{
+	priority_queue<WishlistEntry> copy = wishlist;
+
+	// Empty the wishlist
+	wishlist = priority_queue<WishlistEntry>();
+
+	// Reconstruct without the argument title
+	while (!copy.empty())
+	{
+		WishlistEntry curr = copy.top();
+		curr.setBuyChance(sigmoid(f(this, curr.getTitle())));
+		wishlist.push(curr);
+		copy.pop();
+	}
+}
+
+const WishlistEntry & User::getWishlistEntry(Title * title)
+{
+	priority_queue<WishlistEntry> copy = wishlist;
+	while (!copy.empty())
+	{
+		if (copy.top().getTitle()->getTitleID() == title->getTitleID()) return copy.top();
+		copy.pop();
+	}
+	throw NoMatchingWishlistEntryUser(this);
 }
 
 set<string> User::getPlatforms()

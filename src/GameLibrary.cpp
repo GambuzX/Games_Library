@@ -1143,9 +1143,14 @@ void GameLibrary::updateHashTable()
 	// typedef std::map<Title*, HashTabUsersPtr, ComparePtr<Title>> titleUserHashTabMap;
 	// typedef std::map<User*, std::set<Title*, ComparePtr<Title>>, ComparePtr<User>> usersMap;
 
-	for (const auto & user : users)
-		addUserToHashTables(user.first);
+	// TODO: ver isto
 
+	asleepUsers.clear();
+
+	for (const auto & user : users) {
+		user.first->updateWishlistProbability();
+		addUserToHashTables(user.first);
+	}
 }
 
 void GameLibrary::removeFromHashTable(Title * title, User * user)
@@ -1216,6 +1221,8 @@ set<User*, CompareUsr> GameLibrary::OrderUsersByID(Title * title)
 {
 	set<User*, CompareUsr> ordered_list(CompareUsr(title, ID));
 
+	updateHashTable();
+
 	HashTabUsersPtr hashtable = GameLibrary::asleepUsers[title];
 	HashTabUsersPtr::iterator it;
 	for (it = hashtable.begin(); it != hashtable.end(); it++)
@@ -1228,6 +1235,8 @@ set<User*, CompareUsr> GameLibrary::OrderUsersByAds(Title * title)
 {
 	set<User*, CompareUsr> ordered_list(CompareUsr(title, ADS));
 
+	updateHashTable();
+
 	HashTabUsersPtr hashtable = GameLibrary::asleepUsers[title];
 	HashTabUsersPtr::iterator it;
 	for (it = hashtable.begin(); it != hashtable.end(); it++)
@@ -1236,10 +1245,11 @@ set<User*, CompareUsr> GameLibrary::OrderUsersByAds(Title * title)
 	return ordered_list;
 }
 
-
 set<User*, CompareUsr> GameLibrary::OrderUsersBySearches(Title * title)
 {
 	set<User*, CompareUsr> ordered_list(CompareUsr(title, SEARCHES));
+
+	updateHashTable();
 
 	HashTabUsersPtr hashtable = GameLibrary::asleepUsers[title];
 	HashTabUsersPtr::iterator it;
@@ -1252,6 +1262,8 @@ set<User*, CompareUsr> GameLibrary::OrderUsersBySearches(Title * title)
 set<User*, CompareUsr> GameLibrary::OrderUsersByBuyChance(Title * title)
 {
 	set<User*, CompareUsr> ordered_list(CompareUsr(title, BUYCHANCE));
+
+	updateHashTable();
 
 	HashTabUsersPtr hashtable = GameLibrary::asleepUsers[title];
 	HashTabUsersPtr::iterator it;
