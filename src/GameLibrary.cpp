@@ -213,6 +213,8 @@ bool GameLibrary::addTitleToCompany(string companyName, Title * title)
 	return comp->addTitle(title);
 }
 
+// TODO: add titleID to transactions
+/*
 void GameLibrary::saveGameLibrary()
 {
 	// the info files only contains information on the number of games, users and companies
@@ -456,7 +458,7 @@ void GameLibrary::loadGameLibrary()
 		}
 
 		for (Transaction & transaction : trans) {
-			user->addTransaction(transaction.getValue(), transaction.getDate(), transaction.getType());
+			user->addTransaction(transaction.getValue(), transaction.getDate(), transaction.getType(), transaction.getTitleID());
 		}
 
 		allfriends.emplace_back(i, friend_ids);
@@ -724,7 +726,7 @@ void GameLibrary::loadGameLibrary()
 		user->addWishlistEntry(interest, buy_chance, title);
 	}
 }
-
+*/
 bool GameLibrary::updateTitle(Title* title, Update * update) {
 	try
 	{
@@ -1143,9 +1145,8 @@ void GameLibrary::updateHashTable()
 	// typedef std::map<Title*, HashTabUsersPtr, ComparePtr<Title>> titleUserHashTabMap;
 	// typedef std::map<User*, std::set<Title*, ComparePtr<Title>>, ComparePtr<User>> usersMap;
 
-	// TODO: ver isto
-
-	asleepUsers.clear();
+	// Nao limpa tabela para que users inativos ha muito tempo nao sejam removidos
+	//asleepUsers.clear();
 
 	for (const auto & user : users) {
 		user.first->updateWishlistProbability();

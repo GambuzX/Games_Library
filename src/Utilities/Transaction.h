@@ -26,6 +26,7 @@ private:
 	double value; /**< @brief Value of the Transaction */
 	Date date; /**< @brief Date when the Transaction was made */
 	TransactionType type; /**< @brief Type of the Transaction */
+	unsigned int titleID;	/**< @brief ID of the Title of the Transaction */
 
 public:
 	/**
@@ -33,8 +34,9 @@ public:
 	 * 
 	 * @param val Double to initialize the value Private Member
 	 * @param t TransactionType to initialize the type Private Member
+	 * @param titleID ID of the title of the transaction
 	 */
-	Transaction(double val, TransactionType t);
+	Transaction(double val, TransactionType t, unsigned int id);
 
 	/**
 	 * @brief Construct a new Transaction object with the desired date
@@ -42,8 +44,9 @@ public:
 	 * @param val Double to initialize the value Private Member
 	 * @param d Date that initializes the date Private Member
 	 * @param t TransactionType to initialize the type Private Member
+	 * @param titleID ID of the title of the transaction
 	 */
-	Transaction(double val, Date d, TransactionType t);
+	Transaction(double val, Date d, TransactionType t, unsigned int id);
 	
 	/**
 	 * @brief Get the Value Private Member
@@ -62,9 +65,16 @@ public:
 	/**
 	 * @brief Get the Type Private Member
 	 * 
-	 * @return TransactionType Returns the type Private Member
+	 * @return TransactionType Returns the titleID Private Member
 	 */
 	TransactionType getType() const;
+
+	/**
+	 * @brief Get the Title ID Private Member
+	 *
+	 * @return unsigned int Returns the type Private Member
+	 */
+	unsigned int getTitleID() const;
 
 	/**
 	* @brief Overload of the operator <<

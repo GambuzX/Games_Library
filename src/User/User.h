@@ -380,8 +380,9 @@ public:
 	* @param value Value of transaction
 	* @param date Date of transaction
 	* @param t TransactionType enum value representing the type of transaction
+	* @param titleID ID of the title of the transaction
 	*/
-	void addTransaction(double value, Date date, TransactionType t) { transactions.push_back(Transaction(value, date, t)); }
+	void addTransaction(double value, Date date, TransactionType t, unsigned int titleID) { transactions.push_back(Transaction(value, date, t, titleID)); }
 
 	/**
 	* @brief Returns the Title in the wishlist of higher priority, with a minimum buy rate

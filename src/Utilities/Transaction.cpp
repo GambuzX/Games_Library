@@ -1,17 +1,19 @@
 #include "Transaction.h"
 #include "..\GameLibrary.h"
 
-Transaction::Transaction(double val, TransactionType t)
+Transaction::Transaction(double val, TransactionType t, unsigned int id)
 {
 	value = val;
 	date = GameLibrary::getLibraryDate();
 	type = t;
+	titleID = id;
 }
 
-Transaction::Transaction(double val, Date d, TransactionType t) {
+Transaction::Transaction(double val, Date d, TransactionType t, unsigned int id) {
 	value = val;
 	date = d;
 	type = t;
+	titleID = id;
 }
 
 double Transaction::getValue() const {
@@ -26,15 +28,21 @@ TransactionType Transaction::getType() const {
 	return type;
 }
 
+unsigned int Transaction::getTitleID() const
+{
+	return titleID;
+}
+
 std::ostream & operator<<(std::ostream & os, const Transaction & trans)
 {
 	std::string desc;
 
-	if (trans.getType() == gamePurchase) desc = "Purchased a Title";
-	else if (trans.getType() == homeUpdate) desc = "Updated a Home Title";
-	else if (trans.getType() == onlineSubscription) desc = "Payed an Online Subscription";
+	if (trans.getType() == gamePurchase) desc = "Purchased a  with the ID ";
+	else if (trans.getType() == homeUpdate) desc = "Updated a Home Title with the ID ";
+	else if (trans.getType() == onlineSubscription) desc = "Payed an Online Subscription of the Title with the ID ";
 
-	os << desc << " on " << trans.getDate() << " of value " << trans.getValue() << " .";
+	os << desc << trans.getTitleID();
+	os << " on " << trans.getDate() << " of value " << trans.getValue() << " .";
 	return os;
 }
 
