@@ -106,14 +106,27 @@ bool GameLibrary::addTitle(Title * title) {
 }
 
 bool GameLibrary::removeTitle(Title * title) {
+	// TODO: ver ordem de remocao
+
+	// Remove from company
+	Company* company = getCompany(title->getCompany());
+	company->removeTitle(title);
+
+	// Remove Wishlist Entries & Remove title from the search_ads map
+	for (const auto & user : users) {
+		user.first->removeWishlistEntry(title);
+		user.first->removeTitleFromTupleMap(title);
+	}
+
 	titleSet::iterator it;
 	it = titles.find(title);
 	if (it == titles.end()) return false;
 	titles.erase(it);
 
-	// Remove title from the search_ads map
-	for (const auto & user : users)
-		user.first->removeTitleFromTupleMap(title);
+	// Remove title from asleepUser map (remove its hashtable)
+	titleUserHashTabMap::iterator it3;
+	it3 = asleepUsers.find(title);
+	if (it3 != asleepUsers.end()) asleepUsers.erase(it3);
 
 	titlesRevenueMap::iterator it2;
 	it2 = titlesRevenue.find(title);
@@ -126,14 +139,25 @@ bool GameLibrary::removeTitle(unsigned int id) {
 	Title * title = getTitle(id);
 	if (title == nullptr) return false;
 
+	// Remove from company
+	Company* company = getCompany(title->getCompany());
+	company->removeTitle(title);
+
+	// Remove Wishlist Entries & Remove title from the search_ads map
+	for (const auto & user : users) {
+		user.first->removeWishlistEntry(title);
+		user.first->removeTitleFromTupleMap(title);
+	}
+
 	titleSet::iterator it;
 	it = titles.find(title);
 	if (it == titles.end()) return false;
 	titles.erase(it);
 
-	// Remove title from the search_ads map
-	for (const auto & user : users)
-		user.first->removeTitleFromTupleMap(title);
+	// Remove title from asleepUser map (remove its hashtable)
+	titleUserHashTabMap::iterator it3;
+	it3 = asleepUsers.find(title);
+	if (it3 != asleepUsers.end()) asleepUsers.erase(it3);
 
 	titlesRevenueMap::iterator it2;
 	it2 = titlesRevenue.find(title);

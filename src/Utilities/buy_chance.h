@@ -10,6 +10,8 @@ const double FRIENDS_WEIGHT = 1;
 const double ADS_WEIGHT = 2;
 const double SEARCHES_WEIGHT = 2;
 
+// updates when: buy new game, remove game, add friend, remove friend, new add, new search
+
 double sigmoid(double x)
 {
 	return 1 / (1 + pow(EULER_CONSTANT / 2.5, -26 - x));

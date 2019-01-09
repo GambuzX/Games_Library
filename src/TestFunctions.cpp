@@ -894,12 +894,8 @@ void removeGame(GameLibrary & gL) {
 	int nameErrors = 0;
 
 	unsigned int titleID = intInput(" Title ID Number (0 to go back): ");
-	Title* title = gL.getTitle(titleID);
-
-	Company* company = gL.getCompany(title->getCompany());
 
 	while (titleID != 0) {
-		company->removeTitle(title);
 
 		if (!gL.removeTitle(titleID))
 		{
@@ -1116,7 +1112,7 @@ void globalRevRanking(GameLibrary & gl) {
 
 //-----------------------------------------------------------------------------------------------------------------------//
 
-void search(GameLibrary & gl, User * user)
+void searchTitles(GameLibrary & gl, User * user)
 {
 	gameLibraryPlatform platform = menuPlatform();
 	gameLibraryGenre genre = menuGenre(true);
@@ -1878,7 +1874,7 @@ void UserGameMenu(GameLibrary & gl, User * user) {
 	case 6:
 	{
 		header("Search Titles");
-		search(gl, user);
+		searchTitles(gl, user);
 		std::cout << endl << endl;
 		try
 		{
@@ -2171,7 +2167,7 @@ void ListsRankingsMenu(GameLibrary & gl) {
 		break;
 	case 4:
 		header("Search Titles");
-		search(gl, NULL);
+		searchTitles(gl, NULL);
 		std::cout << endl << endl;
 		ListsRankingsMenu(gl);
 		break;
