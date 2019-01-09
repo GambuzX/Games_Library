@@ -1186,3 +1186,53 @@ unsigned int GameLibrary::numberOfAdsSeen(Title * title)
 		res += user.first->getNumberOfSeenAds(title);
 	return res;
 }
+
+
+set<User*, CompareUsr> GameLibrary::OrderUsersByID(Title * title)
+{
+	set<User*, CompareUsr> ordered_list(CompareUsr(title, ID));
+
+	HashTabUsersPtr hashtable = GameLibrary::asleepUsers[title];
+	HashTabUsersPtr::iterator it;
+	for (it = hashtable.begin(); it != hashtable.end(); it++)
+		ordered_list.insert(*it);
+
+	return ordered_list;
+}
+
+set<User*, CompareUsr> GameLibrary::OrderUsersByAds(Title * title)
+{
+	set<User*, CompareUsr> ordered_list(CompareUsr(title, ADS));
+
+	HashTabUsersPtr hashtable = GameLibrary::asleepUsers[title];
+	HashTabUsersPtr::iterator it;
+	for (it = hashtable.begin(); it != hashtable.end(); it++)
+		ordered_list.insert(*it);
+
+	return ordered_list;
+}
+
+
+set<User*, CompareUsr> GameLibrary::OrderUsersBySearches(Title * title)
+{
+	set<User*, CompareUsr> ordered_list(CompareUsr(title, SEARCHES));
+
+	HashTabUsersPtr hashtable = GameLibrary::asleepUsers[title];
+	HashTabUsersPtr::iterator it;
+	for (it = hashtable.begin(); it != hashtable.end(); it++)
+		ordered_list.insert(*it);
+
+	return ordered_list;
+}
+
+set<User*, CompareUsr> GameLibrary::OrderUsersByBuyChance(Title * title)
+{
+	set<User*, CompareUsr> ordered_list(CompareUsr(title, BUYCHANCE));
+
+	HashTabUsersPtr hashtable = GameLibrary::asleepUsers[title];
+	HashTabUsersPtr::iterator it;
+	for (it = hashtable.begin(); it != hashtable.end(); it++)
+		ordered_list.insert(*it);
+
+	return ordered_list;
+}
