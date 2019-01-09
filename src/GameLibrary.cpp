@@ -106,8 +106,6 @@ bool GameLibrary::addTitle(Title * title) {
 }
 
 bool GameLibrary::removeTitle(Title * title) {
-	// TODO: ver ordem de remocao
-
 	// Remove from company
 	Company* company = getCompany(title->getCompany());
 	company->removeTitle(title);
@@ -363,6 +361,7 @@ void GameLibrary::loadGameLibrary()
 		int age, house_number, ncredit_cards, ntransactions=0, transaction_type, nfriends, ngames;
 		double balance, transaction_value;
 		unsigned transaction_title;
+		string creation_date;
 
 		user_file_name << "user_" << i << ".txt";
 		ifstream user_file("users/" + user_file_name.str());
@@ -381,6 +380,8 @@ void GameLibrary::loadGameLibrary()
 				user_current_state = email_age;
 				break;
 			case email_age:
+			    creation_date = str;
+			    getline(user_file, str);
 				email = split(str)[0];
 				age = stoi(split(str, 1)[1]);
 				getline(user_file, str);
@@ -463,6 +464,7 @@ void GameLibrary::loadGameLibrary()
 		}
 		user_current_state = _id_name;
 		User *user = new User(name, email, age, Address(house_number, road_name, city, country));
+		user->setCreatedDate(Date(creation_date));
 		addUser(user);
 
 		for (CreditCard &ccs : cc) {

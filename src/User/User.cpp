@@ -596,8 +596,8 @@ bool User::operator<(const User & usr) const
 
 ostream& operator<<(ostream &os, const User &user)
 {
-	os << user.getUserID() << " " << user.getName() << endl;
-	os << user.getEmail() << " " << user.getAge() << endl;
+	os << user.getUserID() << " " << user.getName() << " " << user.getEmail() << " " << user.getAge() << endl;
+	os << user.getCreationDate() << endl;
 	user.getAddress().writeAddress(os);
 
 	os << "Credit Cards:" << endl;
