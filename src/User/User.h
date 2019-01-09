@@ -185,7 +185,7 @@ public:
 	/**
 	* @brief Get the friendsList Private Member
 	*
-	* @return const set<User*, ComparePtr<User>> & Returns the friendsList Private Member
+	* @return set<User*, ComparePtr<User>> & Returns the friendsList Private Member
 	*/
 	const std::set<User*, ComparePtr<User>> & getFriendsList() const { return friendsList; }
 
@@ -367,6 +367,9 @@ public:
 	* @return bool Returns true if successfull, false otherwise
 	*/
 	bool addFriend(User * frnd);
+
+	// TODO: comentar
+	void addFriendNoRestrictions(User * frnd);
 
 	/**
 	* @brief Removes a User from the friendsList Private Member

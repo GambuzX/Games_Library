@@ -402,7 +402,12 @@ bool User::addFriend(User * frnd) {
 	if (it != friendsList.end()) return false;
 
 	friendsList.insert(frnd);
+	frnd->addFriendNoRestrictions(this);
 	return true;
+}
+
+void User::addFriendNoRestrictions(User * frnd) {
+	friendsList.insert(frnd);
 }
 
 bool User::removeFriend(User * frnd) {
