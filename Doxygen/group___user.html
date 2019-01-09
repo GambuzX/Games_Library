@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Games Library: Users</title>
+<title>Game Library: Users</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -21,7 +21,8 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Games Library
+   <div id="projectname">Game Library
+   &#160;<span id="projectnumber">2.0</span>
    </div>
    <div id="projectbrief">Multiplatform Game Management System</div>
   </td>
@@ -64,7 +65,9 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#groups">Modules</a> &#124;
-<a href="#nested-classes">Classes</a>  </div>
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
 <div class="title">Users<div class="ingroups"><a class="el" href="group___game_library.html">Game Library</a></div></div>  </div>
 </div><!--header-->
@@ -84,6 +87,25 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_user.html">User</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class that represents an <a class="el" href="class_user.html" title="Class that represents an User in the Game Library. ">User</a> in the Game Library.  <a href="class_user.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_compare_usr.html">CompareUsr</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function object used to compare two Users that belong to an Hashtable based on different criterias.  <a href="class_compare_usr.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga5145fff6c8b6f1f9cf025d814012d373"><td class="memItemLeft" align="right" valign="top"><a id="ga5145fff6c8b6f1f9cf025d814012d373"></a>
+typedef std::map&lt; <a class="el" href="class_title.html">Title</a> *, std::tuple&lt; unsigned int, unsigned int &gt;, <a class="el" href="struct_compare_ptr.html">ComparePtr</a>&lt; <a class="el" href="class_title.html">Title</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>mapTitleTuple</b></td></tr>
+<tr class="separator:ga5145fff6c8b6f1f9cf025d814012d373"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ga8d586cb5742df96b6e14f778f7ab8e79"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___user.html#ga8d586cb5742df96b6e14f778f7ab8e79">UserCmpType</a> { <a class="el" href="group___user.html#gga8d586cb5742df96b6e14f778f7ab8e79a001479a58fb44c39a29b20d565081a68">ID</a>, 
+<a class="el" href="group___user.html#gga8d586cb5742df96b6e14f778f7ab8e79aaeceb83ef7c6f1ed3729d5257310eea2">ADS</a>, 
+<a class="el" href="group___user.html#gga8d586cb5742df96b6e14f778f7ab8e79a50dd6b9c4eea5b68edec947384862a24">SEARCHES</a>, 
+<a class="el" href="group___user.html#gga8d586cb5742df96b6e14f778f7ab8e79a9e96d85f780c0ebcd81d33422c5f3d38">BUYCHANCE</a>
+ }</td></tr>
+<tr class="memdesc:ga8d586cb5742df96b6e14f778f7ab8e79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumerated type for identifying the different types of comparison that can be made between users in a hashtable.  <a href="group___user.html#ga8d586cb5742df96b6e14f778f7ab8e79">More...</a><br /></td></tr>
+<tr class="separator:ga8d586cb5742df96b6e14f778f7ab8e79"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Group holding all the information about Users and related classes. </p>
@@ -95,6 +117,33 @@ Classes</h2></td></tr>
 <a class="el" href="class_address.html" title="Class representing an Address. ">Address</a> </dd>
 <dd>
 <a class="el" href="class_transaction.html" title="Class that represents a Transaction. ">Transaction</a> </dd></dl>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="ga8d586cb5742df96b6e14f778f7ab8e79"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8d586cb5742df96b6e14f778f7ab8e79">&#9670;&nbsp;</a></span>UserCmpType</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group___user.html#ga8d586cb5742df96b6e14f778f7ab8e79">UserCmpType</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Enumerated type for identifying the different types of comparison that can be made between users in a hashtable. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga8d586cb5742df96b6e14f778f7ab8e79a001479a58fb44c39a29b20d565081a68"></a>ID&#160;</td><td class="fielddoc"><p>Compare by ID </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga8d586cb5742df96b6e14f778f7ab8e79aaeceb83ef7c6f1ed3729d5257310eea2"></a>ADS&#160;</td><td class="fielddoc"><p>Compare by number of ADS seen </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga8d586cb5742df96b6e14f778f7ab8e79a50dd6b9c4eea5b68edec947384862a24"></a>SEARCHES&#160;</td><td class="fielddoc"><p>Compare by number of SEARCHES made </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga8d586cb5742df96b6e14f778f7ab8e79a9e96d85f780c0ebcd81d33422c5f3d38"></a>BUYCHANCE&#160;</td><td class="fielddoc"><p>Compare by BUYCHANCE </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

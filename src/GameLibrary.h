@@ -25,10 +25,12 @@
 * @see Title
 */
 
-// TODO: comentar e passar para compareobj??
+/**
+* @brief Object used to specify hash and comparison functions
+*/
 struct UserPtrHash
 {
-	// PARA j� djb2 depois se houver tempo mudar faz 33*...
+	// DJB2 hash
 	int operator() (const User * user) const
 	{
 		unsigned long hash = 5381;

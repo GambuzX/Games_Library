@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Games Library: OnlineTitle Class Reference</title>
+<title>Game Library: OnlineTitle Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -21,7 +21,8 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Games Library
+   <div id="projectname">Game Library
+   &#160;<span id="projectnumber">2.0</span>
    </div>
    <div id="projectbrief">Multiplatform Game Management System</div>
   </td>
@@ -128,6 +129,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a28a15b959623669bda5c5bcb8da3358a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_online_title.html#a28a15b959623669bda5c5bcb8da3358a">updateTitle</a> (<a class="el" href="class_update.html">Update</a> *newUpdate) override</td></tr>
 <tr class="memdesc:a28a15b959623669bda5c5bcb8da3358a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates a Home <a class="el" href="class_title.html" title="Abstract class that represents a Title in the Game Library. ">Title</a> Virtual function that may throw exceptions if called on the incorrect object Also Throws exception if the parameter is not a new <a class="el" href="class_update.html" title="Class representing an Update of a HomeTitle. ">Update</a>.  <a href="#a28a15b959623669bda5c5bcb8da3358a">More...</a><br /></td></tr>
 <tr class="separator:a28a15b959623669bda5c5bcb8da3358a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf5075ba4247ea589dbde9577f1516b7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_online_title.html#acf5075ba4247ea589dbde9577f1516b7">resetUpdates</a> ()</td></tr>
+<tr class="memdesc:acf5075ba4247ea589dbde9577f1516b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the vector of updates Virtual function that may throw exceptions if called on the incorrect object.  <a href="#acf5075ba4247ea589dbde9577f1516b7">More...</a><br /></td></tr>
+<tr class="separator:acf5075ba4247ea589dbde9577f1516b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acceb51eb972e102989cd4c6dcef75d0a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_online_title.html#acceb51eb972e102989cd4c6dcef75d0a">userNeedsUpdate</a> (<a class="el" href="class_user.html">User</a> *usr) const override</td></tr>
 <tr class="memdesc:acceb51eb972e102989cd4c6dcef75d0a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function that verifies if a <a class="el" href="class_user.html" title="Class that represents an User in the Game Library. ">User</a> needs an <a class="el" href="class_update.html" title="Class representing an Update of a HomeTitle. ">Update</a> Virtual function that may throw exceptions if called on the incorrect object.  <a href="#acceb51eb972e102989cd4c6dcef75d0a">More...</a><br /></td></tr>
 <tr class="separator:acceb51eb972e102989cd4c6dcef75d0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -149,13 +153,19 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ae2257e932ec633ef65260822c54744e2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_online_title.html#ae2257e932ec633ef65260822c54744e2">addNewSession</a> (unsigned int userID, const <a class="el" href="class_session.html">Session</a> &amp;sess)</td></tr>
 <tr class="memdesc:ae2257e932ec633ef65260822c54744e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a new <a class="el" href="class_session.html" title="Class representing a player Session of an OnlineTitle. ">Session</a> to the <a class="el" href="class_user.html" title="Class that represents an User in the Game Library. ">User</a>'s vector of sessions kepping it in order May also throw other exceptions if the user is not a owner of the <a class="el" href="class_title.html" title="Abstract class that represents a Title in the Game Library. ">Title</a>.  <a href="#ae2257e932ec633ef65260822c54744e2">More...</a><br /></td></tr>
 <tr class="separator:ae2257e932ec633ef65260822c54744e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a38ee7572746b154a2ec2300a4ceac4d6"><td class="memItemLeft" align="right" valign="top"><a id="a38ee7572746b154a2ec2300a4ceac4d6"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>displayTitleInfo</b> (std::ostream &amp;os) override</td></tr>
+<tr class="memitem:a38ee7572746b154a2ec2300a4ceac4d6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_online_title.html#a38ee7572746b154a2ec2300a4ceac4d6">displayTitleInfo</a> (std::ostream &amp;os) override</td></tr>
+<tr class="memdesc:a38ee7572746b154a2ec2300a4ceac4d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes information about this Online <a class="el" href="class_title.html" title="Abstract class that represents a Title in the Game Library. ">Title</a> to the specified stream.  <a href="#a38ee7572746b154a2ec2300a4ceac4d6">More...</a><br /></td></tr>
 <tr class="separator:a38ee7572746b154a2ec2300a4ceac4d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_title"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_title')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_title.html">Title</a></td></tr>
 <tr class="memitem:a64fbd984a0c329dd0dcc38318d214a45 inherit pub_methods_class_title"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_title.html#a64fbd984a0c329dd0dcc38318d214a45">Title</a> (std::string name, double price, <a class="el" href="class_date.html">Date</a> releaseDate, <a class="el" href="structage_range.html">ageRange</a> ageR, gameLibraryPlatform platform, gameLibraryGenre genre, std::string company)</td></tr>
-<tr class="memdesc:a64fbd984a0c329dd0dcc38318d214a45 inherit pub_methods_class_title"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="class_title.html" title="Abstract class that represents a Title in the Game Library. ">Title</a> object Uses the nextTitleID static unsigned int to assign the titleID.  <a href="class_title.html#a64fbd984a0c329dd0dcc38318d214a45">More...</a><br /></td></tr>
+<tr class="memdesc:a64fbd984a0c329dd0dcc38318d214a45 inherit pub_methods_class_title"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="class_title.html" title="Abstract class that represents a Title in the Game Library. ">Title</a> object Uses the nextTitleID static unsigned int to assign the titleID Defaults minimumBuyProbability to 0.  <a href="class_title.html#a64fbd984a0c329dd0dcc38318d214a45">More...</a><br /></td></tr>
 <tr class="separator:a64fbd984a0c329dd0dcc38318d214a45 inherit pub_methods_class_title"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14101c9c3cfd55b05bbc5d1b838df2f9 inherit pub_methods_class_title"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_title.html#a14101c9c3cfd55b05bbc5d1b838df2f9">setMinimumBuyProbability</a> (float minimumBuyProb)</td></tr>
+<tr class="memdesc:a14101c9c3cfd55b05bbc5d1b838df2f9 inherit pub_methods_class_title"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the Minimum Buy Probability Private Member May throw exception if the parameter is invalid.  <a href="class_title.html#a14101c9c3cfd55b05bbc5d1b838df2f9">More...</a><br /></td></tr>
+<tr class="separator:a14101c9c3cfd55b05bbc5d1b838df2f9 inherit pub_methods_class_title"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac37850a29f6898b6df4650257a2b7633 inherit pub_methods_class_title"><td class="memItemLeft" align="right" valign="top">const float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_title.html#ac37850a29f6898b6df4650257a2b7633">getMinimumBuyProbability</a> ()</td></tr>
+<tr class="memdesc:ac37850a29f6898b6df4650257a2b7633 inherit pub_methods_class_title"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Minimum Buy Probability Private Member.  <a href="class_title.html#ac37850a29f6898b6df4650257a2b7633">More...</a><br /></td></tr>
+<tr class="separator:ac37850a29f6898b6df4650257a2b7633 inherit pub_methods_class_title"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a67c8af14e423ea4efa8f9bcb7eec87f8 inherit pub_methods_class_title"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_title.html#a67c8af14e423ea4efa8f9bcb7eec87f8">getName</a> () const</td></tr>
 <tr class="memdesc:a67c8af14e423ea4efa8f9bcb7eec87f8 inherit pub_methods_class_title"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Name Private Member.  <a href="class_title.html#a67c8af14e423ea4efa8f9bcb7eec87f8">More...</a><br /></td></tr>
 <tr class="separator:a67c8af14e423ea4efa8f9bcb7eec87f8 inherit pub_methods_class_title"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -184,7 +194,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>displayTitleInfo</b> 
 <tr class="memdesc:a87662b57e70da8f011118d51e2391458 inherit pub_methods_class_title"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Genre Name of the Private Member.  <a href="class_title.html#a87662b57e70da8f011118d51e2391458">More...</a><br /></td></tr>
 <tr class="separator:a87662b57e70da8f011118d51e2391458 inherit pub_methods_class_title"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a24e1c879c964cdbda39337018bd50ffc inherit pub_methods_class_title"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_title.html#a24e1c879c964cdbda39337018bd50ffc">getCompany</a> () const</td></tr>
-<tr class="memdesc:a24e1c879c964cdbda39337018bd50ffc inherit pub_methods_class_title"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Company Private Member.  <a href="class_title.html#a24e1c879c964cdbda39337018bd50ffc">More...</a><br /></td></tr>
+<tr class="memdesc:a24e1c879c964cdbda39337018bd50ffc inherit pub_methods_class_title"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="class_company.html" title="Class representing a Company in the Game Library. ">Company</a> Private Member.  <a href="class_title.html#a24e1c879c964cdbda39337018bd50ffc">More...</a><br /></td></tr>
 <tr class="separator:a24e1c879c964cdbda39337018bd50ffc inherit pub_methods_class_title"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7956c180377a3c3d5c82dc2e79d41ed0 inherit pub_methods_class_title"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; <a class="el" href="class_sale.html">Sale</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_title.html#a7956c180377a3c3d5c82dc2e79d41ed0">getSaleHistory</a> () const</td></tr>
 <tr class="memdesc:a7956c180377a3c3d5c82dc2e79d41ed0 inherit pub_methods_class_title"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="class_sale.html" title="Class representing a promotion of a Title. ">Sale</a> History Private Member.  <a href="class_title.html#a7956c180377a3c3d5c82dc2e79d41ed0">More...</a><br /></td></tr>
@@ -426,6 +436,42 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>displayTitleInfo</b> 
 </dl>
 
 <p>Implements <a class="el" href="class_title.html#a15474838117bd94553ed627a22693cb8">Title</a>.</p>
+
+</div>
+</div>
+<a id="a38ee7572746b154a2ec2300a4ceac4d6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a38ee7572746b154a2ec2300a4ceac4d6">&#9670;&nbsp;</a></span>displayTitleInfo()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void OnlineTitle::displayTitleInfo </td>
+          <td>(</td>
+          <td class="paramtype">std::ostream &amp;&#160;</td>
+          <td class="paramname"><em>os</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Writes information about this Online <a class="el" href="class_title.html" title="Abstract class that represents a Title in the Game Library. ">Title</a> to the specified stream. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">os</td><td>Stream to write information to </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Reimplemented from <a class="el" href="class_title.html">Title</a>.</p>
 
 </div>
 </div>
@@ -949,6 +995,41 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>displayTitleInfo</b> 
 </dl>
 
 <p>Implements <a class="el" href="class_title.html#ac0bd896f815f20e061bd2eb631f4e829">Title</a>.</p>
+
+</div>
+</div>
+<a id="acf5075ba4247ea589dbde9577f1516b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acf5075ba4247ea589dbde9577f1516b7">&#9670;&nbsp;</a></span>resetUpdates()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void OnlineTitle::resetUpdates </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reset the vector of updates Virtual function that may throw exceptions if called on the incorrect object. </p>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="class_not_home_title.html" title="Exception that is thrown when a Home Title method is called on an Online Title. ">NotHomeTitle()</a></td><td>If it is called on a Online <a class="el" href="class_title.html" title="Abstract class that represents a Title in the Game Library. ">Title</a> Object </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="class_title.html#aaed00cd5ffa1d5afc135a35647db4683">Title</a>.</p>
 
 </div>
 </div>

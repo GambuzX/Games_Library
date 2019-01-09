@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Games Library: Date Class Reference</title>
+<title>Game Library: Date Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -21,7 +21,8 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Games Library
+   <div id="projectname">Game Library
+   &#160;<span id="projectnumber">2.0</span>
    </div>
    <div id="projectbrief">Multiplatform Game Management System</div>
   </td>
@@ -110,6 +111,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a1299c7e1f0080304f082a9225a743957"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_date.html#a1299c7e1f0080304f082a9225a743957">setYear</a> (unsigned int year)</td></tr>
 <tr class="memdesc:a1299c7e1f0080304f082a9225a743957"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the Year Private Member May throw exception if the parameter is invalid.  <a href="#a1299c7e1f0080304f082a9225a743957">More...</a><br /></td></tr>
 <tr class="separator:a1299c7e1f0080304f082a9225a743957"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adab874932c21b2d602f51e68ffa61367"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_date.html#adab874932c21b2d602f51e68ffa61367">addMonths</a> (unsigned int months)</td></tr>
+<tr class="memdesc:adab874932c21b2d602f51e68ffa61367"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a number of months to the <a class="el" href="class_date.html" title="Class representing a Date in the format DD/MM/YYYY. ">Date</a>.  <a href="#adab874932c21b2d602f51e68ffa61367">More...</a><br /></td></tr>
+<tr class="separator:adab874932c21b2d602f51e68ffa61367"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad719d004d7a1ce5c3578c029588c0199"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_date.html#ad719d004d7a1ce5c3578c029588c0199">addYears</a> (unsigned int years)</td></tr>
+<tr class="memdesc:ad719d004d7a1ce5c3578c029588c0199"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a number of years to the <a class="el" href="class_date.html" title="Class representing a Date in the format DD/MM/YYYY. ">Date</a>.  <a href="#ad719d004d7a1ce5c3578c029588c0199">More...</a><br /></td></tr>
+<tr class="separator:ad719d004d7a1ce5c3578c029588c0199"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a318430ca9069b71101be296e372ebf47"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_date.html">Date</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_date.html#a318430ca9069b71101be296e372ebf47">operator+</a> (int days) const</td></tr>
 <tr class="memdesc:a318430ca9069b71101be296e372ebf47"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overload of the plus operator in order to add a number of days to a date May call the symmetric operator if the number of days is negative.  <a href="#a318430ca9069b71101be296e372ebf47">More...</a><br /></td></tr>
 <tr class="separator:a318430ca9069b71101be296e372ebf47"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -225,6 +232,58 @@ Friends</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="adab874932c21b2d602f51e68ffa61367"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adab874932c21b2d602f51e68ffa61367">&#9670;&nbsp;</a></span>addMonths()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Date::addMonths </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>months</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Add a number of months to the <a class="el" href="class_date.html" title="Class representing a Date in the format DD/MM/YYYY. ">Date</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">months</td><td>Number of months to be added </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ad719d004d7a1ce5c3578c029588c0199"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad719d004d7a1ce5c3578c029588c0199">&#9670;&nbsp;</a></span>addYears()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Date::addYears </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>years</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Add a number of years to the <a class="el" href="class_date.html" title="Class representing a Date in the format DD/MM/YYYY. ">Date</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">years</td><td>Number of years to be added </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="abafed2134d89da1f742f911181aef8ab"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#abafed2134d89da1f742f911181aef8ab">&#9670;&nbsp;</a></span>getCurrentDate()</h2>
 

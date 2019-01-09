@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['gamepurchase',['gamePurchase',['../group___user_utility.html#ggaa7a2e64697569804f14626bbb2649a58a9ba3b53257907c45bfb04eddcb2b5f1e',1,'Transaction.h']]]
+  ['ads',['ADS',['../group___user.html#gga8d586cb5742df96b6e14f778f7ab8e79aaeceb83ef7c6f1ed3729d5257310eea2',1,'User.h']]]
 ];

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Games Library: User Class Reference</title>
+<title>Game Library: User Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -21,7 +21,8 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Games Library
+   <div id="projectname">Game Library
+   &#160;<span id="projectnumber">2.0</span>
    </div>
    <div id="projectbrief">Multiplatform Game Management System</div>
   </td>
@@ -79,8 +80,29 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:adda699c8eb4a6a1e023ac107903857f0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_user.html#adda699c8eb4a6a1e023ac107903857f0">User</a> (std::string name, std::string email, int age, <a class="el" href="class_address.html">Address</a> address)</td></tr>
-<tr class="memdesc:adda699c8eb4a6a1e023ac107903857f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="class_user.html" title="Class that represents an User in the Game Library. ">User</a> object Uses the nextUserID static int to assign the userID Assigns the current <a class="el" href="class_date.html" title="Class representing a Date in the format DD/MM/YYYY. ">Date</a> to createdDate.  <a href="#adda699c8eb4a6a1e023ac107903857f0">More...</a><br /></td></tr>
+<tr class="memdesc:adda699c8eb4a6a1e023ac107903857f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new <a class="el" href="class_user.html" title="Class that represents an User in the Game Library. ">User</a> object Uses the nextUserID static int to assign the userID Assigns the current library <a class="el" href="class_date.html" title="Class representing a Date in the format DD/MM/YYYY. ">Date</a> to createdDate.  <a href="#adda699c8eb4a6a1e023ac107903857f0">More...</a><br /></td></tr>
 <tr class="separator:adda699c8eb4a6a1e023ac107903857f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a720932b92321b2d2dedbdcc0d9cee061"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_user.html#a720932b92321b2d2dedbdcc0d9cee061">getNumberOfSearches</a> (<a class="el" href="class_title.html">Title</a> *title)</td></tr>
+<tr class="memdesc:a720932b92321b2d2dedbdcc0d9cee061"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Number Of Searches of the desired <a class="el" href="class_title.html" title="Abstract class that represents a Title in the Game Library. ">Title</a>.  <a href="#a720932b92321b2d2dedbdcc0d9cee061">More...</a><br /></td></tr>
+<tr class="separator:a720932b92321b2d2dedbdcc0d9cee061"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c72aa078e59d1c9075aef6dd949ca47"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_user.html#a0c72aa078e59d1c9075aef6dd949ca47">getNumberOfSeenAds</a> (<a class="el" href="class_title.html">Title</a> *title)</td></tr>
+<tr class="memdesc:a0c72aa078e59d1c9075aef6dd949ca47"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Number Of Seen Ads of the desired <a class="el" href="class_title.html" title="Abstract class that represents a Title in the Game Library. ">Title</a>.  <a href="#a0c72aa078e59d1c9075aef6dd949ca47">More...</a><br /></td></tr>
+<tr class="separator:a0c72aa078e59d1c9075aef6dd949ca47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b4197b3e383b61d67e59310d71932aa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_user.html#a4b4197b3e383b61d67e59310d71932aa">setSearchesAds</a> (mapTitleTuple mtt)</td></tr>
+<tr class="memdesc:a4b4197b3e383b61d67e59310d71932aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setter for the searches_adds field.  <a href="#a4b4197b3e383b61d67e59310d71932aa">More...</a><br /></td></tr>
+<tr class="separator:a4b4197b3e383b61d67e59310d71932aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a51af63fd835329ca832346c786ba36"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_user.html#a3a51af63fd835329ca832346c786ba36">incNumberOfSearches</a> (<a class="el" href="class_title.html">Title</a> *title)</td></tr>
+<tr class="memdesc:a3a51af63fd835329ca832346c786ba36"><td class="mdescLeft">&#160;</td><td class="mdescRight">Increment the number of times that a certain title has been searched.  <a href="#a3a51af63fd835329ca832346c786ba36">More...</a><br /></td></tr>
+<tr class="separator:a3a51af63fd835329ca832346c786ba36"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c789371c213d53071b0e36dfb2ea251"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_user.html#a6c789371c213d53071b0e36dfb2ea251">incNumberOfSeenAds</a> (<a class="el" href="class_title.html">Title</a> *title)</td></tr>
+<tr class="memdesc:a6c789371c213d53071b0e36dfb2ea251"><td class="mdescLeft">&#160;</td><td class="mdescRight">Increment the number of times that an add from a certain title has been seen.  <a href="#a6c789371c213d53071b0e36dfb2ea251">More...</a><br /></td></tr>
+<tr class="separator:a6c789371c213d53071b0e36dfb2ea251"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb59dc9675a2c4fa550a165b18c007d8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_user.html#abb59dc9675a2c4fa550a165b18c007d8">addTitleToTupleMap</a> (<a class="el" href="class_title.html">Title</a> *title)</td></tr>
+<tr class="memdesc:abb59dc9675a2c4fa550a165b18c007d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a New <a class="el" href="class_title.html" title="Abstract class that represents a Title in the Game Library. ">Title</a> to the searches_ads map and initializes the searches and the number of seen ads to 0.  <a href="#abb59dc9675a2c4fa550a165b18c007d8">More...</a><br /></td></tr>
+<tr class="separator:abb59dc9675a2c4fa550a165b18c007d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b670a126d848ec3cf3681f86c3c4eb0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_user.html#a8b670a126d848ec3cf3681f86c3c4eb0">removeTitleFromTupleMap</a> (<a class="el" href="class_title.html">Title</a> *title)</td></tr>
+<tr class="memdesc:a8b670a126d848ec3cf3681f86c3c4eb0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes a <a class="el" href="class_title.html" title="Abstract class that represents a Title in the Game Library. ">Title</a> from the search_ads map.  <a href="#a8b670a126d848ec3cf3681f86c3c4eb0">More...</a><br /></td></tr>
+<tr class="separator:a8b670a126d848ec3cf3681f86c3c4eb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a22cf60a7b53d14807e2413644381d947"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_date.html">Date</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_user.html#a22cf60a7b53d14807e2413644381d947">getCreationDate</a> () const</td></tr>
 <tr class="memdesc:a22cf60a7b53d14807e2413644381d947"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the createdDate Private Member.  <a href="#a22cf60a7b53d14807e2413644381d947">More...</a><br /></td></tr>
 <tr class="separator:a22cf60a7b53d14807e2413644381d947"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -99,6 +121,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:abdd81193dfb0dee156974a428f0e5913"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_address.html">Address</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_user.html#abdd81193dfb0dee156974a428f0e5913">getAddress</a> () const</td></tr>
 <tr class="memdesc:abdd81193dfb0dee156974a428f0e5913"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the address Private Member.  <a href="#abdd81193dfb0dee156974a428f0e5913">More...</a><br /></td></tr>
 <tr class="separator:abdd81193dfb0dee156974a428f0e5913"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6da50715388848b8ca8943244d22dc07"><td class="memItemLeft" align="right" valign="top">mapTitleTuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_user.html#a6da50715388848b8ca8943244d22dc07">getSearchesAds</a> () const</td></tr>
+<tr class="memdesc:a6da50715388848b8ca8943244d22dc07"><td class="mdescLeft">&#160;</td><td class="mdescRight">Getter for field searches_ads.  <a href="#a6da50715388848b8ca8943244d22dc07">More...</a><br /></td></tr>
+<tr class="separator:a6da50715388848b8ca8943244d22dc07"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1ae7ba20a2c8fbd0456fbc816c880494"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; <a class="el" href="class_credit_card.html">CreditCard</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_user.html#a1ae7ba20a2c8fbd0456fbc816c880494">getCreditCards</a> () const</td></tr>
 <tr class="memdesc:a1ae7ba20a2c8fbd0456fbc816c880494"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the creditCards Private Member.  <a href="#a1ae7ba20a2c8fbd0456fbc816c880494">More...</a><br /></td></tr>
 <tr class="separator:a1ae7ba20a2c8fbd0456fbc816c880494"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -114,9 +139,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a2fee7ce64b9f63232737afc5a5b12af1"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; <a class="el" href="class_transaction.html">Transaction</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_user.html#a2fee7ce64b9f63232737afc5a5b12af1">getTransactions</a> () const</td></tr>
 <tr class="memdesc:a2fee7ce64b9f63232737afc5a5b12af1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the transactions Private Member.  <a href="#a2fee7ce64b9f63232737afc5a5b12af1">More...</a><br /></td></tr>
 <tr class="separator:a2fee7ce64b9f63232737afc5a5b12af1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a203563664a0eaf4989eab204a45c871a"><td class="memItemLeft" align="right" valign="top">const std::priority_queue&lt; <a class="el" href="class_wishlist_entry.html">WishlistEntry</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_user.html#a203563664a0eaf4989eab204a45c871a">getWishlist</a> () const</td></tr>
+<tr class="memdesc:a203563664a0eaf4989eab204a45c871a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Wishlist Private Member.  <a href="#a203563664a0eaf4989eab204a45c871a">More...</a><br /></td></tr>
+<tr class="separator:a203563664a0eaf4989eab204a45c871a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aba606ac48d6c70fd95f6fba956971931"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_user.html#aba606ac48d6c70fd95f6fba956971931">setCreatedDate</a> (const <a class="el" href="class_date.html">Date</a> &amp;date)</td></tr>
 <tr class="memdesc:aba606ac48d6c70fd95f6fba956971931"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the createdDate Private Member.  <a href="#aba606ac48d6c70fd95f6fba956971931">More...</a><br /></td></tr>
 <tr class="separator:aba606ac48d6c70fd95f6fba956971931"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1944e1f8e2930dc5a62c15cdbee8f785"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_user.html#a1944e1f8e2930dc5a62c15cdbee8f785">setAge</a> (const int newAge)</td></tr>
+<tr class="memdesc:a1944e1f8e2930dc5a62c15cdbee8f785"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the age Private Member.  <a href="#a1944e1f8e2930dc5a62c15cdbee8f785">More...</a><br /></td></tr>
+<tr class="separator:a1944e1f8e2930dc5a62c15cdbee8f785"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa84af12f8670e4ec56f98c65314ddd96"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_user.html#aa84af12f8670e4ec56f98c65314ddd96">setPurchasedGames</a> (std::set&lt; <a class="el" href="class_title.html">Title</a> *, <a class="el" href="struct_compare_ptr.html">ComparePtr</a>&lt; <a class="el" href="class_title.html">Title</a> &gt;&gt; *games)</td></tr>
 <tr class="memdesc:aa84af12f8670e4ec56f98c65314ddd96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the purchasedGames Private Member.  <a href="#aa84af12f8670e4ec56f98c65314ddd96">More...</a><br /></td></tr>
 <tr class="separator:aa84af12f8670e4ec56f98c65314ddd96"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -156,6 +187,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a6189dfc8bd8f25f7998aaff9befcfe17"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_user.html#a6189dfc8bd8f25f7998aaff9befcfe17">buyTitle</a> (std::string name, gameLibraryPlatform platform)</td></tr>
 <tr class="memdesc:a6189dfc8bd8f25f7998aaff9befcfe17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Buy <a class="el" href="class_title.html" title="Abstract class that represents a Title in the Game Library. ">Title</a> for <a class="el" href="class_user.html" title="Class that represents an User in the Game Library. ">User</a> Uses <a class="el" href="class_game_library.html" title="Class representing the Game Library system. ">GameLibrary</a>'s static method getTitle() to retrieve information about the <a class="el" href="class_title.html" title="Abstract class that represents a Title in the Game Library. ">Title</a> with name name.  <a href="#a6189dfc8bd8f25f7998aaff9befcfe17">More...</a><br /></td></tr>
 <tr class="separator:a6189dfc8bd8f25f7998aaff9befcfe17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a387211d6976246fc4daf43e07a22e095"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_user.html#a387211d6976246fc4daf43e07a22e095">addTitle</a> (unsigned int titleID)</td></tr>
+<tr class="memdesc:a387211d6976246fc4daf43e07a22e095"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a <a class="el" href="class_title.html" title="Abstract class that represents a Title in the Game Library. ">Title</a> to the <a class="el" href="class_user.html" title="Class that represents an User in the Game Library. ">User</a> list Does not perform a purchase.  <a href="#a387211d6976246fc4daf43e07a22e095">More...</a><br /></td></tr>
+<tr class="separator:a387211d6976246fc4daf43e07a22e095"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8add04afc0e3b342baeb0846dc777e8e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_user.html#a8add04afc0e3b342baeb0846dc777e8e">updateTitle</a> (<a class="el" href="class_title.html">Title</a> *title)</td></tr>
 <tr class="memdesc:a8add04afc0e3b342baeb0846dc777e8e"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_update.html" title="Class representing an Update of a HomeTitle. ">Update</a> <a class="el" href="class_user.html" title="Class that represents an User in the Game Library. ">User</a> version of a <a class="el" href="class_title.html" title="Abstract class that represents a Title in the Game Library. ">Title</a>.  <a href="#a8add04afc0e3b342baeb0846dc777e8e">More...</a><br /></td></tr>
 <tr class="separator:a8add04afc0e3b342baeb0846dc777e8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -166,25 +200,56 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:af7016ee82949e8de45e58d2abee1f744"><td class="mdescLeft">&#160;</td><td class="mdescRight">Play a <a class="el" href="class_title.html" title="Abstract class that represents a Title in the Game Library. ">Title</a>.  <a href="#af7016ee82949e8de45e58d2abee1f744">More...</a><br /></td></tr>
 <tr class="separator:af7016ee82949e8de45e58d2abee1f744"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a382f57db5913e58a7f18074d31cb51a3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_user.html#a382f57db5913e58a7f18074d31cb51a3">addFriend</a> (<a class="el" href="class_user.html">User</a> *frnd)</td></tr>
-<tr class="memdesc:a382f57db5913e58a7f18074d31cb51a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a <a class="el" href="class_user.html" title="Class that represents an User in the Game Library. ">User</a> to the friendsList Private Member.  <a href="#a382f57db5913e58a7f18074d31cb51a3">More...</a><br /></td></tr>
+<tr class="memdesc:a382f57db5913e58a7f18074d31cb51a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a <a class="el" href="class_user.html" title="Class that represents an User in the Game Library. ">User</a> to the friendsList Private Member The addition is made both ways, so that both users are friends of each other.  <a href="#a382f57db5913e58a7f18074d31cb51a3">More...</a><br /></td></tr>
 <tr class="separator:a382f57db5913e58a7f18074d31cb51a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19d10171bb291e68c5335e4f42500491"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_user.html#a19d10171bb291e68c5335e4f42500491">addFriendNoRestrictions</a> (<a class="el" href="class_user.html">User</a> *frnd)</td></tr>
+<tr class="memdesc:a19d10171bb291e68c5335e4f42500491"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a <a class="el" href="class_user.html" title="Class that represents an User in the Game Library. ">User</a> to the friendsList Private Member The addition is only one way, does not insert in the frnd list this user.  <a href="#a19d10171bb291e68c5335e4f42500491">More...</a><br /></td></tr>
+<tr class="separator:a19d10171bb291e68c5335e4f42500491"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5cd193246a5708b04dd73d6818b21029"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_user.html#a5cd193246a5708b04dd73d6818b21029">removeFriend</a> (<a class="el" href="class_user.html">User</a> *frnd)</td></tr>
 <tr class="memdesc:a5cd193246a5708b04dd73d6818b21029"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes a <a class="el" href="class_user.html" title="Class that represents an User in the Game Library. ">User</a> from the friendsList Private Member.  <a href="#a5cd193246a5708b04dd73d6818b21029">More...</a><br /></td></tr>
 <tr class="separator:a5cd193246a5708b04dd73d6818b21029"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8c6e736cb5a2794d5d159a9054ce6b63"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_user.html#a8c6e736cb5a2794d5d159a9054ce6b63">addTransaction</a> (double value, <a class="el" href="class_date.html">Date</a> date, <a class="el" href="group___user_utility.html#gaa7a2e64697569804f14626bbb2649a58">TransactionType</a> t)</td></tr>
-<tr class="memdesc:a8c6e736cb5a2794d5d159a9054ce6b63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a <a class="el" href="class_transaction.html" title="Class that represents a Transaction. ">Transaction</a> to the <a class="el" href="class_user.html" title="Class that represents an User in the Game Library. ">User</a>.  <a href="#a8c6e736cb5a2794d5d159a9054ce6b63">More...</a><br /></td></tr>
-<tr class="separator:a8c6e736cb5a2794d5d159a9054ce6b63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3708fa77375f92202ca19b78df66a6c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_user.html#ab3708fa77375f92202ca19b78df66a6c">addTransaction</a> (double value, <a class="el" href="class_date.html">Date</a> date, <a class="el" href="group___user_utility.html#gaa7a2e64697569804f14626bbb2649a58">TransactionType</a> t, unsigned int titleID)</td></tr>
+<tr class="memdesc:ab3708fa77375f92202ca19b78df66a6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a <a class="el" href="class_transaction.html" title="Class that represents a Transaction. ">Transaction</a> to the <a class="el" href="class_user.html" title="Class that represents an User in the Game Library. ">User</a>.  <a href="#ab3708fa77375f92202ca19b78df66a6c">More...</a><br /></td></tr>
+<tr class="separator:ab3708fa77375f92202ca19b78df66a6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8bf0c383059d991b87fd6123b7c807ee"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_wishlist_entry.html">WishlistEntry</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_user.html#a8bf0c383059d991b87fd6123b7c807ee">nextAdvertisementTitle</a> (float minimumBuyRate)</td></tr>
+<tr class="memdesc:a8bf0c383059d991b87fd6123b7c807ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the <a class="el" href="class_title.html" title="Abstract class that represents a Title in the Game Library. ">Title</a> in the wishlist of higher priority, with a minimum buy rate.  <a href="#a8bf0c383059d991b87fd6123b7c807ee">More...</a><br /></td></tr>
+<tr class="separator:a8bf0c383059d991b87fd6123b7c807ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac852233cac17067334ca476029d2a147"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_wishlist_entry.html">WishlistEntry</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_user.html#ac852233cac17067334ca476029d2a147">nextAdvertisementTitle</a> ()</td></tr>
+<tr class="memdesc:ac852233cac17067334ca476029d2a147"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the next Advertisment title, but the minimumBuyRate is the specified by the <a class="el" href="class_title.html" title="Abstract class that represents a Title in the Game Library. ">Title</a>.  <a href="#ac852233cac17067334ca476029d2a147">More...</a><br /></td></tr>
+<tr class="separator:ac852233cac17067334ca476029d2a147"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08c38e3f332e573b58a6469340f28537"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_user.html#a08c38e3f332e573b58a6469340f28537">addWishlistEntry</a> (unsigned interest, float buyChance, <a class="el" href="class_title.html">Title</a> *title)</td></tr>
+<tr class="memdesc:a08c38e3f332e573b58a6469340f28537"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an entry for the wishlist.  <a href="#a08c38e3f332e573b58a6469340f28537">More...</a><br /></td></tr>
+<tr class="separator:a08c38e3f332e573b58a6469340f28537"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abec25a5c0749d3d509387201bf14f35f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_user.html#abec25a5c0749d3d509387201bf14f35f">addWishlistEntry</a> (unsigned interest, <a class="el" href="class_title.html">Title</a> *title)</td></tr>
+<tr class="memdesc:abec25a5c0749d3d509387201bf14f35f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an entry for the wishlist.  <a href="#abec25a5c0749d3d509387201bf14f35f">More...</a><br /></td></tr>
+<tr class="separator:abec25a5c0749d3d509387201bf14f35f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4cc34ad75e042980fbdf3ba333a15c5f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_user.html#a4cc34ad75e042980fbdf3ba333a15c5f">removeWishlistEntry</a> (<a class="el" href="class_title.html">Title</a> *title)</td></tr>
+<tr class="memdesc:a4cc34ad75e042980fbdf3ba333a15c5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes an entry from the wishlist.  <a href="#a4cc34ad75e042980fbdf3ba333a15c5f">More...</a><br /></td></tr>
+<tr class="separator:a4cc34ad75e042980fbdf3ba333a15c5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe8bb966bba5375a43344b1703f6b25d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_user.html#abe8bb966bba5375a43344b1703f6b25d">editWishlistEntry</a> (<a class="el" href="class_title.html">Title</a> *title, unsigned interest)</td></tr>
+<tr class="memdesc:abe8bb966bba5375a43344b1703f6b25d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Edits an entry in the wishlist.  <a href="#abe8bb966bba5375a43344b1703f6b25d">More...</a><br /></td></tr>
+<tr class="separator:abe8bb966bba5375a43344b1703f6b25d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab34e9601596cec3a6dc7067475d170d8"><td class="memItemLeft" align="right" valign="top"><a id="ab34e9601596cec3a6dc7067475d170d8"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_user.html#ab34e9601596cec3a6dc7067475d170d8">updateWishlistProbability</a> ()</td></tr>
+<tr class="memdesc:ab34e9601596cec3a6dc7067475d170d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the buy chance of all the titles in the wishlist. <br /></td></tr>
+<tr class="separator:ab34e9601596cec3a6dc7067475d170d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a27242005ce5454a1427c26c48cd43903"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="class_wishlist_entry.html">WishlistEntry</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_user.html#a27242005ce5454a1427c26c48cd43903">getWishlistEntry</a> (<a class="el" href="class_title.html">Title</a> *title)</td></tr>
+<tr class="memdesc:a27242005ce5454a1427c26c48cd43903"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the <a class="el" href="class_wishlist_entry.html" title="Class representing a Wishlist Entry. ">WishlistEntry</a> of a given title.  <a href="#a27242005ce5454a1427c26c48cd43903">More...</a><br /></td></tr>
+<tr class="separator:a27242005ce5454a1427c26c48cd43903"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7cedc41270b8aac00a961126068c679c"><td class="memItemLeft" align="right" valign="top">std::set&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_user.html#a7cedc41270b8aac00a961126068c679c">getPlatforms</a> ()</td></tr>
 <tr class="memdesc:a7cedc41270b8aac00a961126068c679c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a set with all the Platforms the <a class="el" href="class_user.html" title="Class that represents an User in the Game Library. ">User</a> has titles for.  <a href="#a7cedc41270b8aac00a961126068c679c">More...</a><br /></td></tr>
 <tr class="separator:a7cedc41270b8aac00a961126068c679c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f762d536dd9e729e972cc91aa449be4"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; unsigned int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_user.html#a4f762d536dd9e729e972cc91aa449be4">getTitlesBougthLastXMonths</a> (unsigned int months) const</td></tr>
+<tr class="memdesc:a4f762d536dd9e729e972cc91aa449be4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the IDs of all the titles bought in the last given months.  <a href="#a4f762d536dd9e729e972cc91aa449be4">More...</a><br /></td></tr>
+<tr class="separator:a4f762d536dd9e729e972cc91aa449be4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a58e2192e14d08a6c5d0a13cc9617d813"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_user.html#a58e2192e14d08a6c5d0a13cc9617d813">operator&lt;</a> (const <a class="el" href="class_user.html">User</a> &amp;usr) const</td></tr>
 <tr class="memdesc:a58e2192e14d08a6c5d0a13cc9617d813"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overload of the less operator A <a class="el" href="class_user.html" title="Class that represents an User in the Game Library. ">User</a> is "less" than the other if its ID is smaller.  <a href="#a58e2192e14d08a6c5d0a13cc9617d813">More...</a><br /></td></tr>
 <tr class="separator:a58e2192e14d08a6c5d0a13cc9617d813"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>
-<tr class="memitem:a8096d4eb432e19f22dd6566e10007454"><td class="memItemLeft" align="right" valign="top"><a id="a8096d4eb432e19f22dd6566e10007454"></a>
-std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;&lt;</b> (std::ostream &amp;os, const <a class="el" href="class_user.html">User</a> &amp;user)</td></tr>
+<tr class="memitem:a8096d4eb432e19f22dd6566e10007454"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_user.html#a8096d4eb432e19f22dd6566e10007454">operator&lt;&lt;</a> (std::ostream &amp;os, const <a class="el" href="class_user.html">User</a> &amp;user)</td></tr>
+<tr class="memdesc:a8096d4eb432e19f22dd6566e10007454"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overload of the &lt;&lt; operator Used to insert the <a class="el" href="class_user.html" title="Class that represents an User in the Game Library. ">User</a> information in a file.  <a href="#a8096d4eb432e19f22dd6566e10007454">More...</a><br /></td></tr>
 <tr class="separator:a8096d4eb432e19f22dd6566e10007454"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -228,7 +293,7 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operato
       </table>
 </div><div class="memdoc">
 
-<p>Construct a new <a class="el" href="class_user.html" title="Class that represents an User in the Game Library. ">User</a> object Uses the nextUserID static int to assign the userID Assigns the current <a class="el" href="class_date.html" title="Class representing a Date in the format DD/MM/YYYY. ">Date</a> to createdDate. </p>
+<p>Construct a new <a class="el" href="class_user.html" title="Class that represents an User in the Game Library. ">User</a> object Uses the nextUserID static int to assign the userID Assigns the current library <a class="el" href="class_date.html" title="Class representing a Date in the format DD/MM/YYYY. ">Date</a> to createdDate. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">name</td><td>String that initializes the name Private Member </td></tr>
@@ -285,7 +350,7 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operato
       </table>
 </div><div class="memdoc">
 
-<p>Adds a <a class="el" href="class_user.html" title="Class that represents an User in the Game Library. ">User</a> to the friendsList Private Member. </p>
+<p>Adds a <a class="el" href="class_user.html" title="Class that represents an User in the Game Library. ">User</a> to the friendsList Private Member The addition is made both ways, so that both users are friends of each other. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">frnd</td><td>Pointer to the <a class="el" href="class_user.html" title="Class that represents an User in the Game Library. ">User</a> to add as friend </td></tr>
@@ -296,8 +361,99 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operato
 
 </div>
 </div>
-<a id="a8c6e736cb5a2794d5d159a9054ce6b63"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8c6e736cb5a2794d5d159a9054ce6b63">&#9670;&nbsp;</a></span>addTransaction()</h2>
+<a id="a19d10171bb291e68c5335e4f42500491"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a19d10171bb291e68c5335e4f42500491">&#9670;&nbsp;</a></span>addFriendNoRestrictions()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void User::addFriendNoRestrictions </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_user.html">User</a> *&#160;</td>
+          <td class="paramname"><em>frnd</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Adds a <a class="el" href="class_user.html" title="Class that represents an User in the Game Library. ">User</a> to the friendsList Private Member The addition is only one way, does not insert in the frnd list this user. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">frnd</td><td>Pointer to the <a class="el" href="class_user.html" title="Class that represents an User in the Game Library. ">User</a> to add as friend </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>bool Returns true if successfull, false otherwise </dd></dl>
+
+</div>
+</div>
+<a id="a387211d6976246fc4daf43e07a22e095"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a387211d6976246fc4daf43e07a22e095">&#9670;&nbsp;</a></span>addTitle()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool User::addTitle </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>titleID</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Add a <a class="el" href="class_title.html" title="Abstract class that represents a Title in the Game Library. ">Title</a> to the <a class="el" href="class_user.html" title="Class that represents an User in the Game Library. ">User</a> list Does not perform a purchase. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">titleID</td><td>ID of <a class="el" href="class_title.html" title="Abstract class that represents a Title in the Game Library. ">Title</a> to add </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>bool Returns true if successfull, false otherwise </dd></dl>
+
+</div>
+</div>
+<a id="abb59dc9675a2c4fa550a165b18c007d8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abb59dc9675a2c4fa550a165b18c007d8">&#9670;&nbsp;</a></span>addTitleToTupleMap()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool User::addTitleToTupleMap </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_title.html">Title</a> *&#160;</td>
+          <td class="paramname"><em>title</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Adds a New <a class="el" href="class_title.html" title="Abstract class that represents a Title in the Game Library. ">Title</a> to the searches_ads map and initializes the searches and the number of seen ads to 0. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">title</td><td><a class="el" href="class_title.html" title="Abstract class that represents a Title in the Game Library. ">Title</a> to be added to the map </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true If the insertion was completed </dd>
+<dd>
+false If there was already a title in the map </dd></dl>
+
+</div>
+</div>
+<a id="ab3708fa77375f92202ca19b78df66a6c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab3708fa77375f92202ca19b78df66a6c">&#9670;&nbsp;</a></span>addTransaction()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -321,7 +477,13 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operato
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="group___user_utility.html#gaa7a2e64697569804f14626bbb2649a58">TransactionType</a>&#160;</td>
-          <td class="paramname"><em>t</em>&#160;</td>
+          <td class="paramname"><em>t</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>titleID</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -342,9 +504,93 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operato
     <tr><td class="paramname">value</td><td>Value of transaction </td></tr>
     <tr><td class="paramname">date</td><td><a class="el" href="class_date.html" title="Class representing a Date in the format DD/MM/YYYY. ">Date</a> of transaction </td></tr>
     <tr><td class="paramname">t</td><td>TransactionType enum value representing the type of transaction </td></tr>
+    <tr><td class="paramname">titleID</td><td>ID of the title of the transaction </td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a08c38e3f332e573b58a6469340f28537"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a08c38e3f332e573b58a6469340f28537">&#9670;&nbsp;</a></span>addWishlistEntry() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool User::addWishlistEntry </td>
+          <td>(</td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>interest</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>buyChance</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_title.html">Title</a> *&#160;</td>
+          <td class="paramname"><em>title</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Creates an entry for the wishlist. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">interest</td><td>Interest in the title, from 1 to 10 </td></tr>
+    <tr><td class="paramname">buyChance</td><td>Chance of the user buying this title, between 0 and 1 </td></tr>
+    <tr><td class="paramname">title</td><td>Pointer to the title </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>bool Returns true if successfull, false otherwise </dd></dl>
+
+</div>
+</div>
+<a id="abec25a5c0749d3d509387201bf14f35f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abec25a5c0749d3d509387201bf14f35f">&#9670;&nbsp;</a></span>addWishlistEntry() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool User::addWishlistEntry </td>
+          <td>(</td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>interest</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_title.html">Title</a> *&#160;</td>
+          <td class="paramname"><em>title</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Creates an entry for the wishlist. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">interest</td><td>Interest in the title, from 1 to 10 </td></tr>
+    <tr><td class="paramname">title</td><td>Pointer to the title </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>bool Returns true if successfull, false otherwise </dd></dl>
 
 </div>
 </div>
@@ -433,6 +679,44 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operato
   <table class="params">
     <tr><td class="paramname">name</td><td>Name of <a class="el" href="class_title.html" title="Abstract class that represents a Title in the Game Library. ">Title</a> to buy </td></tr>
     <tr><td class="paramname">platform</td><td>Platform of <a class="el" href="class_title.html" title="Abstract class that represents a Title in the Game Library. ">Title</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>bool Returns true if successfull, false otherwise </dd></dl>
+
+</div>
+</div>
+<a id="abe8bb966bba5375a43344b1703f6b25d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abe8bb966bba5375a43344b1703f6b25d">&#9670;&nbsp;</a></span>editWishlistEntry()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool User::editWishlistEntry </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_title.html">Title</a> *&#160;</td>
+          <td class="paramname"><em>title</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>interest</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Edits an entry in the wishlist. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">title</td><td>Pointer to the title to edit </td></tr>
+    <tr><td class="paramname">interest</td><td>Interest in the title, from 1 to 10 </td></tr>
   </table>
   </dd>
 </dl>
@@ -651,7 +935,7 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operato
 </div><div class="memdoc">
 
 <p>Get the friendsList Private Member. </p>
-<dl class="section return"><dt>Returns</dt><dd>const set&lt;User*, ComparePtr&lt;User&gt;&gt; &amp; Returns the friendsList Private Member </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>set&lt;User*, ComparePtr&lt;User&gt;&gt; &amp; Returns the friendsList Private Member </dd></dl>
 
 </div>
 </div>
@@ -680,6 +964,76 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operato
 
 <p>Get the name Private Member. </p>
 <dl class="section return"><dt>Returns</dt><dd>string Returns the name Private Member </dd></dl>
+
+</div>
+</div>
+<a id="a720932b92321b2d2dedbdcc0d9cee061"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a720932b92321b2d2dedbdcc0d9cee061">&#9670;&nbsp;</a></span>getNumberOfSearches()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int User::getNumberOfSearches </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_title.html">Title</a> *&#160;</td>
+          <td class="paramname"><em>title</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the Number Of Searches of the desired <a class="el" href="class_title.html" title="Abstract class that represents a Title in the Game Library. ">Title</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">title</td><td>From which we want to know the number of times that has been searched </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>unsigned int Number of times that has been searched a certain <a class="el" href="class_title.html" title="Abstract class that represents a Title in the Game Library. ">Title</a> </dd></dl>
+
+</div>
+</div>
+<a id="a0c72aa078e59d1c9075aef6dd949ca47"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0c72aa078e59d1c9075aef6dd949ca47">&#9670;&nbsp;</a></span>getNumberOfSeenAds()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int User::getNumberOfSeenAds </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_title.html">Title</a> *&#160;</td>
+          <td class="paramname"><em>title</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the Number Of Seen Ads of the desired <a class="el" href="class_title.html" title="Abstract class that represents a Title in the Game Library. ">Title</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">title</td><td>From which we want to know the number of times that an add has been seen </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>unsigned int Number of times that has been seen an add from a certain <a class="el" href="class_title.html" title="Abstract class that represents a Title in the Game Library. ">Title</a> </dd></dl>
 
 </div>
 </div>
@@ -728,6 +1082,61 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operato
 
 <p>Get the purchasedGames Private Member. </p>
 <dl class="section return"><dt>Returns</dt><dd>const set&lt;Title*&gt;* Returns the purchasedGames Private Member </dd></dl>
+
+</div>
+</div>
+<a id="a6da50715388848b8ca8943244d22dc07"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6da50715388848b8ca8943244d22dc07">&#9670;&nbsp;</a></span>getSearchesAds()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">mapTitleTuple User::getSearchesAds </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Getter for field searches_ads. </p>
+<dl class="section return"><dt>Returns</dt><dd>mapTitleTuple Returns the searches_ads Private Member </dd></dl>
+
+</div>
+</div>
+<a id="a4f762d536dd9e729e972cc91aa449be4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4f762d536dd9e729e972cc91aa449be4">&#9670;&nbsp;</a></span>getTitlesBougthLastXMonths()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const vector&lt; unsigned int &gt; User::getTitlesBougthLastXMonths </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>months</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the IDs of all the titles bought in the last given months. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">months</td><td>timeperiod in months to check for titles bought </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>vector&lt;unsigned int&gt; containing all the ids of the bought titles </dd></dl>
 
 </div>
 </div>
@@ -804,6 +1213,61 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operato
 
 <p>Get the userID Private Member. </p>
 <dl class="section return"><dt>Returns</dt><dd>int Returns the userID Private Member </dd></dl>
+
+</div>
+</div>
+<a id="a203563664a0eaf4989eab204a45c871a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a203563664a0eaf4989eab204a45c871a">&#9670;&nbsp;</a></span>getWishlist()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::priority_queue&lt;<a class="el" href="class_wishlist_entry.html">WishlistEntry</a>&gt;&amp; User::getWishlist </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the Wishlist Private Member. </p>
+<dl class="section return"><dt>Returns</dt><dd>const priority_queue&lt;WishlistEntry&gt; &amp; Returns the wishlist Private Member </dd></dl>
+
+</div>
+</div>
+<a id="a27242005ce5454a1427c26c48cd43903"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a27242005ce5454a1427c26c48cd43903">&#9670;&nbsp;</a></span>getWishlistEntry()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="class_wishlist_entry.html">WishlistEntry</a> &amp; User::getWishlistEntry </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_title.html">Title</a> *&#160;</td>
+          <td class="paramname"><em>title</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the <a class="el" href="class_wishlist_entry.html" title="Class representing a Wishlist Entry. ">WishlistEntry</a> of a given title. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">title</td><td><a class="el" href="class_title.html" title="Abstract class that represents a Title in the Game Library. ">Title</a> to search for the <a class="el" href="class_wishlist_entry.html" title="Class representing a Wishlist Entry. ">WishlistEntry</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_wishlist_entry.html" title="Class representing a Wishlist Entry. ">WishlistEntry</a> of the specified title </dd></dl>
 
 </div>
 </div>
@@ -926,6 +1390,121 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operato
 
 </div>
 </div>
+<a id="a3a51af63fd835329ca832346c786ba36"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3a51af63fd835329ca832346c786ba36">&#9670;&nbsp;</a></span>incNumberOfSearches()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void User::incNumberOfSearches </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_title.html">Title</a> *&#160;</td>
+          <td class="paramname"><em>title</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Increment the number of times that a certain title has been searched. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">title</td><td><a class="el" href="class_title.html" title="Abstract class that represents a Title in the Game Library. ">Title</a> that has been searched </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a6c789371c213d53071b0e36dfb2ea251"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c789371c213d53071b0e36dfb2ea251">&#9670;&nbsp;</a></span>incNumberOfSeenAds()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void User::incNumberOfSeenAds </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_title.html">Title</a> *&#160;</td>
+          <td class="paramname"><em>title</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Increment the number of times that an add from a certain title has been seen. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">title</td><td><a class="el" href="class_title.html" title="Abstract class that represents a Title in the Game Library. ">Title</a> from which the add was seen </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a8bf0c383059d991b87fd6123b7c807ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8bf0c383059d991b87fd6123b7c807ee">&#9670;&nbsp;</a></span>nextAdvertisementTitle() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_wishlist_entry.html">WishlistEntry</a> User::nextAdvertisementTitle </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>minimumBuyRate</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the <a class="el" href="class_title.html" title="Abstract class that represents a Title in the Game Library. ">Title</a> in the wishlist of higher priority, with a minimum buy rate. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">minimumBuyRate</td><td>Minimum buy rate for the title to find </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_wishlist_entry.html" title="Class representing a Wishlist Entry. ">WishlistEntry</a> Copy of <a class="el" href="class_wishlist_entry.html" title="Class representing a Wishlist Entry. ">WishlistEntry</a> of most priority </dd></dl>
+
+</div>
+</div>
+<a id="ac852233cac17067334ca476029d2a147"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac852233cac17067334ca476029d2a147">&#9670;&nbsp;</a></span>nextAdvertisementTitle() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_wishlist_entry.html">WishlistEntry</a> User::nextAdvertisementTitle </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the next Advertisment title, but the minimumBuyRate is the specified by the <a class="el" href="class_title.html" title="Abstract class that represents a Title in the Game Library. ">Title</a>. </p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_wishlist_entry.html" title="Class representing a Wishlist Entry. ">WishlistEntry</a> Copy of <a class="el" href="class_wishlist_entry.html" title="Class representing a Wishlist Entry. ">WishlistEntry</a> of most priority </dd></dl>
+
+</div>
+</div>
 <a id="a58e2192e14d08a6c5d0a13cc9617d813"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a58e2192e14d08a6c5d0a13cc9617d813">&#9670;&nbsp;</a></span>operator&lt;()</h2>
 
@@ -1045,6 +1624,104 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operato
 
 </div>
 </div>
+<a id="a8b670a126d848ec3cf3681f86c3c4eb0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8b670a126d848ec3cf3681f86c3c4eb0">&#9670;&nbsp;</a></span>removeTitleFromTupleMap()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool User::removeTitleFromTupleMap </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_title.html">Title</a> *&#160;</td>
+          <td class="paramname"><em>title</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Removes a <a class="el" href="class_title.html" title="Abstract class that represents a Title in the Game Library. ">Title</a> from the search_ads map. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">title</td><td>Pointer to the <a class="el" href="class_title.html" title="Abstract class that represents a Title in the Game Library. ">Title</a> to be removed </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true If the title was removed </dd>
+<dd>
+false If there was no title to be removed </dd></dl>
+
+</div>
+</div>
+<a id="a4cc34ad75e042980fbdf3ba333a15c5f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4cc34ad75e042980fbdf3ba333a15c5f">&#9670;&nbsp;</a></span>removeWishlistEntry()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool User::removeWishlistEntry </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_title.html">Title</a> *&#160;</td>
+          <td class="paramname"><em>title</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Removes an entry from the wishlist. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">title</td><td>Pointer to the title to remove </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>bool Returns true if successfull, false otherwise </dd></dl>
+
+</div>
+</div>
+<a id="a1944e1f8e2930dc5a62c15cdbee8f785"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1944e1f8e2930dc5a62c15cdbee8f785">&#9670;&nbsp;</a></span>setAge()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void User::setAge </td>
+          <td>(</td>
+          <td class="paramtype">const int&#160;</td>
+          <td class="paramname"><em>newAge</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the age Private Member. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">newAge</td><td>int to set the age to </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="aba606ac48d6c70fd95f6fba956971931"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aba606ac48d6c70fd95f6fba956971931">&#9670;&nbsp;</a></span>setCreatedDate()</h2>
 
@@ -1107,6 +1784,40 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operato
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">games</td><td>Pointer to the <a class="el" href="class_user.html" title="Class that represents an User in the Game Library. ">User</a>'s game list </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a4b4197b3e383b61d67e59310d71932aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4b4197b3e383b61d67e59310d71932aa">&#9670;&nbsp;</a></span>setSearchesAds()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void User::setSearchesAds </td>
+          <td>(</td>
+          <td class="paramtype">mapTitleTuple&#160;</td>
+          <td class="paramname"><em>mtt</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Setter for the searches_adds field. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mtt</td><td>mapTitleTuple to copy to searches_ads </td></tr>
   </table>
   </dd>
 </dl>
@@ -1191,6 +1902,53 @@ std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operato
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>bool Returns true if successfull, false otherwise </dd></dl>
+
+</div>
+</div>
+<h2 class="groupheader">Friends And Related Function Documentation</h2>
+<a id="a8096d4eb432e19f22dd6566e10007454"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8096d4eb432e19f22dd6566e10007454">&#9670;&nbsp;</a></span>operator&lt;&lt;</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::ostream&amp; operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype">std::ostream &amp;&#160;</td>
+          <td class="paramname"><em>os</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="class_user.html">User</a> &amp;&#160;</td>
+          <td class="paramname"><em>user</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Overload of the &lt;&lt; operator Used to insert the <a class="el" href="class_user.html" title="Class that represents an User in the Game Library. ">User</a> information in a file. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">os</td><td>Stream to write to </td></tr>
+    <tr><td class="paramname">user</td><td><a class="el" href="class_user.html" title="Class that represents an User in the Game Library. ">User</a> to insert in the stream </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ostream Stream used to write to </dd></dl>
 
 </div>
 </div>

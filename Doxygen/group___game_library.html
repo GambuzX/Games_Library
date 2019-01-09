@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Games Library: Game Library</title>
+<title>Game Library: Game Library</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -21,7 +21,8 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Games Library
+   <div id="projectname">Game Library
+   &#160;<span id="projectnumber">2.0</span>
    </div>
    <div id="projectbrief">Multiplatform Game Management System</div>
   </td>
@@ -64,17 +65,21 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#groups">Modules</a> &#124;
-<a href="#nested-classes">Classes</a>  </div>
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle">
 <div class="title">Game Library</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Game Library system to manage Users and Titles <a class="el" href="class_game_library.html" title="Class representing the Game Library system. ">GameLibrary</a> Class represents a Game Library system to manage Users and Titles.  
+<p>Game Library system to manage Users and Titles <a class="el" href="class_game_library.html" title="Class representing the Game Library system. ">GameLibrary</a> Class represents a Game Library system to manage Users and Titles. This Class has an internal <a class="el" href="class_date.html" title="Class representing a Date in the format DD/MM/YYYY. ">Date</a> to keep track of the time.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
 Modules</h2></td></tr>
+<tr class="memitem:group___game_library_utility"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___game_library_utility.html">Game Library Utility</a></td></tr>
+<tr class="memdesc:group___game_library_utility"><td class="mdescLeft">&#160;</td><td class="mdescRight">Group holding the utility classes required to implement the Game Library class. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group___title"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___title.html">Titles</a></td></tr>
 <tr class="memdesc:group___title"><td class="mdescLeft">&#160;</td><td class="mdescRight">Group holding all the information about Titles and related classes. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -87,18 +92,36 @@ Modules</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_user_ptr_hash.html">UserPtrHash</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Object used to specify hash and comparison functions.  <a href="struct_user_ptr_hash.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_library.html">GameLibrary</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class representing the Game Library system.  <a href="class_game_library.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_compare_ptr.html">ComparePtr&lt; Comparable &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Comparable class used to order pointers by comparing the pointed elements.  <a href="struct_compare_ptr.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_decrescent_order.html">DecrescentOrder&lt; Comparable &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Comparable class used to order elements by Decrescent order.  <a href="struct_decrescent_order.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga0beeb880308aa2b91c42989644d299b3"><td class="memItemLeft" align="right" valign="top"><a id="ga0beeb880308aa2b91c42989644d299b3"></a>
+typedef std::set&lt; <a class="el" href="class_title.html">Title</a> *, <a class="el" href="struct_compare_ptr.html">ComparePtr</a>&lt; <a class="el" href="class_title.html">Title</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>titlesSet</b></td></tr>
+<tr class="separator:ga0beeb880308aa2b91c42989644d299b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2d91bc1be5f5c9ecb4d5e8f1f71bc1db"><td class="memItemLeft" align="right" valign="top"><a id="ga2d91bc1be5f5c9ecb4d5e8f1f71bc1db"></a>
+typedef std::map&lt; <a class="el" href="class_title.html">Title</a> *, double, <a class="el" href="struct_compare_ptr.html">ComparePtr</a>&lt; <a class="el" href="class_title.html">Title</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>titlesRevenueMap</b></td></tr>
+<tr class="separator:ga2d91bc1be5f5c9ecb4d5e8f1f71bc1db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad332687a5dae2b4d09bf6df64753213b"><td class="memItemLeft" align="right" valign="top"><a id="gad332687a5dae2b4d09bf6df64753213b"></a>
+typedef std::map&lt; <a class="el" href="class_user.html">User</a> *, std::set&lt; <a class="el" href="class_title.html">Title</a> *, <a class="el" href="struct_compare_ptr.html">ComparePtr</a>&lt; <a class="el" href="class_title.html">Title</a> &gt; &gt;, <a class="el" href="struct_compare_ptr.html">ComparePtr</a>&lt; <a class="el" href="class_user.html">User</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>usersMap</b></td></tr>
+<tr class="separator:gad332687a5dae2b4d09bf6df64753213b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa642fe40a910dafa0a75db328f619112"><td class="memItemLeft" align="right" valign="top"><a id="gaa642fe40a910dafa0a75db328f619112"></a>
+typedef std::unordered_set&lt; <a class="el" href="class_user.html">User</a> *, <a class="el" href="struct_user_ptr_hash.html">UserPtrHash</a>, <a class="el" href="struct_user_ptr_hash.html">UserPtrHash</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>HashTabUsersPtr</b></td></tr>
+<tr class="separator:gaa642fe40a910dafa0a75db328f619112"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2233f3371a24e22cad7961209b597294"><td class="memItemLeft" align="right" valign="top"><a id="ga2233f3371a24e22cad7961209b597294"></a>
+typedef std::map&lt; <a class="el" href="class_title.html">Title</a> *, HashTabUsersPtr, <a class="el" href="struct_compare_ptr.html">ComparePtr</a>&lt; <a class="el" href="class_title.html">Title</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>titleUserHashTabMap</b></td></tr>
+<tr class="separator:ga2233f3371a24e22cad7961209b597294"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1dea835b0944e43c9a125241df4de04f"><td class="memItemLeft" align="right" valign="top"><a id="ga1dea835b0944e43c9a125241df4de04f"></a>
+typedef std::set&lt; <a class="el" href="class_company.html">Company</a> *, <a class="el" href="struct_compare_company.html">CompareCompany</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>companiesSet</b></td></tr>
+<tr class="separator:ga1dea835b0944e43c9a125241df4de04f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Game Library system to manage Users and Titles <a class="el" href="class_game_library.html" title="Class representing the Game Library system. ">GameLibrary</a> Class represents a Game Library system to manage Users and Titles. </p>
+<p>Game Library system to manage Users and Titles <a class="el" href="class_game_library.html" title="Class representing the Game Library system. ">GameLibrary</a> Class represents a Game Library system to manage Users and Titles. This Class has an internal <a class="el" href="class_date.html" title="Class representing a Date in the format DD/MM/YYYY. ">Date</a> to keep track of the time. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="class_user.html" title="Class that represents an User in the Game Library. ">User</a> </dd>
 <dd>
 <a class="el" href="class_title.html" title="Abstract class that represents a Title in the Game Library. ">Title</a> </dd></dl>

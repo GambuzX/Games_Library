@@ -403,7 +403,9 @@ public:
 	std::string getInvalidDate() const { return date; };
 };
 
-// TODO: comentar
+/**
+* @brief Exception that is thrown when an outdated Date is specified
+*/
 class OldDate {
 private:
 	Date invDate;

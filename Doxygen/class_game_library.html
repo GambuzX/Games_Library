@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Games Library: GameLibrary Class Reference</title>
+<title>Game Library: GameLibrary Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -21,7 +21,8 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Games Library
+   <div id="projectname">Game Library
+   &#160;<span id="projectnumber">2.0</span>
    </div>
    <div id="projectbrief">Multiplatform Game Management System</div>
   </td>
@@ -78,10 +79,19 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a5d9ac2ca4e0dd5f30b9601a139e64a38"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_library.html#a5d9ac2ca4e0dd5f30b9601a139e64a38">GameLibrary</a> (unsigned int months)</td></tr>
+<tr class="memdesc:a5d9ac2ca4e0dd5f30b9601a139e64a38"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new Game Library object.  <a href="#a5d9ac2ca4e0dd5f30b9601a139e64a38">More...</a><br /></td></tr>
+<tr class="separator:a5d9ac2ca4e0dd5f30b9601a139e64a38"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2193ef272a006c8b9047de2e48d638d4"><td class="memItemLeft" align="right" valign="top"><a id="a2193ef272a006c8b9047de2e48d638d4"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_library.html#a2193ef272a006c8b9047de2e48d638d4">~GameLibrary</a> ()</td></tr>
 <tr class="memdesc:a2193ef272a006c8b9047de2e48d638d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Game Library class Destructor Frees the space allocated for the Users and Titles. <br /></td></tr>
 <tr class="separator:a2193ef272a006c8b9047de2e48d638d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1af1b60d011ae12ed1eae2467c3756fb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_library.html#a1af1b60d011ae12ed1eae2467c3756fb">setMothsToUpdate</a> (unsigned int months)</td></tr>
+<tr class="memdesc:a1af1b60d011ae12ed1eae2467c3756fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the Moths To <a class="el" href="class_update.html" title="Class representing an Update of a HomeTitle. ">Update</a> Hash Table private parameter.  <a href="#a1af1b60d011ae12ed1eae2467c3756fb">More...</a><br /></td></tr>
+<tr class="separator:a1af1b60d011ae12ed1eae2467c3756fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac105f42b186fda702236e8d83756e029"><td class="memItemLeft" align="right" valign="top">companiesSet&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_library.html#ac105f42b186fda702236e8d83756e029">getCompanies</a> ()</td></tr>
+<tr class="memdesc:ac105f42b186fda702236e8d83756e029"><td class="mdescLeft">&#160;</td><td class="mdescRight">Getter method for the set of registered companies.  <a href="#ac105f42b186fda702236e8d83756e029">More...</a><br /></td></tr>
+<tr class="separator:ac105f42b186fda702236e8d83756e029"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8cbcf41be49a48899e247eed0fe7e33a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_library.html#a8cbcf41be49a48899e247eed0fe7e33a">addUser</a> (std::string name, std::string email, int age, <a class="el" href="class_address.html">Address</a> address)</td></tr>
 <tr class="memdesc:a8cbcf41be49a48899e247eed0fe7e33a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a <a class="el" href="class_user.html" title="Class that represents an User in the Game Library. ">User</a> to the Game Library Constructs a new user with the given parameters May throw some exceptions if there is already an user with the specified email.  <a href="#a8cbcf41be49a48899e247eed0fe7e33a">More...</a><br /></td></tr>
 <tr class="separator:a8cbcf41be49a48899e247eed0fe7e33a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -109,6 +119,27 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ab08e5a0ddbb8d1a21b6232cf380e5f28"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_library.html#ab08e5a0ddbb8d1a21b6232cf380e5f28">removeTitle</a> (unsigned int id)</td></tr>
 <tr class="memdesc:ab08e5a0ddbb8d1a21b6232cf380e5f28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes a <a class="el" href="class_title.html" title="Abstract class that represents a Title in the Game Library. ">Title</a> from the Game Library.  <a href="#ab08e5a0ddbb8d1a21b6232cf380e5f28">More...</a><br /></td></tr>
 <tr class="separator:ab08e5a0ddbb8d1a21b6232cf380e5f28"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef6cdcaac8cd45b030b1933e6f82891a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_library.html#aef6cdcaac8cd45b030b1933e6f82891a">addCompany</a> (<a class="el" href="class_company.html">Company</a> *comp)</td></tr>
+<tr class="memdesc:aef6cdcaac8cd45b030b1933e6f82891a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a company to the Game Library.  <a href="#aef6cdcaac8cd45b030b1933e6f82891a">More...</a><br /></td></tr>
+<tr class="separator:aef6cdcaac8cd45b030b1933e6f82891a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af95618c874f69165d7494652c8a00637"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_library.html#af95618c874f69165d7494652c8a00637">removeCompany</a> (<a class="el" href="class_company.html">Company</a> *comp)</td></tr>
+<tr class="memdesc:af95618c874f69165d7494652c8a00637"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes a company from the Game Library.  <a href="#af95618c874f69165d7494652c8a00637">More...</a><br /></td></tr>
+<tr class="separator:af95618c874f69165d7494652c8a00637"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a412ea16e6d8185f7a59e643a622d9d57"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_company.html">Company</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_library.html#a412ea16e6d8185f7a59e643a622d9d57">getCompany</a> (unsigned nif)</td></tr>
+<tr class="memdesc:a412ea16e6d8185f7a59e643a622d9d57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finds a company based on its nif.  <a href="#a412ea16e6d8185f7a59e643a622d9d57">More...</a><br /></td></tr>
+<tr class="separator:a412ea16e6d8185f7a59e643a622d9d57"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58124edad3e35eaaade1f1c32e49bf5c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_company.html">Company</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_library.html#a58124edad3e35eaaade1f1c32e49bf5c">getCompany</a> (std::string name)</td></tr>
+<tr class="memdesc:a58124edad3e35eaaade1f1c32e49bf5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finds a company based on its name.  <a href="#a58124edad3e35eaaade1f1c32e49bf5c">More...</a><br /></td></tr>
+<tr class="separator:a58124edad3e35eaaade1f1c32e49bf5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a279fd5ebb94f6f0ba438c72dfaa765dd"><td class="memItemLeft" align="right" valign="top">std::set&lt; <a class="el" href="class_company.html">Company</a> *, <a class="el" href="struct_compare_company_by_name.html">CompareCompanyByName</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_library.html#a279fd5ebb94f6f0ba438c72dfaa765dd">wildcardMatchingCompanies</a> (std::string wildcard)</td></tr>
+<tr class="memdesc:a279fd5ebb94f6f0ba438c72dfaa765dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finds all companies whose name matches a given wildcard.  <a href="#a279fd5ebb94f6f0ba438c72dfaa765dd">More...</a><br /></td></tr>
+<tr class="separator:a279fd5ebb94f6f0ba438c72dfaa765dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf7cf8b6f0022116abad30fec8128d88"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_library.html#adf7cf8b6f0022116abad30fec8128d88">editCompany</a> (std::string name, unsigned NIF, unsigned contact)</td></tr>
+<tr class="memdesc:adf7cf8b6f0022116abad30fec8128d88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Edits a company from the Game Library.  <a href="#adf7cf8b6f0022116abad30fec8128d88">More...</a><br /></td></tr>
+<tr class="separator:adf7cf8b6f0022116abad30fec8128d88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afca18b37f6a6734089838af14cc0073b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_library.html#afca18b37f6a6734089838af14cc0073b">addTitleToCompany</a> (std::string companyName, <a class="el" href="class_title.html">Title</a> *title)</td></tr>
+<tr class="memdesc:afca18b37f6a6734089838af14cc0073b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a title to a company.  <a href="#afca18b37f6a6734089838af14cc0073b">More...</a><br /></td></tr>
+<tr class="separator:afca18b37f6a6734089838af14cc0073b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6b49e5020e72c247cad01c7c1bcd5c4c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_library.html#a6b49e5020e72c247cad01c7c1bcd5c4c">saveGameLibrary</a> ()</td></tr>
 <tr class="separator:a6b49e5020e72c247cad01c7c1bcd5c4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a53819c5918229bdc4451a326a5e34f9c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_library.html#a53819c5918229bdc4451a326a5e34f9c">loadGameLibrary</a> ()</td></tr>
@@ -144,12 +175,72 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:abf7abbbbdc3474a41515aab766bc1f85"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_library.html#abf7abbbbdc3474a41515aab766bc1f85">buildUserConsumingHabitsList</a> (<a class="el" href="class_user.html">User</a> *user, std::ostream &amp;os, ConsumingHabitsFilter chFilter)</td></tr>
 <tr class="memdesc:abf7abbbbdc3474a41515aab766bc1f85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Builds a list of a <a class="el" href="class_user.html" title="Class that represents an User in the Game Library. ">User</a>'s consuming habits.  <a href="#abf7abbbbdc3474a41515aab766bc1f85">More...</a><br /></td></tr>
 <tr class="separator:abf7abbbbdc3474a41515aab766bc1f85"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4e7b437045e66548274a076b9a54281a"><td class="memItemLeft" align="right" valign="top"><a id="a4e7b437045e66548274a076b9a54281a"></a>
-std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>split</b> (std::string long_string, int num_unique=0)</td></tr>
+<tr class="memitem:a4e7b437045e66548274a076b9a54281a"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_library.html#a4e7b437045e66548274a076b9a54281a">split</a> (std::string long_string, int num_unique=0)</td></tr>
+<tr class="memdesc:a4e7b437045e66548274a076b9a54281a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Splits a string into a vector of strings, isolating words surrounded by spaces.  <a href="#a4e7b437045e66548274a076b9a54281a">More...</a><br /></td></tr>
 <tr class="separator:a4e7b437045e66548274a076b9a54281a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa798953dc9733ac0b176d0f036ee3522"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_library.html#aa798953dc9733ac0b176d0f036ee3522">getPurchaseChance</a> (<a class="el" href="class_user.html">User</a> *usr, <a class="el" href="class_title.html">Title</a> *title)</td></tr>
+<tr class="memdesc:aa798953dc9733ac0b176d0f036ee3522"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the purchase change of a user for a title.  <a href="#aa798953dc9733ac0b176d0f036ee3522">More...</a><br /></td></tr>
+<tr class="separator:aa798953dc9733ac0b176d0f036ee3522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab0308186ba1c4f6a4940e73a07dfd6e2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_library.html#ab0308186ba1c4f6a4940e73a07dfd6e2">goToDate</a> (<a class="el" href="class_date.html">Date</a> &amp;d)</td></tr>
+<tr class="memdesc:ab0308186ba1c4f6a4940e73a07dfd6e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the Library <a class="el" href="class_date.html" title="Class representing a Date in the format DD/MM/YYYY. ">Date</a> to a new <a class="el" href="class_date.html" title="Class representing a Date in the format DD/MM/YYYY. ">Date</a> in the Future and atualizes all users age (by counting number of New Years) May throw an exception if the input is an old date.  <a href="#ab0308186ba1c4f6a4940e73a07dfd6e2">More...</a><br /></td></tr>
+<tr class="separator:ab0308186ba1c4f6a4940e73a07dfd6e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:addbda3a6362fde9fa1c0d5aba9591395"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_library.html#addbda3a6362fde9fa1c0d5aba9591395">advanceXdays</a> (unsigned int numberDays)</td></tr>
+<tr class="memdesc:addbda3a6362fde9fa1c0d5aba9591395"><td class="mdescLeft">&#160;</td><td class="mdescRight">Advance a number of days and atualizes all users age (by counting number of New Years)  <a href="#addbda3a6362fde9fa1c0d5aba9591395">More...</a><br /></td></tr>
+<tr class="separator:addbda3a6362fde9fa1c0d5aba9591395"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad57a105460b75d7ae4575cc1fad3e825"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_library.html#ad57a105460b75d7ae4575cc1fad3e825">advanceXmonths</a> (unsigned int numberMonths)</td></tr>
+<tr class="memdesc:ad57a105460b75d7ae4575cc1fad3e825"><td class="mdescLeft">&#160;</td><td class="mdescRight">Advance a number of months and atualizes all users age (by counting number of New Years)  <a href="#ad57a105460b75d7ae4575cc1fad3e825">More...</a><br /></td></tr>
+<tr class="separator:ad57a105460b75d7ae4575cc1fad3e825"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a79d44b4de9922a1dbd108eba105db827"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_library.html#a79d44b4de9922a1dbd108eba105db827">advanceXyears</a> (unsigned int numberYears)</td></tr>
+<tr class="memdesc:a79d44b4de9922a1dbd108eba105db827"><td class="mdescLeft">&#160;</td><td class="mdescRight">Advance a number of years and atualizes all users age.  <a href="#a79d44b4de9922a1dbd108eba105db827">More...</a><br /></td></tr>
+<tr class="separator:a79d44b4de9922a1dbd108eba105db827"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e94e223ee602502b47e31980628120c"><td class="memItemLeft" align="right" valign="top"><a id="a8e94e223ee602502b47e31980628120c"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_library.html#a8e94e223ee602502b47e31980628120c">updateHashTable</a> ()</td></tr>
+<tr class="memdesc:a8e94e223ee602502b47e31980628120c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generic function that updates all users in all the Hash Tables Calls the <a class="el" href="class_game_library.html#a239bc387af529e9714783b9db8996e0d" title="Adds user to all the corresponding hash tables based on his wishlist, the probability of buying the g...">addUserToHashTables()</a> function for every user in the usersMap. <br /></td></tr>
+<tr class="separator:a8e94e223ee602502b47e31980628120c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a10ebcb21939a09f142ae3fbb55d052fb"><td class="memItemLeft" align="right" valign="top"><a id="a10ebcb21939a09f142ae3fbb55d052fb"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_library.html#a10ebcb21939a09f142ae3fbb55d052fb">removeActiveUsers</a> ()</td></tr>
+<tr class="memdesc:a10ebcb21939a09f142ae3fbb55d052fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates all the hashtables of the titles, removing the active users. <br /></td></tr>
+<tr class="separator:a10ebcb21939a09f142ae3fbb55d052fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab61ea636e436bc112765158ff0e8152d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_library.html#ab61ea636e436bc112765158ff0e8152d">addSleepyUsers</a> (unsigned int months)</td></tr>
+<tr class="memdesc:ab61ea636e436bc112765158ff0e8152d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds an user to an Hash Table if no game is bought in a certain amount of time This function satisfies this part of the handout: "devendo voltar a ser adicionado se não comprar nenhum título dentro de X meses." Therefore it must be used after a date update.  <a href="#ab61ea636e436bc112765158ff0e8152d">More...</a><br /></td></tr>
+<tr class="separator:ab61ea636e436bc112765158ff0e8152d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e65a705ee25d3577f48b03dbdaef1f1"><td class="memItemLeft" align="right" valign="top"><a id="a6e65a705ee25d3577f48b03dbdaef1f1"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_library.html#a6e65a705ee25d3577f48b03dbdaef1f1">addSleepyUsers</a> ()</td></tr>
+<tr class="memdesc:a6e65a705ee25d3577f48b03dbdaef1f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds an user to an Hash Table if no game is bought in the amount of time specified in the monthsToUpdateHash Private Member This function is implemented based on the <a class="el" href="class_game_library.html#a6e65a705ee25d3577f48b03dbdaef1f1" title="Adds an user to an Hash Table if no game is bought in the amount of time specified in the monthsToUpd...">addSleepyUsers()</a> with one argument function, therefore it must be used in the same circumstances. <br /></td></tr>
+<tr class="separator:a6e65a705ee25d3577f48b03dbdaef1f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a239bc387af529e9714783b9db8996e0d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_library.html#a239bc387af529e9714783b9db8996e0d">addUserToHashTables</a> (<a class="el" href="class_user.html">User</a> *user, bool prob)</td></tr>
+<tr class="memdesc:a239bc387af529e9714783b9db8996e0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds user to all the corresponding hash tables based on his wishlist, the probability of buying the game and the minimum probability that the company is interested in receiving a notification about the user.  <a href="#a239bc387af529e9714783b9db8996e0d">More...</a><br /></td></tr>
+<tr class="separator:a239bc387af529e9714783b9db8996e0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95d8e7bc54e4bed3013f2e3eac0ad74c"><td class="memItemLeft" align="right" valign="top">const HashTabUsersPtr &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_library.html#a95d8e7bc54e4bed3013f2e3eac0ad74c">getTitleHashTable</a> (<a class="el" href="class_title.html">Title</a> *title)</td></tr>
+<tr class="memdesc:a95d8e7bc54e4bed3013f2e3eac0ad74c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="class_title.html" title="Abstract class that represents a Title in the Game Library. ">Title</a> Hash Table object.  <a href="#a95d8e7bc54e4bed3013f2e3eac0ad74c">More...</a><br /></td></tr>
+<tr class="separator:a95d8e7bc54e4bed3013f2e3eac0ad74c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9fd6c34d13bf0f543d94fa09c0e27616"><td class="memItemLeft" align="right" valign="top">const titleUserHashTabMap &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_library.html#a9fd6c34d13bf0f543d94fa09c0e27616">getAsleepUsers</a> ()</td></tr>
+<tr class="memdesc:a9fd6c34d13bf0f543d94fa09c0e27616"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Asleep Users object.  <a href="#a9fd6c34d13bf0f543d94fa09c0e27616">More...</a><br /></td></tr>
+<tr class="separator:a9fd6c34d13bf0f543d94fa09c0e27616"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc3c5a644cea769bde760cb35fc521c3"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_library.html#abc3c5a644cea769bde760cb35fc521c3">numberOfSearches</a> (<a class="el" href="class_title.html">Title</a> *title)</td></tr>
+<tr class="memdesc:abc3c5a644cea769bde760cb35fc521c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the number of times that a title was searched.  <a href="#abc3c5a644cea769bde760cb35fc521c3">More...</a><br /></td></tr>
+<tr class="separator:abc3c5a644cea769bde760cb35fc521c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a62281dcd5a28141d0171c7f6aef9d2b9"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_library.html#a62281dcd5a28141d0171c7f6aef9d2b9">numberOfAdsSeen</a> (<a class="el" href="class_title.html">Title</a> *title)</td></tr>
+<tr class="memdesc:a62281dcd5a28141d0171c7f6aef9d2b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the number of times that a title ad was seen.  <a href="#a62281dcd5a28141d0171c7f6aef9d2b9">More...</a><br /></td></tr>
+<tr class="separator:a62281dcd5a28141d0171c7f6aef9d2b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf55688ecfd8b3c24e2aef58f466c03c"><td class="memItemLeft" align="right" valign="top">std::set&lt; <a class="el" href="class_user.html">User</a> *, <a class="el" href="class_compare_usr.html">CompareUsr</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_library.html#acf55688ecfd8b3c24e2aef58f466c03c">OrderUsersByID</a> (<a class="el" href="class_title.html">Title</a> *title)</td></tr>
+<tr class="memdesc:acf55688ecfd8b3c24e2aef58f466c03c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Orders the users in a title's hashtable by ID.  <a href="#acf55688ecfd8b3c24e2aef58f466c03c">More...</a><br /></td></tr>
+<tr class="separator:acf55688ecfd8b3c24e2aef58f466c03c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab88573f2821583f88253f550de1e59e4"><td class="memItemLeft" align="right" valign="top">std::set&lt; <a class="el" href="class_user.html">User</a> *, <a class="el" href="class_compare_usr.html">CompareUsr</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_library.html#ab88573f2821583f88253f550de1e59e4">OrderUsersByAds</a> (<a class="el" href="class_title.html">Title</a> *title)</td></tr>
+<tr class="memdesc:ab88573f2821583f88253f550de1e59e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Orders the users in a title's hashtable by number of ADS seen.  <a href="#ab88573f2821583f88253f550de1e59e4">More...</a><br /></td></tr>
+<tr class="separator:ab88573f2821583f88253f550de1e59e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a11235d727dd70e491b1623fd0f9eedf2"><td class="memItemLeft" align="right" valign="top">std::set&lt; <a class="el" href="class_user.html">User</a> *, <a class="el" href="class_compare_usr.html">CompareUsr</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_library.html#a11235d727dd70e491b1623fd0f9eedf2">OrderUsersBySearches</a> (<a class="el" href="class_title.html">Title</a> *title)</td></tr>
+<tr class="memdesc:a11235d727dd70e491b1623fd0f9eedf2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Orders the users in a title's hashtable number of searches of the title.  <a href="#a11235d727dd70e491b1623fd0f9eedf2">More...</a><br /></td></tr>
+<tr class="separator:a11235d727dd70e491b1623fd0f9eedf2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7c3444ed6f7a090bb879fb5b5dfd96a"><td class="memItemLeft" align="right" valign="top">std::set&lt; <a class="el" href="class_user.html">User</a> *, <a class="el" href="class_compare_usr.html">CompareUsr</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_library.html#ad7c3444ed6f7a090bb879fb5b5dfd96a">OrderUsersByBuyChance</a> (<a class="el" href="class_title.html">Title</a> *title)</td></tr>
+<tr class="memdesc:ad7c3444ed6f7a090bb879fb5b5dfd96a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Orders the users in a title's hashtable by buy chance.  <a href="#ad7c3444ed6f7a090bb879fb5b5dfd96a">More...</a><br /></td></tr>
+<tr class="separator:ad7c3444ed6f7a090bb879fb5b5dfd96a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a3a33a6723a0065cdc15da1a0b819796d"><td class="memItemLeft" align="right" valign="top">static std::set&lt; <a class="el" href="class_title.html">Title</a> *, <a class="el" href="struct_compare_ptr.html">ComparePtr</a>&lt; <a class="el" href="class_title.html">Title</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_library.html#a3a33a6723a0065cdc15da1a0b819796d">showMatchingTitles</a> (gameLibraryPlatform platform, gameLibraryGenre genre, <a class="el" href="structage_range.html">ageRange</a> ageR)</td></tr>
+<tr class="memdesc:a3a33a6723a0065cdc15da1a0b819796d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a set with all the titles that respect a certain criteria.  <a href="#a3a33a6723a0065cdc15da1a0b819796d">More...</a><br /></td></tr>
+<tr class="separator:a3a33a6723a0065cdc15da1a0b819796d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a063d73b3e7f46364693355100c3fd732"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_library.html#a063d73b3e7f46364693355100c3fd732">updateTitleRevenue</a> (<a class="el" href="class_title.html">Title</a> *title, double amount)</td></tr>
 <tr class="memdesc:a063d73b3e7f46364693355100c3fd732"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the revenue of a <a class="el" href="class_title.html" title="Abstract class that represents a Title in the Game Library. ">Title</a> Fails if title does not exist.  <a href="#a063d73b3e7f46364693355100c3fd732">More...</a><br /></td></tr>
 <tr class="separator:a063d73b3e7f46364693355100c3fd732"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -165,10 +256,105 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a98bdb5881e7b126dacb1cbf6f5b96037"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_library.html#a98bdb5881e7b126dacb1cbf6f5b96037">isOnlineTitle</a> (<a class="el" href="class_title.html">Title</a> *title)</td></tr>
 <tr class="memdesc:a98bdb5881e7b126dacb1cbf6f5b96037"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verifies if a <a class="el" href="class_title.html" title="Abstract class that represents a Title in the Game Library. ">Title</a> is an Online <a class="el" href="class_title.html" title="Abstract class that represents a Title in the Game Library. ">Title</a>.  <a href="#a98bdb5881e7b126dacb1cbf6f5b96037">More...</a><br /></td></tr>
 <tr class="separator:a98bdb5881e7b126dacb1cbf6f5b96037"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95b4d3d426db03c4faa1c90cb03c28df"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_date.html">Date</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_library.html#a95b4d3d426db03c4faa1c90cb03c28df">getLibraryDate</a> ()</td></tr>
+<tr class="memdesc:a95b4d3d426db03c4faa1c90cb03c28df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Library <a class="el" href="class_date.html" title="Class representing a Date in the format DD/MM/YYYY. ">Date</a> object.  <a href="#a95b4d3d426db03c4faa1c90cb03c28df">More...</a><br /></td></tr>
+<tr class="separator:a95b4d3d426db03c4faa1c90cb03c28df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae80617199cf90330d4a569eae5d65a2a"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game_library.html#ae80617199cf90330d4a569eae5d65a2a">removeFromHashTable</a> (<a class="el" href="class_title.html">Title</a> *title, <a class="el" href="class_user.html">User</a> *user)</td></tr>
+<tr class="memdesc:ae80617199cf90330d4a569eae5d65a2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes a user from all the correct hash tables after game is bought This function satisfies this part of the handout: "Quando o utilizador compra este título, ou outro título da mesma plataforma dentro, 
+        passa a ser considerado ativo e é retirado da tabela de dispersão" To find the titles from the same platform a <a class="el" href="class_game_library.html#a3a33a6723a0065cdc15da1a0b819796d" title="Returns a set with all the titles that respect a certain criteria. ">showMatchingTitles()</a> call is used.  <a href="#ae80617199cf90330d4a569eae5d65a2a">More...</a><br /></td></tr>
+<tr class="separator:ae80617199cf90330d4a569eae5d65a2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Class representing the Game Library system. </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a5d9ac2ca4e0dd5f30b9601a139e64a38"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5d9ac2ca4e0dd5f30b9601a139e64a38">&#9670;&nbsp;</a></span>GameLibrary()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">GameLibrary::GameLibrary </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>months</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Construct a new Game Library object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">months</td><td>Number of months that has to pass by for a user to be considered asleep </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="aef6cdcaac8cd45b030b1933e6f82891a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aef6cdcaac8cd45b030b1933e6f82891a">&#9670;&nbsp;</a></span>addCompany()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool GameLibrary::addCompany </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_company.html">Company</a> *&#160;</td>
+          <td class="paramname"><em>comp</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Adds a company to the Game Library. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">comp</td><td>Pointer to new company </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>bool Returns true if successfull, false otherwise </dd></dl>
+
+</div>
+</div>
+<a id="ab61ea636e436bc112765158ff0e8152d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab61ea636e436bc112765158ff0e8152d">&#9670;&nbsp;</a></span>addSleepyUsers()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GameLibrary::addSleepyUsers </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>months</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Adds an user to an Hash Table if no game is bought in a certain amount of time This function satisfies this part of the handout: "devendo voltar a ser adicionado se não comprar nenhum título dentro de X meses." Therefore it must be used after a date update. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">months</td><td>Number of months that has to go by to a user be considered asleep </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a7f4fe8d8e90d4c750ce1e51bc6366d34"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7f4fe8d8e90d4c750ce1e51bc6366d34">&#9670;&nbsp;</a></span>addTitle()</h2>
 
@@ -193,6 +379,44 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>bool Returns true if successfully added title, false otherwise </dd></dl>
+
+</div>
+</div>
+<a id="afca18b37f6a6734089838af14cc0073b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afca18b37f6a6734089838af14cc0073b">&#9670;&nbsp;</a></span>addTitleToCompany()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool GameLibrary::addTitleToCompany </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>companyName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_title.html">Title</a> *&#160;</td>
+          <td class="paramname"><em>title</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Adds a title to a company. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">companyName</td><td>Name of company to add a <a class="el" href="class_title.html" title="Abstract class that represents a Title in the Game Library. ">Title</a> </td></tr>
+    <tr><td class="paramname">title</td><td>Pointer to the title to add </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>bool Returns true if successfull, false otherwise </dd></dl>
 
 </div>
 </div>
@@ -273,6 +497,120 @@ Static Public Member Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">user</td><td>Pointer to the <a class="el" href="class_user.html" title="Class that represents an User in the Game Library. ">User</a> to be added </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a239bc387af529e9714783b9db8996e0d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a239bc387af529e9714783b9db8996e0d">&#9670;&nbsp;</a></span>addUserToHashTables()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GameLibrary::addUserToHashTables </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_user.html">User</a> *&#160;</td>
+          <td class="paramname"><em>user</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>prob</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Adds user to all the corresponding hash tables based on his wishlist, the probability of buying the game and the minimum probability that the company is interested in receiving a notification about the user. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">user</td><td><a class="el" href="class_user.html" title="Class that represents an User in the Game Library. ">User</a> to be added to the hash tables </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="addbda3a6362fde9fa1c0d5aba9591395"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#addbda3a6362fde9fa1c0d5aba9591395">&#9670;&nbsp;</a></span>advanceXdays()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GameLibrary::advanceXdays </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>numberDays</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Advance a number of days and atualizes all users age (by counting number of New Years) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">numberDays</td><td>Number of days to fast forward </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ad57a105460b75d7ae4575cc1fad3e825"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad57a105460b75d7ae4575cc1fad3e825">&#9670;&nbsp;</a></span>advanceXmonths()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GameLibrary::advanceXmonths </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>numberMonths</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Advance a number of months and atualizes all users age (by counting number of New Years) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">numberMonths</td><td>Number of months to fast forward </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a79d44b4de9922a1dbd108eba105db827"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a79d44b4de9922a1dbd108eba105db827">&#9670;&nbsp;</a></span>advanceXyears()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GameLibrary::advanceXyears </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>numberYears</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Advance a number of years and atualizes all users age. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">numberYears</td><td>Number of years to fast forward </td></tr>
   </table>
   </dd>
 </dl>
@@ -522,6 +860,51 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="adf7cf8b6f0022116abad30fec8128d88"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adf7cf8b6f0022116abad30fec8128d88">&#9670;&nbsp;</a></span>editCompany()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool GameLibrary::editCompany </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>NIF</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>contact</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Edits a company from the Game Library. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>Name of company to edit </td></tr>
+    <tr><td class="paramname">NIF</td><td>New NIF for the company </td></tr>
+    <tr><td class="paramname">contact</td><td>New contact for the company </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>bool Returns true if successfull, false otherwise </dd></dl>
+
+</div>
+</div>
 <a id="a9c740202182a07905dbce52012735fad"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9c740202182a07905dbce52012735fad">&#9670;&nbsp;</a></span>favoriteUserPlatform()</h2>
 
@@ -546,6 +929,182 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>string Favorite platform of <a class="el" href="class_user.html" title="Class that represents an User in the Game Library. ">User</a> user </dd></dl>
+
+</div>
+</div>
+<a id="a9fd6c34d13bf0f543d94fa09c0e27616"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9fd6c34d13bf0f543d94fa09c0e27616">&#9670;&nbsp;</a></span>getAsleepUsers()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const titleUserHashTabMap&amp; GameLibrary::getAsleepUsers </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the Asleep Users object. </p>
+<dl class="section return"><dt>Returns</dt><dd>const titleUserHashTabMap&amp; Map with all the Titles and corresponding Hash Tables </dd></dl>
+
+</div>
+</div>
+<a id="ac105f42b186fda702236e8d83756e029"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac105f42b186fda702236e8d83756e029">&#9670;&nbsp;</a></span>getCompanies()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">companiesSet GameLibrary::getCompanies </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Getter method for the set of registered companies. </p>
+<dl class="section return"><dt>Returns</dt><dd>set of registered companies </dd></dl>
+
+</div>
+</div>
+<a id="a412ea16e6d8185f7a59e643a622d9d57"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a412ea16e6d8185f7a59e643a622d9d57">&#9670;&nbsp;</a></span>getCompany() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_company.html">Company</a> * GameLibrary::getCompany </td>
+          <td>(</td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>nif</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Finds a company based on its nif. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">nif</td><td>NIF of the company to find </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_company.html" title="Class representing a Company in the Game Library. ">Company</a> * Pointer to the company found, nullptr if not found </dd></dl>
+
+</div>
+</div>
+<a id="a58124edad3e35eaaade1f1c32e49bf5c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a58124edad3e35eaaade1f1c32e49bf5c">&#9670;&nbsp;</a></span>getCompany() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_company.html">Company</a> * GameLibrary::getCompany </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>name</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Finds a company based on its name. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>Name of the company to find </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_company.html" title="Class representing a Company in the Game Library. ">Company</a> * Pointer to the company found, nullptr if not found </dd></dl>
+
+</div>
+</div>
+<a id="a95b4d3d426db03c4faa1c90cb03c28df"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a95b4d3d426db03c4faa1c90cb03c28df">&#9670;&nbsp;</a></span>getLibraryDate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="class_date.html">Date</a> GameLibrary::getLibraryDate </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the Library <a class="el" href="class_date.html" title="Class representing a Date in the format DD/MM/YYYY. ">Date</a> object. </p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_date.html" title="Class representing a Date in the format DD/MM/YYYY. ">Date</a> Current <a class="el" href="class_date.html" title="Class representing a Date in the format DD/MM/YYYY. ">Date</a> of the Library </dd></dl>
+
+</div>
+</div>
+<a id="aa798953dc9733ac0b176d0f036ee3522"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa798953dc9733ac0b176d0f036ee3522">&#9670;&nbsp;</a></span>getPurchaseChance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float GameLibrary::getPurchaseChance </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_user.html">User</a> *&#160;</td>
+          <td class="paramname"><em>usr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_title.html">Title</a> *&#160;</td>
+          <td class="paramname"><em>title</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the purchase change of a user for a title. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">usr</td><td><a class="el" href="class_user.html" title="Class that represents an User in the Game Library. ">User</a> in question </td></tr>
+    <tr><td class="paramname">title</td><td><a class="el" href="class_title.html" title="Abstract class that represents a Title in the Game Library. ">Title</a> in question </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>float Returns the purchase chance </dd></dl>
 
 </div>
 </div>
@@ -627,6 +1186,41 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Title* Pointer to the <a class="el" href="class_title.html" title="Abstract class that represents a Title in the Game Library. ">Title</a> with name name </dd></dl>
+
+</div>
+</div>
+<a id="a95d8e7bc54e4bed3013f2e3eac0ad74c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a95d8e7bc54e4bed3013f2e3eac0ad74c">&#9670;&nbsp;</a></span>getTitleHashTable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const HashTabUsersPtr&amp; GameLibrary::getTitleHashTable </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_title.html">Title</a> *&#160;</td>
+          <td class="paramname"><em>title</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the <a class="el" href="class_title.html" title="Abstract class that represents a Title in the Game Library. ">Title</a> Hash Table object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">title</td><td><a class="el" href="class_title.html" title="Abstract class that represents a Title in the Game Library. ">Title</a> from which we want the hash table </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>const HashTabUsersPtr&amp; HashTable with the asleep users of the desired <a class="el" href="class_title.html" title="Abstract class that represents a Title in the Game Library. ">Title</a> </dd></dl>
 
 </div>
 </div>
@@ -713,6 +1307,38 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="ab0308186ba1c4f6a4940e73a07dfd6e2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab0308186ba1c4f6a4940e73a07dfd6e2">&#9670;&nbsp;</a></span>goToDate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GameLibrary::goToDate </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_date.html">Date</a> &amp;&#160;</td>
+          <td class="paramname"><em>d</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the Library <a class="el" href="class_date.html" title="Class representing a Date in the format DD/MM/YYYY. ">Date</a> to a new <a class="el" href="class_date.html" title="Class representing a Date in the format DD/MM/YYYY. ">Date</a> in the Future and atualizes all users age (by counting number of New Years) May throw an exception if the input is an old date. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">d</td><td>New Future <a class="el" href="class_date.html" title="Class representing a Date in the format DD/MM/YYYY. ">Date</a> to be set </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="class_old_date.html" title="Exception that is thrown when an outdated Date is specified. ">OldDate()</a></td><td>If the the new date has already passed by </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a98bdb5881e7b126dacb1cbf6f5b96037"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a98bdb5881e7b126dacb1cbf6f5b96037">&#9670;&nbsp;</a></span>isOnlineTitle()</h2>
 
@@ -773,6 +1399,60 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a62281dcd5a28141d0171c7f6aef9d2b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a62281dcd5a28141d0171c7f6aef9d2b9">&#9670;&nbsp;</a></span>numberOfAdsSeen()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int GameLibrary::numberOfAdsSeen </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_title.html">Title</a> *&#160;</td>
+          <td class="paramname"><em>title</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the number of times that a title ad was seen. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">title</td><td><a class="el" href="class_title.html" title="Abstract class that represents a Title in the Game Library. ">Title</a> in the ads </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>unsigned int Number of times that a title add was seen </dd></dl>
+
+</div>
+</div>
+<a id="abc3c5a644cea769bde760cb35fc521c3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abc3c5a644cea769bde760cb35fc521c3">&#9670;&nbsp;</a></span>numberOfSearches()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int GameLibrary::numberOfSearches </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_title.html">Title</a> *&#160;</td>
+          <td class="paramname"><em>title</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the number of times that a title was searched. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">title</td><td><a class="el" href="class_title.html" title="Abstract class that represents a Title in the Game Library. ">Title</a> searched </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>unsigned int Number of times that a title was searched </dd></dl>
+
+</div>
+</div>
 <a id="a957a0d7858b94af836832c4060f4bb04"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a957a0d7858b94af836832c4060f4bb04">&#9670;&nbsp;</a></span>onlineTitlesPlayTime()</h2>
 
@@ -797,6 +1477,187 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>double time spent by a <a class="el" href="class_user.html" title="Class that represents an User in the Game Library. ">User</a> playing Online Titles </dd></dl>
+
+</div>
+</div>
+<a id="ab88573f2821583f88253f550de1e59e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab88573f2821583f88253f550de1e59e4">&#9670;&nbsp;</a></span>OrderUsersByAds()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">set&lt; <a class="el" href="class_user.html">User</a> *, <a class="el" href="class_compare_usr.html">CompareUsr</a> &gt; GameLibrary::OrderUsersByAds </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_title.html">Title</a> *&#160;</td>
+          <td class="paramname"><em>title</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Orders the users in a title's hashtable by number of ADS seen. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">title</td><td><a class="el" href="class_title.html" title="Abstract class that represents a Title in the Game Library. ">Title</a> to check the hashtable </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>set Returns a set of the users ordered by number of ADS seen </dd></dl>
+
+</div>
+</div>
+<a id="ad7c3444ed6f7a090bb879fb5b5dfd96a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad7c3444ed6f7a090bb879fb5b5dfd96a">&#9670;&nbsp;</a></span>OrderUsersByBuyChance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">set&lt; <a class="el" href="class_user.html">User</a> *, <a class="el" href="class_compare_usr.html">CompareUsr</a> &gt; GameLibrary::OrderUsersByBuyChance </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_title.html">Title</a> *&#160;</td>
+          <td class="paramname"><em>title</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Orders the users in a title's hashtable by buy chance. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">title</td><td><a class="el" href="class_title.html" title="Abstract class that represents a Title in the Game Library. ">Title</a> to check the hashtable </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>set Returns a set of the users ordered by buy chance </dd></dl>
+
+</div>
+</div>
+<a id="acf55688ecfd8b3c24e2aef58f466c03c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acf55688ecfd8b3c24e2aef58f466c03c">&#9670;&nbsp;</a></span>OrderUsersByID()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">set&lt; <a class="el" href="class_user.html">User</a> *, <a class="el" href="class_compare_usr.html">CompareUsr</a> &gt; GameLibrary::OrderUsersByID </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_title.html">Title</a> *&#160;</td>
+          <td class="paramname"><em>title</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Orders the users in a title's hashtable by ID. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">title</td><td><a class="el" href="class_title.html" title="Abstract class that represents a Title in the Game Library. ">Title</a> to check the hashtable </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>set Returns a set of the users ordered by ID </dd></dl>
+
+</div>
+</div>
+<a id="a11235d727dd70e491b1623fd0f9eedf2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a11235d727dd70e491b1623fd0f9eedf2">&#9670;&nbsp;</a></span>OrderUsersBySearches()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">set&lt; <a class="el" href="class_user.html">User</a> *, <a class="el" href="class_compare_usr.html">CompareUsr</a> &gt; GameLibrary::OrderUsersBySearches </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_title.html">Title</a> *&#160;</td>
+          <td class="paramname"><em>title</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Orders the users in a title's hashtable number of searches of the title. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">title</td><td><a class="el" href="class_title.html" title="Abstract class that represents a Title in the Game Library. ">Title</a> to check the hashtable </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>set Returns a set of the users ordered by Searches of the title </dd></dl>
+
+</div>
+</div>
+<a id="af95618c874f69165d7494652c8a00637"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af95618c874f69165d7494652c8a00637">&#9670;&nbsp;</a></span>removeCompany()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool GameLibrary::removeCompany </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_company.html">Company</a> *&#160;</td>
+          <td class="paramname"><em>comp</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Removes a company from the Game Library. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">comp</td><td>Pointer to company to remove </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>bool Returns true if successfull, false otherwise </dd></dl>
+
+</div>
+</div>
+<a id="ae80617199cf90330d4a569eae5d65a2a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae80617199cf90330d4a569eae5d65a2a">&#9670;&nbsp;</a></span>removeFromHashTable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GameLibrary::removeFromHashTable </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_title.html">Title</a> *&#160;</td>
+          <td class="paramname"><em>title</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_user.html">User</a> *&#160;</td>
+          <td class="paramname"><em>user</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Removes a user from all the correct hash tables after game is bought This function satisfies this part of the handout: "Quando o utilizador compra este título, ou outro título da mesma plataforma dentro, 
+        passa a ser considerado ativo e é retirado da tabela de dispersão" To find the titles from the same platform a <a class="el" href="class_game_library.html#a3a33a6723a0065cdc15da1a0b819796d" title="Returns a set with all the titles that respect a certain criteria. ">showMatchingTitles()</a> call is used. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">title</td><td><a class="el" href="class_title.html" title="Abstract class that represents a Title in the Game Library. ">Title</a> bought </td></tr>
+    <tr><td class="paramname">user</td><td><a class="el" href="class_user.html" title="Class that represents an User in the Game Library. ">User</a> that has bought the title </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -896,6 +1757,131 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Saves the current Game Library and all of its data to 3 different files, one for the games registered in the library, one for the users and their titles and another one for the transactions </p>
+
+</div>
+</div>
+<a id="a1af1b60d011ae12ed1eae2467c3756fb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1af1b60d011ae12ed1eae2467c3756fb">&#9670;&nbsp;</a></span>setMothsToUpdate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GameLibrary::setMothsToUpdate </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>months</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the Moths To <a class="el" href="class_update.html" title="Class representing an Update of a HomeTitle. ">Update</a> Hash Table private parameter. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">months</td><td>Number of months that has to pass by for a user to be considered asleep </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a3a33a6723a0065cdc15da1a0b819796d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3a33a6723a0065cdc15da1a0b819796d">&#9670;&nbsp;</a></span>showMatchingTitles()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">set&lt; <a class="el" href="class_title.html">Title</a> *, <a class="el" href="struct_compare_ptr.html">ComparePtr</a>&lt; <a class="el" href="class_title.html">Title</a> &gt; &gt; GameLibrary::showMatchingTitles </td>
+          <td>(</td>
+          <td class="paramtype">gameLibraryPlatform&#160;</td>
+          <td class="paramname"><em>platform</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">gameLibraryGenre&#160;</td>
+          <td class="paramname"><em>genre</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structage_range.html">ageRange</a>&#160;</td>
+          <td class="paramname"><em>ageR</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns a set with all the titles that respect a certain criteria. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">platform</td><td>Filter to limit titles to this platform </td></tr>
+    <tr><td class="paramname">genre</td><td>Filter to limit titles to this genre </td></tr>
+    <tr><td class="paramname">ageR</td><td>Filter to limit titles to this age range </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Set of pointers to the titles that match </dd></dl>
+
+</div>
+</div>
+<a id="a4e7b437045e66548274a076b9a54281a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e7b437045e66548274a076b9a54281a">&#9670;&nbsp;</a></span>split()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">vector&lt; string &gt; GameLibrary::split </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>long_string</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>num_unique</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Splits a string into a vector of strings, isolating words surrounded by spaces. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">long_string</td><td>String to split </td></tr>
+    <tr><td class="paramname">num_unique</td><td>Indicates if should only split once </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>vector with all the strings isolated </dd></dl>
 
 </div>
 </div>
@@ -1053,6 +2039,33 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>double Total cost of the <a class="el" href="class_user.html" title="Class that represents an User in the Game Library. ">User</a> user's library </dd></dl>
+
+</div>
+</div>
+<a id="a279fd5ebb94f6f0ba438c72dfaa765dd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a279fd5ebb94f6f0ba438c72dfaa765dd">&#9670;&nbsp;</a></span>wildcardMatchingCompanies()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">set&lt; <a class="el" href="class_company.html">Company</a> *, <a class="el" href="struct_compare_company_by_name.html">CompareCompanyByName</a> &gt; GameLibrary::wildcardMatchingCompanies </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>wildcard</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Finds all companies whose name matches a given wildcard. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">wildcard</td><td>Wildcard string to match </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>set Set with all the companies whose name matches the given wildcard </dd></dl>
 
 </div>
 </div>
