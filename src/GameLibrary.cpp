@@ -331,6 +331,7 @@ void GameLibrary::loadGameLibrary()
 		friends,
 		games,
 		wishlist,
+		ads,
 	};
 
 	enum company_states {
@@ -356,12 +357,14 @@ void GameLibrary::loadGameLibrary()
 	vector<pair<unsigned int, vector<unsigned int>>> allfriends, allgames;
 	vector<pair<unsigned int, vector<string>>> allwishlists;
 
+	// user id, title id, nsearches, nads
+	vector<map<pair<string, unsigned int>, tuple<unsigned int, unsigned int>>> allsearches;
+
 	for (size_t i = 1; i <= nusers; ++i) {
-		string name, email, road_name, city, country, number, holder, expiry, transaction_date;
-		int age, house_number, ncredit_cards, ntransactions=0, transaction_type, nfriends, ngames;
+		string name, email, road_name, city, country, number, holder, expiry, transaction_date, creation_date;
+		int age, house_number, ncredit_cards, ntransactions=0, transaction_type, nfriends, ngames, nads;
 		double balance, transaction_value;
 		unsigned transaction_title;
-		string creation_date;
 
 		user_file_name << "user_" << i << ".txt";
 		ifstream user_file("users/" + user_file_name.str());
@@ -371,7 +374,8 @@ void GameLibrary::loadGameLibrary()
 		Address addr;
 		vector<CreditCard> cc;
 		vector<Transaction> trans;
-		vector<unsigned int> friend_ids, game_ids;
+		vector<unsigned int> friend_ids, game_ids, search_ids;
+		map<pair<string, unsigned int>, tuple<unsigned int, unsigned int>> user_searches;
 
 		while(getline(user_file, str)) {
 			switch (user_current_state) {
@@ -380,11 +384,11 @@ void GameLibrary::loadGameLibrary()
 				user_current_state = email_age;
 				break;
 			case email_age:
-			    creation_date = str;
-			    getline(user_file, str);
 				email = split(str)[0];
 				age = stoi(split(str, 1)[1]);
 				getline(user_file, str);
+			    creation_date = str;
+			    getline(user_file, str);
 				if (str == "Address:") user_current_state = address;
 				break;
 			case address:
@@ -434,15 +438,29 @@ void GameLibrary::loadGameLibrary()
 			}
 			case friends:
 				if (nfriends == 0) {
-					user_current_state = games;
+					user_current_state = ads;
 					getline(user_file, str);
-					ngames = stoi(str);
+					nads = stoi(str);
 					break;
 				}
 
 				friend_ids.push_back(static_cast<unsigned int &&>(stoi(str)));
 				--nfriends;
 				break;
+			case ads: {
+			    if (nads == 0) {
+			        user_current_state = games;
+			        getline(user_file, str);
+			        ngames = stoi(str);
+			        break;
+			    }
+			    vector<string> vec = split(str);
+                user_searches.insert(make_pair(make_pair(email, stoi(vec[0])),
+                    tuple<unsigned int, unsigned int>(static_cast<const unsigned int &>(stoi(vec[1])),
+                        static_cast<const unsigned int &>(stoi(vec[2])))));
+			    --nads;
+			    break;
+			}
 			case games:
 				if (ngames == 0) {
 					if (str == "Wishlist:") {
@@ -458,7 +476,7 @@ void GameLibrary::loadGameLibrary()
 			case wishlist:
 				vector<string> split_string = split(str);
 
-				allwishlists.push_back(make_pair(i, split_string));
+				allwishlists.emplace_back(i, split_string);
 				break;
 			}
 		}
@@ -466,6 +484,7 @@ void GameLibrary::loadGameLibrary()
 		User *user = new User(name, email, age, Address(house_number, road_name, city, country));
 		user->setCreatedDate(Date(creation_date));
 		addUser(user);
+        allsearches.push_back(user_searches);
 
 		for (CreditCard &ccs : cc) {
 			user->addCreditCard(ccs);
@@ -719,6 +738,23 @@ void GameLibrary::loadGameLibrary()
 				continue;
 			}
 		}
+	}
+
+	for (auto it = allsearches.begin(); it != allsearches.end(); ++it)  {
+		User* user;
+		mapTitleTuple searches_ads;
+	    for (const auto &search_map : *it) {
+            const string &email = get<0>(search_map.first);
+	        unsigned titleID = get<1>(search_map.first);
+
+	        user = getUser(email);
+	        if (user == nullptr) break;
+
+	        Title* title = getTitle(titleID);
+	        if (title == nullptr) continue;
+	        searches_ads.insert(make_pair(title, tuple<unsigned int, unsigned int>(get<0>(search_map.second), get<1>(search_map.second))));
+	    }
+		user->setSearchesAds(searches_ads);
 	}
 
 	for (pair<unsigned int, vector<string>> &wishlist_pair : allwishlists) {
