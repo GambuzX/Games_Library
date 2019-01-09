@@ -119,7 +119,7 @@ bool User::buyTitle(Title* title) {
 	}
 	GameLibrary::updateTitleRevenue(title, price);
 	title->addNewUser(this);
-	addTransaction(price, GameLibrary::getLibraryDate(), gamePurchase);
+	addTransaction(price, GameLibrary::getLibraryDate(), gamePurchase, title->getTitleID());
 	purchasedGames->insert(title);
 
 	// Remove WishList Entry
@@ -159,7 +159,7 @@ bool User::buyTitle(unsigned int titleID) {
 	}
 	GameLibrary::updateTitleRevenue(title, price);
 	title->addNewUser(this);
-	addTransaction(price, GameLibrary::getLibraryDate(), gamePurchase);
+	addTransaction(price, GameLibrary::getLibraryDate(), gamePurchase, titleID);
 	purchasedGames->insert(title);
 
 	// Remove WishList Entry
@@ -198,7 +198,7 @@ bool User::buyTitle(std::string name, gameLibraryPlatform platform)
 	}
 	GameLibrary::updateTitleRevenue(title, price);
 	title->addNewUser(this);
-	addTransaction(price, GameLibrary::getLibraryDate(), gamePurchase);
+	addTransaction(price, GameLibrary::getLibraryDate(), gamePurchase, title->getTitleID());
 	purchasedGames->insert(title);
 
 	// Remove WishList Entry
@@ -260,7 +260,7 @@ bool User::updateTitle(Title* title) {
 	title->updateUserVersion(this);
 	if (!subtractValue(updatePrice)) return false;
 	GameLibrary::updateTitleRevenue(title, updatePrice);
-	addTransaction(updatePrice, GameLibrary::getLibraryDate(), homeUpdate);
+	addTransaction(updatePrice, GameLibrary::getLibraryDate(), homeUpdate, title->getTitleID());
 
 	return true;
 }
@@ -305,7 +305,7 @@ bool User::updateTitle(unsigned int titleID) {
 	title->updateUserVersion(this);
 	if (!subtractValue(updatePrice)) return false;
 	GameLibrary::updateTitleRevenue(title, updatePrice);
-	addTransaction(updatePrice, GameLibrary::getLibraryDate(), homeUpdate);
+	addTransaction(updatePrice, GameLibrary::getLibraryDate(), homeUpdate, titleID);
 
 	return true;
 }
@@ -363,7 +363,7 @@ bool User::playGame(Title * title, double duration) {
 
 		title->addNewSession(this, Session(duration, GameLibrary::getLibraryDate()));
 		GameLibrary::updateTitleRevenue(title, playPrice);
-		addTransaction(playPrice, GameLibrary::getLibraryDate(), onlineSubscription);
+		addTransaction(playPrice, GameLibrary::getLibraryDate(), onlineSubscription, title->getTitleID());
 	}
 	// If Home Title
 	else
@@ -388,7 +388,7 @@ bool User::playGame(Title * title, double duration) {
 		// If nothing is thrown, title was updated
 		if (!subtractValue(updatePrice)) return false;
 		GameLibrary::updateTitleRevenue(title, updatePrice);
-		addTransaction(updatePrice, GameLibrary::getLibraryDate(), homeUpdate);
+		addTransaction(updatePrice, GameLibrary::getLibraryDate(), homeUpdate, title->getTitleID());
 	}
 
 	return true;
@@ -570,6 +570,20 @@ set<string> User::getPlatforms()
 	return plats;
 }
 
+const vector<unsigned int> User::getTitlesBougthLastXMonths(unsigned int months) const
+{
+	vector<unsigned int> res;
+	Date lastTitleBoughtDate;
+	for (size_t i = 0; i < transactions.size(); i++) {
+		unsigned int elapsedMonths = (GameLibrary::getLibraryDate() - transactions.at(i).getDate()) / 30;
+		if (elapsedMonths > months)
+			return res;
+		if (transactions.at(i).getType() == gamePurchase)
+			res.push_back(transactions.at(i).getTitleID());
+	}
+	return res;
+}
+
 bool User::operator<(const User & usr) const
 {
 	return userID < usr.getUserID();
@@ -600,4 +614,23 @@ ostream& operator<<(ostream &os, const User &user)
 	}
 
 	return os;
+}
+
+bool CompareUsr::operator()(User * usr1, User * usr2)
+{
+	if (title == nullptr) return *usr1 < *usr2;
+	switch (cmp_type)
+	{
+	case ID:
+		return *usr1 < *usr2;
+	case ADS:
+		return usr1->getNumberOfSeenAds(title) > usr2->getNumberOfSeenAds(title);
+	case SEARCHES:
+		return usr1->getNumberOfSearches(title) > usr2->getNumberOfSearches(title);
+	case BUYCHANCE:
+		return sigmoid(f(usr1, title)) > sigmoid(f(usr2, title));
+		//return usr1->getWishlistEntry(title).getBuyChance() > usr2->getWishlistEntry(title).getBuyChance();
+	}
+
+	return *usr1 < *usr2;
 }

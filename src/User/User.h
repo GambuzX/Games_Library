@@ -6,6 +6,7 @@
 #include <set>
 #include <queue>
 #include <tuple>
+#include <algorithm>
 #include "..\Utilities\buy_chance.h"
 #include "..\Title\Title.h"
 #include "..\Utilities\CreditCard.h"
@@ -13,6 +14,7 @@
 #include "..\Utilities\Address.h"
 #include "..\Utilities\WishlistEntry.h"
 #include "..\Utilities\CompareObj.h"
+#include "..\Utilities\buy_chance.h"
 
 class Title;
 class WishlistEntry;
@@ -380,8 +382,9 @@ public:
 	* @param value Value of transaction
 	* @param date Date of transaction
 	* @param t TransactionType enum value representing the type of transaction
+	* @param titleID ID of the title of the transaction
 	*/
-	void addTransaction(double value, Date date, TransactionType t) { transactions.push_back(Transaction(value, date, t)); }
+	void addTransaction(double value, Date date, TransactionType t, unsigned int titleID) { transactions.push_back(Transaction(value, date, t, titleID)); sort(transactions.begin(), transactions.end()); }
 
 	/**
 	* @brief Returns the Title in the wishlist of higher priority, with a minimum buy rate
@@ -441,6 +444,9 @@ public:
 	*/
 	std::set<std::string> getPlatforms();
 
+	//TODO: comentar
+	const std::vector<unsigned int> getTitlesBougthLastXMonths(unsigned int months) const;
+
 	/**
 	* @brief Overload of the less operator
 	* A User is "less" than the other if its ID is smaller
@@ -470,24 +476,7 @@ private:
 public:
 	CompareUsr(UserCmpType cmp) { title = nullptr; cmp_type = cmp; }
 	CompareUsr(Title* title, UserCmpType cmp) { this->title = title; cmp_type = cmp; }
-	bool operator()(User * usr1, User * usr2)
-	{
-		if (title == nullptr) return *usr1 < *usr2;
-		switch (cmp_type)
-		{
-		case ID:
-			return *usr1 < *usr2;
-		case ADS:
-			return usr1->getNumberOfSeenAds(title) > usr2->getNumberOfSeenAds(title);
-		case SEARCHES:
-			return usr1->getNumberOfSearches(title) > usr2->getNumberOfSearches(title);
-		case BUYCHANCE:
-			return sigmoid(f(usr1, title)) > sigmoid(f(usr2, title));
-			//return usr1->getWishlistEntry(title).getBuyChance() > usr2->getWishlistEntry(title).getBuyChance();
-		}
-
-		return *usr1 < *usr2;
-	}
+	bool operator()(User * usr1, User * usr2);
 };
 
 /** @} */

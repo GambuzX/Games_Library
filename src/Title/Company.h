@@ -144,6 +144,19 @@ struct CompareCompany
 	}
 };
 
+/**
+* @brief Struct for comparing Company Pointer objects by name first
+*/
+struct CompareCompanyByName
+{
+	bool operator()(Company * c1, Company * c2) const
+	{
+		if (c1->getName() == c2->getName())
+			return c1->getNTitles() < c2->getNTitles();
+		return c1->getName() < c2->getName();
+	}
+};
+
 /** @} */
 
 #endif
