@@ -14,6 +14,7 @@
 #include "..\Utilities\Address.h"
 #include "..\Utilities\WishlistEntry.h"
 #include "..\Utilities\CompareObj.h"
+#include "..\Utilities\buy_chance.h"
 
 class Title;
 class WishlistEntry;
@@ -444,7 +445,7 @@ public:
 	std::set<std::string> getPlatforms();
 
 	//TODO: comentar
-	const std::vector<unsigned int>& getTitlesBougthLastXMonths(unsigned int months) const;
+	const std::vector<unsigned int> getTitlesBougthLastXMonths(unsigned int months) const;
 
 	/**
 	* @brief Overload of the less operator
@@ -475,24 +476,7 @@ private:
 public:
 	CompareUsr(UserCmpType cmp) { title = nullptr; cmp_type = cmp; }
 	CompareUsr(Title* title, UserCmpType cmp) { this->title = title; cmp_type = cmp; }
-	bool operator()(User * usr1, User * usr2)
-	{
-		if (title == nullptr) return *usr1 < *usr2;
-		switch (cmp_type)
-		{
-		case ID:
-			return *usr1 < *usr2;
-		case ADS:
-			return usr1->getNumberOfSeenAds(title) > usr2->getNumberOfSeenAds(title);
-		case SEARCHES:
-			return usr1->getNumberOfSearches(title) > usr2->getNumberOfSearches(title);
-		case BUYCHANCE:
-			return sigmoid(f(usr1, title)) > sigmoid(f(usr2, title));
-			//return usr1->getWishlistEntry(title).getBuyChance() > usr2->getWishlistEntry(title).getBuyChance();
-		}
-
-		return *usr1 < *usr2;
-	}
+	bool operator()(User * usr1, User * usr2);
 };
 
 /** @} */

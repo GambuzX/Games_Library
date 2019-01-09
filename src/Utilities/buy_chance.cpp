@@ -1,7 +1,7 @@
-#include "buy_chance.h"
-#include "..\GameLibrary.h"
 #include <cmath>
 #include <set>
+#include "buy_chance.h"
+#include "..\GameLibrary.h"
 
 const double EULER_CONSTANT = std::exp(1.0);
 const double SIMILAR_GAMES_WEIGHT = 4;

@@ -13,6 +13,7 @@
 #include "Utilities\Update.h"
 #include "Utilities\CompareObj.h"
 
+
 /** @defgroup GameLibrary Game Library
 * @{
 *
@@ -201,6 +202,14 @@ public:
     * @return Company * Pointer to the company found, nullptr if not found
     */
     Company * getCompany(std::string name);
+
+	/**
+	* @brief Finds all companies whose name matches a given wildcard
+	* 
+	* @param wildcard Wildcard string to match
+	* @return set Set with all the companies whose name matches the given wildcard
+	*/
+	std::set<Company*, CompareCompanyByName> wildcardMatchingCompanies(std::string wildcard);
 
 	/**
 	* @brief Edits a company from the Game Library
@@ -453,6 +462,8 @@ public:
 	 * @param user User that has bought the title
 	 */
 	static void removeFromHashTable(Title * title, User * user);
+
+	void removeActiveUsers();
 
 	// Use when date is fast forward: done
 	// Adds user dependent of the last bought game

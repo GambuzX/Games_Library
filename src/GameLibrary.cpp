@@ -195,6 +195,16 @@ Company * GameLibrary::getCompany(std::string name) {
     return nullptr;
 }
 
+set<Company*, CompareCompanyByName> GameLibrary::wildcardMatchingCompanies(string wildcard)
+{
+	set<Company*, CompareCompanyByName> return_set;
+	companiesSet::iterator it;
+	for (it = platformCompanies.begin(); it != platformCompanies.end(); it++)
+		if (wildcardMatch((*it)->getName().c_str(), wildcard.c_str()))
+			return_set.insert(*it);
+	return return_set;
+}
+
 bool GameLibrary::editCompany(std::string name, unsigned NIF, unsigned contact)
 {
 	Company * comp = getCompany(name);
