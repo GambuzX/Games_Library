@@ -87,6 +87,11 @@ public:
 	unsigned int getNumberOfSeenAds(Title * title) { return std::get<1>(searches_ads[title]); };
 
 	/**
+	 * @brief Setter for the searches_adds field
+	 * @param mtt mapTitleTuple to copy to searches_ads
+	 */
+	void setSearchesAds(mapTitleTuple mtt) { searches_ads = mtt; }
+	/**
 	 * @brief Increment the number of times that a certain title has been searched
 	 * 
 	 * @param title Title that has been searched
@@ -159,6 +164,14 @@ public:
 	* @return Address Returns the address Private Member
 	*/
 	Address getAddress() const { return address; }
+
+
+	/**
+	 * @brief Getter for field searches_ads
+	 *
+	 * @return mapTitleTuple Returns the searches_ads Private Member
+	 */
+	mapTitleTuple getSearchesAds() const { return searches_ads; }
 
 	/**
 	* @brief Get the creditCards Private Member

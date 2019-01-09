@@ -598,6 +598,7 @@ ostream& operator<<(ostream &os, const User &user)
 {
 	os << user.getUserID() << " " << user.getName() << endl;
 	os << user.getEmail() << " " << user.getAge() << endl;
+	os << user.getCreationDate() << endl;
 	user.getAddress().writeAddress(os);
 
 	os << "Credit Cards:" << endl;
@@ -616,6 +617,15 @@ ostream& operator<<(ostream &os, const User &user)
 	os << user.getFriendsList().size() << endl;
 	for (const User* f : user.getFriendsList()) {
 		os << f->getUserID() << endl;
+	}
+	mapTitleTuple mtt = user.getSearchesAds();
+
+	os << "Ads:" << endl;
+	os << mtt.size() << endl;
+
+	for (pair<Title*, std::tuple<unsigned int, unsigned int>> title_pair : mtt) {
+		// id nsearches nads
+		os << title_pair.first->getTitleID() << " " << get<0>(title_pair.second) << " " << get<1>(title_pair.second) << endl;
 	}
 
 	return os;

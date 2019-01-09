@@ -106,8 +106,6 @@ bool GameLibrary::addTitle(Title * title) {
 }
 
 bool GameLibrary::removeTitle(Title * title) {
-	// TODO: ver ordem de remocao
-
 	// Remove from company
 	Company* company = getCompany(title->getCompany());
 	company->removeTitle(title);
@@ -228,7 +226,7 @@ void GameLibrary::saveGameLibrary()
 	// the info files only contains information on the number of games, users and companies
 	ofstream library_info_file("info.txt");
 
-	library_info_file << titles.size() << " " << users.size() << " " << platformCompanies.size() << endl;
+	library_info_file << titles.size() << " " << users.size() << " " << platformCompanies.size() << " " << monthsToUpdateHash << endl;
 	library_info_file.close();
 
 	system("mkdir titles >nul 2>nul");
@@ -333,6 +331,7 @@ void GameLibrary::loadGameLibrary()
 		friends,
 		games,
 		wishlist,
+		ads,
 	};
 
 	enum company_states {
@@ -349,7 +348,7 @@ void GameLibrary::loadGameLibrary()
 		cout << "Opening of information file failed. Does it exist?" << endl;
 	}
 
-	info_file >> ntitles >> nusers >> ncompanies;
+	info_file >> ntitles >> nusers >> ncompanies >> monthsToUpdateHash;
 
 	ostringstream user_file_name;
 	ostringstream title_file_name;
@@ -358,9 +357,12 @@ void GameLibrary::loadGameLibrary()
 	vector<pair<unsigned int, vector<unsigned int>>> allfriends, allgames;
 	vector<pair<unsigned int, vector<string>>> allwishlists;
 
+	// user id, title id, nsearches, nads
+	vector<map<pair<string, unsigned int>, tuple<unsigned int, unsigned int>>> allsearches;
+
 	for (size_t i = 1; i <= nusers; ++i) {
-		string name, email, road_name, city, country, number, holder, expiry, transaction_date;
-		int age, house_number, ncredit_cards, ntransactions=0, transaction_type, nfriends, ngames;
+		string name, email, road_name, city, country, number, holder, expiry, transaction_date, creation_date;
+		int age, house_number, ncredit_cards, ntransactions=0, transaction_type, nfriends, ngames, nads;
 		double balance, transaction_value;
 		unsigned transaction_title;
 
@@ -372,7 +374,8 @@ void GameLibrary::loadGameLibrary()
 		Address addr;
 		vector<CreditCard> cc;
 		vector<Transaction> trans;
-		vector<unsigned int> friend_ids, game_ids;
+		vector<unsigned int> friend_ids, game_ids, search_ids;
+		map<pair<string, unsigned int>, tuple<unsigned int, unsigned int>> user_searches;
 
 		while(getline(user_file, str)) {
 			switch (user_current_state) {
@@ -384,6 +387,8 @@ void GameLibrary::loadGameLibrary()
 				email = split(str)[0];
 				age = stoi(split(str, 1)[1]);
 				getline(user_file, str);
+			    creation_date = str;
+			    getline(user_file, str);
 				if (str == "Address:") user_current_state = address;
 				break;
 			case address:
@@ -433,15 +438,29 @@ void GameLibrary::loadGameLibrary()
 			}
 			case friends:
 				if (nfriends == 0) {
-					user_current_state = games;
+					user_current_state = ads;
 					getline(user_file, str);
-					ngames = stoi(str);
+					nads = stoi(str);
 					break;
 				}
 
 				friend_ids.push_back(static_cast<unsigned int &&>(stoi(str)));
 				--nfriends;
 				break;
+			case ads: {
+			    if (nads == 0) {
+			        user_current_state = games;
+			        getline(user_file, str);
+			        ngames = stoi(str);
+			        break;
+			    }
+			    vector<string> vec = split(str);
+                user_searches.insert(make_pair(make_pair(email, stoi(vec[0])),
+                    tuple<unsigned int, unsigned int>(static_cast<const unsigned int &>(stoi(vec[1])),
+                        static_cast<const unsigned int &>(stoi(vec[2])))));
+			    --nads;
+			    break;
+			}
 			case games:
 				if (ngames == 0) {
 					if (str == "Wishlist:") {
@@ -457,13 +476,15 @@ void GameLibrary::loadGameLibrary()
 			case wishlist:
 				vector<string> split_string = split(str);
 
-				allwishlists.push_back(make_pair(i, split_string));
+				allwishlists.emplace_back(i, split_string);
 				break;
 			}
 		}
 		user_current_state = _id_name;
 		User *user = new User(name, email, age, Address(house_number, road_name, city, country));
+		user->setCreatedDate(Date(creation_date));
 		addUser(user);
+        allsearches.push_back(user_searches);
 
 		for (CreditCard &ccs : cc) {
 			user->addCreditCard(ccs);
@@ -641,7 +662,7 @@ void GameLibrary::loadGameLibrary()
 
 				}
 
-				for (Sale sale : sales_history)
+				for (const Sale &sale : sales_history)
 					online_title->addPromotion(sale);
 
 				for (Update up_date : update_vector)
@@ -651,7 +672,7 @@ void GameLibrary::loadGameLibrary()
 				Title* online_titl = new OnlineTitle(title_name, stod(_price), Date(_release_date), ar, glp, glg, company, new FixedSubscription(stod(_subs_value)));
 				addTitle(online_titl);
 
-				for (Sale sale : sales_history)
+				for (const Sale &sale : sales_history)
 					online_titl->addPromotion(sale);
 
 				for (Update up_date : update_vector)
@@ -719,6 +740,23 @@ void GameLibrary::loadGameLibrary()
 		}
 	}
 
+	for (auto &allsearche : allsearches) {
+		User* user;
+		mapTitleTuple searches_ads;
+	    for (const auto &search_map : allsearche) {
+            const string &email = get<0>(search_map.first);
+	        unsigned titleID = get<1>(search_map.first);
+
+	        user = getUser(email);
+	        if (user == nullptr) break;
+
+	        Title* title = getTitle(titleID);
+	        if (title == nullptr) continue;
+	        searches_ads.insert(make_pair(title, tuple<unsigned int, unsigned int>(get<0>(search_map.second), get<1>(search_map.second))));
+	    }
+		user->setSearchesAds(searches_ads);
+	}
+
 	for (pair<unsigned int, vector<string>> &wishlist_pair : allwishlists) {
 		User* user = find_if(users.begin(), users.end(),
 							 [wishlist_pair](const std::pair<User* const, std::set<Title*, ComparePtr<Title>>> &user) {
@@ -737,6 +775,9 @@ void GameLibrary::loadGameLibrary()
 
 		user->addWishlistEntry(interest, buy_chance, title);
 	}
+	updateHashTable();
+	removeActiveUsers();
+	addSleepyUsers(monthsToUpdateHash);
 }
 
 bool GameLibrary::updateTitle(Title* title, Update * update) {
