@@ -93,6 +93,13 @@ public:
 	 */
 	bool operator<(const Update & update) const;
 
+	/**
+	* @brief Overload of the << operator
+	*
+	* @param os Stream to write information to
+	* @param update Update object to write
+	* @return ostream Stream used to write to
+	*/
 	friend std::ostream& operator<<(std::ostream &os, const Update &update);
 };
 

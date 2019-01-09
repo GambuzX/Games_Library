@@ -397,6 +397,13 @@ public:
 	 */
 	bool operator<(const Title & t2) const;
 
+	/**
+	* @brief Overload of the << operator
+	*
+	* @param os Stream to write information to
+	* @param title Title object to write
+	* @return ostream Stream used to write to
+	*/
 	friend std::ostream& operator<<(std::ostream &os, const Title &title);
 	
 };

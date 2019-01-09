@@ -235,6 +235,11 @@ public:
 	*/
 	double getTimePlayed(const User * usr) const override { throw NotOnlineTitle(getTitleID()); }
 
+	/**
+	* @brief Writes information about this Online Title to the specified stream
+	*
+	* @param os Stream to write information to
+	*/
 	void displayTitleInfo(std::ostream& os) override;
 
 	//void updateUserVersion(std::string name);

@@ -85,7 +85,13 @@ public:
 	*/
 	friend std::ostream & operator<<(std::ostream & os, const Transaction & trans);
 
-	// order decrescent
+	/**
+	* @brief Overload of the < operator
+	* Compares by the date of the Transaction
+	*
+	* @param t2 Second Transaction object to use in comparison
+	* @return Result of comparison
+	*/
 	bool operator<(const Transaction& t2) const;
 
 	/**

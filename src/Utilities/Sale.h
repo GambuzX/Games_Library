@@ -73,6 +73,13 @@ public:
 	 */
 	bool operator<(const Sale& s2) const;
 
+	/**
+	* @brief Overload of the << operator
+	*
+	* @param os Stream to write information to
+	* @param s Sale object to write
+	* @return ostream Stream used to write to
+	*/
 	friend std::ostream& operator<<(std::ostream &os, const Sale &s);
 };
 

@@ -242,6 +242,11 @@ public:
 	 */
 	void addNewSession(unsigned int userID, const Session & sess);
 
+	/**
+	* @brief Writes information about this Online Title to the specified stream
+	*
+	* @param os Stream to write information to
+	*/
 	void displayTitleInfo(std::ostream& os) override;
 	//bool operator<(const Title & t2) const override;
 

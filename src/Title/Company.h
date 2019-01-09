@@ -123,19 +123,27 @@ public:
 
     /**
      * @brief Displays company information in a human-friendly way
-     * @param out
-     * @param c
-     * @return
+     * @param out Stream to write information to
+     * @param c Company to write info
+     * @return ostream Stream used to write
      */
     friend std::ostream& operator<<(std::ostream &out, const Company &c);
 };
 
 
 /**
-* @brief Struct for comparing Company Pointer objects
+* @brief Struct for comparing Company Pointer objects by number of titles first
 */
 struct CompareCompany
 {
+	/**
+	* @brief Overload of the operator ()
+	* Compares Companies by number of titles and name
+	*
+	* @param c1 first company to compare
+	* @param c2 second company to compare
+	* @return bool Result of comparison
+	*/
 	bool operator()(Company * c1,  Company * c2) const
 	{
 		if (c1->getNTitles() == c2->getNTitles())
@@ -149,6 +157,14 @@ struct CompareCompany
 */
 struct CompareCompanyByName
 {
+	/**
+	* @brief Overload of the operator ()
+	* Compares Companies by name and number of titles
+	*
+	* @param c1 first company to compare
+	* @param c2 second company to compare
+	* @return bool Result of comparison
+	*/
 	bool operator()(Company * c1, Company * c2) const
 	{
 		if (c1->getName() == c2->getName())

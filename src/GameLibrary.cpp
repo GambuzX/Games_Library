@@ -741,7 +741,7 @@ void GameLibrary::loadGameLibrary()
 	}
 
 	for (auto &allsearche : allsearches) {
-		User* user;
+		User* user = nullptr;
 		mapTitleTuple searches_ads;
 	    for (const auto &search_map : allsearche) {
             const string &email = get<0>(search_map.first);
@@ -1242,11 +1242,10 @@ void GameLibrary::removeActiveUsers()
 // nao tem em conta a probabilidade
 void GameLibrary::addSleepyUsers(unsigned int months)
 {
-	// TOD: mudar
 	for (const auto & user : users) {
 		vector<unsigned int> titlesBought = user.first->getTitlesBougthLastXMonths(months);
 		if(titlesBought.empty())
-			addUserToHashTables(user.first, false);
+			addUserToHashTables(user.first, true);
 	}
 }
 
@@ -1256,7 +1255,6 @@ void GameLibrary::addUserToHashTables(User * user, bool prob)
 {
 	priority_queue<WishlistEntry> prov = user->getWishlist();
 	while (!prov.empty()) {
-		// TODO: verificar condicao
 		if (!prob || prov.top().getBuyChance() > prov.top().getTitle()->getMinimumBuyProbability()) {
 			titleUserHashTabMap::iterator it = asleepUsers.find(prov.top().getTitle());
 			if (it != asleepUsers.end()) (*it).second.insert(user);

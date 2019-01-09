@@ -223,7 +223,11 @@ public:
 	*/
 	void setCreatedDate(const Date & date) { createdDate = date; }
 	
-	// TODO: Comentar
+	/**
+	* @brief Set the age Private Member
+	*
+	* @param newAge int to set the age to
+	*/
 	void setAge(const int newAge) { age = newAge; }
 
 	/**
@@ -375,13 +379,20 @@ public:
 
 	/**
 	* @brief Adds a User to the friendsList Private Member
+	* The addition is made both ways, so that both users are friends of each other
 	*
 	* @param frnd Pointer to the User to add as friend
 	* @return bool Returns true if successfull, false otherwise
 	*/
 	bool addFriend(User * frnd);
 
-	// TODO: comentar
+	/**
+	* @brief Adds a User to the friendsList Private Member
+	* The addition is only one way, does not insert in the frnd list this user
+	*
+	* @param frnd Pointer to the User to add as friend
+	* @return bool Returns true if successfull, false otherwise
+	*/
 	void addFriendNoRestrictions(User * frnd);
 
 	/**
@@ -406,11 +417,15 @@ public:
 	* @brief Returns the Title in the wishlist of higher priority, with a minimum buy rate
 	*
 	* @param minimumBuyRate Minimum buy rate for the title to find
-	* @return WishlistEntry * Copy of WishlistEntry of most priority
+	* @return WishlistEntry Copy of WishlistEntry of most priority
 	*/
 	WishlistEntry nextAdvertisementTitle(float minimumBuyRate);
-	
-	//TODO: ver Next Advertsiment mas minimunBuyRate e o especificado pelo fabricante do title
+
+	/**
+	* @brief Gets the next Advertisment title, but the minimumBuyRate is the specified by the Title
+	*
+	* @return WishlistEntry Copy of WishlistEntry of most priority
+	*/
 	WishlistEntry nextAdvertisementTitle();
 
 	/**
@@ -448,9 +463,18 @@ public:
 	* @return bool Returns true if successfull, false otherwise
 	*/
 	bool editWishlistEntry(Title * title, unsigned interest);
-	//TODO: comentar
+	
+	/**
+	* @brief Updates the buy chance of all the titles in the wishlist
+	*/
 	void updateWishlistProbability();
 
+	/**
+	* @brief Gets the WishlistEntry of a given title
+	*
+	* @param title Title to search for the WishlistEntry
+	* @return WishlistEntry of the specified title
+	*/
 	const WishlistEntry & getWishlistEntry(Title * title);
 
 	/**
@@ -460,7 +484,12 @@ public:
 	*/
 	std::set<std::string> getPlatforms();
 
-	//TODO: comentar
+	/**
+	* @brief Gets the IDs of all the titles bought in the last given months
+	*
+	* @param months timeperiod in months to check for titles bought
+	* @return vector<unsigned int> containing all the ids of the bought titles
+	*/
 	const std::vector<unsigned int> getTitlesBougthLastXMonths(unsigned int months) const;
 
 	/**
@@ -472,26 +501,60 @@ public:
 	*/
 	bool operator<(const User & usr) const;
 
+	/**
+	* @brief Overload of the << operator
+	* Used to insert the User information in a file
+	*
+	* @param os Stream to write to
+	* @param user User to insert in the stream
+	* @return ostream Stream used to write to
+	*/
 	friend std::ostream& operator<<(std::ostream &os, const User &user);
 
 };
 
+/**
+* @brief Enumerated type for identifying the different types of comparison that can be made between users in a hashtable
+*/
 enum UserCmpType
 {
-	ID,
-	ADS,
-	SEARCHES,
-	BUYCHANCE
+	ID, /*!< Compare by ID */
+	ADS,  /*!< Compare by number of ADS seen */
+	SEARCHES,  /*!< Compare by number of SEARCHES made */
+	BUYCHANCE  /*!< Compare by BUYCHANCE */
 };
 
+/**
+* @brief Function object used to compare two Users that belong to an Hashtable based on different criterias
+*/
 class CompareUsr
 {
 private:
-	Title * title;
-	UserCmpType cmp_type;
+	Title * title; /**< @brief Title to which the hashtable belongs */
+	UserCmpType cmp_type; /**< @brief criteria of comparison */
 public:
+	/**
+	* @brief Constructor of the class
+	*
+	* @param cmp Type of comparison
+	*/
 	CompareUsr(UserCmpType cmp) { title = nullptr; cmp_type = cmp; }
+
+	/**
+	* @brief Constructor of the class
+	*
+	* @param title Title to which the hashtable belongs
+	* @param cmp Type of comparison
+	*/
 	CompareUsr(Title* title, UserCmpType cmp) { this->title = title; cmp_type = cmp; }
+
+	/**
+	* @brief Overload of the operator (), used to compare two users based on the specified criteria
+	*
+	* @param usr1 Left side user to compare
+	* @param usr2 Right side user to compare
+	* @return bool Result of the comparison
+	*/
 	bool operator()(User * usr1, User * usr2);
 };
 

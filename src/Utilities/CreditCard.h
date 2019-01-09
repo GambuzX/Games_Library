@@ -109,6 +109,14 @@ public:
 	 */
 	CreditCard & operator-(const double & val);
 
+
+	/**
+	* @brief Overload of the << operator
+	*
+	* @param os Stream to write information to
+	* @param cc CreditCard object to write
+	* @return ostream Stream used to write to
+	*/
 	friend std::ostream& operator<<(std::ostream &os, const CreditCard &cc);
 };
 

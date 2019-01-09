@@ -395,6 +395,13 @@ public:
 	*/
 	static bool isOnlineTitle(Title * title);
 
+	/**
+	* @brief Splits a string into a vector of strings, isolating words surrounded by spaces
+	*
+	* @param long_string String to split
+	* @param num_unique Indicates if should only split once
+	* @return vector with all the strings isolated
+	*/
 	std::vector<std::string> split(std::string long_string, int num_unique = 0);
 
 	/**
@@ -463,6 +470,9 @@ public:
 	 */
 	static void removeFromHashTable(Title * title, User * user);
 
+	/**
+	* @brief Updates all the hashtables of the titles, removing the active users
+	*/
 	void removeActiveUsers();
 
 	// Use when date is fast forward: done
@@ -525,13 +535,36 @@ public:
 	unsigned int numberOfAdsSeen(Title * title);
 
 
-
+	/**
+	* @brief Orders the users in a title's hashtable by ID
+	*
+	* @param title Title to check the hashtable
+	* @return set Returns a set of the users ordered by ID
+	*/
 	std::set<User*, CompareUsr> OrderUsersByID(Title * title);
 
+	/**
+	* @brief Orders the users in a title's hashtable by number of ADS seen
+	*
+	* @param title Title to check the hashtable
+	* @return set Returns a set of the users ordered by number of ADS seen
+	*/
 	std::set<User*, CompareUsr> OrderUsersByAds(Title * title);
 
+	/**
+	* @brief Orders the users in a title's hashtable number of searches of the title
+	*
+	* @param title Title to check the hashtable
+	* @return set Returns a set of the users ordered by Searches of the title
+	*/
 	std::set<User*, CompareUsr> OrderUsersBySearches(Title * title);
 
+	/**
+	* @brief Orders the users in a title's hashtable by buy chance
+	*
+	* @param title Title to check the hashtable
+	* @return set Returns a set of the users ordered by buy chance
+	*/
 	std::set<User*, CompareUsr> OrderUsersByBuyChance(Title * title);
 };
 
