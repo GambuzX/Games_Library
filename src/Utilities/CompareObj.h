@@ -1,6 +1,8 @@
 #ifndef COMPARE_OBJ_H
 #define COMPARE_OBJ_H
 
+#include <string>
+
 /** @addtogroup GameLibraryUtility
  * @{
  */
@@ -44,6 +46,16 @@ struct DecrescentOrder
 		return lhs > rhs;
 	}
 };
+
+/**
+ * @brief Checks if a string matches a wildcard
+ *
+ * @param str String to check if matches
+ * @param strWild Wildcard to match
+ * @return bool True if wildcard matches the string, false otherwise
+ */
+bool wildcardMatch(const char *str, const char *strWild);
+
 
 /** @} */
 

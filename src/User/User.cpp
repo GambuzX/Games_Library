@@ -601,3 +601,22 @@ ostream& operator<<(ostream &os, const User &user)
 
 	return os;
 }
+
+bool CompareUsr::operator()(User * usr1, User * usr2)
+{
+	if (title == nullptr) return *usr1 < *usr2;
+	switch (cmp_type)
+	{
+	case ID:
+		return *usr1 < *usr2;
+	case ADS:
+		return usr1->getNumberOfSeenAds(title) > usr2->getNumberOfSeenAds(title);
+	case SEARCHES:
+		return usr1->getNumberOfSearches(title) > usr2->getNumberOfSearches(title);
+	case BUYCHANCE:
+		return sigmoid(f(usr1, title)) > sigmoid(f(usr2, title));
+		//return usr1->getWishlistEntry(title).getBuyChance() > usr2->getWishlistEntry(title).getBuyChance();
+	}
+
+	return *usr1 < *usr2;
+}
