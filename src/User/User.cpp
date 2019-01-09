@@ -608,7 +608,7 @@ ostream& operator<<(ostream &os, const User &user)
 
 	os << "Transactions:" << endl;
 	os << user.getTransactions().size() << endl;
-	for (Transaction t : user.getTransactions()) {
+	for (const Transaction &t : user.getTransactions()) {
 		t.writeTransaction(os);
 	}
 
