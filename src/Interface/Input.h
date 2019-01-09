@@ -20,6 +20,8 @@
 */
 std::string namesInput(std::string question);
 
+std::string wildStringInput(std::string question);
+
 /**
 * Robustness of the name with Numbers Input:
 * - Checks if the word has other characters than letters, spaces and numbers;

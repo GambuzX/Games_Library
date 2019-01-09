@@ -681,6 +681,7 @@ void addGames(GameLibrary & gL)
 	Date releaseDate = dateInput(" Release date: ");
 	gameLibraryPlatform platform = menuPlatform();
 	gameLibraryGenre genre = menuGenre(false);
+	float minimumProb = probabilityInput(" Minmum Probability (asleep user): ");
 	string company = namesInput(" Publisher name (only letters and space): ");
 
 	Company *comp = gL.getCompany(company);
@@ -694,6 +695,7 @@ void addGames(GameLibrary & gL)
 	    Title *ht;
 		if (platform != all_platforms) {
 		    ht = new HomeTitle(name, price, releaseDate, ar, platform, genre, company);
+			ht->setMinimumBuyProbability(minimumProb);
 			gL.addTitle(ht);
 			gL.addTitleToCompany(company, ht);
 			return;
@@ -703,6 +705,7 @@ void addGames(GameLibrary & gL)
 			for (int plat = nds; plat != last; plat++)
 			{
 			    ht = new HomeTitle(name, price, releaseDate, ar, static_cast<gameLibraryPlatform>(plat), genre, company);
+				ht->setMinimumBuyProbability(minimumProb);
 				gL.addTitle(ht);
                 gL.addTitleToCompany(company, ht);
 			}
@@ -718,6 +721,7 @@ void addGames(GameLibrary & gL)
             auto* fs = new FixedSubscription(subsPrice);
 			if (platform != all_platforms) {
 			    ot = new OnlineTitle(name, price, releaseDate, ar, platform, genre, company, fs);
+				ot->setMinimumBuyProbability(minimumProb);
 				gL.addTitle(ot);
 				gL.addTitleToCompany(company, ot);
 				return;
@@ -727,6 +731,7 @@ void addGames(GameLibrary & gL)
 				for (int plat = nds; plat != last; plat++)
 				{
 				    ot = new OnlineTitle(name, price, releaseDate, ar, static_cast<gameLibraryPlatform>(plat), genre, company, fs);
+					ot->setMinimumBuyProbability(minimumProb);
 					gL.addTitle(ot);
 					gL.addTitleToCompany(company, ot);
 				}
@@ -737,6 +742,7 @@ void addGames(GameLibrary & gL)
 		    auto* ds = new DynamicSubscription(subsPrice);
 			if (platform != all_platforms) {
 			    ot = new OnlineTitle(name, price, releaseDate, ar, platform, genre, company, ds);
+				ot->setMinimumBuyProbability(minimumProb);
 				gL.addTitle(ot);
 				gL.addTitleToCompany(company, ot);
 				return;
@@ -746,6 +752,7 @@ void addGames(GameLibrary & gL)
 				for (int plat = nds; plat != last; plat++)
 				{
 				    ot = new OnlineTitle(name, price, releaseDate, ar, static_cast<gameLibraryPlatform>(plat), genre, company, ds);
+					ot->setMinimumBuyProbability(minimumProb);
 					gL.addTitle(ot);
 					gL.addTitleToCompany(company, ot);
 				}
@@ -2223,9 +2230,10 @@ void CompaniesMenu(GameLibrary &gameL)
 	std::cout << "   2 - Add Company" << endl;
 	std::cout << "   3 - Remove Company" << endl;
 	std::cout << "   4 - Company Info" << endl;
+	std::cout << "   5 - Search Company Name (wild string)" << endl;
 	std::cout << "   0 - Go back" << endl << endl;
 
-	int option_number = menuInput(" Option ? ", 0, 4);
+	int option_number = menuInput(" Option ? ", 0, 5);
 
 	switch (option_number)
 	{
@@ -2255,6 +2263,18 @@ void CompaniesMenu(GameLibrary &gameL)
 	    std::cout << endl << endl;
 	    CompaniesMenu(gameL);
 		break;
+	case 5:
+	{
+		header("Search Company Name");
+		string wildSearch = wildStringInput(" Wildstring Input (* = 0+ chars and ? = 1 char): ");
+		set<Company*, CompareCompanyByName> wildComp = gameL.wildcardMatchingCompanies(wildSearch);
+		for (auto it : wildComp) {
+			std::cout << *it << endl;
+		}
+		std::cout << endl << endl;
+		CompaniesMenu(gameL);
+		break;
+	}
 	case 0:
 		header("CREATE GAME LIBRARY");
 		PrincipalMenu(gameL);
