@@ -754,7 +754,8 @@ void GameLibrary::loadGameLibrary()
 	        if (title == nullptr) continue;
 	        searches_ads.insert(make_pair(title, tuple<unsigned int, unsigned int>(get<0>(search_map.second), get<1>(search_map.second))));
 	    }
-		user->setSearchesAds(searches_ads);
+		if(user != nullptr)
+			user->setSearchesAds(searches_ads);
 	}
 
 	for (pair<unsigned int, vector<string>> &wishlist_pair : allwishlists) {
