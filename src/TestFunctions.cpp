@@ -1371,6 +1371,7 @@ void AsleepUsersMenu(GameLibrary & gl, Title * game) {
 	option_number = menuInput(" Option ? ", 0, 4);
 
 	unsigned int min;
+	float min_prob;
 
 	switch (option_number)
 	{
@@ -1398,8 +1399,8 @@ void AsleepUsersMenu(GameLibrary & gl, Title * game) {
 		break;
 	case 4:
 		header("Potencial Buyers by Probability");
-		min = probabilityInput(" Smallest Probability (0 for complete list): ");
-		asleepUsersSummary(gl.OrderUsersByID(game), game, (float)min, BUYCHANCE);
+		min_prob = probabilityInput(" Smallest Probability (0 for complete list): ");
+		asleepUsersSummary(gl.OrderUsersByID(game), game, min_prob, BUYCHANCE);
 		std::cout << endl << endl;
 		AsleepUsersMenu(gl, game);
 		break;
