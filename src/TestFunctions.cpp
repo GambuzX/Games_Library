@@ -1986,9 +1986,7 @@ void GameOperationsMenu(GameLibrary & gl, unsigned titleID) {
 		break;
 	case 4:
 		header("Potencial Buyers");
-		// TODO 1: aqui vai ser chamado o menu AsleepUsersMenu
-		std::cout << endl << endl;
-		GameOperationsMenu(gl, titleID);
+		AsleepUsersMenu(gl, game);
 		break;
 	case 0:
 		GamesMenu(gl);
