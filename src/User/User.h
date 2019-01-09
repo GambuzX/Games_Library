@@ -441,6 +441,41 @@ public:
 
 };
 
+enum UserCmpType
+{
+	ID,
+	ADS,
+	SEARCHES,
+	BUYCHANCE
+};
+
+class CompareUsr
+{
+private:
+	Title * title;
+	UserCmpType cmp_type;
+public:
+	CompareUsr(UserCmpType cmp) { title = nullptr; cmp_type = cmp; }
+	CompareUsr(Title* title, UserCmpType cmp) { this->title = title; cmp_type = cmp; }
+	bool operator()(User * usr1, User * usr2)
+	{
+		if (title == nullptr) return *usr1 < *usr2;
+		switch (cmp_type)
+		{
+		case ID:
+			return *usr1 < *usr2;
+		case ADS:
+			return usr1->getNumberOfSeenAds(title) < usr2->getNumberOfSeenAds(title);
+		case SEARCHES:
+			return usr1->getNumberOfSearches(title) < usr2->getNumberOfSearches(title);
+		case BUYCHANCE:
+			return true; // sigmoid(f(usr1, title)) < sigmoid(f(usr2, title));
+		}
+
+		return *usr1 < *usr2;
+	}
+};
+
 /** @} */
 
 #endif

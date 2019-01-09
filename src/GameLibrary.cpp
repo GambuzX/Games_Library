@@ -245,6 +245,20 @@ void GameLibrary::saveGameLibrary()
 			user_file << title->getTitleID() << endl;
 		}
 
+		// copy wishlist before saving, because priority_queues are not iterable
+		priority_queue<WishlistEntry> wishlist = user.first->getWishlist();
+		user_file << "Wishlist:" << endl;
+
+		while (!wishlist.empty()) {
+			WishlistEntry wishlist_entry = wishlist.top();
+
+			user_file << wishlist_entry.getTitle()->getTitleID() << " " << wishlist_entry.getInterest();
+			user_file << " " << wishlist_entry.getBuyChance() << endl;
+
+			wishlist.pop();
+		}
+
+
 		user_file.close();
 	}
 
@@ -308,6 +322,7 @@ void GameLibrary::loadGameLibrary()
 		transactions,
 		friends,
 		games,
+		wishlist,
 	};
 
 	enum company_states {
@@ -331,6 +346,7 @@ void GameLibrary::loadGameLibrary()
 	ostringstream company_file_name;
 
 	vector<pair<unsigned int, vector<unsigned int>>> allfriends, allgames;
+	vector<pair<unsigned int, vector<string>>> allwishlists;
 
 	for (size_t i = 1; i <= nusers; ++i) {
 		string name, email, road_name, city, country, number, holder, expiry, transaction_date;
@@ -348,7 +364,6 @@ void GameLibrary::loadGameLibrary()
 		vector<unsigned int> friend_ids, game_ids;
 
 		while(getline(user_file, str)) {
-
 			switch (user_current_state) {
 			case _id_name:
 				name = split(str, 1)[1];
@@ -414,10 +429,22 @@ void GameLibrary::loadGameLibrary()
 				--nfriends;
 				break;
 			case games:
-				if (ngames == 0) { break; }
+				if (ngames == 0) {
+					if (str == "Wishlist:") {
+						user_current_state = wishlist;
+					}
+
+					break;
+				}
+
 				game_ids.push_back(static_cast<unsigned int &&>(stoi(str)));
 				--ngames;
-			default: break;
+				break;
+			case wishlist:
+				vector<string> split_string = split(str);
+
+				allwishlists.push_back(make_pair(i, split_string));
+				break;
 			}
 		}
 		user_current_state = _id_name;
@@ -638,11 +665,12 @@ void GameLibrary::loadGameLibrary()
                 company_current_state = contact;
                 break;
             case contact:
+                if (str == "Titles:") {
+                	company_current_state = titles;
+                	break;
+                }
+
                 _contact = static_cast<unsigned int>(stoi(str));
-
-                getline(company_file, str);
-                if (str == "Titles:") company_current_state = titles;
-
                 break;
             case titles:
                 published_games.push_back(static_cast<unsigned int>(stoi(str)));
@@ -657,6 +685,7 @@ void GameLibrary::loadGameLibrary()
 
         addCompany(c);
         company_file.close();
+        company_current_state = nif_name;
     }
 
 	for (pair<unsigned int, vector<unsigned int>> &games_list : allgames) {
@@ -674,6 +703,25 @@ void GameLibrary::loadGameLibrary()
 				continue;
 			}
 		}
+	}
+
+	for (pair<unsigned int, vector<string>> &wishlist_pair : allwishlists) {
+		User* user = find_if(users.begin(), users.end(),
+							 [wishlist_pair](const std::pair<User* const, std::set<Title*, ComparePtr<Title>>> &user) {
+								 return user.first->getUserID() == wishlist_pair.first;
+							 })->first;
+
+		if (user == nullptr) break;
+
+		auto titleID = static_cast<unsigned int>(stoi(wishlist_pair.second[0]));
+		auto interest = static_cast<unsigned int>(stoi(wishlist_pair.second[1]));
+		float buy_chance = stof(wishlist_pair.second[2]);
+
+		Title* title = *find_if(GameLibrary::titles.begin(), GameLibrary::titles.end(), [titleID](const Title* t1) {
+			return t1->getTitleID() == titleID;
+		});
+
+		user->addWishlistEntry(interest, buy_chance, title);
 	}
 }
 
@@ -1161,4 +1209,54 @@ unsigned int GameLibrary::numberOfAdsSeen(Title * title)
 	for (const auto & user : users)
 		res += user.first->getNumberOfSeenAds(title);
 	return res;
+}
+
+
+set<User*, CompareUsr> GameLibrary::OrderUsersByID(Title * title)
+{
+	set<User*, CompareUsr> ordered_list(CompareUsr(title, ID));
+
+	HashTabUsersPtr hashtable = GameLibrary::asleepUsers[title];
+	HashTabUsersPtr::iterator it;
+	for (it = hashtable.begin(); it != hashtable.end(); it++)
+		ordered_list.insert(*it);
+
+	return ordered_list;
+}
+
+set<User*, CompareUsr> GameLibrary::OrderUsersByAds(Title * title)
+{
+	set<User*, CompareUsr> ordered_list(CompareUsr(title, ADS));
+
+	HashTabUsersPtr hashtable = GameLibrary::asleepUsers[title];
+	HashTabUsersPtr::iterator it;
+	for (it = hashtable.begin(); it != hashtable.end(); it++)
+		ordered_list.insert(*it);
+
+	return ordered_list;
+}
+
+
+set<User*, CompareUsr> GameLibrary::OrderUsersBySearches(Title * title)
+{
+	set<User*, CompareUsr> ordered_list(CompareUsr(title, SEARCHES));
+
+	HashTabUsersPtr hashtable = GameLibrary::asleepUsers[title];
+	HashTabUsersPtr::iterator it;
+	for (it = hashtable.begin(); it != hashtable.end(); it++)
+		ordered_list.insert(*it);
+
+	return ordered_list;
+}
+
+set<User*, CompareUsr> GameLibrary::OrderUsersByBuyChance(Title * title)
+{
+	set<User*, CompareUsr> ordered_list(CompareUsr(title, BUYCHANCE));
+
+	HashTabUsersPtr hashtable = GameLibrary::asleepUsers[title];
+	HashTabUsersPtr::iterator it;
+	for (it = hashtable.begin(); it != hashtable.end(); it++)
+		ordered_list.insert(*it);
+
+	return ordered_list;
 }

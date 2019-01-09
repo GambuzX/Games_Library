@@ -511,6 +511,16 @@ public:
 	 * @return unsigned int Number of times that a title add was seen
 	 */
 	unsigned int numberOfAdsSeen(Title * title);
+
+
+
+	std::set<User*, CompareUsr> OrderUsersByID(Title * title);
+
+	std::set<User*, CompareUsr> OrderUsersByAds(Title * title);
+
+	std::set<User*, CompareUsr> OrderUsersBySearches(Title * title);
+
+	std::set<User*, CompareUsr> OrderUsersByBuyChance(Title * title);
 };
 
 /** @} */
