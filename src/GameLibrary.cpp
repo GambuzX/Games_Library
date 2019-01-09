@@ -1139,6 +1139,8 @@ void GameLibrary::advanceXyears(unsigned int numberYears)
 	this->libraryDate.addYears(numberYears);
 }
 
+// Adiciona da maneira 1: update da probabilidade e adiciona consoante probabilidade
+// Mantém os já adicionados, ou seja, adicionados pq tempo passou continuam la
 void GameLibrary::updateHashTable()
 {
 	// typedef std::unordered_set<User *, UserPtrHash, UserPtrHash> HashTabUsersPtr;
@@ -1150,10 +1152,11 @@ void GameLibrary::updateHashTable()
 
 	for (const auto & user : users) {
 		user.first->updateWishlistProbability();
-		addUserToHashTables(user.first);
+		addUserToHashTables(user.first, true);
 	}
 }
 
+// Remove jogador da tabela do titulo e dos seus "vizinhos"
 void GameLibrary::removeFromHashTable(Title * title, User * user)
 {
 	ageRange ar;
@@ -1168,28 +1171,40 @@ void GameLibrary::removeFromHashTable(Title * title, User * user)
 	}
 }
 
-void GameLibrary::addSleepyUsers(unsigned int months)
+// Vai ver todos os jogadores que na verdade estao ativos e, com base nos jogos que comprou nos ultimos X meses, atualiza todas as tabelas
+// Correr após updateHashTable
+void GameLibrary::removeActiveUsers()
 {
 	for (const auto & user : users) {
-		// Find last game bought
-		vector<Transaction> userTransictions = user.first->getTransactions();
-		Date lastTitleBoughtDate;
-		for (size_t i = userTransictions.size() - 1; i >= 0 ; i--)
-			if (userTransictions.at(i).getType() == gamePurchase){
-				lastTitleBoughtDate = userTransictions.at(i).getDate();
-				break;
-			}
-		unsigned int elapsedMonths = (this->libraryDate - lastTitleBoughtDate) / 30;
-		if (elapsedMonths >= months)
-			addUserToHashTables(user.first);
+		vector<unsigned int> boughtTitles = user.first->getTitlesBougthLastXMonths(this->monthsToUpdateHash);
+		for (size_t i = 0; i < boughtTitles.size(); i++) {
+			Title * title = this->getTitle(boughtTitles.at(i));
+			if (title != NULL)
+				removeFromHashTable(title, user.first);
+		}
 	}
 }
 
-void GameLibrary::addUserToHashTables(User * user)
+// Adiciona da maneira 2: tempo passa e verifica se n comprou NENHUM titulo (e nao apenas os relevantes)
+// nao tem em conta a probabilidade
+void GameLibrary::addSleepyUsers(unsigned int months)
+{
+	// TOD: mudar
+	for (const auto & user : users) {
+		vector<unsigned int> titlesBought = user.first->getTitlesBougthLastXMonths(months);
+		if(titlesBought.empty())
+			addUserToHashTables(user.first, false);
+	}
+}
+
+// prob: atualizar com base na probabilidade
+// helper function
+void GameLibrary::addUserToHashTables(User * user, bool prob)
 {
 	priority_queue<WishlistEntry> prov = user->getWishlist();
 	while (!prov.empty()) {
-		if (prov.top().getBuyChance() > prov.top().getTitle()->getMinimumBuyProbability()) {
+		// TODO: verificar condicao
+		if (!prob || prov.top().getBuyChance() > prov.top().getTitle()->getMinimumBuyProbability()) {
 			titleUserHashTabMap::iterator it = asleepUsers.find(prov.top().getTitle());
 			if (it != asleepUsers.end()) (*it).second.insert(user);
 			else {
@@ -1223,6 +1238,7 @@ set<User*, CompareUsr> GameLibrary::OrderUsersByID(Title * title)
 	set<User*, CompareUsr> ordered_list(CompareUsr(title, ID));
 
 	updateHashTable();
+	removeActiveUsers();
 
 	HashTabUsersPtr hashtable = GameLibrary::asleepUsers[title];
 	HashTabUsersPtr::iterator it;
@@ -1237,6 +1253,7 @@ set<User*, CompareUsr> GameLibrary::OrderUsersByAds(Title * title)
 	set<User*, CompareUsr> ordered_list(CompareUsr(title, ADS));
 
 	updateHashTable();
+	removeActiveUsers();
 
 	HashTabUsersPtr hashtable = GameLibrary::asleepUsers[title];
 	HashTabUsersPtr::iterator it;
@@ -1251,6 +1268,7 @@ set<User*, CompareUsr> GameLibrary::OrderUsersBySearches(Title * title)
 	set<User*, CompareUsr> ordered_list(CompareUsr(title, SEARCHES));
 
 	updateHashTable();
+	removeActiveUsers();
 
 	HashTabUsersPtr hashtable = GameLibrary::asleepUsers[title];
 	HashTabUsersPtr::iterator it;
@@ -1265,6 +1283,7 @@ set<User*, CompareUsr> GameLibrary::OrderUsersByBuyChance(Title * title)
 	set<User*, CompareUsr> ordered_list(CompareUsr(title, BUYCHANCE));
 
 	updateHashTable();
+	removeActiveUsers();
 
 	HashTabUsersPtr hashtable = GameLibrary::asleepUsers[title];
 	HashTabUsersPtr::iterator it;

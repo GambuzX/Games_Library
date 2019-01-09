@@ -6,6 +6,7 @@
 #include <set>
 #include <queue>
 #include <tuple>
+#include <algorithm>
 #include "..\Utilities\buy_chance.h"
 #include "..\Title\Title.h"
 #include "..\Utilities\CreditCard.h"
@@ -382,7 +383,7 @@ public:
 	* @param t TransactionType enum value representing the type of transaction
 	* @param titleID ID of the title of the transaction
 	*/
-	void addTransaction(double value, Date date, TransactionType t, unsigned int titleID) { transactions.push_back(Transaction(value, date, t, titleID)); }
+	void addTransaction(double value, Date date, TransactionType t, unsigned int titleID) { transactions.push_back(Transaction(value, date, t, titleID)); sort(transactions.begin(), transactions.end()); }
 
 	/**
 	* @brief Returns the Title in the wishlist of higher priority, with a minimum buy rate
@@ -441,6 +442,9 @@ public:
 	* @return set<string> with a string for each platform the User has Titles for
 	*/
 	std::set<std::string> getPlatforms();
+
+	//TODO: comentar
+	const std::vector<unsigned int>& getTitlesBougthLastXMonths(unsigned int months) const;
 
 	/**
 	* @brief Overload of the less operator

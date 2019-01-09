@@ -85,6 +85,9 @@ public:
 	*/
 	friend std::ostream & operator<<(std::ostream & os, const Transaction & trans);
 
+	// order decrescent
+	bool operator<(const Transaction& t2) const;
+
 	void writeTransaction(std::ostream &os) const;
 };
 

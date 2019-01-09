@@ -570,6 +570,20 @@ set<string> User::getPlatforms()
 	return plats;
 }
 
+const vector<unsigned int> & User::getTitlesBougthLastXMonths(unsigned int months) const
+{
+	vector<unsigned int> res;
+	Date lastTitleBoughtDate;
+	for (size_t i = 0; i < transactions.size(); i++) {
+		unsigned int elapsedMonths = (GameLibrary::getLibraryDate() - transactions.at(i).getDate()) / 30;
+		if (elapsedMonths > months)
+			return res;
+		if (transactions.at(i).getType() == gamePurchase)
+			res.push_back(transactions.at(i).getTitleID());
+	}
+	return res;
+}
+
 bool User::operator<(const User & usr) const
 {
 	return userID < usr.getUserID();

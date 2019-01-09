@@ -247,12 +247,13 @@ void transactionsSummary(User*  user) {
 	for (auto & trans : prov)
 	{
 		std::cout << " Transaction  " << i << ":\n";
-		std::cout << "  - Date:\t" << trans.getDate() << endl;
+		std::cout << "  - Date:\t\t" << trans.getDate() << endl;
 		std::cout << "  - Value:\t" << trans.getValue() << endl;
-		std::cout << "  - Type:\t";
+		std::cout << "  - Type:\t\t";
 		if (trans.getType() == gamePurchase) std::cout << "Purchased a Title";
 		else if (trans.getType() == homeUpdate) std::cout << "Updated a Home Title";
 		else if (trans.getType() == onlineSubscription) std::cout << "Played an Online Title";
+		std::cout << "  - Title ID:\t" << trans.getTitleID();
 		std::cout << endl << endl;
 		i++;
 	}
@@ -2408,7 +2409,7 @@ void InicialMenu(GameLibrary & gl)
 		//IR para função que vai buscar o nome da pasta/ficheiro
 		std::cout << " Loading..." << endl;
 		try {
-		    gl.loadGameLibrary();
+//		    gl.loadGameLibrary();
 
 		} catch (const AlreadyLoaded &al) {
 		    std::cout << al.getMessage() << endl;
@@ -2422,8 +2423,9 @@ void InicialMenu(GameLibrary & gl)
 	case 3:
 	    header("SAVE GAME LIBRARY");
 		gl.updateHashTable();
+		gl.removeActiveUsers();
 	    std::cout << " Saving..." << endl;
-	    gl.saveGameLibrary();
+	  //  gl.saveGameLibrary();
 	    std::cout << " Done" << endl << endl;
 	    InicialMenu(gl);
 	    break;

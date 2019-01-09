@@ -479,7 +479,8 @@ public:
 	 * 
 	 * @param user User to be added to the hash tables
 	 */
-	void addUserToHashTables(User * user);
+	// TODO: comentar
+	void addUserToHashTables(User * user, bool prob);
 
 	/**
 	 * @brief Get the Title Hash Table object

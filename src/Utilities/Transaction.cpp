@@ -46,7 +46,13 @@ std::ostream & operator<<(std::ostream & os, const Transaction & trans)
 	return os;
 }
 
+bool Transaction::operator<(const Transaction & t2) const
+{
+	return !(this->date <= t2.getDate());
+}
+
 void Transaction::writeTransaction(std::ostream &os) const {
 	os << getType() << " " << getDate() << std::endl;
 	os << getValue() << std::endl;
 }
+
