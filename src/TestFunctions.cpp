@@ -2409,7 +2409,7 @@ void InicialMenu(GameLibrary & gl)
 		//IR para função que vai buscar o nome da pasta/ficheiro
 		std::cout << " Loading..." << endl;
 		try {
-//		    gl.loadGameLibrary();
+		    gl.loadGameLibrary();
 
 		} catch (const AlreadyLoaded &al) {
 		    std::cout << al.getMessage() << endl;
@@ -2425,7 +2425,7 @@ void InicialMenu(GameLibrary & gl)
 		gl.updateHashTable();
 		gl.removeActiveUsers();
 	    std::cout << " Saving..." << endl;
-	  //  gl.saveGameLibrary();
+	    gl.saveGameLibrary();
 	    std::cout << " Done" << endl << endl;
 	    InicialMenu(gl);
 	    break;

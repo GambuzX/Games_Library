@@ -235,14 +235,14 @@ public:
 	* one for the games registered in the library, one for the users and their titles
 	* and another one for the transactions
 	*/
-	//void saveGameLibrary();
+	void saveGameLibrary();
 
 	/**
 	* @brief Loads a previously saved Game Library data to the current Game Library instance
 	*
 	* @param file File to load the data from
 	*/
-	//void loadGameLibrary();
+	void loadGameLibrary();
 
 	/**
 	* @brief Updates a Title

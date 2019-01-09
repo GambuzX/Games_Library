@@ -52,7 +52,7 @@ bool Transaction::operator<(const Transaction & t2) const
 }
 
 void Transaction::writeTransaction(std::ostream &os) const {
-	os << getType() << " " << getDate() << std::endl;
+	os << getType() << " " << getDate() << " " << getTitleID() << std::endl;
 	os << getValue() << std::endl;
 }
 

@@ -88,6 +88,12 @@ public:
 	// order decrescent
 	bool operator<(const Transaction& t2) const;
 
+	/**
+	 * @brief Write information on a Transaction in a friendly way
+	 * to the ostream given as argument
+	 *
+	 * @param os ostream to write to
+	 */
 	void writeTransaction(std::ostream &os) const;
 };
 

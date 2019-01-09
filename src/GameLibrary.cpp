@@ -223,8 +223,6 @@ bool GameLibrary::addTitleToCompany(string companyName, Title * title)
 	return comp->addTitle(title);
 }
 
-// TODO: add titleID to transactions
-/*
 void GameLibrary::saveGameLibrary()
 {
 	// the info files only contains information on the number of games, users and companies
@@ -364,6 +362,7 @@ void GameLibrary::loadGameLibrary()
 		string name, email, road_name, city, country, number, holder, expiry, transaction_date;
 		int age, house_number, ncredit_cards, ntransactions=0, transaction_type, nfriends, ngames;
 		double balance, transaction_value;
+		unsigned transaction_title;
 
 		user_file_name << "user_" << i << ".txt";
 		ifstream user_file("users/" + user_file_name.str());
@@ -417,18 +416,21 @@ void GameLibrary::loadGameLibrary()
 				cc.emplace_back(name, holder, expiry, balance);
 				--ncredit_cards;
 				break;
-			case transactions:
+			case transactions: {
 				if (ntransactions == 0) { user_current_state = friends; getline(user_file, str); nfriends = stoi(str); break;}
+				vector<string> split_line = split(str);
 
-				transaction_type = stoi(split(str, 1)[0]);
-				transaction_date = split(str, 1)[1];
+				transaction_type = stoi(split_line[0]);
+				transaction_date = split_line[1];
+				transaction_title = static_cast<unsigned int>(stoi(split_line[2]));
 
 				getline(user_file, str);
 				transaction_value = stod(str);
 
-				trans.emplace_back(transaction_value, transaction_date, (TransactionType) transaction_type);
+				trans.emplace_back(transaction_value, transaction_date, (TransactionType) transaction_type, transaction_title);
 				--ntransactions;
 				break;
+			}
 			case friends:
 				if (nfriends == 0) {
 					user_current_state = games;
@@ -736,7 +738,7 @@ void GameLibrary::loadGameLibrary()
 		user->addWishlistEntry(interest, buy_chance, title);
 	}
 }
-*/
+
 bool GameLibrary::updateTitle(Title* title, Update * update) {
 	try
 	{
