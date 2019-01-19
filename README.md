@@ -17,8 +17,8 @@ In the second part we had to implement new features using the following **non-li
 * priority queue
 * hash table
 
-**First Part Grade: ??**
-**Second Part Grade: ??**
+#### **First Part Grade: ??**
+#### **Second Part Grade: ??**
 
 ### Description
 This repository contains the source code of our Game Library, the reports we submitted explaining each part in detail, a UML diagram of the first part and the project documentation.
