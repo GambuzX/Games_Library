@@ -35,6 +35,11 @@ This repository contains the source code of our Game Library, the reports we sub
 * Doxygen
 * Visual Paradigm (UML diagram)
 
+### Group Members
+* [Gonçalo Oliveira](https://github.com/Goncalo101 "Goncalo101")
+* [Manuel Coutinho](https://github.com/ManelCoutinho "ManelCoutinho")
+* [Mário Gil](https://github.com/GambuzX "GambuzX")
+
 ### Curricular Unit Info
 * **Date:** 2nd Year, 1st Semester, 2018/2019
 * **Course:** [Algoritmos e Estruturas de Dados | Algorithms and Data Structures](https://sigarra.up.pt/feup/en/UCURR_GERAL.FICHA_UC_VIEW?pv_ocorrencia_id=419991 "AEDA") (AEDA)
